@@ -3,9 +3,9 @@
 \graphicspath{ {./images/} }
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage{hyperref}
 \usepackage{pgfplotstable}
 \usepackage{minitoc}
+\usepackage{hyperref}
 \usepackage{xcolor} % For coloring
 % \usepackage{titlesec}
 % \usepackage{amsthm}
@@ -13,9 +13,10 @@
 %Bibliography
 % \usepackage{natbib}
 % \bibliographystyle{plainnat}
-\usepackage[backend=biber, style=authoryear, sorting=none]{biblatex}
+\usepackage[backend=biber, style=apa, sorting=none]{biblatex}
 \addbibresource{biblio_zotero.bib}
 
-\dominitoc
-
 \newcommand{\citep}{\parencite}
+\newcommand{\citet}{\textcite}
+
+\pgfplotsset{compat=1.18}
