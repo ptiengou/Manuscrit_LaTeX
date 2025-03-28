@@ -1,21 +1,8 @@
 \documentclass{report}
-
-\usepackage[a4paper, total={6in, 9in}]{geometry}
-\usepackage{graphicx} % Required for inserting images
-\graphicspath{ {./images/} }
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{hyperref}
-\usepackage{pgfplotstable}
-\usepackage{minitoc}
-\usepackage{xcolor} % For coloring
-% \usepackage{titlesec}
-% \usepackage{amsthm}
-\usepackage{natbib}
-\bibliographystyle{plainnat}
+\include{preamble.tex} 
 
 \begin{document}
-\dominitoc
+
 
 \section*{Title options}
     Key concepts to include
@@ -45,39 +32,43 @@
 \tableofcontents
 \newpage
 
-\section{Abstract}
-\section{Résumé}
-\section{Résumé long}
-\section{Remerciements}
+\section*{Abstract}
+\section*{Résumé}
+\section*{Résumé long}
+\section*{Remerciements}
 
 \chapter{Introduction}
 \minitoc
 \include{1.introduction}
 
-\chapter{Methods and tools : the IPSL Climate Model}
+\chapter{Methods and tools: regional simulations with the IPSL Climate Model}
 \minitoc
-
 \include{2.methods}
 
 \chapter{Evaluation and calibration of a new routing scheme}
 \minitoc
-
 \include{3.routing}
 
-\chapter{Regional study of the impacts of irrigation on the atmospheric and terrestrial water cycle using GCM-like physics}
+\chapter{Yearly and seasonal impacts of irrigation on regional climate and water cycle}
 \minitoc
 \include{4.monthly_study}
 
-\chapter{Impacts of irrigatin on the ABL}
+\chapter{Simulating the impacts of irrigation-indueced heterogeneities on the Atmospheric Boundary Layer}
 \minitoc
 \include{5.ABL_hf_study}
 
 \chapter{Conclusions and perspectives}
 
 \newpage
-\nocite{*} %todo:fix this properly
-\bibliography{biblio_zotero}
-\newpage
+
+%Using bibtex
+% \nocite{*} %todo:fix this properly
+% \bibliography{biblio_zotero}
+
+%Using biblatex
+\printbibliography
+
+
 % \renewcommand*\listfigurename{List of figures}
 \listoffigures
 \newpage
