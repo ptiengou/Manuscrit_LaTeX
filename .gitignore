@@ -24,6 +24,8 @@
 *.snm
 *.vrb
 *.xdv
+*.bcf
 
+*.xml
 # PDF output (optional, keep if needed)
 *.pdf
