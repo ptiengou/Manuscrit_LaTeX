@@ -19,7 +19,8 @@ All simulations were run with prescribed sea surface temperature and sea ice con
 Simulations are run in a Limited Area Model (LAM) configuration, first used and well described in \citet{raillard_leveraging_2024}.
 Lateral boundary conditions for the LAM are read at each time step of the dynamics, and are taken from ERA5 reanalysis hourly values at 0.25° resolution \citep{hersbach_era5_2020}.
 The domain comprises 3 zones: a raw forcing zone which contains values directly given by the forcing, a transition zone  where the model is nudged toward the forcing with decreasing strength, and a free zone at the center of the domain where there is no direct influence of the lateral forcing.
-In this study, the LAM domain is a hexagon centered on (40.4°N, -3.7°E) and of radius 1500 km (Fig. \ref{fig:domain_full_hex}). The radius is composed of 60 grid cells, so the diameter of a cell is 25 km. 
+In this study, the LAM domain is a hexagon centered on (40.4°N, -3.7°E) and of radius 1500 km (Fig. %todo
+). The radius is composed of 60 grid cells, so the diameter of a cell is 25 km. 
 Outputs of the model are natively on a hexagonal grid but are interpolated to a more traditional longitude-latitude grid of similar resolution, in order to simplify post-treatment and comparisons to evaluation products.
 
 \section{ORCHIDEE Land Surface Model}
