@@ -1,0 +1,73 @@
+\documentclass{report}
+
+\usepackage[a4paper, total={6in, 9in}]{geometry}
+\usepackage{graphicx} % Required for inserting images
+\graphicspath{ {./images/} }
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{pgfplotstable}
+\usepackage{minitoc}
+\usepackage{xcolor} % For coloring
+% \usepackage{titlesec}
+% \usepackage{amsthm}
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+
+\begin{document}
+\dominitoc
+
+\section*{Title options}
+    Key concepts to include
+    \begin{itemize}
+        \item Regional modeling (or rather modeling of regional impacts)
+        \item Irrigation
+        \item Water cycle (river discharge and reservoirs)
+        \item Iberian Peninsula ? or Semi-arid region ? 
+        \item Heterogeneities
+        \item ABL ? does not fully include precipitation (deep convection)
+    \end{itemize}
+    \hfill
+    \\
+    Formulations
+    \begin{itemize}
+        \item Modeling regional impacts of irrigation on the water cycle and atmospheric boundary layer in an Earth System Model.
+        \item 
+    \end{itemize}
+    
+    \title{Thèse de doctorat}
+    \author{Pierre Tiengou }
+    \date{2025}
+    \maketitle
+
+\clearpage
+\renewcommand*\contentsname{Contents}
+\tableofcontents
+\newpage
+
+\section*{Abstract}
+\section*{Résumé}
+\section*{Résumé long}
+\section*{Remerciements}
+
+\chapter{Introduction}
+\minitoc
+\include{1. introduction}
+
+\chapter{Methods and tools : the IPSL Climate Model}
+\minitoc
+
+\include{2. methods}
+
+\chapter{Conclusions and perspectives}
+
+\newpage
+\nocite{*} %todo:fix this properly
+\bibliography{biblio_zotero}
+\newpage
+% \renewcommand*\listfigurename{List of figures}
+\listoffigures
+\newpage
+\listoftables
+
+\end{document}
