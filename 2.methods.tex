@@ -83,7 +83,7 @@ The missing term to complete the surface water balance is evapotranspiration $E$
 
 where $\rho_{air}$ is the air density, $V$ is the horizontal wind speed, $C_{drag}$ is the surface drag coefficient, $q_{air}$ is the specific humidity of the air (typically taken at 2m), and $q_{sat}(T_S)$ is the specific humidity of saturated air at the surface temperature $T_S$.
 %todo:add norm and vector over V
-%todo:check si on prend l'humidité au premier niveau ou interpolée à 2m (même question pour vent...)
+%todo:check en couplé si on prend l'humidité au premier niveau ou interpolée à 2m (même question pour vent...)
 
 $C_{drag}$ is computed for the whole grid cell and depends on two roughness lengths:  
 %option: mentionner C_drag ici mais faire une section séparée où j'explique VRAIMENT comment c'est calculé ? (Richardson etc...) ?
@@ -94,7 +94,7 @@ $C_{drag}$ is computed for the whole grid cell and depends on two roughness leng
 \end{itemize} 
 
 The default parameterization in ORCHIDEE is based on \citet{su_evaluation_2001} and dynamically evaluates both roughness lengths using empirical formulations. However, some of the obtained values are not always consistent (particularly for $z_{0h}$), and another parameterization is sometimes used. 
-This simpler approach relies on two prescribed parameters for each PFT:  %todo:check, by PFT really ? how is the aggregation done ?
+This simpler approach relies on two prescribed parameters for each PFT:  
 \begin{itemize}
     \item The ratio between $z_{0m}$ and the canopy height, with a typical value of $\frac{1}{15}$.
     \item The ratio between $z_{0m}$ and $z_{0h}$, with a typical value of $\frac{1}{10}$.  
@@ -160,26 +160,23 @@ Finally, regarding radiative fluxes, ORCHIDEE does not modify the incoming radia
 %todo:timestep : ici ou plus tard dans la configuration ?
 
 \subsection{Routing scheme}
-\subsubsection{from article}
-River discharge is simulated using a routing scheme based on the one described in \citet{ngo-duc_validation_2007}.
-This scheme solves water transfers directly on the MERIT Digital Elevation Model (DEM) \citep{yamazaki_merit_2019} which provides topographic data at a 2-km resolution. Each DEM grid cell contains three linear reservoirs that represent surface runoff, groundwater and rivers. Surface runoff and drainage computed for each ORCHIDEE soil column are interpolated to the routing grid to feed the surface runoff and groundwater reservoirs (respectively). All three reservoirs then flow into the river reservoir of the downstream grid cell, with a residence time that depends on the slope and on a time constant specific to each reservoir. 
-In this scheme, the river reservoir is the only representation of horizontal water transfers in ORCHIDEE.
+%todo:decide if need to change surface runoff to overland for clarity ?
+The routing scheme is a sub-module of SECHIBA, which simulates horizontal water transfers between cascading reservoirs and transports it to the oceans \citep{ducharne_development_2003, ngo-duc_validation_2007}. 
+Water routing is necessary to maintain water conservation on a global scale in fully coupled simulations with a dynamic ocean model, and it also enables simulation of river discharge and groundwater volumes. 
+This scheme generally runs at a larger time step than the rest of the model (once per day by default). However, the irrigation scheme (detailed in the next section) requires routing to run at each time step of the ORCHIDEE model.
 
-\subsubsection{from CSI + translation}
-The routing scheme is a sub-module of SECHIBA, which circulates water between various cascading reservoirs to represent horizontal transfers and transport it to the oceans \citep{ducharne_development_2003, ngo-duc_validation_2007}. 
-Routing is necessary to maintain water conservation on a global scale in coupled simulations with the ocean, and it also allows for simulating river discharge and representing groundwater volumes. 
-This scheme generally runs at a larger time step than the rest of the model (once per day by default); however, the irrigation modeling (detailed in the next section) requires routing to run at each time step of the ORCHIDEE model.
+The routing scheme subdivides the simulation domain into Hydrological Transfer Units (HTU) and uses a Digital Elevation Model (DEM) constructed from topographic data to define flow directions and characterize the HTUs (dimensions, slope, upstream/downstream relationships). The grid upon which the routing flows are solved can be independent of the ORCHIDEE grid, and is hereafter referred to as the routing grid.
 
-The scheme subdivides the simulation domain into Hydrological Transfer Units (HTU) and uses a Digital Elevation Model (DEM, constructed from topographic data) to define flow directions and characterize the HTUs (dimensions, slope, upstream/downstream relationships).
-Within each HTU, three linear reservoirs are distinguished: the fast reservoir (surface runoff), the slow reservoir (groundwater), and the stream reservoir (rivers). These reservoirs differ based on their respective time constants, which determine the residence time as a function of slope (denoted as TCST\_FAST, TCST\_SLOW, and TCST\_STREAM in Figure \ref{fig:routing_principles}).
-The slow reservoir is fed by drainage, the fast reservoir by runoff, and all three reservoirs flow into the river reservoir in the downstream grid cell. The river reservoir is therefore the only one connected to neighboring cells, as no other horizontal transfer is modeled in ORCHIDEE. This assumption may have limitations at high resolutions as it ignores direct groundwater transfers between grid cells.
+Within each HTU, three linear reservoirs are represented: the fast reservoir (surface runoff), the slow reservoir (groundwater), and the stream reservoir (rivers). For each reservoir, the characteristic residence time of water in a grid cell depends on a fixed transfer coefficient (denoted as TCST\_FAST, TCST\_SLOW, and TCST\_STREAM in Fig. \ref{fig:routing_principles}) and on the local slope.
+Surface runoff and drainage computed for each ORCHIDEE soil column are interpolated to the routing grid to feed the surface runoff and groundwater reservoirs (respectively). All three reservoirs then flow into the river reservoir of the downstream grid cell. The river reservoir is therefore the only one connected to neighboring cells, as no other horizontal transfer is modeled in ORCHIDEE. This assumption may have limitations at high resolutions as it ignores direct groundwater transfers between grid cells.
 
-The outgoing volume $Q$ from a reservoir at a routing time step is expressed in terms of the reservoir volume in the grid cell, $V$, the time constant $TCST$ ($day \cdot km^{-1}$), a topographic index $topoindex$ ($km$) provided by the DEM, and the routing time step $dt_{routing}$ ($s$):
+The outgoing volume $Q$ from a reservoir at a routing time step is expressed in terms of the reservoir volume in the routing grid cell, $V$, the transfer coefficient $TCST$ ($day \cdot km^{-1}$), a topographic index $topoindex$ ($km$) derived from the DEM that indicates the slope, and the routing time step $dt_{routing}$ ($s$):
 
 \begin{equation}
     Q = \frac{V}{topoindex \times TCST} \times \frac{dt_{routing}}{86400}
 \end{equation}
 
+%todo:add figure
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\linewidth]{images/routing_structure.png}
@@ -187,31 +184,21 @@ The outgoing volume $Q$ from a reservoir at a routing time step is expressed in 
     \label{fig:routing_principles}
 \end{figure}
 
-Based on the same flow physics, different versions of routing have been developed, corresponding to different relationships between the DEM grid, the ORCHIDEE grid, and the definition of the HTUs used:
+Several versions of the routing scheme have been developed in ORCHIDEE, all based on these modeling principles but corresponding to different relationships between the routing grid, the ORCHIDEE grid, and the definition of the HTUs used. Two of them are relevant for this work:
 
 \begin{itemize}
-\item \textbf{\textit{Subgrid\_halfdeg} routing}, which was the default option in branch 2.2 until recently. It is designed to work with a specific DEM at a resolution of 0.5°. Additionally, it requires that an ORCHIDEE grid cell contains an integer number of DEM grid cells, which limits its use to resolutions higher than 0.5°.
+\item \textbf{\textit{Subgrid\_halfdeg} routing}, which was the default option in branch 2.2 until CMIP6. It is designed to work with a specific DEM at a resolution of 0.5°. Additionally, it requires each ORCHIDEE grid cell to contain a finite number of DEM grid cells, which limits its use to resolutions higher than 0.5°.
 
-\item \textbf{\textit{Interp\_topo} routing}, recently implemented into ORCHIDEE to become the default version in IPSL-CM7. It is designed to adapt to any DEM and to be completely independent of ORCHIDEE’s resolution and even the shape of the grid cells. This is particularly necessary for compatibility with the new hexagonal-grid atmospheric dynamics model (DYNAMICO) of IPSL-CM7.
+\item \textbf{\textit{Interp\_topo} routing}, recently implemented into ORCHIDEE to become the default version in IPSL-CM7. It is designed to adapt to any DEM and to be completely independent of ORCHIDEE’s resolution and even of the shape of the grid cells. This is particularly necessary for compatibility with the new hexagonal-grid atmospheric dynamics model (DYNAMICO) of IPSL-CM7.
+In this version, the routing grid is the same as the DEM grid, meaning HTUs are exactly the DEM grid cells. It relies on a robust interpolation of runoff and drainage from the ORCHIDEE grid to the routing grid, where horizontal transfers between reservoirs are performed. Once these transfers are completed, water volumes in the reservoirs are re-interpolated from the routing grid back to the ORCHIDEE grid, allowing them to be used for irrigation within ORCHIDEE grid cells.
 
-In this routing, HTUs are exactly the DEM grid cells, requiring interpolation of runoff and drainage from the ORCHIDEE grid to the DEM grid, where they serve as inputs for the fast and slow reservoirs, respectively. Horizontal transfers between river reservoirs of the HTUs are thus performed directly on the DEM grid. Once these transfers are completed, water volumes in the reservoirs are re-interpolated from the DEM back to the ORCHIDEE grid, allowing them to be used for irrigation within ORCHIDEE grid cells.
-
-\item \textbf{\textit{Subgrid\_HTU} routing}, developed before the introduction of the \textit{interp\_topo} routing to operate at a higher resolution than \textit{subgrid\_halfdeg} routing. In this version, HTUs are constructed from a high-resolution DEM by aggregating grid cells. However, this routing still maintains the constraint of having an integer number of HTUs within each ORCHIDEE grid cell, making it incompatible with DYNAMICO. I have not used it in simulations, but this manuscript occasionally refers to it.
+%todo:voir si pertinent de mentionner cette option
+%\item \textbf{\textit{Subgrid\_HTU} routing}, developed before the introduction of the \textit{interp\_topo} routing to operate at a higher resolution than \textit{subgrid\_halfdeg} routing. In this version, HTUs are constructed from a high-resolution DEM by aggregating grid cells. However, this routing still maintains the constraint of having an integer number of HTUs within each ORCHIDEE grid cell, making it incompatible with DYNAMICO. I have not used it in simulations, but this manuscript occasionally refers to it.
 \end{itemize}
 
 \subsection{Irrigation scheme}
-\subsubsection{from article}
-Irrigation is modeled using the scheme extensively described in \citet{arboleda-obando_validation_2024}, based on a water-conservative supply-and-demand approach.
-It computes a moisture deficit by comparing SM in the upper layers of the ORCHIDEE soil column (corresponding to the root zone) to a target SM described as a fraction of the SM at field capacity.
-In the default version of the global model, this target is set to 90 \% of SM at field capacity, but it reflects a wide variety of irrigation practices, including flooding in rice paddies. In the Iberian Peninsula, the irrigation methods are less water-intensive, and after a calibration of the routing and irrigation schemes (not shown), the target value was adjusted to 60 \% of SM at field capacity. 
-To avoid computing irrigation requirements on grid cells without plants, the SM deficit is set to zero if the Leaf Area Index (LAI) is below a given threshold $LAI_{min}$.
-At each time step, the SM deficit is combined to the irrigated fraction of each ORCHIDEE grid cell (based on the HID database of \citet{siebert_quantifying_2010} at 5 arc-min resolution) to define the irrigation requirement. 
-This demand is then compared to the available water in the various reservoirs of the routing scheme. Water is withdrawn preferentially from either surface water (runoff and rivers) or groundwater depending on the nature of irrigation equipments, according to a map of areas equipped for irrigation \citep{siebert_groundwater_2010}.
-The amount of water withdrawn from the reservoirs is then added at the top of the ORCHIDEE soil column at the next time step and infiltrates.
-%option:show here map of irrig_frac and AEI ? -> I think they are fine with results on irrigation for better visualization of the links
 
-\subsubsection{from CSI}
-A scheme for representing irrigation in ORCHIDEE has recently been developed, presented, and validated in \citet{arboleda-obando_validation_2024}. An irrigation representation already existed in ORCHIDEE \citep{de_rosnay_integrated_2003, guimberteau_global_2012}, but this work relies solely on this new modeling approach detailed here and summarized in Figure \ref{fig:schema_pedro}.
+A new irrigation scheme has recently been implemented in ORCHIDEE, presented and validated in \citet{arboleda-obando_validation_2024}. An irrigation representation already existed in ORCHIDEE \citep{de_rosnay_integrated_2003, guimberteau_global_2012}, but this work relies solely on this new modeling approach. The scheme is based on a water-conservative supply-and-demand approach, summarized in Figure \ref{fig:schema_pedro}
 
 \begin{figure}[t]
     \centering
@@ -219,8 +206,6 @@ A scheme for representing irrigation in ORCHIDEE has recently been developed, pr
     \caption{Principles of the new irrigation scheme. Extracted from \citet{arboleda-obando_validation_2024}.}
     \label{fig:schema_pedro}
 \end{figure}
-
-\hfill
 
 First, a root zone is defined using parameter $Root_{lim} \in [0;1]$, which determines the fraction of the root system that must be included in the zone. This results in the inclusion of a certain number of vertical layers depending on the cumulative root density. It is important to note that irrigation only applies to the column of low vegetation PFTs (grasses and crops), and the root zone is defined exclusively within this column.
 
@@ -232,11 +217,11 @@ Given this target value and the root zone, a soil moisture deficit $D$ (mm) is c
 \end{equation}
 where $W_i$ and $W_i^{fc}$ are respectively the soil moisture and field capacity soil moisture of layer $i$ (in mm), .
 
-In the absence of plants (notably in winter), it is not relevant to compute a soil moisture deficit and an irrigation demand. A parameter $LAI_{lim}$ is therefore defined as a threshold LAI value below which the soil moisture deficit is zero.
+In the absence of plants (notably in winter), it is not relevant to compute a soil moisture deficit and an irrigation demand. A parameter $LAI_{lim}$ is therefore defined as a threshold LAI value below which the soil moisture deficit is zero. The default value is $LAI_{lim}=0.1$.
 
-For a SECHIBA module time step $dt$ (by default 15 minutes in ICOLMDZOR simulations), the water demand to be added to the column to represent irrigation is thus $D/dt$ (mm/h). However, if the hourly irrigation rate is significantly higher than the infiltration rate into the soil, the model may produce excessive runoff that is not representative of reality. To prevent this, even if the moisture deficit is very high, the hourly irrigation rate is capped by a maximum value $I_{max}$.
+For a SECHIBA module time step $dt$ (by default 15 minutes in ICOLMDZOR simulations), the irrigation demand hourly rate is $D/dt$ (mm/h). However, if the hourly irrigation rate is significantly higher than the infiltration rate into the soil, the model may produce excessive runoff that is not representative of reality. To prevent this, even if the moisture deficit is very high, the hourly irrigation rate is capped by a maximum value $I_{max}$.
 
-Finally, the water demand for the column is weighted by the fraction of the grid cell that is irrigated: $f_{irr}$. This fraction is obtained from a map of irrigated fractions, which can be updated over the course of the simulation.
+Finally, the water demand for the column is weighted by the fraction of the grid cell that is irrigated: $f_{irr}$. This fraction is obtained from the HID map at 5 arc-min resolution \citep{siebert_quantifying_2010}, and can be updated each year over the course of the simulation.
 This irrigated fraction must not exceed the fraction of the soil column containing grasses and crops, as irrigation is only applied to this column.
 
 The irrigation demand $I_{req}$ is therefore:
@@ -244,13 +229,13 @@ The irrigation demand $I_{req}$ is therefore:
     I_{req} = f_{irr} min(D/dt, I_{max})
 \end{equation}
 
-Once this demand is determined, the irrigation scheme searches for available water in the three reservoirs of the routing scheme mapped on the ORCHIDEE grid.
+Once this demand is computed, the irrigation scheme searches for available water in the three reservoirs of the routing scheme mapped on the ORCHIDEE grid.
 The volume of water available for irrigation is expressed as:
 \begin{equation}
     A_w = f_{sw} (a_1 S_1 + a_2 S_2)+ f_{gw}a_3 S_3
 \end{equation}
-where $S_i$ represents the water volume (in mm) in each of the reservoirs (rivers, surface water, groundwater), and for each reservoir, a parameter $a_i \in [0;1]$ limits the total volume that can be withdrawn. This ensures that a certain amount of water remains in each reservoir, representing physical constraints and environmental regulations on irrigation withdrawals.
-The fractions $f_{sw}$ and $f_{gw}$, ranging from 0 to 1, represent the accessibility of different reservoirs (surface water and groundwater, respectively) within the grid cell. The global map from \citet{siebert_groundwater_2010} of irrigation-equipped areas is used to define these fractions. A key feature of this map is that a given area cannot be equipped for both surface water and groundwater use simultaneously, which translates to $f_{sw} + f_{gw} =1$.
+where $S_i$ represents the water volume (in mm) in each of the reservoirs (rivers, surface runoff, groundwater), and for each reservoir, a parameter $a_i \in [0;1]$ limits the total volume that can be withdrawn. This ensures that a certain amount of water remains in each reservoir, representing physical constraints and environmental regulations on irrigation withdrawals.
+The fractions $f_{sw}$ and $f_{gw}$, ranging from 0 to 1, represent the accessibility of different reservoirs (surface water and groundwater, respectively) within the grid cell. These fractions are obtained from the global map from \citet{siebert_groundwater_2010} of areas equipped for irrigation. A key feature of this map is that a given area cannot be equipped for both surface water and groundwater use simultaneously, which translates to $f_{sw} + f_{gw} =1$.
 
 Once the demand $I_{req}$ and supply $A_w$ are calculated, the applied irrigation is determined as:
 \begin{equation}
@@ -258,14 +243,14 @@ Once the demand $I_{req}$ and supply $A_w$ are calculated, the applied irrigatio
 \end{equation}
 
 Water is primarily withdrawn from the river reservoir, and only if this is insufficient to meet the demand are the other reservoirs tapped, in the limit of $f_{sw}$ and $f_{gw}$.
-This withdrawn water is added in the code simultaneously with water infiltration into the soil, simulating a gravity-fed or drip irrigation method.
+At the next time step, the amount of water withdrawn from the reservoirs is added at the top of the ORCHIDEE soil column and infiltrates, simulating a gravity-fed or drip irrigation method.
+It must be noted that although the original irrigation scheme from \citet{arboleda-obando_validation_2024} included the possibility to withdraw water from neighboring grid cells to represent adduction systems, this option is not compatible with the new version of the routing scheme used with ICOLMDZOR and was therefore not used in this work.
 
-\hfill
-
-To summarize the functioning of this irrigation scheme, the following inputs are used:
+%todo:remove summary ? make it a table ?
+To summarize the practical use of this irrigation scheme, the following inputs are used:
 \begin{itemize}
     \item Map of irrigated fractions, to obtain $f_{irr}$.
-    \item Map of irrigation-equipped areas, to obtain $f_{sw}$ and $f_{gw}$.
+    \item Map of areas equipped for irrigation, to obtain $f_{sw}$ and $f_{gw}$.
 \end{itemize}
 
 Additionally, to use this scheme, the following parameters must be set:
@@ -278,4 +263,6 @@ Additionally, to use this scheme, the following parameters must be set:
     % \item $a_{i,add}$, which limits the maximum portion that can be supplied from the river reservoir of a neighboring grid cell.
 \end{itemize}
 
-The sensitivity analyses described in \citet{arboleda-obando_validation_2024} have shown that the parameter $\beta$ has the greatest impact on the volume of water withdrawn for irrigation. These analyses have allowed the determination of default values for all parameters to best represent the impact of irrigation on global climate. However, these values can be adjusted for simulations focused on a specific region.
+The sensitivity analyses described in \citet{arboleda-obando_validation_2024} identified default values for all parameters to best represent the impact of irrigation on the global climate and showed that the target parameter $\beta$ has the greatest impact on the volume of water withdrawn for irrigation.
+In the default version of the global model, this parameter is set to 0.9, defining a soil moisture target at 90 \% of SM at field capacity. However, this value reflects a wide variety of irrigation practices, including flooding in rice paddies and can be adjusted for simulations focused on a specific region. %todo:cf section....
+
