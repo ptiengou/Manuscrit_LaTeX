@@ -208,8 +208,7 @@ A new irrigation scheme has recently been implemented in ORCHIDEE, presented and
 \end{figure}
 
 First, a root zone is defined using parameter $Root_{lim} \in [0;1]$, which determines the fraction of the root system that must be included in the zone. This results in the inclusion of a certain number of vertical layers depending on the cumulative root density. It is important to note that irrigation only applies to the column of low vegetation PFTs (grasses and crops), and the root zone is defined exclusively within this column.
-
-A target soil moisture value is also defined to sustain plant growth. It is expressed as a fraction of the soil moisture at field capacity water content (parameter $\beta \in [0;1]$).
+A target soil moisture value is also defined to sustain plant growth. It is expressed as a fraction of the soil moisture at field capacity water content (parameter $\beta$).
 
 Given this target value and the root zone, a soil moisture deficit $D$ (mm) is calculated as the sum of deficits across all layers of the root zone:
 \begin{equation}
