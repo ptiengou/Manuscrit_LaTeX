@@ -25,6 +25,8 @@
 *.vrb
 *.xdv
 *.bcf
+*.bbl
+*.synctex*
 
 *.xml
 # PDF output (optional, keep if needed)
