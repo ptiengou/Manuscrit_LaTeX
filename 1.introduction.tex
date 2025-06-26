@@ -1,7 +1,55 @@
-\section{Land surface interactions}
-Let's go.
-\section{Irrigation}
-Ok
+\section{Irrigation in the world and in the Iberian Peninsula}
+Irrigation is a widespread practice in the world which consists in providing additional water to cultivated soil to favor crop growth and development.
+Irrigated fields are estimated to cover about 20\% of global cropland (3.5 million km$^2$), which account for 40\% of the food produced in the world.
+
+
+%various methods : flooding, sprinkler, drip
+%various sources : river, dams, pumping, advection from mountainous areas
+%order of magnitudes : world fraction, volumes / same for Spain+Portugal
+%how it's estimated ?
+
+\section{Regional climate modeling}
+Climatology aims at describing statistical distribution of multiple variables of interest, among which temperature, pressure, humidity, precipitation, and wind speed.
+For centuries, it remained a science based on observations, 
+%todo : koppen geiger
+
+which then led to the formulation of conceptual models and to mathematical representations of the energy balance and radiative tranfer processes.
+%todo cite Edwards
+The Navier-Stokes equations describe the fluid mechanics that control the motions of the atmosphere. However these equations do not have any known analytical solution, forbidding their direct use to predict motions of air, water and other components of the atmosphere. 
+Modern climate modeling originated in the 1950s with the development of computer simulations which enable numerically estimating solutions of these equations.
+
+%todo: cite Manabe, others ?
+General circulation models (GCMs) use a simplified version of the Navier-Stokes equations, referred to as \textit{primitive equations}, to represent the complex motions of the atmosphere. 
+The globe is discretized into grid cells, which can range from a few tens to a few hundred kilometers. Using an appropriate temporal discretization, this enables approximating solutions of the primitive equations to represent atmospheric dynamics. This part of the model is often referred to as \textit{the dynamical core}. However, several major processes of the climate system are not described by fluid mechanics and require additional \textit{parameterizations}, which compute the mean effect of various processes in each vertical column, independently of neighbouring grid cells. Most importantly, they represent all radiative emission and transfer processes which largely dictate the energy budget of the atmosphere.
+Thermodynamic processes involved in the phase changes of water are also essential to represent energy transfers between phases, cloud formation and precipitation. Parameterizations are also used to account for the processes that occur at a smaller scale than the resolution of the GCM and cannot be described by the dynamical core, such as turbulent diffusion or shallow and deep convection processes. Finally, parametererization are used to represent interactions of the atmosphere with the various surfaces it can be interfaced with: sea surface, ice caps or sea ice, bare soil, vegetation, urban areas... Interactions between the land surface and the atmosphere and the feedback loops between the two systems are a major focus of this thesis, and the following section %tocheck
+provides a detailed description of the state of knowledge in this field. 
+
+Historically, the first climate models primarily focused on the atmosphere, with
+a very simplified representation of the surface. Over the past three decades, climate models have evolved to distincly represent continental surfaces by coupling atmospheric models with ocean models and land surface models (LSMs), and are now often referred to as Earth system models (ESMs). Nowadays, ESMs are not only used to simulate temperature, precipitation, and wind, but can have a much wider range of applications in geoscience, paleoclimatology, oceanography, glaciology, subsurface hydrology, biology, biogeochemistry, etc... 
+Regarding land surface in particular, the complexity of LSMs has gradually increased, for example, to better account for the influence of vegetation on the atmosphere, or to represent additional processes of interest such as rivers and groundwater, and biogeochemical cycles of carbon or nitrogen. They can also be used as standalone models using atmospheric forcings instead of a dynamical coupling with a GCM.
+
+%limits to increase in resolution : computing power, physical hypotheses
+%how do we evaluate them : point based and satelite obs
+
+
+\subsection{Climate change}
+As early as 1824, Joseph Fourier, followed by Claude Pouillet, theoretized than some atmospheric components of the atmosphere can influence the temperature of the air more than others, which was demonstrated in 1838 by Eunice Newton Foote for water vapour and carbon dioxyde (CO2). This was linked to infrared absorption and emissions by the experimental work of John Tyndall, and, in 1896, Svante Arrhenius conducted the first estimate of the global temperature increase caused by a hypothetical doubling of CO2 in the atmosphere.
+
+Since the industrial revolution in the 19th century, anthropic activities have increased %todo : estimate
+the amounts of greenhouse gases in the atmosphere, mainly as a consequence of fossil fuel combustion and by destruction of natural sinks to give way to agricultural land.
+By the end of the 1950s, it was established that concentration of CO2 in the atmosphere was increasing, %todo: cite and show Keeling curve
+and that although water vapour was overwhelmingly dominant in the atmospheric composition, other greenhouse gases present in the upper atmosphere, such as CO2, could have a significant impact on global energy balance, and therefore temperature. Therefore, concerns arose about the possible rise of global temperatures and the impacts it could have on natural ecosystems and human activities.
+Concurrent research in paleoclimatology showed that previous evolutions of greenhouse gases in the atmosphere had never been this fast, and were all associated with large-scale changes. 
+
+As this knowledge progressed coincidentally with modeling capablilities in numerical climate modeling, models started to be used not only to reproduce past and present climate, but also to simulate future climate scenarios. They quickly confirmed the risk of rapid increases in global temperature, and hinted at the global and regional consequences on ice cap and glacier melting, sea level rise, and disruption of the water cycle among others. In 1988, the International Panel on Climate Change was established by the World Meteorological Organisation (WMO) and the United Nations Environment Program (UNEP) to unify efforts in climate change science, and on the socio-economic impacts of global warming. This group still carries on today in its mission to "provide governments at all levels with scientific information that they can use to develop climate policies".
+
+At the end of the 20th and the beginning of the 21st centuries, there were also many developments in the field of remote sensing which enabled the monitoring of climate variables from satellites. 
+
+\section{Land-atmosphere coupling}
+
+\subsection{Water and energy budgets at the surface}
+
+%existing texts
 \section{Intro article LAM1}
 Physical processes at the interface between the soil surface and the lower atmosphere can influence meteorological 
 %(air temperature, relative humidity, winds, precipitation)
@@ -44,6 +92,7 @@ It leverages a new Limited Area Model (LAM) configuration introduced in the Inst
 This configuration allows gaining insight on the parameterizations of the global model while running with a higher resolution (25 km) for lower computational costs.
 %option: mention coupling with highres routing ? (not sure since details are given in Methods)
 This work is based on two regional simulations (with and without irrigation) over the Iberian Peninsula between 2010 and 2022, analyzed on yearly and seasonal scales.
+
 \section{CSI state of the art + translation}
 
 Interactions between the land surface and the lower layers of the atmosphere have significant impacts on meteorological (air temperature and humidity, precipitation, wind) and hydrological (runoff, stream flow, soil moisture) variables at various spatial and temporal scales. This makes it a subject of interest for climate studies and a necessary component of climate or numerical weather prediction (NWP) models. This section aims to provide a state-of-the-art description of these interactions and their modeling, as well as the impacts irrigation can have on these interactions.
@@ -185,5 +234,4 @@ The impacts of irrigation on regional climate have been studied for several deca
 
 However, it is important to note that most ESMs participating in CMIP6 did not include irrigation modeling. In heavily irrigated regions, models representing irrigation show different historical trends in several climate variables (soil moisture, latent heat flux) that better match satellite observations \citep{al-yaari_role_2022}. 
 The IRRMIP intercomparison project is designed to study in detail the various impacts of irrigation representation in ESMs to better understand the uncertainty of responses to this modeling \citep{yao_irrigation-expansion-induced_2023}.
-
 %lol
