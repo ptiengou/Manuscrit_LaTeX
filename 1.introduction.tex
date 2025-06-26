@@ -31,6 +31,8 @@ Regarding land surface in particular, the complexity of LSMs has gradually incre
 %limits to increase in resolution : computing power, physical hypotheses
 %how do we evaluate them : point based and satelite obs
 
+%specificities of regional modeling ? 
+%mention hierarchy of models, mesoscale/NWP, RANS, LES, (DNS)
 
 \subsection{Climate change}
 As early as 1824, Joseph Fourier, followed by Claude Pouillet, theoretized than some atmospheric components of the atmosphere can influence the temperature of the air more than others, which was demonstrated in 1838 by Eunice Newton Foote for water vapour and carbon dioxyde (CO2). This was linked to infrared absorption and emissions by the experimental work of John Tyndall, and, in 1896, Svante Arrhenius conducted the first estimate of the global temperature increase caused by a hypothetical doubling of CO2 in the atmosphere.
@@ -45,122 +47,77 @@ As this knowledge progressed coincidentally with modeling capablilities in numer
 
 At the end of the 20th and the beginning of the 21st centuries, there were also many developments in the field of remote sensing which enabled the monitoring of climate variables from satellites. 
 
-\section{Land-atmosphere coupling}
+\section{Land-atmosphere interactions}
+
+Over land, interactions between the surface and the lower layers of the atmosphere have significant impacts on meteorological (air temperature and humidity, precipitation, wind) and hydrological (runoff, stream flow, soil moisture) variables. The two systems influence each other's water and energy budgets, and multiple feedback loops can be identified depending on the spatial and temporal scales considered. The complexity of this coupling and the variety of impacts it can have on ecosystems and human activities make it a subject of interest for climate science and a necessary component of climate or numerical weather prediction (NWP) models. This section aims to provide a state-of-the-art description of these interactions and their modeling, as well as the impacts irrigation can have on them.
 
 \subsection{Water and energy budgets at the surface}
-
-%existing texts
-\section{Intro article LAM1}
-Physical processes at the interface between the soil surface and the lower atmosphere can influence meteorological 
-%(air temperature, relative humidity, winds, precipitation)
-and hydrological 
-%(soil moisture, streamflow, surface runoff) 
-variables at various spatial and temporal scales, contributing to complex feedback loops.
-In areas where the transition regime described by \citet{Budyko_1956, Budyko_1974} is most frequent, soil moisture (SM) holds a central role in these processes as a main driver of evapotranspiration (ET), which conditions the partitioning of energy at the interface between land and atmosphere \citep{betts_fife_1995, seneviratne_investigating_2010}. 
- 
-The GLACE experiment used General Circulation Models (GCMs) to identify regions of strong land surface-atmosphere coupling between SM and precipitation, mostly in semi-arid transition regions \citep{koster_regions_2004}. This was confirmed by other modeling studies which also distinguished various mechanisms through which land surface conditions can impact the atmosphere in these coupling hotspots, and metrics to quantify them \citep{dirmeyer_terrestrial_2011, zou_precipitation_2023}.
-Experiments were also implemented to isolate the response of the atmosphere to various surface conditions under a changing climate, such as GLACE-CMIP5 \citep{seneviratne_impact_2013} and identified land-atmosphere coupling processes as a major driver of the response to a global temperature rise in these hotspots \citep{berg_interannual_2015}. 
-Moreover, the frequent warm bias of CMIP5 models \citep{christensen_temperature_2012, mueller_systematic_2014} was linked to underestimates of SM \citep{al-yaari_satellite-based_2019} and partly attributed to the representation of land surface-atmosphere coupling processes \citep{cheruy_combined_2013, cheruy_role_2014}, justifying ongoing research on their understanding and improvement within models.
-
-A great source of complexity in land surface-atmosphere processes comes from the spatial heterogeneity of SM, which may derive from the diversity of vegetation, soil types, orographic features, and anthropogenic processes.
-Increases in SM and ET have been associated with direct increases in precipitation (moisture recycling presented in \citet{eltahir_precipitation_1996}) in both modeling and observational studies \citep{koster_observational_2003, guo_glace_2006, wei_dissecting_2012, findell_probability_2011}, constituting a positive feedback loop. However, it can also lead to a stabilization of the Atmospheric Boundary Layer (ABL), inhibiting vertical development and convection \citep{findell_atmospheric_2003-1, ek_influence_2004}. This leads to a negative feedback loop where convective rainfall is more likely to occur over drier soil patches, also noticed in observations \citep{taylor_afternoon_2012, klein_dry_2020}. However, \citet{guillod_reconciling_2015} emphasized the importance of temporal context, showing that these precipitation over drier soils occur more often when soils are moister than usual at the regional scale.
-Finally it must be noted that SM heterogeneities can affect precipitation through mesoscale circulations which can either favor or inhibit convection triggering \citep{findell_atmospheric_2003, taylor_frequency_2011, rochetin_morphology_2017}.\\
-
-%irrigation : obs and known processes, regional modeling (with obs campaigns) and global modeling + link to my config
-In particular, irrigation can create strong spatial heterogeneities in SM. Previous studies have already established that irrigation leads to an increase of the latent heat flux and a decrease of sensible heat flux on irrigated areas \citep{pokhrel_incorporating_2012}, leading to a moister and cooler atmosphere near the surface \citep{bonfils_empirical_2007}. 
-In the American Midwest, \citet{nocco_observation_2019} showed that such effects could impact regional climate and even mask the rise in temperature induced by global warming. Different regional responses of precipitation were also observed, such as a decrease over irrigated areas \citep{alter_rainfall_2015} or an increase in downwind regions \citep{deangelis_evidence_2010}.
-
-To analyze the atmospheric processes involved, regional modeling studies have often been used in complement of observational campaigns. The Great Plains irrigation experiment (GRAINEX, \cite{rappin_great_2021}) measurements and simulations with the Weather Research and Forecasting (WRF) model showed a lower ABL over irrigated areas and a reduction of existing mesoscale slope-induced circulations in the presence of irrigation \citep{rappin_landatmosphere_2022, phillips_influence_2022}. In the Ebro Valley (northern Spain), Meso-NH simulations over the area of the Land surface Interactions with the Atmosphere over the Iberian Semi-arid Environment campaign (LIAISE, \cite{boone_land_2019}) were shown to be greatly improved by representing irrigation \citep{lunel_irrigation_2024}, and also highlighted a weakening of the regional sea-breeze regime due to irrigation \citep{lunel_marinada_2024}.
-\citet{lo_irrigation_2013} and \citet{yang_impact_2017} studied local and remote impacts of irrigation in California's Central Valley, showing a strengthening of the hydrological cycle, with moisture recycling at the river basin scale, whereas a similar study in Saudi Arabia identified a negative feedback loop with increases in precipitation located in a remote area \citep{lo_intense_2021}.
-%option:With the WRF atmospheric model and Noah Land Surface Model (LSM), ABL and LCL lowering in Great Plains (quian 2013), heterogeneous response of precip in China (Liu 2021) 
-%NB : Yang 2017 was also with WRF+Noah but not Lo2013 (CAM)
-%option:kueppers_influence_2012 (not sure which model)
-However, representations of irrigation in models can be very diverse, as they do not target the same objectives. For instance, \citet{lunel_irrigation_2024} uses an idealized representation that maintains SM at a certain level in irrigated areas. This type of modeling is suitable for short simulations over a limited domain but for Earth System Models (ESMs) running long simulations, water-conservative approaches are necessary. With this type of approach, \citet{leng_significant_2017} identified contrasted responses in river discharge and water table depth depending on the irrigation methods represented. 
-%option: mention that GCMs cannot always go to the same level of details as regional/NWP models and therefore are forced to simplify (crop types, irrigation spatial and temporal patterns)
-%option: Idea that most regional studies do not include interannual variability, usually only 1 summer or 1 field campaign (more expensive and models not designed for long runs)
-
-At the global scale, average impacts of simulated irrigation were studied in coupled simulations \citep{sacks_effects_2009, puma_effects_2010, cook_irrigation_2015}, with effects mostly visible in irrigation hotspots such as India, Eastern China and the United States of America. This type of study also identified remote connections between irrigation in Asia and precipitation in East Africa \citep{de_vrese_asian_2016}, and moisture-importing and exporting regions \citep{wei_where_2013}.
-Yet, it must be noted that only three CMIP6 models included a representation of irrigation, and \citet{al-yaari_role_2022} showed that they performed better in capturing the trends of several climate variables in irrigated areas.
-Efforts are currently being pursued to better account for irrigation's impacts in ESMs, as is best illustrated by the Irrigation Model Intercomparison Project (IRRMIP), which aims at comparing the response of various models to the representation of irrigation \citep{yao_irrigation-expansion-induced_2023}.\\
-%option: extremes Thiery 2017 ? Hauser 20..
-%option: \citet{guimberteau_global_2012} showed that irrigation can delay the onset of the Indian Monsoon.
-
-It is not expected from ESMs to achieve the same level of precision as non-hydrostatic high resolution models in their accounting for irrigation, but the extent to which their representation of irrigation can impact simulated climate in irrigated regions is still not well constrained. 
-In this context, this study aims at understanding which regional impacts of irrigation on surface-atmosphere couplings and the water cycle can be represented by a climate model. 
-%option: idea of discriminating how much irrigation modeling improvement is needed (if most known effects are represented, more complexity is not required, if there are some obvious limits, research can focus on these aspects)
-It leverages a new Limited Area Model (LAM) configuration introduced in the Institut Pierre-Simon Laplace Climate Model (IPSL-CM) to perform regional simulations with the land surface and atmospheric components of the global model, respectively ORCHIDEE \citep{cheruy_improved_2020} and ICOLMDZ \citep{dubos_dynamico-10_2015, hourdin_lmdz6a_2020}.
-This configuration allows gaining insight on the parameterizations of the global model while running with a higher resolution (25 km) for lower computational costs.
-%option: mention coupling with highres routing ? (not sure since details are given in Methods)
-This work is based on two regional simulations (with and without irrigation) over the Iberian Peninsula between 2010 and 2022, analyzed on yearly and seasonal scales.
-
-\section{CSI state of the art + translation}
-
-Interactions between the land surface and the lower layers of the atmosphere have significant impacts on meteorological (air temperature and humidity, precipitation, wind) and hydrological (runoff, stream flow, soil moisture) variables at various spatial and temporal scales. This makes it a subject of interest for climate studies and a necessary component of climate or numerical weather prediction (NWP) models. This section aims to provide a state-of-the-art description of these interactions and their modeling, as well as the impacts irrigation can have on these interactions.
-
-\subsection{Surface Water and Energy Budgets}
-
-To understand the components of surface-atmosphere coupling, it is necessary to recall the main fluxes of matter and energy at the surface. 
+To understand the components of the land-atmosphere coupling, it is necessary to recall the main fluxes of water and energy at the surface. 
 Figure \ref{fig:budgets} depicts the various components of these two budgets.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{images/budgets_seneviratne.png}
-    \caption{Surface water and energy budgets. Extracted from \citet{seneviratne_investigating_2010}}
+    \includegraphics[width=\textwidth]{images/budgets.png}
+    \caption{Surface water and energy budgets. \\Based on similar figures from \citet{seneviratne_investigating_2010}%add these tanguy
+    }
     \label{fig:budgets}
 \end{figure}
 
-The surface water budget is defined by:
+The surface water budget accounts for:
 \begin{itemize}
     \item Precipitation (transfer from the atmosphere to the surface), $P$.
-    \item Evapotranspiration (transfer from the surface to the atmosphere), $E$.
-    \item Drainage of water in the soil to lower layers, denoted here as $R_g$.
-    \item Surface runoff, $R_s$.
+    \item Evapotranspiration (transfer of liquid or solid water from the surface to the atmosphere in gaseous form), $ET$. It is the sum of direct evaporation and of transpiration, a process in  which vegetation releases water is has collected in the soil.
+    \item Drainage of water in the soil to lower layers, denoted  as $D$. 
+    \item Surface runoff, $R_{surf}$, water that does not infiltrate in the soil and flows out of the area considered.
 \end{itemize}
 
-The equation governing the evolution of water quantity in the soil layer (denoted here as $S$) is:
+The equation governing the evolution of water quantity in the upper soil layer (denoted here as $W$) is:
 \begin{equation}
-    \frac{dS}{dt} = P - E - R_s - R_g
+    \frac{dW}{dt} = P - ET - R_{surf} - D
 \end{equation}
 
 The surface energy budget includes:
 \begin{itemize}
-    \item Shortwave radiation (SW), with an incoming term corresponding to incident solar radiation ($SW_{down}$) and an outgoing term corresponding to the directly reflected portion ($SW_{up}$).
+    \item Shortwave radiation (SW), with an incoming term ($SW_{dn}$) corresponding to incident solar radiation and an outgoing term ($SW_{up}$) corresponding to the portion reflected by the surface .
 
     The difference between these two terms and the albedo of the considered surface are defined as:
 
-    $SW_{net} = SW_{down} - SW_{up}$
+    $SW_{net} = SW_{dn} - SW_{up}$
 
-    $\alpha = SW_{up}/SW_{down}$.
-    \item Longwave radiation (LW), with an outgoing term corresponding to the infrared radiation emitted by the surface based on its temperature ($LW_{up}$) and an incoming term corresponding to the infrared radiation reflected or emitted by clouds and atmospheric gases reaching the surface ($LW_{down}$).
+    $\alpha_{SW} = SW_{up}/SW_{dn}$.
+    \item Longwave radiation (LW), with an incoming term ($LW_{dn}$) corresponding to the infrared radiation reflected or emitted by clouds and atmospheric gases reaching the surface and an outgoing term ($LW_{up}$) corresponding mostly to the infrared radiation emitted by the surface based on its temperature, as well as a partial reflection of the incoming LW radiation.
 
-    The difference between these two terms is defined as $LW_{net} = LW_{down} - LW_{up}$.
-
+    The difference between these two terms is defined as $LW_{net} = LW_{dn} - LW_{up}$.
+    
     The net radiation is also defined as the sum of the two radiation terms: $R_{n} = SW_{net} + LW_{net}$.
-    \item Sensible heat flux, which is a thermal transfer between the air and the surface, denoted as $SH$ in Figure \ref{fig:budgets}.
-    \item Latent heat flux, which corresponds to the energy used to evaporate water at the surface. This energy flux is directly related to evapotranspiration (water flux) through the enthalpy of vaporization ($\lambda$), and is therefore denoted as $\lambda E$.
+    \item Sensible heat flux $H$, which is a thermal transfer between the air and the surface.
+    \item Latent heat flux, which corresponds to the energy used to evaporate water at the surface. This energy flux is directly related to evapotranspiration (water flux) through the enthalpy of vaporization ($\lambda$), and is therefore denoted as $LE = \lambda ET$.
     \item Heat flux to the soil, which is a thermal conduction transfer between the considered surface layer and the lower soil layers, denoted as $G$.
 \end{itemize}
 
-The equation governing the evolution of energy in the surface soil layer (denoted as $H$ in Figure \ref{fig:budgets}) is:
+The equation governing the evolution of energy in the surface soil layer (denoted as $E$ in Figure \ref{fig:budgets}) is:
 \begin{equation}
-    \frac{dH}{dt} = R_{n} - G - \lambda E - SH
+    \frac{dE}{dt} = R_{n} - G - \lambda ET - H
 \end{equation}
 
-\subsection{Role of Soil Moisture in Surface-Atmosphere Coupling}
+
+\subsection{Role of soil moisture in land-atmosphere interactions}
 
 The term \textit{coupling} between the surface and the atmosphere encompasses multiple influences and feedbacks between the two systems. Soil moisture plays a central role in this coupling through its direct and indirect interactions with evapotranspiration, precipitation, and the surface energy budget.
 
-\subsubsection*{Atmospheric Boundary Layer and Air Temperature}
+\subsubsection*{Atmospheric boundary layer development and air temperature}
 
 In meteorology, the atmospheric boundary layer is defined as the lower part of the troposphere directly influenced by the presence of the surface. This layer is where shallow convection and turbulent diffusion phenomena occur, contributing to energy diffusion and mixing of the air.
 The lowest part of the boundary layer, on the order of a few tens of meters, is called the surface layer. The influence of the Coriolis force is negligible compared to that of the surface, and the wind speed generally follows a logarithmic profile. The empirical similarity theory developed by Monin and Obukhov describes the mean flow, temperature, and humidity in this layer \citep{monin1954osnovnye}.
 The height of the boundary layer varies during the diurnal cycle depending on air stability, which is related to the presence of vertical temperature and humidity gradients, and wind. It can measure a few tens of meters at night and up to a few kilometers during the day in arid regions \citep{garratt_review_1994}.
 
-The distribution of energy between the two turbulent fluxes at the surface ($\lambda E$ and $SH$ in Figure \ref{fig:budgets}) plays an essential role in the development of the boundary layer. For a given net radiation $R_n$ and a nearly constant soil heat flux (e.g., over 24 hours if there is equilibrium between daytime and nighttime), the remaining energy is distributed between the two turbulent fluxes. The evaporative fraction (defined as $EF = \lambda E / R_n$) and the Bowen ratio (defined as $B = SH / \lambda E$) quantify this distribution. If the latent heat flux is very high compared to the sensible heat flux ($EF$ high, $B$ low), the air temperature in the surface layer remains low because the energy is primarily used for evapotranspiration, and the soil transfers little heat to the air. Conversely, if the Bowen ratio is high, a larger portion of the incident energy is transmitted directly to the air, leading to a higher air temperature near the surface and more pronounced development of the boundary layer \citep{betts_fife_1995}.
+The partitionning of energy between the two turbulent fluxes at the surface ($\lambda ET$ and $H$) plays an essential role in the development of the boundary layer. As a tought experiment, for a given net radiation $R_n$ and a nearly constant soil heat flux (e.g., over 24 hours if there is equilibrium between daytime and nighttime), the remaining energy is distributed between the two turbulent fluxes. The evaporative fraction (defined as $EF = \lambda ET / R_n$) %attention défini autrement dans l'article EF=LE/(LE+H)
+and the Bowen ratio (defined as $B = H / \lambda ET$) quantify this partitionning. If the latent heat flux is very high compared to the sensible heat flux ($EF$ high, $B$ low), the air temperature in the surface layer remains low because the energy is primarily used for evapotranspiration, and the soil transfers little heat to the air. Conversely, if the Bowen ratio is high, a larger portion of the incident energy is transmitted directly to the air, leading to a higher air temperature near the surface and more pronounced development of the boundary layer \citep{betts_fife_1995}.
+In reality, the processes are a bit more complex since the surface temperature (and therefore the $LW_{up}$ flux) may also react to changes in latent heat flux, but the reciprocal behaviour of the latent and sensible heat fluxes has been identified in multiple observations and modeling experiments \citep{betts_fife_1995, seneviratne_investigating_2010}. %todo:source
 
 Moreover, soil moisture also affects the thermal properties of the soil, as wet soil has greater thermal inertia than dry soil. In contexts where the latent heat flux is limited, this can significantly impact air temperature by affecting nighttime cooling \citep{ait-mesbah_role_2015}. The absence of solar radiation at night usually leads to radiative cooling of the soil and air in the surface layer. However, for wetter soil, this cooling will be less pronounced due to higher thermal inertia. During daytime, the impact of this inertia is often negligible, and other processes dominate the evolution of air temperature. Still, on a daily average, an increase in soil moisture can lead to an increase in air temperature since nighttime cooling is less significant \citep{cheruy_role_2017}.
 
-\subsubsection*{Coupling Between Soil Moisture and Evapotranspiration}
+\subsubsection*{Coupling between soil moisture and evapotranspiration}
 
 Soil moisture is a key factor in the description of evapotranspiration regimes initially established by \citet{Budyko_1956, Budyko_1974}. Three main regimes are identified for the evolution of the evaporative fraction $EF$. Figure \ref{fig:evap_regimes} represents these regimes.
 
@@ -179,33 +136,38 @@ Soil moisture is a key factor in the description of evapotranspiration regimes i
 
 Through its influence on evapotranspiration, soil moisture directly impacts surface water and energy budgets, particularly the distribution of energy between turbulent fluxes. As explained earlier, this has consequences for air temperature and humidity in the surface layer.
 
-However, there are also several the feedbacks of evapotranspiration on soil moisture. First, an increase in evapotranspiration directly leads to a decrease in soil moisture and an increase in air humidity. This contributes to reducing the vertical humidity gradient between the air and the surface, which tends to limit evaporation \citep{allen_crop_2000}, forming a negative feedback loop. It is also established that an increase in air temperature leads to higher evaporative demand \citep{jarvis_stomatal_1986}. If enough water is available in the soil, a temperature increase will increase evapotranspiration, thus decreasing soil moisture. This can form a positive feedback loop where dry soil leads to high air temperatures, resulting in even drier soil and extreme drought events \citep{quesada_asymmetric_2012}. If no more water is available or if there are no more gradients between the soil surface and the air, the feedback of air temperature on soil moisture becomes neutral, and the feedback loop is interrupted.
+However, there are also several the feedbacks of evapotranspiration on soil moisture. First, an increase in evapotranspiration directly leads to a decrease in soil moisture and an increase in air humidity. This contributes to reducing the vertical humidity gradient between the air and the surface, which tends to limit evaporation \citep{allen_crop_2000}, forming a negative feedback loop. It is also established that an increase in air temperature leads to higher evaporative demand \citep{jarvis_stomatal_1986}. If enough water is available in the soil, a temperature increase will increase evapotranspiration, thus decreasing soil moisture. This can form a positive feedback loop where dry soil leads to high air temperatures, resulting in even drier soil and possibly initiating extreme drought events \citep{quesada_asymmetric_2012}. If no more water is available or if there are no more gradients between the soil surface and the air, the feedback of air temperature on soil moisture becomes neutral, and the feedback loop is interrupted.
 
-\subsubsection*{Coupling Between Soil Moisture and Precipitation}
+\subsubsection*{Coupling between soil moisture and precipitation}
 
-The most complex processes of surface-atmosphere coupling concern the link between soil moisture and precipitation. Several opposing effects are at play.
+The most complex processes of surface-atmosphere coupling concern the link between soil moisture and precipitation. Several opposing effects are at play, with a large importance of spatial heterogeneities of soil moisture at the surface, which may derive from the diversity of vegetation, soil types, orographic features, and anthropogenic processes.
 
-First, the concept of atmospheric moisture recycling described in \citet{eltahir_precipitation_1996} relates an increase in evapotranspiration to an increase in precipitation. This constitutes a positive feedback loop between soil moisture and precipitation observed in both observational and modeling studies \citep{koster_observational_2003, guo_glace_2006, wei_dissecting_2012, findell_probability_2011}. However, high soil moisture can limit the vertical development of the boundary layer, inhibiting precipitation formation \citep{findell_atmospheric_2003-1, ek_influence_2004}. Under certain conditions, drier soil can favor the formation of convective systems and thus precipitation, creating a negative feedback loop \citep{klein_dry_2020}. Spatial heterogeneities in soil moisture have also been identified as factors influencing precipitation through mesoscale circulations that can either facilitate or inhibit the triggering of convection \citep{findell_atmospheric_2003, taylor_frequency_2011, rochetin_morphology_2017}.
+Increases in SM and ET have been associated with direct increases in precipitation in both modeling and observational studies \citep{koster_observational_2003, guo_glace_2006, wei_dissecting_2012, findell_probability_2011}, constituting a positive feedback loop \citep[moisture recycling, as presented in ][]{eltahir_precipitation_1996}.
 
-The observational study \citet{taylor_afternoon_2012} highlighted a negative feedback with convective precipitation triggered over drier areas compared to neighboring wetter areas. This suggests that indirect processes related to boundary layer structure and heterogeneities can exceed the direct process of moisture recycling, although demonstrating causality in such observational studies remains challenging \citep{salvucci_investigating_2002, guillod_land-surface_2014}. Building on the purely spatial analysis of \citet{taylor_afternoon_2012}, a spatiotemporal analysis of correlations between soil moisture and precipitation highlighted the importance of temporally contextualizing heterogeneities \citep{guillod_reconciling_2015}. It showed that while precipitation is more frequently triggered over drier areas, it occurs on days that are wetter relative to the season and region concerned.
+However, high soil moisture can lead to a stabilisation of the boundary layer. %todo:citation ? details ? mention that it's driven by H ?
+This stabilisation can inhibit vertical development and convective processes involved in cloud formationa and precipitation \citep{findell_atmospheric_2003-1, ek_influence_2004}. 
+This constitutes a negative feedback loop where convective rainfall is more likely to occur over drier soil patches, which was noticed in observations \citep{taylor_afternoon_2012, klein_dry_2020}. These findings suggest that indirect processes related to boundary layer structure and heterogeneities can locally exceed the direct process of atmospheric moisture recycling, although demonstrating causality in such observational studies remains challenging \citep{salvucci_investigating_2002, guillod_land-surface_2014}. Building on the purely spatial analysis of \citet{taylor_afternoon_2012}, a spatiotemporal analysis of correlations between soil moisture and precipitation highlighted the importance of temporal variability \citep{guillod_reconciling_2015}. It showed that while precipitation is more frequently triggered over drier areas, it occurs on days that are wetter relative to the season and region concerned.
+Finally, spatial heterogeneities in soil moisture have also been identified as factors influencing precipitation through mesoscale circulations that can either favour or inhibit convection triggering \citep{findell_atmospheric_2003, taylor_frequency_2011, rochetin_morphology_2017}.
 
-\subsection{Surface-Atmosphere Coupling in Climate Models}
+\subsection{Land-atmosphere interactions in climate models}
 
-Historically, the first general circulation models (GCMs) primarily focused on the atmosphere, with a very simplified representation of the surface. Over the past three decades, climate models (often called Earth System Models, ESMs) have distinctly represented continental surfaces by coupling an atmospheric model with a Land Surface Model (LSM). The complexity of these models has gradually increased, for example, to better account for the influence of vegetation or model carbon fluxes in ESMs.
-
+In modern ESMs of NWP models %todo:check que NWP défini avant
+he modeling of land-atmosphere interactions involves both the atmospheric model and the land surface model, and the modeling choices for their coupling.
 From the perspective of an atmospheric model, latent and sensible heat fluxes at the surface constitute necessary boundary conditions for solving turbulent diffusion equations throughout the considered atmospheric column. These conditions impact essential meteorological variables such as air temperature, wind, and humidity. From the perspective of the LSM, precipitation computed in the atmospheric model constitutes a water input for the soil column, while surface layer characteristics (humidity, temperature, wind) condition evapotranspiration demand.
 
-Various experiments have been designed to quantify the importance of surface coupling processes for atmospheric models. In particular, the GLACE experiments \citep{koster_glace_2006} compared atmospheric simulations with different prescribed soil moisture conditions to isolate the influence of soil moisture on precipitation. This led to the identification of hotspots: regions where this coupling is particularly pronounced. These are mainly semi-arid regions (Sahel, Great Plains in the United States) where the transitional evaporation regime described in Figure \ref{fig:evap_regimes} is more frequent than dry and wet regimes \citep{koster_regions_2004}, which has been confirmed by other studies \citep{dirmeyer_terrestrial_2011, zou_precipitation_2023}. The GLACE-CMIP5 experiments \citep{seneviratne_impact_2013} extended these conclusions by highlighting the importance of this coupling in the global warming response observed in these hotspots \citep{berg_interannual_2015}.
+Various experiments have been designed to quantify the importance of surface coupling processes for atmospheric models. In particular, the GLACE experiments \citep{koster_glace_2006} compared atmospheric simulations with different prescribed soil moisture conditions to isolate the influence of soil moisture on precipitation. This led to the identification of hotspots: regions where this coupling is particularly pronounced. These are mainly semi-arid regions (Sahel, Great Plains in the United States) where the transitional evaporation regime described in Figure \ref{fig:evap_regimes} is more frequent than dry and wet regimes \citep{koster_regions_2004}.
+This was confirmed by other modelling studies that also identified various mechanisms through which land surface conditions can impact the atmosphere in these coupling hotspots, and metrics to quantify them \citep{dirmeyer_terrestrial_2011, zou_precipitation_2023}.
+The GLACE-CMIP5 experiments \citep{seneviratne_impact_2013} extended these conclusions by highlighting the importance of this coupling in the global warming response observed in these hotspots \citep{berg_interannual_2015}.
 
-A particular challenge in modeling this coupling within an ESM arises from the size of the grid cells used (generally around 100 km for long climate simulations). At this scale, numerous subgrid heterogeneities exist at the surface, requiring the aggregation and averaging of highly diverse surface-atmosphere interactions depending on vegetation cover, elevation, or anthropogenic factors (cities, irrigation).
+A particular challenge in modeling this coupling within an ESM arises from the size of the grid cells used (generally around 100 km for long climate simulations). At this scale, numerous subgrid heterogeneities exist at the surface, requiring the aggregation and averaging of highly diverse land-atmosphere interactions depending on vegetation cover, elevation, or anthropogenic factors (cities, irrigation).
 
-For example, regarding the triggering of convective rainfall in heterogeneous areas, \citet{moon_soil_2019} showed that CMIP5 models correctly reproduced the positive temporal feedbacks (rain on wetter days) described in \citet{guillod_reconciling_2015} but not the negative spatial feedbacks identified in \citet{taylor_afternoon_2012}. The influence of resolution and parametrization choices (especially for deep convection) on the importance of surface-atmosphere coupling in models has also been highlighted by \citet{tuinenburg_high-resolution_2020} and \citet{lee_weaker_2024}.
+For example, regarding the triggering of convective rainfall in heterogeneous areas, \citet{moon_soil_2019} showed that CMIP5 models correctly reproduced the positive temporal feedbacks (rain on wetter days) described in \citet{guillod_reconciling_2015} but not the negative spatial feedbacks identified in \citet{taylor_afternoon_2012}. The influence of resolution and parametrization choices (especially for deep convection) on the importance of land-atmosphere coupling in models has also been highlighted by \citet{tuinenburg_high-resolution_2020} and \citet{lee_weaker_2024}.
 
-Several ongoing projects aim to better document the impact of these heterogeneities and explore ways to better account for them in models. This is the case of the Land Surface Interactions with the Atmosphere over the Iberian Semi-Arid Environment (LIAISE, \cite{boone_land_2019}) and Models and Observations for Surface-Atmosphere Interactions (MOSAI, \cite{lohou_model_2022}) projects, which rely on measurement campaigns specifically dedicated to studying surface-atmosphere coupling processes and comparing multiple models with these observations.
+Several ongoing projects aim to better document the impact of these heterogeneities and explore ways to better account for them in models. This is the case of the Land Surface Interactions with the Atmosphere over the Iberian Semi-Arid Environment (LIAISE, \cite{boone_land_2019}) and Models and Observations for Surface-Atmosphere Interactions (MOSAI, \cite{lohou_model_2022}) projects, which rely on measurement campaigns specifically dedicated to studying land-atmosphere interactions and comparing multiple models with these observations.
 
-It is now well known that accurately representing surface-atmosphere couplings is essential for accurately representing climate, particularly temperature and precipitation extremes \citep{jaeger_impact_2011, van_den_hurk_acceleration_2011}. Furthermore, the study of CMIP5 simulations has revealed a warm bias in most models, particularly in the Mediterranean basin \citep{christensen_temperature_2012, mueller_systematic_2014}. Surface interaction processes have been identified as a crucial factor in the appearance of these biases, especially the partitioning of energy between latent and sensible heat fluxes and the underestimation of evapotranspiration \citep{cheruy_combined_2013, cheruy_role_2014}. By comparing CMIP5 model biases with satellite observations, \citet{al-yaari_satellite-based_2019} also showed that these temperature biases are correlated with soil moisture biases.
+It is now well known that accurately representing surface-atmosphere couplings is essential for accurately representing climate, particularly temperature and precipitation extremes \citep{jaeger_impact_2011, van_den_hurk_acceleration_2011}. Furthermore, the study of CMIP5 simulations has revealed a warm bias in most models, particularly in the Mediterranean basin \citep{christensen_temperature_2012, mueller_systematic_2014}. By comparing CMIP5 model biases with satellite observations, \citet{al-yaari_satellite-based_2019} also showed that these temperature biases are correlated with soil moisture biases. More generally, surface interaction processes have been identified as a crucial factor in the appearance of these biases, especially the partitioning of energy between latent and sensible heat fluxes and the underestimation of evapotranspiration \citep{cheruy_combined_2013, cheruy_role_2014}. 
 
-\subsection{Impacts of Irrigation on Surface-Atmosphere Coupling}
+\subsection{Impacts of irrigation on land-atmosphere interactions}
 
 Human activities can influence the various components of surface-atmosphere coupling. This is particularly the case with irrigation, which directly modifies soil moisture through artificial water inputs. This practice is widespread globally in various forms (gravity irrigation, sprinklers, drip irrigation) and enables agriculture to maintain yields that would not be achievable in many regions otherwise. The historical reconstruction by \citet{siebert_global_2015} estimates that the total irrigated area increased fivefold during the 20th century due to population growth and industrialization, rising from 63 Mha in 1900 to 306 Mha in 2005. Certain regions stand out, such as South Asia, the Western United States, Eastern China, and Western Europe (Figure \ref{irrig_evolution_map}).
 
@@ -234,4 +196,20 @@ The impacts of irrigation on regional climate have been studied for several deca
 
 However, it is important to note that most ESMs participating in CMIP6 did not include irrigation modeling. In heavily irrigated regions, models representing irrigation show different historical trends in several climate variables (soil moisture, latent heat flux) that better match satellite observations \citep{al-yaari_role_2022}. 
 The IRRMIP intercomparison project is designed to study in detail the various impacts of irrigation representation in ESMs to better understand the uncertainty of responses to this modeling \citep{yao_irrigation-expansion-induced_2023}.
+
+
+
+%existing texts
+%In particular, irrigation can create strong spatial heterogeneities in SM. Observational studies have established that irrigation leads to a moister and cooler atmosphere near the surface \citep{bonfils_empirical_2007, mcdermid_irrigation_2023}, which is explained by an increase in the latent heat flux and a decrease in the sensible heat flux in irrigated areas \citep{rappin_landatmosphere_2022, boone_land_2025}.
+%In the American Midwest, \cite{nocco_observation_2019} showed that such effects could impact the regional climate and even mask the rise in temperature induced by global warming. Different regional responses of precipitation have also been observed, such as a decrease in irrigated areas \citep{alter_rainfall_2015} or an increase in downwind regions \citep{deangelis_evidence_2010}.
+
+%To analyse the atmospheric processes involved, regional modelling studies have often been used to complement observational campaigns. The Great Plains irrigation experiment \cite[GRAINEX,][]{rappin_great_2021} measurements and simulations with the Weather Research and Forecasting (WRF) model revealed a lower ABL over irrigated areas and a reduction of existing mesoscale slope-induced circulations in the presence of irrigation \citep{rappin_landatmosphere_2022, phillips_influence_2022}. In the Ebro Valley (northern Spain), Meso-NH simulations over the area of the Land surface Interactions with the Atmosphere over the Iberian Semiarid Environment campaign \citep[LIAISE][]{boone_land_2019} were shown to be greatly improved by representing irrigation \citep{lunel_irrigation_2024}, and also highlighted a weakening of the regional sea-breeze regime due to irrigation \citep{lunel_marinada_2024}.  \cite{lo_irrigation_2013} and \cite{yang_impact_2017} studied the local and remote impacts of irrigation in California's Central Valley, showing a strengthening of the hydrological cycle, with moisture recycling at the river basin scale, whereas a similar study in Saudi Arabia identified a negative feedback loop with increases in precipitation located in a remote area \citep{lo_intense_2021}. 
+
+%These results, however, were obtained with very diverse representations of irrigation since not all models target the same objectives. For example, \cite{lunel_irrigation_2024} used an idealized representation that maintains SM at a certain level in irrigated areas. This type of modelling is suitable for short simulations over a limited domain but for Earth System Models (ESMs) running long simulations, water-conservative approaches are necessary. With this type of approach, \cite{leng_significant_2017} identified contrasting responses in river discharge and water table depth depending on the irrigation methods represented. 
+
+%At the global scale, the average impacts of simulated irrigation have been studied in land-atmosphere coupled simulations \citep{sacks_effects_2009, puma_effects_2010, pokhrel_incorporating_2012, cook_irrigation_2015}, with effects mostly visible in irrigation hotspots such as India, Eastern China and the United States of America. This type of study has also identified remote connections between irrigation in Asia and precipitation in East Africa \citep{de_vrese_asian_2016}, and between moisture-importing and moisture-exporting regions \citep{wei_where_2013}. However, only three CMIP6 models included a representation of irrigation, and \cite{al-yaari_role_2022} showed that they better captured the trends of several climate variables over irrigated regions. Efforts are currently being pursued to better account for the impacts of irrigation in ESMs, as illustrated by the Irrigation Model Intercomparison Project (IRRMIP), which aims to compare the responses of various models to representations of irrigation \citep{yao_irrigation_2023, yao_impacts_2024}.
+
+\section{Scientific questions}
+
+%ESMs are not expected to achieve the same level of precision as convection resolving models in their accounting for irrigation, but the extent to which their representation of irrigation can impact the simulated climate in irrigated regions is still not well constrained. In this context, this study aims to understand which regional impacts of irrigation on surface-atmosphere couplings and the water cycle can be represented by a climate model. It leverages a new limited area model configuration developed for the Institut Pierre-Simon Laplace climate model (IPSL-CM) to perform regional simulations with the land surface and atmospheric components of the global model, ORCHIDEE \citep{krinner_dynamic_2005, cheruy_improved_2020} and ICOLMDZ \citep{dubos_dynamico-10_2015, hourdin_lmdz6a_2020}.This configuration allows for insight on the parameterizations of the global model while running with a higher resolution (25 km) and lower computational costs than in global applications.
 %lol
