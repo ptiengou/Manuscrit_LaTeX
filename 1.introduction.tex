@@ -16,7 +16,7 @@ This practice is widespread globally in various forms (gravity irrigation, sprin
 %order of magnitudes : world fraction, volumes / same for Spain+Portugal
 %how it's estimated ?
 
-\section{Regional climate modelling}
+\section{Climate modelling}
 Climatology aims at describing statistical distribution of multiple variables of interest, among which temperature, pressure, humidity, precipitation, and wind speed.
 For centuries, it remained a science based on observations, 
 %todo : koppen geiger
@@ -32,6 +32,16 @@ The globe is discretized into grid cells, which can range from a few tens to a f
 Thermodynamic processes involved in the phase changes of water are also essential to represent energy transfers between phases, cloud formation and precipitation. Parameterizations are also used to account for the processes that occur at a smaller scale than the resolution of the GCM and cannot be described by the dynamical core, such as turbulent diffusion or shallow and deep convection processes. Finally, parametererization are used to represent interactions of the atmosphere with the various surfaces it can be interfaced with: sea surface, ice caps or sea ice, bare soil, vegetation, urban areas... Interactions between the land surface and the atmosphere and the feedback loops between the two systems are a major focus of this thesis, and the following section %tocheck
 provides a detailed description of the state of knowledge in this field. 
 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/GCM_structure.png}
+    \caption{GCM structure %todo:ref
+    }
+    \label{fig:GCM}
+\end{figure}
+
+
 Historically, the first climate models primarily focused on the atmosphere, with
 a very simplified representation of the surface. Over the past three decades, climate models have evolved to distincly represent continental surfaces by coupling atmospheric models with ocean models and land surface models (LSMs), and are now often referred to as Earth system models (ESMs). Nowadays, ESMs are not only used to simulate temperature, precipitation, and wind, but can have a much wider range of applications in geoscience, paleoclimatology, oceanography, glaciology, subsurface hydrology, biology, biogeochemistry, etc... 
 Regarding land surface in particular, the complexity of LSMs has gradually increased, for example, to better account for the influence of vegetation on the atmosphere, or to represent additional processes of interest such as rivers and groundwater, and biogeochemical cycles of carbon or nitrogen. They can also be used as standalone models using atmospheric forcings instead of a dynamical coupling with a GCM.
@@ -39,8 +49,10 @@ Regarding land surface in particular, the complexity of LSMs has gradually incre
 %limits to increase in resolution : computing power, physical hypotheses
 %how do we evaluate them : point based and satelite obs
 
-%specificities of regional modelling ? 
+%specificities of regional modelling ? Lateral forcing
 %mention hierarchy of models, CRM/mesoscale/NWP, RANS/LES, (DNS)
+
+% notion of climate variability, sensitivity to initial (+/- boundary conditions). Idea that running a climate model over a given year may not represent correctly what happenned on that year, but that over a decade (or more) it should be able to reproduce the mean state of climate.
 
 \subsection{Climate change}
 As early as 1824, Joseph Fourier, followed by Claude Pouillet, theoretized than some atmospheric components of the atmosphere can influence the temperature of the air more than others, which was demonstrated in 1838 by Eunice Newton Foote for water vapour and carbon dioxyde (CO2). This was linked to infrared absorption and emissions by the experimental work of John Tyndall, and, in 1896, Svante Arrhenius conducted the first estimate of the global temperature increase caused by a hypothetical doubling of CO2 in the atmosphere.
@@ -54,6 +66,9 @@ Concurrent research in paleoclimatology showed that previous evolutions of green
 As this knowledge progressed coincidentally with modelling capablilities in numerical climate modelling, models started to be used not only to reproduce past and present climate, but also to simulate future climate scenarios. They quickly confirmed the risk of rapid increases in global temperature, and hinted at the global and regional consequences on ice cap and glacier melting, sea level rise, and disruption of the water cycle among others. In 1988, the International Panel on Climate Change was established by the World Meteorological Organisation (WMO) and the United Nations Environment Program (UNEP) to unify efforts in climate change science, and on the socio-economic impacts of global warming. This group still carries on today in its mission to "provide governments at all levels with scientific information that they can use to develop climate policies".
 
 At the end of the 20th and the beginning of the 21st centuries, there were also many developments in the field of remote sensing which enabled the monitoring of climate variables from satellites. 
+
+
+%SSP emission pathways
 
 \section{Land-atmosphere interactions}
 
@@ -196,8 +211,7 @@ The impacts of irrigation on regional climate have been studied for several deca
 %distinction modèle couplé/LSM offline pas très nette
 
 Using water-conservative representations of irrigation also allows the study of the continental water cycle as a whole, accounting for impacts of irrigation withdrawals. More complex models can now differentiate between irrigation methods, withdrawals from surface or groundwater ressources and represent storage and adduction, offering an integrated vision of the anthropized water cycle. %todo:more refs..............
-For instance, \citep{leng_significant_2017} showed that the responses in groundwater levels and river flows to irrigation were very contrasted and highly dependent on the irrigation methods and sources used.  %todo:cite yao yi 2022
-confirmed these findings, and also showed that representing distinct irrigation methods in CLM improved the agreement with surface fluxes measurements.
+For instance, \citep{leng_significant_2017} showed that the responses in groundwater levels and river flows to irrigation were very contrasted and highly dependent on the irrigation methods and sources used.  \citet{yao_implementation_2022} confirmed these findings, and also showed that representing distinct irrigation methods in CLM improved the agreement with surface fluxes measurements.
 %todo : pedro ? costantini +/- decharme
 
 Finally, global simulations allow the study of very remote connection and long term patterns. \citep{de_vrese_asian_2016} highlighted a link between irrigation in Asia and increased precipitation in East Africa, while \citep{wei_where_2013} identified moisture-importing and -exporting regions at the global scale. Running 30-years simulations with and without irrigation, \citep{guimberteau_global_2012} studied the temporal disruptions of seasonal phenomena, and identified a delay in the onset of the Indian summer monsoon due to regional irrigation effects.

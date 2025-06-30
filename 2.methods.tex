@@ -4,14 +4,14 @@ This work uses the atmosphere and land surface components of the IPSL-CM, which 
 \subsection{Dynamical core and parameterizations}
 The atmospheric component of the model is the association of the dynamical core DYNAMICO \citep{dubos_dynamico-10_2015}, and the LMDZ6A physics used for CMIP6 \citep{hourdin_lmdz6a_2020}. 
 
-The icosahedral dynamical core has been used in some models for several years, such as ICON
-%todo:ref
+Icosahedral dynamical cores already existed in some models, such as ICON \citep{zangl_icon_2015,giorgetta_icon-_2018,prill_icon_nodate}
+%todo: màj prill2022
 , and was introduced in the IPSL-CM with the main objective of standardizing grid cells for global simulations. In particular, it avoids the discrepancies of a "regular" longitude-latitude grid that appear at the poles, opening new prospects for modeling projects in the Arctic %todo:cite project ?
-and Antarctic regions %todo:cite AWACA ?
-.
-%todo:check and mention dt_dynamic (= 30s)?
+and Antarctic regions. %todo:cite AWACA ?
+All simulations run in the thesis used a 30s time step for the dynamics.
 
-The physics of the model are version NPv6.2 with 79 vertical levels, and are run every 15 mn and include the following parameterizations:
+The physics of the model are version NPv6.2 with 79 vertical levels, and are run every 15 mn.
+They include the following parameterizations:
 \begin{itemize}
     \item a surface layer description based on \cite{louis_parametric_1979} and \cite{king_sensitivity_2001}; 
     %option: give more details into ATKE scheme and consequences for surface layer ? not used here but...
@@ -25,16 +25,62 @@ The physics of the model are version NPv6.2 with 79 vertical levels, and are run
 %todo:detail forcings : solar, SST ans SIC from AMIP -> ref ? (thèse Pedro ?)
 All simulations were run with prescribed sea surface temperature and sea ice content from the AMIP dataset.
 
-\subsection{Limited Area Model configuration}
-Simulations are run in a Limited Area Model (LAM) configuration, first used and described in \citet{raillard_leveraging_2024}.
-Lateral boundary conditions for the LAM are read at each time step of the dynamics, and are taken from ERA5 reanalysis hourly values at 0.25° resolution \citep{hersbach_era5_2020}.
-The domain comprises 3 zones: a raw forcing zone which contains values directly given by the forcing, a transition zone  where the model is nudged toward the forcing with decreasing strength, and a free zone at the center of the domain where there is no direct influence of the lateral forcing. 
-%todo:add figure showing 3 LAM zones, nudging variables
-%option:explain init ? orography ?
+\subsection{Limited area model configuration}
+Simulations are run in a limited area model (LAM) configuration, first used and described in \citet{raillard_leveraging_2024}.
+
+\subsubsection{Boundary conditions}
+Since simulations with the LAM only cover a portion of the globe, lateral boundary conditions are read by the model from a forcing file, which can be obtained from various sources. 
+In most of the work presented here, lateral boundary conditions for the LAM were taken from ERA5 reanalysis hourly values at 0.25° resolution \citep{hersbach_era5_2020}.  This product uses a model with observation data assimilation techniques to produce outputs that are as close as possible to actual conditions. When simulating recent climate, using this forcing enables having rather realistic synoptic conditions. 
+It is also possible to run the model with other sources for the forcing file, in particular using outputs from global climate simulations, either from the ICOLMDZ global model or from other models. The modelling community at IPSL is also currently investigating the possibility of using mean outputs from the CMIP6 simulations under various SSPs to run the LAM in possible future climate conditions.
+
+%todo: list variables needed
+
+\subsubsection{Domain structure and nudging method}
+
+The simulation domain is a large hexagon composed of hexagonal grid cells, and defined by three parameters:
+\begin{itemize}
+    \item The centre of the hexagon (latitude and longitude).
+    \item The radius of hexagon, distance between the centre and one of the vertices, in kilometers.
+    \item The number of grid cells on this radius, referred to as NBP.
+\end{itemize}
+
+The resolution of the model (diameter of one grid cell) is directly obtained by dividing the radius by the NBP.
+
+
+The simulation domain is separated in 3 concentric zones, as shown on Fig. \ref{fig:LAM_domain}: 
+\begin{itemize}
+    \item The raw forcing zone which contains values directly given by the forcing, consisting of 5 grid cells.
+    \item The transition zone  where the model is nudged toward the forcing with decreasing strength, consisting of 8 grid cells.
+    \item the free zone at the centre of the domain where there is no direct influence of the lateral forcing, with all the remaining grid cells (NBP - 8 - 5).
+\end{itemize} 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/LAM_domain_zones.png}
+    \caption{Example of the structure of the LAM domain with NBP=27 \citep[from][]{raillard_leveraging_2024}}
+    \label{fig:LAM_domain}
+\end{figure}
+
+The principles of nudging are well known in climate modelling and NWP. It consists in adding a forcing term in the equation that governs the evolution of a given prognostic variable V in the model, to drive it towards a reference value $V_{ref}$ over a given time scale $\tau$.
+. %tocheck : prognostic only ? how do we use CIWC, CLWC then ?(or maybe they are prognostic too ?)
+
+\begin{equation}
+    \frac{\partial V}{\partial t} = \frac{\partial V}{\partial t}_{\text{model}}+ \frac{V_{\text{ref}} - V}{\tau}
+\end{equation}
+
+This 
+
 %option:details on nudging equation and strength ?
-%todo:add nudging in high altitude for u,v, T (?)
+%are read at each time step of the dynamics, and 
+
+
+
+
+%option:explain init ? orography ?
+%todo:add nudging in high altitude for u,v, T 
 %option:discuss choice of domain (100 vs 1500 vs 2000km ?)
-%todo: choice of lateral forcing source and frequency (restults from Mariame)
+
+
 %option:mention that some results were obtained with interpolated outputs (chapter 4), while some of them focused on native outputs to identify specific grid cells (chapter 5)
 
 \section{ORCHIDEE Land Surface Model}
