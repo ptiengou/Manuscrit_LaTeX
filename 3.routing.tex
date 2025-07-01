@@ -1,8 +1,126 @@
+\chapter{Evaluation and calibration of a new routing scheme over the Iberian Peninsula}
+\label{chap:routing}
+\minitoc
+\pagebreak
+
 \section{Chapter introduction}
 
-\section{Evaluation of the routing scheme compare to previous versions}
+This chapter presents the preliminary work to evaluate and calibrate the new version of the routing scheme (\textit{interp\_topo}) before running coupled simulations with ICOLMDZOR. As a reminder, the pre-existing version of the routing scheme \textit{subgrid\_halfdeg} cannot be used with ICOLMDZOR because they impose constraints on the ORCHIDEE and routing grid that are incompatible with the icosahedral grid.
+The \textit{interp\_topo} routing is based on the same modelling principles (described in Chapter \ref{chap:methods}) as \textit{subgrid\_halfdeg} but relies on a new code to interpolate between the ORCHIDEE grid and the routing grid. 
+
+This preliminary work had two main objectives:
+\begin{itemize}
+    \item Ensure that the new code could replicate the behaviour of the \textit{subgrid\_halfdeg} version if given the same parameters and DEM as input. 
+    Indeed, this routing has long been the default version in ORCHIDEE and in the IPSL-CM, including for CMIP6 coupled model runs and has been subject to calibration and evaluation studies. %todo:ref ?
+    \item Evaluate and calibrate the new code using a high resolution DEM over the Iberian Peninsula.
+\end{itemize}
+
+The relevant routing outputs for evaluation and calibration are river discharge and water volumes in each of the reservoirs (groundwater, surface runoff, rivers). 
+It must be noted that these volumes cannot be easily compared to observations, since large-scale measurements of groundwater or river volumes are complex and may not physically correspond to the abstraction level of the reservoirs modelled in ORCHIDEE.
+There importance in this work is mainly justified by the fact that the irrigatin scheme withdraws water from these reservoirs to satisfy the irrigation demand while conserving water quantities.
+
+All simulations for this chapter are run in offline mode, meaning that ORCHIDEE is not coupled to any atmospheric model but takes meteorological data as input. The choice of this meteorological forcing may impact the results of the offline simulation.
+
+\section{Consistency of \textit{interp\_topo} with \textit{subgrid\_halfdeg} routing}
+\subsubsection{Methods: simulation setup}
+
+This first analysis used the \textit{interp\_topo} routing in the same setup as the \textit{subgrid\_halfdeg} routing. 
+The input DEM was the same (0.5° resolution), and the time constants for the three reservoirs were the same as the default values for the global model (Table \ref{table:tcst_refs}). Simulations were first run without irrigation to assess the routing scheme on its own and then with irrigation.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{TCST\_SLOW} & \textbf{TCST\_FAST} & \textbf{TCST\_STREAM} \\ \hline
+25            & 3             & 0.24            \\ \hline
+\end{tabular}
+\caption{Routing time constant for the consistency analysis ($day \cdot km^{-1}$).}
+\label{table:tcst_consistency}
+\end{table}
+
+%todo: remember what I actually did
+
+Simulations were run from 2000 to 2012, over a regional domain covering the Iberian Peninsula and part of Morocco, since at the time, this region was also considered as a study area for coupled simulations.
+
+
+
+% It is also the version that was used for the calibration of the irrigation scheme developped in \citet{arboleda-obando_validation_2024} and since the scheme withdraws
 
 \section{Calibration over the Iberian Peninsula}
 
+Once the general consistency of the \textit{interp\_topo} routing had been assessed, it was neccessary to evaluate the specific configuration that would be used for the coupled simulation, using the MERIT DEM at 2km resolution and accounting for irrigation. To use irrigation, the routing time step must be the same as the time step of ORCHIDEE, which is 15mn (1800s) in coupled simulations. 
+
+This calibration was initially focused on the three time constants of the routing reservoirs: TCST\_SLOW, TCST\_FAST, TCST\_STREAM. However, the sensitivity analysis of the river discharge to the activation of irrigation was very important, with large differences in the responses depending on the intensity of irrigation demand. As a consequence, the parameter $\beta$, which defines the soil moisture target in the irrigation scheme, was also included in this calibration and modified compared to the default version.
+
+% For these offline calibration simulations, given the better availability of flow observations and meteorological forcings before 2014, I did not work exactly on the period 2010-2022 but rather on the previous decades.. 
+
+\subsection{Simulation setup}
+
+At the begining of the calibration, three reference sets of TCST parameters (presented in Table \ref{table:tcst_refs}) were considered:
+\begin{itemize}
+\item The values established during an initial calibration of the \textit{interp\_topo} routing performed over the Danube basin by Yann Meurdesoif and Deniz Kiliç \cite{kilic_evaluation_2023}, focusing only on river discharge observations.
+\item The default values used by the \textit{subgrid\_halfdeg} routing on a global scale.
+\item The values used for regional studies with the \textit{subgrid\_HTU} routing \citep{rinchiuso_improving_2022, huang_multi-objective_2024}.
+\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{} & \textbf{TCST\_SLOW} & \textbf{TCST\_FAST} & \textbf{TCST\_STREAM} \\ \hline
+Initial \textit{interp\_topo} calibration & 1.2 & 0.9 & 0.03 \\ \hline
+\textit{Subgrid\_halfdeg} default values & 25 & 3 & 0.24 \\ \hline
+\textit{Subgrid\_HTU} calibration & 600 & 80 & 6.3 \\ \hline
+\end{tabular}
+\caption{Reference parameter sets considered to calibrate the \textit{interp\_topo} routing ($day \cdot km^{-1}$).}
+\label{table:tcst_refs}
+\end{table}
+
+In these three sets of values, there is approximately an order of magnitude between the three time constants, and very significant differences (one or two orders of magnitude) between each set. 
+This can be explained by the different DEMs used, the way HTUs are defined, and the calibration choices that led to these sets of values.%todo:compléter ? 
+
+Three initial experiments were defined , based on these ratios:\\$TCST\_SLOW \approx 10 \times TCST\_FAST \approx 10 \times TCST\_STREAM$.
+Table \ref{table:tcst_exp} presents these three sets of values based on the orders of magnitude of each of the reference value sets (TCST1, TCST2, TCST3), as well as the one to which the calibration led (TCST4), whose development steps are detailed below.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{} & \textbf{TCST\_SLOW} & \textbf{TCST\_FAST} & \textbf{TCST\_STREAM} \\ \hline
+TCST1 & 3 & 0.3 & 0.03 \\ \hline
+TCST2 & 30 & 3 & 0.3 \\ \hline
+TCST3 & 300 & 30 & 3 \\ \hline
+TCST4 & 700 & 100 & 0.1 \\ \hline
+\end{tabular}
+\caption{Value sets of the simulations for the calibration of the \textit{interp\_topo} routing ($day \cdot km^{-1}$).}
+\label{table:tcst_exp}
+\end{table}
+
+Four simulations were therefore carried out with these four sets of TCST values, over the period 2000-2012, without activating irrigation.
+The first three years are considered as a spin-up to allow the vegetation, soil moisture, and routing reservoir volumes to reach equilibrium, and the results presented therefore cover 10 years of simulation (2003-2012).
+
+\subsection{Reservoir volumes and time constants}
+
+\subsection{Impact of irrigation on river discharge}
+The simulated river discharge is evaluated against monthly observation data from discharge stations of the Global Runoff Data Center \cite[GRDC, https://grdc.bafg.de,][]{fekete_global_2003}.
+
+Stations were positioned on the MERIT DEM grid with tools presented in \cite{polcher_hydrological_2023}, which use the GPS position of the stations as well as the upstream catchment area to find the most appropriate grid cell for comparison with the observations. 
+
 \section{Chapter conclusions}
-This chapter presented the evaluation of the new routing scheme.
+
+This chapter presents the evaluation and calibration of the new version of the routing scheme using ORCHIDEE offline simulations  over the Iberian Peninsula, which was necessary to prepare for coupled simulations.
+
+This calibration and evaluation work first showed that the new routing code behaves similarly to the pre-existing version if given the same input map and parameters.%todo : some differences identified ?
+
+The new routing was then used with a high-resolution DEM over the Iberian Peninsula, and several options were tested for the reservoir time constants. 
+Comparison of reservoir volumes with the previous version of the routing (\textit{subgrid\_halfdeg}), which served as a first reference, allowed the identification of values for TCST\_SLOW and TCST\_FAST to simulate similar water volumes on average over the Peninsula. This was essential because of the dependance of the irrigation scheme on the available water in the routing reservoirs.
+Using discharge observations, the value of TCST\_STREAM was then adjusted to correctly represent the seasonnal cycle of the major rivers of the Iberian Peninsula.
+
+Sensitivity experiments highlighted the very large response of river discharge to the activation of irrigation (except in winter). 
+This is not shown here, %tocheck and/or todo
+but it is worth noting that irrigation stood out significantly compared to other sensitivity analyses conducted (on meteorological forcing, on the use of bare soil evaporation resistance). 
+The magnitude of this sensitivity also contributed to the decision not to further calibrate the TCST values, whose impact on fidelity to observations remains limited compared to that of irrigation.
+As a consequence, the $\beta$ parameter of the irrigation scheme was also included in the calibration, and 0.6 was identified as a more suitable value than the default 0.9. This choice allows avoiding excessively low discharge in summer for the four rivers considered, and is considered more consistent with a representation of irrigation practices in the region.
+
+Therefore, the set of parameters from the simulations \textit{tcst4\_no\_irr} and \textit{tcst4\_irr\_reduced} were used to study the impact of irrigation in the coupled simulations presented in CHapter \ref{chap:monthly}.
+%over

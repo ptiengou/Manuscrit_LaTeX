@@ -1,3 +1,8 @@
+\chapter{Methods and tools: regional simulations with the IPSL Climate Model}
+\label{chap:methods}
+\minitoc
+\pagebreak
+
 This work uses the atmosphere and land surface components of the IPSL-CM, which has been a regular participant in CMIP exercises, including CMIP6 \citep{boucher_presentation_2020}. 
 
 \section{ICOLMDZ atmospheric model}
@@ -26,14 +31,38 @@ They include the following parameterizations:
 All simulations were run with prescribed sea surface temperature and sea ice content from the AMIP dataset.
 
 \subsection{Limited area model configuration}
-Simulations are run in a limited area model (LAM) configuration, first used and described in \citet{raillard_leveraging_2024}.
+Simulations are run in a limited area model (LAM) configuration, first used and described in \citet{raillard_leveraging_2024}. It must be noted that the use of this model in the IPSL community is very recent, that it is still evolving quickly, and that its evaluation is still ongoing. In particular, the simulations presented in chapter \ref{chap:monthly} constitute the first case study focusing on the water cycle and land-atmosphere interactions, as well as the first use case at the midlatitudes.
 
 \subsubsection{Boundary conditions}
 Since simulations with the LAM only cover a portion of the globe, lateral boundary conditions are read by the model from a forcing file, which can be obtained from various sources. 
 In most of the work presented here, lateral boundary conditions for the LAM were taken from ERA5 reanalysis hourly values at 0.25° resolution \citep{hersbach_era5_2020}.  This product uses a model with observation data assimilation techniques to produce outputs that are as close as possible to actual conditions. When simulating recent climate, using this forcing enables having rather realistic synoptic conditions. 
 It is also possible to run the model with other sources for the forcing file, in particular using outputs from global climate simulations, either from the ICOLMDZ global model or from other models. The modelling community at IPSL is also currently investigating the possibility of using mean outputs from the CMIP6 simulations under various SSPs to run the LAM in possible future climate conditions.
 
-%todo: list variables needed
+To run a regional simulation, the forcing file must contain data for the nudged variables %todo:confirm if CIWC and CLWC
+as well as some other variables at the surface that are used to manage initialization. %todo:clarify
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Variables on vertical levels}} \\ \hline
+Air temperature                & t     \\ \hline
+Zonal wind                    & u     \\ \hline
+Meridional wind               & v     \\ \hline
+Relative humidity             & r     \\ \hline
+Specific humidity             & q     \\ \hline
+Specific liquid water content & clwc  \\ \hline
+Specific ice water content    & ciwc  \\ \hline
+\multicolumn{2}{|c|}{\textbf{Surface variables}} \\ \hline
+2m air temperature            & t2m   \\ \hline
+Surface geopotential          & z     \\ \hline
+Surface pressure              & p     \\ \hline
+\end{tabular}
+\caption{List of variables required in the LAM forcing file.}
+\end{table}
+
+%option:explain init ? orography ?
+
 
 \subsubsection{Domain structure and nudging method}
 
@@ -46,6 +75,7 @@ The simulation domain is a large hexagon composed of hexagonal grid cells, and d
 
 The resolution of the model (diameter of one grid cell) is directly obtained by dividing the radius by the NBP.
 
+\hfill
 
 The simulation domain is separated in 3 concentric zones, as shown on Fig. \ref{fig:LAM_domain}: 
 \begin{itemize}
@@ -57,33 +87,36 @@ The simulation domain is separated in 3 concentric zones, as shown on Fig. \ref{
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\linewidth]{images/LAM_domain_zones.png}
-    \caption{Example of the structure of the LAM domain with NBP=27 \citep[from][]{raillard_leveraging_2024}}
+    \caption{LAM domain structure example with NBP=27 \citep[from][]{raillard_leveraging_2024}}
     \label{fig:LAM_domain}
 \end{figure}
 
-The principles of nudging are well known in climate modelling and NWP. It consists in adding a forcing term in the equation that governs the evolution of a given prognostic variable V in the model, to drive it towards a reference value $V_{ref}$ over a given time scale $\tau$.
+The concept of nudging are well known in climate modelling and NWP, since it is often used to manage boundary conditions in regional models, or to reproduce realistic situations for comparison to observations or to study specific events. Nudging is done by adding a forcing term in the equation that governs the evolution of a given prognostic variable V in the model, to drive it towards a reference value $V_{ref}$ over a given time scale $\tau$.
 . %tocheck : prognostic only ? how do we use CIWC, CLWC then ?(or maybe they are prognostic too ?)
 
 \begin{equation}
     \frac{\partial V}{\partial t} = \frac{\partial V}{\partial t}_{\text{model}}+ \frac{V_{\text{ref}} - V}{\tau}
 \end{equation}
 
-This 
+The strength of the nudging can be modulated by adjusting the time scale $\tau$.
+In the raw forcing zone, $\tau = 3600s$ and in the free zone, $\tau$ is infinite, meaning the forcing term does not alter the equation. In the transition zone inbetween, the value of $\tau$ is gradually increased over the 8 grid cells, following an arctan profile, to smooth the transition.
 
-%option:details on nudging equation and strength ?
-%are read at each time step of the dynamics, and 
+Nudging is applied at every time step of the dynamics (30s here). The reference value for each variable is obtained by temporally interpolating the forcing file to this time step. The sampling frequency of the forcing file can have an impact on the simulation. In this work, hourly forcing files were used for most of the simulations, but some sensitivity experiments were made using forcing data sampled every six hours.
 
+\subsubsection{Technical specificities}
 
+While running the first simulations with the LAM, various occurrences of inappropriate model behaviour were observed at the top of the atmosphere, reaching temperatures over 373K. Based on prior expereience of the model developper, this was attributed to inconsistent quantities of air in these layers of very low density, which could lead to excessive heating over one model time step. The unusual interaction of advection from the dynamics and nudging were thought to be responsible for anomalies in the matter and energy budgets, in or near the transition zone.
+To solve this issue, an additionnal nudging of temperature and wind components was applied for the upper layers of the atmosphere (above 1hPa) over the whole domain, to ensure that values remaines in a reasonible order of magnitude. 
 
+\hfill
 
-%option:explain init ? orography ?
-%todo:add nudging in high altitude for u,v, T 
+On a different topic, it must also be noted that the model computes all variables on its hexagonal grid cells. However, it is not very straightfroward to analyse and display simulation data on such a grid since most usual tools (ferret, ncview, matplotlib) struggle with the coordinates system. 
+By default, LAM outputs are therefore interpolated to a regular longitude-latitude grid, but can be obtained on the native hexagonal grid if needed.
+In this work, the simulations used in Chapter \ref{chap:monthly} were analysed solely using the interpolated outputs, while simulations used in Chapter \ref{chap:liaise}, which used specific grid cells for comparison to observation, were analysed using the native hexagonal grid.
+
 %option:discuss choice of domain (100 vs 1500 vs 2000km ?)
 
-
-%option:mention that some results were obtained with interpolated outputs (chapter 4), while some of them focused on native outputs to identify specific grid cells (chapter 5)
-
-\section{ORCHIDEE Land Surface Model}
+\section{ORCHIDEE land surface model}
 \subsection{General structure, running modes, and input data}
 ORCHIDEE (Organizing Carbon and Hydrology In Dynamic EcosystEms) is a land surface model. Various "branches" and versions exist within the model, as the base structure presented in \citet{krinner_dynamic_2005} has been adapted and extended to meet different research objectives. 
 This work uses branch 2.2 \citep{cheruy_improved_2020}, which served as the land component of the IPSL climate model for CMIP6 simulations \citep{boucher_presentation_2020}. While the version chosen for CMIP7 simulations is ORCHIDEE v.4.2, which integrates recent developments for the modeling of snow, permafrost, vegetation, carbon, nitrogen and phosphorus cycles %todo:check, add major other elements 
@@ -160,7 +193,7 @@ To obtain the actual evapotranspiration $E$ from the maximum theoretical value $
 A resistance to evaporation is computed for each of the terms, and the aridity coefficient $\beta$ is computed as a conductance controlled by these resistances, taking into account the fractions of the grid cell occupied by bare soil, vegetation and snow:
 
 \begin{equation}
-    \beta = frac_{bare_soil} \times \frac{1}{R_{bare_soil}} + frac_{vegetation} \times ( \frac{1}{R_{transpiration}} + \frac{1}{R_{interception}} ) + frac_{snow} \times  \frac{1}{R_{sublimation}}
+    \beta = frac_{bare} \times \frac{1}{R_{bare}} + frac_{veget} \times ( \frac{1}{R_{transpiration}} + \frac{1}{R_{interception}} ) + frac_{snow} \times  \frac{1}{R_{sublimation}}
 \end{equation}
 %todo:ask AD if this is ok even if not 100% realistic ? est ce que c'est comme ça que les fractions interviennent ou est ce que je dis nimp ?
 
@@ -217,31 +250,31 @@ The routing scheme subdivides the simulation domain into Hydrological Transfer U
 Within each HTU, three linear reservoirs are represented: the fast reservoir (surface runoff), the slow reservoir (groundwater), and the stream reservoir (rivers). For each reservoir, the characteristic residence time of water in a grid cell depends on a fixed transfer coefficient (denoted as TCST\_FAST, TCST\_SLOW, and TCST\_STREAM in Fig. \ref{fig:routing_principles}) and on the local slope.
 Surface runoff and drainage computed for each ORCHIDEE soil column are interpolated to the routing grid to feed the surface runoff and groundwater reservoirs (respectively). All three reservoirs then flow into the river reservoir of the downstream grid cell. The river reservoir is therefore the only one connected to neighboring cells, as no other horizontal transfer is modeled in ORCHIDEE. This assumption may have limitations at high resolutions as it ignores direct groundwater transfers between grid cells.
 
-The outgoing volume $Q$ from a reservoir at a routing time step is expressed in terms of the reservoir volume in the routing grid cell, $V$, the transfer coefficient $TCST$ ($day \cdot km^{-1}$), a topographic index $topoindex$ ($km$) derived from the DEM that indicates the slope, and the routing time step $dt_{routing}$ ($s$):
+The outgoing volume $Q$ (given in $kg$) from a reservoir over one routing time step is expressed using the reservoir volume in the routing grid cell $V$ ($kg$), the transfer coefficient of the reservoir $TCST$ ($day \cdot km^{-1}$), a topographic index $topoindex$ ($km$) derived from the DEM that indicates the slope, and the routing time step $dt_{routing}$ ($s$):
 
 \begin{equation}
     Q = \frac{V}{topoindex \times TCST} \times \frac{dt_{routing}}{86400}
 \end{equation}
-
-%todo:add figure
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=1\linewidth]{images/routing_structure.png}
-    \caption{Operating principles of the \textit{interp\_topo} routing}
-    \label{fig:routing_principles}
-\end{figure}
 
 Several versions of the routing scheme have been developed in ORCHIDEE, all based on these modeling principles but corresponding to different relationships between the routing grid, the ORCHIDEE grid, and the definition of the HTUs used. Two of them are relevant for this work:
 
 \begin{itemize}
 \item \textbf{\textit{Subgrid\_halfdeg} routing}, which was the default option in branch 2.2 until CMIP6. It is designed to work with a specific DEM at a resolution of 0.5°. Additionally, it requires each ORCHIDEE grid cell to contain a finite number of DEM grid cells, which limits its use to resolutions higher than 0.5°.
 
-\item \textbf{\textit{Interp\_topo} routing}, recently implemented into ORCHIDEE to become the default version in IPSL-CM7. It is designed to adapt to any DEM and to be completely independent of ORCHIDEE’s resolution and even of the shape of the grid cells. This is particularly necessary for compatibility with the new hexagonal-grid atmospheric dynamics model (DYNAMICO) of IPSL-CM7.
-In this version, the routing grid is the same as the DEM grid, meaning HTUs are exactly the DEM grid cells. It relies on a robust interpolation of runoff and drainage from the ORCHIDEE grid to the routing grid, where horizontal transfers between reservoirs are performed. Once these transfers are completed, water volumes in the reservoirs are re-interpolated from the routing grid back to the ORCHIDEE grid, allowing them to be used for irrigation within ORCHIDEE grid cells.
+\item \textbf{\textit{Interp\_topo} routing}, recently implemented into ORCHIDEE to become the default version in IPSL-CM7. It is designed to adapt to any DEM and to be completely independent of ORCHIDEE’s resolution and even of the shape of the grid cells. This is particularly necessary for compatibility with the hexagonal grid of the new atmospheric dynamics (DYNAMICO) of IPSL-CM7.
+In this version, the routing grid is exactly the same as the DEM grid, meaning HTUs are exactly the DEM grid cells. It relies on a robust interpolation of runoff and drainage from the ORCHIDEE grid to the routing grid, where horizontal transfers between reservoirs are performed. Once these transfers are completed, water volumes in the reservoirs are re-interpolated from the routing grid back to the ORCHIDEE grid, allowing them to be used for irrigation within ORCHIDEE grid cells.
 
 %todo:voir si pertinent de mentionner cette option
-%\item \textbf{\textit{Subgrid\_HTU} routing}, developed before the introduction of the \textit{interp\_topo} routing to operate at a higher resolution than \textit{subgrid\_halfdeg} routing. In this version, HTUs are constructed from a high-resolution DEM by aggregating grid cells. However, this routing still maintains the constraint of having an integer number of HTUs within each ORCHIDEE grid cell, making it incompatible with DYNAMICO. I have not used it in simulations, but this manuscript occasionally refers to it.
+\item \textbf{\textit{Subgrid\_HTU} routing}, developed before the introduction of the \textit{interp\_topo} routing to operate at a higher resolution than \textit{subgrid\_halfdeg} routing. In this version, HTUs are constructed from a high-resolution DEM by aggregating grid cells. However, this routing still maintains the constraint of having an integer number of HTUs within each ORCHIDEE grid cell, making it incompatible with the icosahedral grid. It was not used in the simulations presented in this thesis, but the manuscript occasionnaly refers to it.
 \end{itemize}
+
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\linewidth]{images/routing_structure.png}
+    \caption{Operating principles of the \textit{interp\_topo} routing}
+    \label{fig:routing_principles}
+\end{figure}
 
 \subsection{Irrigation scheme}
 
@@ -250,7 +283,7 @@ A new irrigation scheme has recently been implemented in ORCHIDEE, presented and
 \begin{figure}[t]
     \centering
     \includegraphics[width=1\textwidth]{images/schema_pedro.png}
-    \caption{Principles of the new irrigation scheme. Extracted from \citet{arboleda-obando_validation_2024}.}
+    \caption{Principles of the new irrigation scheme \citep[from][]{arboleda-obando_validation_2024}.}
     \label{fig:schema_pedro}
 \end{figure}
 
