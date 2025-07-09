@@ -272,7 +272,7 @@ In this version, the routing grid is exactly the same as the DEM grid, meaning H
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\linewidth]{images/routing_structure.png}
-    \caption{Operating principles of the \textit{interp\_topo} routing}
+    \caption{Operating principles of the \textit{interp\_topo} routing}%todo:explain hydrographs
     \label{fig:routing_principles}
 \end{figure}
 
@@ -345,3 +345,10 @@ Additionally, to use this scheme, the following parameters must be set:
 The sensitivity analyses described in \citet{arboleda-obando_validation_2024} identified default values for all parameters to best represent the impact of irrigation on the global climate and showed that the target parameter $\beta$ has the greatest impact on the volume of water withdrawn for irrigation.
 In the default version of the global model, this parameter is set to 0.9, defining a soil moisture target at 90 \% of SM at field capacity. However, this value reflects a wide variety of irrigation practices, including flooding in rice paddies and can be adjusted for simulations focused on a specific region. %todo:cf section....
 
+\section{Input data and external forcings}
+%todo: decide if this is a good way to treat the topic
+%topography ? (if not in general intro over Peninsula)
+%irrgmap
+%aei_sw
+%DEMs
+%
