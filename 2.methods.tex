@@ -51,7 +51,7 @@ The simulation domain is separated in 3 concentric zones, as shown on Fig. \ref{
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/LAM_domain_zones.png}
+    \includegraphics[width=0.5\textwidth]{images/methods/LAM_domain_zones.png}
     \caption{LAM domain structure example with NBP=27 \citep[from][]{raillard_leveraging_2024}}
     \label{fig:LAM_domain}
 \end{figure}
@@ -230,15 +230,14 @@ Finally, regarding radiative fluxes, ORCHIDEE does not modify the incoming radia
 
 \subsection{Routing scheme}
 \label{section:routing_methods}
-%option:decide if need to change surface runoff to surface water for clarity ?
 The routing scheme is a sub-module of SECHIBA, which simulates horizontal water transfers between cascading reservoirs and transports it to the oceans \citep{ducharne_development_2003, ngo-duc_validation_2007}. 
 Water routing is necessary to maintain water conservation on a global scale in fully coupled simulations with a dynamic ocean model, and it also enables simulation of river discharge and groundwater volumes. 
 This scheme generally runs at a larger time step than the rest of the model (once per day by default). However, the irrigation scheme (detailed in the next section) requires routing to run at each time step of the ORCHIDEE model.
 
 The routing scheme subdivides the simulation domain into hydrological transfer units (HTU) and uses a digital elevation model (DEM) constructed from topographic data to define flow directions and characterize the HTUs (dimensions, slope, upstream/downstream relationships). The grid upon which the routing flows are solved can be independent of the ORCHIDEE grid, and is hereafter referred to as the routing grid.
 
-Within each HTU, three linear reservoirs are represented: the \textit{slow} reservoir (groundwater), the \textit{fast} reservoir (surface runoff), and the \textit{stream} reservoir (rivers). For each reservoir, the characteristic residence time of water in a grid cell depends on a fixed transfer coefficient (denoted TCST\_SLOW, as TCST\_FAST, and TCST\_STREAM in Fig. \ref{fig:routing_principles}) and on the local slope obtained from the DEM.
-Surface runoff and drainage computed for each ORCHIDEE soil column are interpolated to the routing grid to respectively feed the surface runoff and groundwater reservoirs. All three reservoirs then flow into the river reservoir of the downstream HTU. The river reservoir is therefore the only one connected to neighboring HTU, as no other horizontal transfer is modeled in ORCHIDEE. This assumption may have limitations at high resolutions as it ignores direct groundwater transfers between grid cells.
+Within each HTU, three linear reservoirs are represented: the \textit{slow} reservoir (groundwater), the \textit{fast} reservoir (overland), and the \textit{stream} reservoir (rivers). For each reservoir, the characteristic residence time of water in a grid cell depends on a fixed transfer coefficient (denoted TCST\_SLOW, as TCST\_FAST, and TCST\_STREAM in Fig. \ref{fig:routing_principles}) and on the local slope obtained from the DEM.
+Surface runoff and drainage computed for each ORCHIDEE soil column are interpolated to the routing grid to respectively feed the overland and groundwater reservoirs. All three reservoirs then flow into the river reservoir of the downstream HTU. The river reservoir is therefore the only one connected to neighboring HTU, as no other horizontal transfer is modeled in ORCHIDEE. This assumption may have limitations at high resolutions as it ignores direct groundwater transfers between grid cells.
 
 The outgoing water quantity $Q$ (given in $kg$) from a reservoir over one routing time step is expressed using the reservoir volume in the routing grid cell $V$ ($kg$), the transfer coefficient of the reservoir $TCST$ ($day \cdot km^{-1}$), a topographic index $topoindex$ ($km$) derived from the DEM that indicates the slope, and the routing time step $dt_{routing}$ ($s$):
 
@@ -260,8 +259,8 @@ In this version, the routing grid is exactly the same as the DEM grid, meaning H
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1\textwidth]{images/routing_structure.png}
-    \caption{Operating principles of the \textit{interp\_topo} routing. The \textit{hydrographs} variable corresponds to the river discharge, which is evaluated at the entrance of the routing grid cell.}
+    \includegraphics[width=1\textwidth]{images/methods/routing_principles.png}
+    \caption{Modelling principles of the \textit{interp\_topo} routing.}
     \label{fig:routing_principles}
 \end{figure}
 
@@ -279,7 +278,7 @@ A new irrigation scheme has recently been implemented in ORCHIDEE, presented and
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=1\textwidth]{images/schema_pedro.png}
+    \includegraphics[width=1\textwidth]{images/methods/schema_pedro.png}
     \caption{Principles of the new irrigation scheme \citep[from][]{arboleda-obando_validation_2024}.}
     \label{fig:schema_pedro}
 \end{figure}
@@ -310,7 +309,7 @@ The volume of water available for irrigation is expressed as:
 \begin{equation}
     A_w = f_{sw} (a_1 S_1 + a_2 S_2)+ f_{gw}a_3 S_3
 \end{equation}
-where $S_i$ represents the water volume (in mm) in each of the reservoirs (rivers, surface runoff, groundwater), and for each reservoir, a parameter $a_i \in [0;1]$ limits the total volume that can be withdrawn. This ensures that a certain amount of water remains in each reservoir, representing physical constraints and environmental regulations on irrigation withdrawals.
+where $S_i$ represents the water volume (in mm) in each of the reservoirs (rivers, overland, groundwater), and for each reservoir, a parameter $a_i \in [0;1]$ limits the total volume that can be withdrawn. This ensures that a certain amount of water remains in each reservoir, representing physical constraints and environmental regulations on irrigation withdrawals.
 The fractions $f_{sw}$ and $f_{gw}$, ranging from 0 to 1, represent the accessibility of different reservoirs (surface water and groundwater, respectively) within the grid cell. These fractions are obtained from the global map from \citet{siebert_groundwater_2010} of areas equipped for irrigation. A key feature of this map is that a given area cannot be equipped for both surface water and groundwater use simultaneously, which translates to $f_{sw} + f_{gw} =1$.
 
 Once the demand $I_{req}$ and supply $A_w$ are calculated, the applied irrigation is determined as:
