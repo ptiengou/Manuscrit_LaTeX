@@ -273,7 +273,7 @@ The \std routing can only use the 0.5° DEM whereas the \native can be used with
 %option:mention river discharge stations, positionning on DEM ? Or keep that for dedicated chapter ?
 
 \subsection{Irrigation scheme}
-
+\subsubsection{Modelling principles}
 A new irrigation scheme has recently been implemented in ORCHIDEE, presented and validated in \citet{arboleda-obando_validation_2024}. An irrigation representation already existed in ORCHIDEE \citep{de_rosnay_integrated_2003, guimberteau_global_2012}, but this work relies solely on this new modelling approach. The scheme is based on a water-conservative supply-and-demand approach, summarized in Figure \ref{fig:schema_pedro}
 
 \begin{figure}[t]
@@ -360,13 +360,18 @@ In the default version of the global model, this parameter is set to 0.9, defini
     \label{fig:irrig_inputs}
 \end{figure}
 
+\subsubsection{Irrigation scheme with the \native routing.}
 
-% \section{Simulation setup}
-%not sure if relevant, offline sims in Chapter 3, coupled sims in Chapter 4&5, probably better to keep these details to their specific chapter
+This irrigation scheme was initially developed with the \std routing version, and adjustments were made when developing the \native routing to make it compatible with this new code. Since in \native the routing grid is completely independent of the ORCHIDEE grid, it is important to identify which variables are computed directly on the ORCHIDEE grid and which ones are computed on the routing grid, and then interpolated to the ORCHIDEE grid to be used as ORCHIDEE outputs.
+In particular, reservoir volumes are computed on the routing grid, which means that irrigation (which withdraws from these reservoirs) must be computed on the same grid.
+To ensure water conservation, the \native routing uses absolute values in $kg$ of water (as opposed to areal values in $kg m^{-2}$). Therefore, when interpolating variables from one grid to another, the variables are also converted to a different unit, accounting for the area of the ORCHIDEE grid cells.
+The only variable that is output directly on the routing grid is the river discharge, which only has relevance in relation to the topography. Figure \ref{fig:irrig_interpolations_outputvars} summarizes the interactions between the two grids for routing and irrigation variables in \native.
 
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=0.5\textwidth]{images/methods/altitude_map.png}
-%     \caption{Altitude (m) over the ICOLMDZOR simulation domain, on the native hexagonal grid.}
-%     \label{fig:domain_atltitude}
-% \end{figure}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{images/methods/routing_irrig_interpolation_outputvars.png}
+    \caption{River routing and irrigation variables and interactions between the ORCHIDEE and routing grids in \native. Variables shown in red are used as model outputs while the others are only intermediate computations.}
+    \label{fig:irrig_interpolations_outputvars}
+\end{figure}
+
+%chapter end
