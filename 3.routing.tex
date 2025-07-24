@@ -23,13 +23,13 @@ It must be noted that these volumes cannot be easily compared to observations, s
 Theie importance in this work is mainly justified by the fact that the irrigation scheme withdraws water from these reservoirs to satisfy the irrigation demand while conserving water quantities.
 
 All simulations for this chapter were run in offline mode, meaning that ORCHIDEE is not coupled to any atmospheric model but takes meteorological data as input. 
-Simulations were run from 2000 to 2012, with the WATCH Forcing Data ERA-Interim \citep[WFDEI, ][]{weedon_wfdei_2014}. Sensitivity experiments to assess the impact of the forcing were also run with the Global Soil Wetness Project Phase 3 Atmospheric Boundary Conditions \citep[GSWP3, ][]{kim_hyungjun_global_2017}, another forcing dataset which is only available until 2010.
-In all simulations, the first three years were considered as a spinup and removed from the analysis, to allow the vegetation and hydrological variables to reach an equilibrium. The regional domain covers the Iberian Peninsula and part of Morocco, since at the time, this region was also considered as a study area for coupled simulations. Since this idea was not pursued, the analysis only focuses on the Iberian Peninsula.
+Most simulations were run from 2000 to 2012, with the WATCH Forcing Data ERA-Interim \citep[WFDEI, ][]{weedon_wfdei_2014}. Sensitivity experiments to assess the impact of the forcing were also run with the Global Soil Wetness Project Phase 3 Atmospheric Boundary Conditions \citep[GSWP3, ][]{kim_hyungjun_global_2017}, another forcing dataset which is only available until 2010.
+In all simulations, the first three years were considered as a spin-up and removed from the analysis, to allow the vegetation and hydrological variables to reach an equilibrium. The regional domain covers the Iberian Peninsula and part of Morocco, since at the time, this region was also considered as a study area for coupled simulations. Since this idea was not pursued, the analysis only focuses on the Iberian Peninsula.
 Topographical data from the two DEMs presented in Chapter \ref{chap:methods} was used, either from the 0.5°-resolution DEM historically associated with the \std routing or from the MERIT DEM at 2-km resolution.
 
 In all this chapter, the simulated river discharge is evaluated against monthly observation data from discharge stations of the Global Runoff Data Center \cite[GRDC, https://grdc.bafg.de,][]{fekete_global_2003}.
 Stations were positioned on the 0.5° DEM grid using only the GPS position, and on the MERIT DEM grid with tools presented in \cite{polcher_hydrological_2023}, which use the GPS position of the stations as well as the upstream catchment area to find the most appropriate grid cell for comparison with the observations. 
-Four stations were used between 2003 and 2012, which are all on large rivers (Ebro, Douro, Tagus, Guadiana) and show large discharge values, meaning they represent the integrated discharge over a large share of the basins.
+Four stations were used, which are all on large rivers (Ebro, Douro, Tagus, Guadiana) and show large discharge values, meaning they represent the integrated discharge over a large share of the basins.
 
 \begin{figure}[htbp]
     \centering
@@ -119,7 +119,7 @@ Four simulations were run, two without irrigation (labeled as \textit{no\_irr}) 
     \label{fig:routing_reservoirs_halfdeg}
 \end{figure}
 
-The comparison of the mean volumes for the fast and slow reservoirs (Fig. \ref{fig:routing_reservoirs_halfdeg}a-f) shows differences only on coastal grid cells, which are very low in \std but can have significant values in \native. This is particularly visible in the northern moutain ranges, and it must be noted that the values computed by \native are in the expected order of magnitude, considering these are regions of high precipitation, and therefore high drainage and surface runoff.
+The comparison of the mean volumes for the groundwater and overland reservoirs (Fig. \ref{fig:routing_reservoirs_halfdeg}a-f) shows differences only on coastal grid cells, which are very low in \std but can have significant values in \native. This is particularly visible in the northern moutain ranges, and it must be noted that the values computed by \native are in the expected order of magnitude, considering these are regions of high precipitation, and therefore high drainage and surface runoff.
 These differences are thought to be the consequence of a different handling of water quantities and their units in \native compared to \std. Drainage and surface runoff are computed on the ORCHIDEE grid, in $kg m^{-2}$ (equivalent to $mm$ over the grid cell) and in \native, they are  converted to absolute water quantities (in $kg$) before being interpolated to the DEM grid. These absolute quantities are routed on the DEM grid and the new water quantities in the reservoirs are reinterpolated to the ORCHIDEE grid (even when the two grids have the same resolution). 
 To express them as an areal value, in $kg m^{-2}$, the absolute water quantity has to be divided by the area of the grid cell. It is considered likely that this back-and-forth interpolation and change of units introduces the differences, by accounting for continental fraction (to obtain the exact area on coastal points) whereas in \std this was not necessary since all computations were on the same grid cell. Such subtleties in the code were introduced to enable compatibility with any DEM grid and are still under investigation by its developpers to clarify the cause of the observed discrepancies and determine whether they introduced errors or corrected existing flaws of the previous code.
 Since this issue affected only the groundwater and overland reservoirs and was located only on coastal grid cells, it was considered that for the purpose of this thesis, the impacts should not affect the results substantially and that \native could be used in its current version.
@@ -229,11 +229,9 @@ This comparison of the \native routing version with \std showed that this new ve
 
 Once the general consistency of the \native routing had been assessed, it became possible to evaluate the specific setup that would be used for the coupled simulation, using the MERIT DEM at 2km resolution and accounting for irrigation. To use irrigation, the routing time step must be the same as the time step of ORCHIDEE, which is 15mn (900s) in coupled simulations. 
 
-This calibration was initially focused on the three time constants of the routing reservoirs: TCST\_SLOW, TCST\_FAST, TCST\_STREAM. Although these parameters could theoretically be independent of the spatial and temporal time steps and of the DEM used as input, they can strongly influence the results. %rephrase
+This calibration was initially focused on the three time constants of the routing reservoirs: TCST\_SLOW, TCST\_FAST, TCST\_STREAM. Although these parameters should theoretically be independent of the spatial and temporal time steps and of the DEM used as input, they can strongly influence the results. %todo : rephrase
 In particular, the ORCHIDEE routing scheme had never been used with a high-resolution topography like the MERIT DEM at 2-km resolution, since the \std routing ran only with the 0.5° resolution DEM used in the previous section, and often with a 24-hours routing time step. Multiple tests were therefore carried to identify an appopriate set of time constants for the reservoirs.
 Moreover, the sensitivity of river discharge to the activation of irrigation was identified as very important, with large differences in the responses depending on the intensity of irrigation demand. As a consequence, the parameter $\beta$, which defines the soil moisture target in the irrigation scheme, was also included in this calibration and modified compared to the default version of the model.
-
-% For these offline calibration simulations, given the better availability of flow observations and meteorological forcings before 2014, I did not work exactly on the period 2010-2022 but rather on the previous decades.. 
 
 \subsection{Simulation experiments}
 
@@ -258,7 +256,7 @@ Initial \native calibration & 1.2 & 0.9 & 0.03 \\ \hline
 \end{table}
 
 In these three sets of values, there is approximately an order of magnitude between the three time constants, and very significant differences (one or two orders of magnitude) between each set. 
-This can be explained by the different DEMs used, the way HTUs are defined, and the calibration choices that led to these sets of values.%option:compléter analyse ? 
+This can be explained by the different DEMs used, the way HTUs are defined, and the calibration choices that led to these sets of values.%option:compléter explication ? 
 
 Three initial experiments were defined, based on these ratios:\\$TCST\_SLOW \approx 10 \times TCST\_FAST \approx 100 \times TCST\_STREAM$.
 Table \ref{table:tcst_exp} presents these three sets of values based on the orders of magnitude of each of the reference value sets (TCST1, TCST2, TCST3), as well as the one selected after the calibration (TCST4), whose development steps are detailed hereafter.
@@ -277,8 +275,7 @@ TCST4 & 700 & 100 & 0.1 \\ \hline
 \label{table:tcst_exp}
 \end{table}
 
-Four simulations were therefore carried out with these four sets of TCST values, over the period 2000-2012, without activating irrigation.
-The first three years are considered as a spin-up to allow the vegetation, soil moisture, and routing reservoir volumes to reach equilibrium, and the results presented therefore cover 10 years of simulation (2003-2012). %todo:remove if this part is already mentionned in the chapter methods
+Four simulations without irrigation were therefore carried out with these four sets of TCST values over the period 2000-2012 and analysed over 2003-2012.
 
 \subsection{Reservoir volumes and time constants}
 
@@ -328,7 +325,7 @@ It can be noted that the performance of TCST1 for river dischage is good, but th
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{images/chap3/river_discharge/merit_tcst_4stations_SC.png}
-    \caption{River discharge mean seasonal cycle (2003-2012) for 4 large stations of the Peninsula.}
+    \caption{River discharge mean seasonal cycle (2003-2012) with four sets of TCST parameters.}
     \label{fig:merit_tcsts_stations_SC}
 \end{figure}
 
@@ -339,36 +336,57 @@ Further tests for the choice of parameters were considered, to explore if the pe
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{images/chap3/river_discharge/merit_forcing_4stations_SC.png}
-    \caption{River discharge mean seasonal cycle (2003-2012) for 4 large stations of the Peninsula.}
+    \caption{River discharge mean seasonal cycle (2003-2012) with GSWP3 and WFDEI forcings, with ant without irrigation.}
     \label{fig:merit_forcing_stations_SC}
 \end{figure}
 
-The impacts of the atmospheric forcing used and of irrigation were assessed jointly with four simulations, all with the TCST4 parameter set, using two atmospheric forcings (WFDEI and GSWP3), %todo:ref ?
-each with and without irrigation. 
+The impacts of the atmospheric forcing used and of irrigation were assessed jointly with four simulations, all with the TCST4 parameter set, using two atmospheric forcings (WFDEI and GSWP3), each with and without irrigation. Considering the availability of GSWP3, simulations were only run until 2010.
 
 The results (Fig. \ref{fig:merit_forcing_stations_SC}) show a response to both changes but a stronger impact of irrigation, which strongly reduces discharge, except in winter. The WFDEI and GSWP3 forcing produce seasonal cycles with similar structures but using the GSWP3 forcing leads to larger discharge in the winter peak for the Ebro and Douro basin, as well in the peak of autumn precipitation in the Tagus, Douro and Guadiana basins. These regional and sesonal specificities reflect the differences in precipitation between the two forcings. %todo:show yearly or seasonal maps ? side by side, diff ?
 In summer, the \noirr and \irr simulations with the two forcings are similar, especially with irrigation, which depletes the river reservoir, reducing discharge to near-zero for the four rivers.
 
-The strengths of these responses, compared to the differences in the parameter sets explored in Fig. \ref{fig:merit_tcsts_stations_SC} justified the decision not to pursue finer tuning of the TCST parameters, which would be too dependent on the forcing or the activation of irrigation. The TCST4 parameter set was considered a reasonible option, and it was decided to include the parameterization of irrigation in the calibration. 
+The strengths of these responses, compared to the differences in the parameter sets explored in Fig. \ref{fig:merit_tcsts_stations_SC} justified the decision not to pursue finer tuning of the TCST parameters, which would be too dependent on the forcing or the activation of irrigation. The TCST4 parameter set was considered an acceptable option for the routing scheme, and it was decided to include the parameterization of irrigation in the calibration. 
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{images/chap3/river_discharge/merit_irr_4stations_SC.png}
-    \caption{River discharge mean seasonal cycle (2003-2012) for 4 large stations of the Peninsula.}
+    \caption{River discharge mean seasonal cycle (2003-2010) in the \noirr, \irr and \textit{irr\_reduced} simulations.}
     \label{fig:merit_irr_stations_SC}
 \end{figure}
 
-The global evaluation of the ORCHIDEE irrigation scheme \citep{arboleda-obando_validation_2024} identified the \textit{beta\_irrig} parameter as the main driver of simulated irrigation. This parameter conditions the soil moisture target as a fraction of soil moisture at field capacity. The default value selected for global simulations was $beta\_irrig = 0.9$. However, this value was chosen as an average on the global scale, meant to reflect a large diversity of irrigation practices, including flooding methods in rice paddies, which is common in intensely irrigated regions of northern India and China. For such practices, $beta\_irrig = 1.2$ would be more appropriate to represent the irrigation withdrawals properly. In the Iberian Peninsula however, the limited water supply and semiarid climate favor less water intensive methods (drip or sprinkler irrigation) which would be better represented with lower values of \textit{beta\_irrig}. The value of $0.9$ was selected as a way to center the global biases compared to reference products on zero, acknowledging that this value was too low for some regions and too high for others.
+The global evaluation of the ORCHIDEE irrigation scheme \citep{arboleda-obando_validation_2024} identified the \betairrig parameter as the main driver of simulated irrigation. This parameter conditions the soil moisture target as a fraction of soil moisture at field capacity. The default value selected for global simulations was \betairrig = 0.9. However, this value was chosen as an average on the global scale, meant to reflect a large diversity of irrigation practices, including flooding methods in rice paddies, which is common in intensely irrigated regions of northern India and China. For such practices, \betairrig = 1.2 would be more appropriate to represent the irrigation withdrawals properly. In the Iberian Peninsula however, the limited water supply and semiarid climate favor less water intensive methods (drip or sprinkler irrigation) which would be better represented with lower values of \betairrig. The value of $0.9$ was selected as a way to center the global biases compared to reference products on zero, acknowledging that this value was too low for some regions and too high for others.
 
-This is why other values were explored for the calibration over the Iberian Peninsula, as well as to limit the unrealistic depletion of rivers in summer. Fig. \ref{fig:merit_irr_stations_SC} shows three simulations, all with the WFDEI forcing and TCST4 set of parameter for routing, but with different options for irrigation: \noirr, \irr (default value $beta\_irrig = 0.9$) and \textit{irr\_reduced} with $beta\_irrig = 0.6$. 
+This is why other values were explored for the calibration over the Iberian Peninsula, as well as to limit the unrealistic depletion of rivers in summer. Fig. \ref{fig:merit_irr_stations_SC} shows three simulations, all with the WFDEI forcing and TCST4 set of parameter for routing, but with different options for irrigation: \noirr, \irr (default value \betairrig = 0.9) and \textit{irr\_reduced} with \betairrig = 0.6. 
 This simulation limits the depletion in summer and yields much better performance in the Ebro basin, which is the most very intensely irrigated region, and largely depends on water from river (as opposed to groundwater) for irrigation.
+This reduced irrigation also seems more consistent when looking at the seasonal cycle of irrigation (Fig. \ref{fig:merit_irr_reduced}c). In the default \irr simulation, high volumes are withdrawn in the spring but irrigation drops in summer, which is the season where irrigation demand is the highest. This is due to a lack of available water in the reservoirs in the irrigated regions in summer, which are depleted too quickly when using \betairrig = 0.9. The effect of the river reservoir depletion is also visible on the summer river discharge of Fig. \ref{fig:merit_irr_stations_SC} which falls to near-zero for the four rivers considered.
+
+To summarize, the \textit{irr\_reduced} setup simulates a lower demand in irriation and therefore less irrigation overall, but it avoids an early depletion of the reservoirs, yielding a more consistent seasonal cycle of irrigation and matching discharge observation better in spring and summer.
+%option : also show root_deficit to demonstrate that large Beta leads to much larger demand
+
+%figure : maps of irrig in irr and irr_reduced, and seasonal cycle of irrig over IP for both sims
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \caption{Mean irrigation in \irr.\\ } 
+        \includegraphics[width=\textwidth]{images/chap3/maps/irrigation_ave_tcst4_irr.png}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \caption{Mean irrigation in \textit{irr\_reduced}.} 
+        \includegraphics[width=\textwidth]{images/chap3/maps/irrigation_ave_tcst4_irr_reduced.png}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\textwidth}        
+        \caption{Seasonnal cycle of irrigation.} 
+        \includegraphics[width=\textwidth]{images/chap3/time_series/irrigation_seasonal_cycle_irr_reduced.png}
+    \end{subfigure}
+    \caption{Simulated irrigation in the \irr and \textit{irr\_reduced} simulations (2003-2012).}
+    \label{fig:merit_irr_reduced}
+\end{figure}
 
 \pagebreak
 
 \section{Chapter conclusions}
 
-This chapter presents the evaluation and calibration of the new version of the routing scheme (\native) using ORCHIDEE offline simulations  over the Iberian Peninsula. This was a necessary step to prepare for coupled simulations, which provided a finer understanding of the behaviour of the routing scheme with different DEMs and time steps, and also highlighted the interdependency between the irrigation parameterization and the routing reservoirs and river discharge. 
-%NB : no result actually comments on the impact of irrig on GW reservoir so far...
+This chapter presents the evaluation and calibration of the new version of the routing scheme (\native) using ORCHIDEE offline simulations over the Iberian Peninsula. This was a necessary step to prepare for coupled simulations, which provided a finer understanding of the behaviour of the routing scheme with different DEMs, and also highlighted the interdependency between the irrigation parameterization, the routing reservoirs, and river discharge. 
 
 This calibration and evaluation work first showed that the new routing code mostly behaves similarly to the pre-existing version (\std) if given the same time step, input map, and parameters, although some differences were identified on the coastal grid cells. Differences in the routing path also appeared between \std and \native, leading to local differences in discharge and irrigation.
 
@@ -377,8 +395,8 @@ Comparison of reservoir volumes with the previous version of the routing (\std),
 Using discharge observations, the value of TCST\_STREAM was then adjusted to correctly represent the seasonal cycle of the major rivers of the Iberian Peninsula.
 
 Sensitivity experiments highlighted the very large response of river discharge to the activation of irrigation (except in winter), and a significant yet more moderate response to the atmospheric forcing used for the calibration. 
-The magnitude of these sensitivities to irrigation also contributed to the decision not to further calibrate the TCST values, as their impact on simulated river discharge performance remains limited compared to that of irrigation.
-As a consequence, the $\beta$ parameter of the irrigation scheme was also included in the calibration, and 0.6 was identified as a more suitable value than the default value of 0.9. This choice allows avoiding excessively low discharge in summer for the four rivers considered, and is considered more consistent with a representation of irrigation practices in the region.
+The magnitude of these sensitivities also contributed to the decision not to further calibrate the TCST values, as their impact on simulated river discharge performance remains limited compared to that of irrigation.
+As a consequence, the $\beta$ parameter of the irrigation scheme was also included in the calibrated parameters, and 0.6 was identified as a more suitable value than the default value of 0.9. This option avoids depletion of the reservoirs, which makes the seasonal cycle of irrigation more consistent and enables better agreement with observation for discharge in summer. As hypothesized in \citet{arboleda-obando_validation_2024} this value is considered more consistent with a representation of irrigation practices in the region.
 
 Therefore, the set of parameters from the simulations \textit{tcst4\_no\_irr} and \textit{tcst4\_irr\_reduced} were used to study the impact of irrigation in the coupled simulations presented in Chapter \ref{chap:monthly}.
 %over
