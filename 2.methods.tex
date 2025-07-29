@@ -362,7 +362,6 @@ In the default version of the global model, this parameter is set to 0.9, defini
 %todo: comment for future links : main irrigated valleys (mention coast no irrigated ?), dependency to GW or surface water (identify Ebro vs Andalousia)
 
 \subsubsection{Irrigation scheme with the \native routing.}
-s
 This irrigation scheme was initially developed with the \std routing version, and adjustments were made when developing the \native routing to make it compatible with this new code. Since in \native the routing grid is completely independent of the ORCHIDEE grid, it is important to identify which variables are computed directly on the ORCHIDEE grid and which ones are computed on the routing grid, and then interpolated to the ORCHIDEE grid to be used as ORCHIDEE outputs.
 In particular, reservoir volumes are computed on the routing grid, which means that irrigation (which withdraws from these reservoirs) must be computed on the same grid.
 To ensure water conservation, the \native routing uses absolute values in $kg$ of water (as opposed to areal values in $kg m^{-2}$). Therefore, when interpolating variables from one grid to another, the variables are also converted to a different unit, accounting for the area of the ORCHIDEE grid cells.

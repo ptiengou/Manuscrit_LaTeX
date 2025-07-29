@@ -1,7 +1,7 @@
 \chapter{Impacts of irrigation on regional climate and water cycle}
 \label{chap:monthly}
 \minitoc
-\pagebreak
+\clearpage
 
 \section{Chapter introduction}
 
@@ -36,7 +36,7 @@ Independently of its source (ERA5 or global ICOLMDZ simulations) and temporal sa
 %figure:altitude over hexagonal domain (native grid)
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.7\textwidth]{images/chap4/f01.png}
+    \includegraphics[width=0.7\textwidth]{images/chap4/article/f01.png}
     \caption{Altitude (m) over the simulation domain on the native hexagonal grid for a simulation with $R_{domain}=1500km$ and $NBP=60$.}
     \label{fig:domain_full_hex}
 \end{figure}
@@ -84,7 +84,7 @@ The 18 selected stations with available data over the simulation period and an a
 %figure:discharge stations and dams
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{images/chap4/f02.pdf}
+    \includegraphics[width=\textwidth]{images/chap4/article/f02.pdf}
     \caption{Stations used for river discharge evaluation, river dams from \citet{aquastat_dams}, and main rivers of the study area from the CCM2.1 dataset \citep{vogt_pan-european_2007}, showing only rivers longer than 50 km for readability.}
     \label{fig:selected_stations}
 \end{figure}
@@ -124,11 +124,304 @@ The 18 selected stations with available data over the simulation period and an a
 \end{table*}
 \clearpage
 
+\clearpage
+
 \section{Influence of lateral forcing on the consistency of the LAM}
 \label{sec:forcing_influence}
 \subsection{Structural inconsitencies and influence of domain size}
+
+%figure : maps of 6 vars in ERA to see variable structure
+\begin{figure}[htbp]
+    \centering
+    \begin{tabular}{ccc}
+        %precip
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_precip_ERA5.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_SWdnSFC_ERA5.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_cldt_ERA5.png}
+        \end{subfigure} \\
+
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_evap_ERA5.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_LWdnSFC_ERA5.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_cldl_ERA5.png}
+        \end{subfigure}
+    \end{tabular}
+    \caption{}
+    \label{fig:ERA_var_maps}
+\end{figure}
+
+%figure : maps of diff vs ERA for 3 domain sizes : precip, evap
+\begin{figure}[htbp]
+    \centering
+    \begin{tabular}{ccc}
+        %precip
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_precip_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_precip_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_precip_era_LAM_2000km_NBP80.png}
+        \end{subfigure} \\
+        
+        %evap
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_evap_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_evap_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_evap_era_LAM_2000km_NBP80.png}
+        \end{subfigure} 
+    \end{tabular}
+    \caption{}
+    \label{fig:domain_size_P_ET_ERA_diff_maps}
+\end{figure}
+
+
+
+%figure : maps of diff vs ERA for 3 domain sizes : SW, LW, cloud cover
+\begin{figure}[htbp]
+    \centering
+    \begin{tabular}{ccc}
+
+        %SWdn
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_SWdnSFC_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_SWdnSFC_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_SWdnSFC_era_LAM_2000km_NBP80.png}
+        \end{subfigure} \\
+        
+        %LWdn
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_LWdnSFC_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_LWdnSFC_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_LWdnSFC_era_LAM_2000km_NBP80.png}
+        \end{subfigure} \\
+        %total
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldt_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldt_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldt_era_LAM_2000km_NBP80.png}
+        \end{subfigure} \\
+        
+        %low
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldl_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldl_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldl_era_LAM_2000km_NBP80.png}
+        \end{subfigure} \\
+        
+    \end{tabular}
+    \caption{}
+    \label{fig:domain_size_clouds_ERA_diff_maps}
+\end{figure}
+
+\clearpage
+
 \subsection{Impact of the source of the lateral forcing}
+
+%figure : maps of diff vs ERA for 2 forcing sources
+\begin{figure}[htbp]
+    \centering
+    \begin{tabular}{cc}
+        %precip
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_precip_era_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_precip_ico_era.png}
+        \end{subfigure} \\
+        
+        %evap
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_evap_era_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_evap_ico_era.png}
+        \end{subfigure} \\
+        
+        %SWdn
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_SWdnSFC_era_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_SWdnSFC_ico_era.png}
+        \end{subfigure}\\
+        
+        %LWdn
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_LWdnSFC_era_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_LWdnSFC_ico_era.png}
+        \end{subfigure} \\
+    \end{tabular}
+    \caption{}
+    \label{fig:forcing_source_ERA_diff_maps_endvars}
+\end{figure}
+
+
+%figure : maps of diff vs ERA for 2 forcing sources
+\begin{figure}[htbp]
+    \centering
+    \begin{tabular}{cc}
+        %precip
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_precip_era_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_precip_ico_era.png}
+        \end{subfigure} \\
+        
+        %evap
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_evap_era_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_evap_ico_era.png}
+        \end{subfigure} \\
+        
+        %SWdn
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_SWdnSFC_era_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_SWdnSFC_ico_era.png}
+        \end{subfigure}\\
+        
+        %LWdn
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_LWdnSFC_era_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_LWdnSFC_ico_era.png}
+        \end{subfigure} \\
+    \end{tabular}
+    \caption{}
+    \label{fig:forcing_source_ERA_diff_maps_clouds}
+\end{figure}
+
+\clearpage
+
 \subsection{Impact of the forcing file sampling frequency}
+
+%figure : maps of diff vs ERA for 2 forcing sampling freqs
+\begin{figure}[htbp]
+    \centering
+    \begin{tabular}{cc}
+        %precip
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_precip_era_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_precip_ico_era.png}
+        \end{subfigure} \\
+        
+        %evap
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_evap_era_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_evap_ico_era.png}
+        \end{subfigure} \\
+        
+        %SWdn
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_SWdnSFC_era_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_SWdnSFC_ico_era.png}
+        \end{subfigure}\\
+        
+        %LWdn
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_LWdnSFC_era_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_LWdnSFC_ico_era.png}
+        \end{subfigure} \\
+    \end{tabular}
+    \caption{}
+    \label{fig:forcing_sampling_freq_ERA_diff_maps}
+\end{figure}
+
+\clearpage
 
 \section{Impacts of irrigation under present climate (2010-2022)}
 \label{sec:article1}
@@ -144,7 +437,7 @@ They are referred to as \irr (with irrigation activated in ORCHIDEE) and \noirr 
 %figure
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{images/chap4/f03.png}
+    \includegraphics[width=\textwidth]{images/chap4/article/f03.png}
     \caption{Simulated irrigation and its drivers. Input maps of (a) grid cell irrigated fraction \citep[\% , derived from][]{hurtt_harmonization_2020} and (b) the share of irrigation equipment for surface withdrawals, as opposed to groundwater withdrawals \citep[\%, derived from ][]{siebert_groundwater_2010}. Annual means (2010-2022) of (c) simulated irrigation requirement (mm d$^{-1}$), (d) irrigation (mm d$^{-1}$), and relative changes (\irr - \noirr, \%) in water volumes in (e) groundwater and (f) river reservoirs.}
     \label{fig:irrig_maps}
 \end{figure}
@@ -164,7 +457,7 @@ Overall, the spatial biases of the simulated irrigation offset each other relati
 %figure : map of bias (irr vs obsEbro) + Seasonnal cycle over area with obs
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/chap4/f04.png}
+    \includegraphics[width=0.5\textwidth]{images/chap4/article/f04.png}
     \caption{Evaluation of simulated irrigation from January 2016 to July 2020 over the Ebro Valley. (a) Mean seasonal cycle of irrigation for the \irr simulation and the remote sensing product (\textit{Ebro\_estimate}, mm d$^{-1}$), and (b) mean bias compared with the product (mm d$^{-1}$). The simulation outputs are interpolated on the grid of the remote sensing product.}
     \label{fig:irrig_eval}
 \end{figure}
@@ -174,7 +467,7 @@ Overall, the spatial biases of the simulated irrigation offset each other relati
 %%single column figure : discharge obs vs irr vs no_irr on 3 stations (3 large rivers with proper data)
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=8.3cm]{images/chap4/f05.png} 
+    \includegraphics[width=8.3cm]{images/chap4/article/f05.png} 
     \caption{Impacts of irrigation on river discharge. Mean seasonal cycle of river discharge (m$^3$ s$^{-1}$) in observations (black) and the \noirr (red) and \irr (blue) simulations at five stations: (a) Tortosa (Ebro), (b) Tore (Douro), (c) Talavera (Tagus), (d) Azud de Badajoz (Guadiana), and (e) Mengibar (Guadalquivir). A mask is applied to the simulations to filter out months without corresponding observation data.}
     \label{fig:discharge_SC}
 \end{figure}
@@ -231,7 +524,7 @@ Overall, the performance is clearly improved for 12 stations but partly degraded
 %figure: precip and ET eval, side by side Seasonal Cycle (with obs products) and bias to GPCC/GLEAM
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{images/chap4/f06.png}
+    \includegraphics[width=\textwidth]{images/chap4/article/f06.png}
     \caption{Evaluation of simulated precipitation (P) and evapotranspiration (ET) over the Iberian Peninsula continental subdomain, from 2010 to 2019. 
     (a) Mean seasonal cycle of P (mm d$^{-1}$) for the two simulations and GPCC product, annual mean P bias of the (b) \noirr and (c) \irr simulations relative to the GPCC product (mm d$^{-1}$).
     (d) Mean seasonal cycle of ET (mm d$^{-1}$) for the two simulations and GLEAM4 product, annual mean ET bias of the (e) \noirr and (f) \irr simulations relative to the GLEAM4 product (mm d$^{-1}$).}
@@ -258,7 +551,7 @@ To assess the influence of irrigation on the model, the two simulations (\irr an
 %figure : maps of JJA diff with non-sig grid cells hatched 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=15cm]{images/chap4/f07.png}
+    \includegraphics[width=15cm]{images/chap4/article/f07.png}
     \caption{Summer irrigation and its impacts (JJA, 2010-2022). (a) Irrigation (mm d$^{-1}$) and 10 m wind (\irr simulation). Mean changes in the presence of irrigation (\irr - \noirr): (b) evaporative fraction, (c) 2 m temperature (K), (d) atmospheric boundary layer height (m), (e) lifting condensation level (m), (f) precipitation (mm d$^{-1}$), (g) convective available potential energy (J kg$^{-1}$), (h) moisture convergence (mm d$^{-1}$). Hatching indicates areas where the change is not statistically significant.}
     \label{fig:diff_sig_6vars}
 \end{figure}
@@ -285,7 +578,7 @@ Therefore, it appears that irrigation contributes to an increase in atmospheric 
 %figure: 2 scatter plots over IP domain, rainDiff vs irrig
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{images/chap4/f08_colorblind.png}
+    \includegraphics[width=\textwidth]{images/chap4/article/f08_colorblind.png}
     \caption{Domain-averaged influence of irrigation on monthly changes in ET and P (2010-2022). Each data point corresponds to the average value over the Iberian Peninsula continental domain for a single month of simulation (156 data points for 12 months over 13 years). The average amount of water added by irrigation in the \irr simulation (mm d$^{-1}$) is plotted against the average change (\textit{irr - no\_irr}) in (a) ET (mm d$^{-1}$) and (b) P (mm d$^{-1}$). The data points for the winter months are all concentrated around (0,0) for both figures because of very small irrigation volumes and changes in ET and P during this season.}
     \label{fig:scatter_IP}
 \end{figure}
@@ -317,7 +610,7 @@ Over the entire Iberian Peninsula, the increase in precipitation represents 25 \
 %figure: moisture budget : barplot for 3 zones +IP
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=12cm]{images/chap4/f09.png}
+    \includegraphics[width=12cm]{images/chap4/article/f09.png}
     \caption{Changes in the atmospheric moisture budget for subdomains with different irrigation intensities. Each bar plot shows the annual mean irrigation in the \irr simulation (2010-2022, mm d$^{-1}$) alongside the changes (\textit{irr - no\_irr}) in ET (mm d$^{-1}$) and P (mm d$^{-1}$) averaged over distinct subsets of the domain: (a) low irrigation, grid cells with an annual average irrigation lower than 0.06 mm d$^{-1}$, (b) medium irrigation, those where it is between 0.06 and 0.12 mm d$^{-1}$, (c) high irrigation those where it is higher than 0.12 mm d$^{-1}$, and (d) the Iberian Peninsula includes all 3 subsets. The three subdomains are shown in (e).}
     \label{fig:moisture_budget_annual}
 \end{figure}
@@ -356,19 +649,86 @@ In particular, it would be relevant to compare the model to field observations f
 
 \clearpage
 
-\section{Chapter appendix} %todo:voir si je mets ces figures ou si je les laisse en Appendix ici ou Appendix à la fin du manuscrit
+\section{Chapter appendix} %todo:déplacer en fin de manuscrit
 %f
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{images/chap4/18_stations_TS.png}
+    \includegraphics[width=\textwidth]{images/chap4/article/18_stations_TS.png}
     \caption{Time series of river discharge for the \irr and \noirr simulations and GRDC observations.}
 \end{figure}
 
 %f
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{images/chap4/18_stations_SC.png}
+    \includegraphics[width=\textwidth]{images/chap4/article/18_stations_SC.png}
     \caption{Mean seasonnal cycle of river discharge for the \irr and \noirr simulations and GRDC observations. A mask is applied to the simulations to filter out months without corresponding observation data.}
 \end{figure}
+
+
+%figure : maps of relative diff vs ERA for 3 domain sizes
+%todo:captions
+\begin{figure}[htbp]
+    \centering
+    \begin{tabular}{ccc}
+        %precip
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_precip_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_precip_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_precip_era_LAM_2000km_NBP80.png}
+        \end{subfigure} \\
+        
+        %evap
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_2000km_NBP80.png}
+        \end{subfigure} \\
+        
+        %SWdn
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_SWdnSFC_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_SWdnSFC_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_SWdnSFC_era_LAM_2000km_NBP80.png}
+        \end{subfigure} \\
+        
+        %LWdn
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_LWdnSFC_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_LWdnSFC_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_LWdnSFC_era_LAM_2000km_NBP80.png}
+        \end{subfigure} \\
+    \end{tabular}
+    \caption{}
+    \label{fig:domain_size_ERA_reldiff_maps}
+\end{figure}
+ 
 
 %final line
