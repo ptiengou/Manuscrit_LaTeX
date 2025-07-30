@@ -1,4 +1,4 @@
-\chapter{Impacts of irrigation on regional climate and water cycle}
+\chapter{Simulating the regional climate of the Iberian Peninsula and the impacts of irrigation}
 \label{chap:monthly}
 \minitoc
 \clearpage
@@ -13,35 +13,53 @@ This chapter presents results of coupled regional climate simulations run with I
     \item How are the impacts of irrigation modulated in a future climate, under a strong climate change scenario ?
 \end{itemize}
 
-In the process of identifying the adequate simulation setup for the LAM, considering how recent the model is, particular attention was paid to the consistency of the model. Structural biases were identified in the transition zone one the edges of the LAM, with possible associated impacts in the free zone. A sensitivity analysis on the size of the domain enabled pursuing the work with a limited influence of these biases but several scientific questions were identified as to their source and other ways to reduce them. These were further investigated during Mariame Maiga's'internship for her 1st year of Masters at Sorbonne Université, which I co-supervised with Frédérique Cheruy from April to July 2025. 
+In the process of identifying the adequate simulation setup for the LAM, considering how recent the model is, particular attention was paid to the consistency of the model. Structural biases were identified in the transition zone one the edges of the LAM, with possible associated impacts in the free zone. A sensitivity analysis on the size of the domain enabled pursuing the work with a limited influence of these biases but several secondary questions were identified as to their source and other ways to reduce them. These were further investigated during Mariame Maiga's'internship for her first year of Masters at Sorbonne Université, which I co-supervised with Frédérique Cheruy from April to July 2025. 
 All these analyses provided valuable understanding of the sensitivities of the LAM to its lateral forcing and addressed the following questions: 
 \begin{itemize}
-    \item Which variables have an inconsistent behaviour in the transition zone ?
+    \item Which variables have an inconsistent behaviour in the transition zone ? How can these inconsistencies be explained ?
     \item How can the size of the domain limit the extent of these inconsistencies to ensure the LAM is not influenced in the free zone ?
-    \item How dependent on the choice of lateral forcing are the inconsitencies in the transition zone ?
-    \item How much does the timestep of the forcing file influence the consistency and performance of the LAM ?
+    \item How dependent on the choice of lateral forcing are the inconsistencies in the transition zone ? 
+    \item How much does the sampling frequency of the forcing file influence the consistency and performance of the LAM ?
 \end{itemize}
 
-%todo:explain sections, add climate change
+This chapter first contains methodological aspects regarding the simulation setups used and the reference products used for evaluation of the LAM. 
+In Section \ref{sec:forcing_influence}, the inconsistencies in the transition zone are analysed in simulations without irrigation, focusing on the impact of the domain size, and the characteristics of the forcing file.
+
+Section \ref{sec:article1} then presents the impacts of irrigation on land-atmosphere interactions and the water cycle, under the present climate of the Iberian Peninsula. These results were included in an article currently under review in Earth System Dynamics: \url{https://egusphere.copernicus.org/preprints/2025/egusphere-2025-2491/}.
+The article was not included as a whole in the thesis manuscript (%todo:internal link to Appendix, adapt sentence
+), but many elements were reused and adapted, to avoid redundancies with Chapters \ref{chap:introduction} and \ref{chap:methods} and enable a better integration with additional results from Sections \ref{sec:forcing_influence} and \ref{sec:climate_change}, and Chapter \ref{chap:liaise}.
+Finally, Section \ref{sec:climate_change} contains results obtained from coupled simulations of future climate under a strong climate change scenario, highlighting the impacts of climate change over the Iberian Peninsula, and how they interact with irrigation.
+
+\clearpage
 
 \section{Chapter-specific methods}
 \subsection{Coupled simulations}
 All the results presented in this chapter derived from coupled simulation run with ICOLMDZ and ORCHIDEE using the LAM described in Chapter \ref{chap:methods}. The routing and irrigation schemes were used with the parameter set identified after the offline calibration presented in Chapter \ref{chap:routing}, and the MERIT DEM at 2-km resolution.
 
-Several simulation setups and periods were used to produce the result presented here but they all involved a hexagonal domain centered at (40.4°N, -3.7°E), with a radius ($R_{domain}$) of either 1000km, 1500km or 2000km. When changing the radius of the domain, the $NBP$ parameter (number of grid cells the domain radius) was adapted to either 40, 60, or 80, to ensure that grid cells kept the same diameter of 25km. The setup with a $R_{domain}=1500km$ and $NBP=60$ is presented in Fig. \ref{fig:domain_full_hex}. 
+Several simulation setups and periods were used to produce the result presented here but they all used a hexagonal domain centered at (40.4°N, -3.7°E), with a radius ($R_{domain}$) of either 1000km, 1500km or 2000km. When changing the radius of the domain, the $NBP$ parameter (number of grid cells on the domain radius) was adapted to either 40, 60, or 80, to ensure that grid cells kept the same diameter of 25km. The setup with a $R_{domain}=1500 km$ and $NBP=60$ is presented in Fig. \ref{fig:domain_full_hex}. 
+ 
+Since the spatial resolution was always the same, the timesteps were also fixed, to 30s for the dynamical core, and 15mn for the atmospheric physics and the LSM (including routing and irrigation).
+The forcing file is interpolated temporally so that lateral conditions can be read at every time step of the dynamics.
+Forcing files from two different sources were used, and the differences this choice can induce are analysed in Section \ref{sec:forcing_influence}. In Section \ref{sec:article1}, the forcing variables are extracted from the ERA5 reanalysis, while for future climate simulations, in Section \ref{sec:climate_change}, outputs from a global ICOLMDZOR simulation under greenhouse gases emission scenario SSP5 8.5 were used as forcing variables.
+Sensitivity tests on the impact of the forcing file sampling frequency are also presented in Section \ref{sec:forcing_influence}, with forcing files containing either hourly or 6-hourly data.
+This sensitivity was of interest since future climate simulations were initially supposed to use CMIP6 output variables, which are available only every six hours. However, this option was eventually discarded due to technical difficulties such as unexpected model crashes when running simulations with this sampling frequency and issues with the formatting of the forcing file from CMIP6 outputs. The future climate simulations presented here were therefore run using hourly outputs from a global ICOLMDZOR simulation.
 
-Since the spatial resolution was always the same, the timesteps were also fixed, to 30s for the dynamical core, and 15mn for the atmospheric physics and LSM (including routing and irrigation).
-Independently of its source (ERA5 or global ICOLMDZ simulations) and temporal sampling (1 or 6 hours), the forcing file is interpolated temporally so that lateral conditions can be read at every time step of the dynamics.
+%todo: for ICOLMDZ, detail zoom parameters
+%todo : SST (AMIP for present, fully coupled model + bias correction for future ?)
 
 %figure:altitude over hexagonal domain (native grid)
-\begin{figure}[h]
+\begin{figure}[hbtp]
     \centering
     \includegraphics[width=0.7\textwidth]{images/chap4/article/f01.png}
-    \caption{Altitude (m) over the simulation domain on the native hexagonal grid for a simulation with $R_{domain}=1500km$ and $NBP=60$.}
+    \caption{Altitude (m) over the simulation domain on the native hexagonal grid for a simulation with $R_{domain}=1500 km$ and $NBP=60$.}
     \label{fig:domain_full_hex}
 \end{figure}
 
-The main study period in current climate was from 2010 to 2022, since before and after that period not all forcing variables were readily available on the IPSL servers and running the LAM would have required substantial manual data collection work. Some sensitivity analysis of Section \ref{sec:forcing_influence} were run on specific or shorter periods to overcome technical issues or to limit the computing time and ressources used. All simulations were run after a 3-year spinup period to make sure that vegetation and hydrological variables had reached an equilibrium.
+The main study period under current climate is from 2010 to 2022, since before and after that period not all forcing variables were readily available on the IPSL servers and running the LAM would have required substantial manual data collection work. Some sensitivity analysis of Section \ref{sec:forcing_influence} were run on specific or shorter periods to overcome technical issues or to limit the computing time and ressources used.
+All simulations were run after a 3-year spinup period to make sure that vegetation and hydrological variables had reached an equilibrium. 
+To analyse the impact of domain size, simulations were only run between 2010 and 2014. 
+For the analysis of the forcing file sampling frequency, simulations were only run over the year 2013 because of unexpected model crashes in other simulation years. This same year was run 10 times in chained simulations (starting each new simulation year at the end of the previous one) that can act as a small ensemble, although it must be noted that this secific year cannot represent the diversity of current climate by itself.
+%todo: add period for future climate (2050-2062 ? longer ?)
 
 As a technical reminder, although the outputs of the model are natively on a hexagonal grid, in this chapter they are interpolated to a more traditional longitude-latitude grid of similar resolution, to simplify posttreatment and comparisons to evaluation products.
 
@@ -49,14 +67,14 @@ Considering the focus on land-atmosphere coupling, the analysis is often restric
 
 \subsection{Evaluation datasets}
 %table:ref datasets
-\begin{table*}[h]
+\begin{table*}[hbtp]
     \caption{Gridded datasets used for evaluation.}
     \resizebox{\textwidth}{!}{%
     \begin{tabular}{lccccc}
         \toprule
         \textbf{Dataset} & \textbf{Variables used} & \textbf{Unit} & \textbf{Resolution} & \textbf{Available period} & \textbf{References}\\
         \midrule
-        ERA5  & P, ET, t2m & mm d$^{-1}$, K & 0.25° & 2010-2022 & \cite{hersbach_era5_2020}\\ %tocheck: variables used
+        ERA5  & P, ET & mm d$^{-1}$ & 0.25° & 2010-2022 & \cite{hersbach_era5_2020}\\ %tocheck: variables used
         \midrule
         GPCC  & Precipitation & mm d$^{-1}$ & 0.25° & 2010-2019 & \cite{gpcc_v2020}\\
         \midrule
@@ -71,13 +89,18 @@ Considering the focus on land-atmosphere coupling, the analysis is often restric
     \label{tab:obs-datasets}
 \end{table*}
 
-The simulations in present climate conditions are evaluated against the monthly mean values of several reference gridded products listed in Table \ref{tab:obs-datasets}
-The ERA5 reanalysis \citep{hersbach_era5_2020} at 0.25° resolution was first used as a reference product to asses the realism of multiple variables (precipitation, ET, 2-m temperature), and this is how the inconsistencies studied in Section \ref{sec:forcing_influence} were identified. However, as in most simulations ERA5 was the source used for the lateral boundary conditions and considering the fact that data assimilation for this reanalysis is not used for all variables, other reference products were used for precipitation and evapotranspiration.
-Precipitation data from the Global Precipitation Climatology Centre (GPCC) Full Data Monthly Product Version 2020 \citep{gpcc_v2020} was used. This reanalysis product provides precipitation data until 2019 over land on a 0.25° x 0.25° grid using in situ rain gauges. 
-For ET, the Global Land Evaporation Amsterdam Model (GLEAM) dataset was used, in its fourth version \citep{miralles_gleam4_2025}. This product computes ET using a large set of input variables obtained from reanalyses as well as in situ and satellite observations. Monthly values at 0.25° resolution were used, initially given in mm month$^{-1}$ but converted to mm d$^{-1}$. GLEAM4 is available until 2022 but when precipitation and ET are evaluated jointly in Section \ref{sec:article1}, it was only used over the availability period of GPCC data (2010-2019).
+The simulations in present climate conditions were evaluated against the monthly mean values of several reference gridded products listed in Table \ref{tab:obs-datasets}.
+The ERA5 reanalysis \citep{hersbach_era5_2020} at 0.25° resolution was first used as a reference product to asses the realism of multiple variables (precipitation, ET, 2-m temperature), and this is how the inconsistencies studied in Section \ref{sec:forcing_influence} were identified. However, as in most simulations ERA5 was the source used for the lateral boundary conditions which does not make it the most appropriate reference product for evaluation. Therefore, and also considering the fact that data assimilation for this reanalysis is not used for all variables, other reference products were used for precipitation and evapotranspiration.
+
+Precipitation data from the Global Precipitation Climatology Centre (GPCC) Full Data Monthly Product Version 2020 \citep{gpcc_v2020} was used. This product provides precipitation data until 2019 over land on a 0.25° x 0.25° grid using in situ rain gauges. 
+
+For ET, the Global Land Evaporation Amsterdam Model (GLEAM) dataset was used, in its fourth version \citep{miralles_gleam4_2025}. This product computes ET using a large set of input variables obtained from reanalyses as well as in situ and satellite observations. Monthly values at 0.25° resolution were used, initially given in mm month$^{-1}$ but converted to mm d$^{-1}$. GLEAM4 is available until 2022 but when precipitation and ET were evaluated jointly (Sections \ref{sec:forcing_influence}, \ref{sec:article1}), it was only used over the availability period of GPCC data (2010-2019).
+
 Simulated irrigation was evaluated in the Ebro Valley region using a high resolution remote sensing product from the European Space Agency (ESA) Irrigation+ project \citep{dari_regional_2023}. This product estimates irrigation with a soil moisture based approach using satellite measurements from Sentinel-1, and provides data for three intensely irrigated areas: the Ebro Basin in Spain, the Po Valley in Italy and the Murray-Darling Basin in Australia. From 2016 to 2020 in the Ebro Basin, the median values of the RMSE, Pearson correlation coefficient $r$ and bias are 12.4 mm over 14 days, 0.66, and -4.62 mm over 14 days, respectively. Weekly values are aggregated to a monthly average in mm d$^{-1}$. 
 
-The simulated river discharge was evaluated against monthly observation data from discharge stations of the Global Runoff Data Center \cite[GRDC, https://grdc.bafg.de,][]{fekete_global_2003}.
+\hfill
+
+The simulated river discharge was evaluated against monthly observation data from discharge stations of the Global Runoff Data Center \citep[GRDC, https://grdc.bafg.de,][]{fekete_global_2003}.
 Stations were positioned on the MERIT DEM grid with tools presented in \cite{polcher_hydrological_2023}, which use the GPS position of the stations as well as the upstream catchment area to find the most appropriate grid cell for comparison with the observations. 
 The 18 selected stations with available data over the simulation period and an adequate position on the DEM grid are described in Table \ref{table:stations_data} and shown in Fig. \ref{fig:selected_stations}. Most stations have available data from January 2010 to September 2017, and in Section \ref{sec:article1}, river discharge was therefore evaluated using the first eight years of simulation (2010-2017).
 
@@ -91,7 +114,8 @@ The 18 selected stations with available data over the simulation period and an a
 
 %table:description of discharge station used
 \begin{table*}[htbp]
-    \caption{Characteristics of river discharge stations used for evaluation. Stations marked with * are the largest of the five major basins of the Peninsula, and are shown in Fig. \ref{fig:discharge_SC}.}
+    \caption{Characteristics of river discharge stations used for evaluation. Stations marked with * are the largest of the five major basins of the Peninsula, and are shown in Fig. \ref{fig:discharge_SC}.%todo:check still the case
+    }
     \resizebox{\textwidth}{!}{%
     \begin{tabular}{lcccccc}
         \toprule
@@ -122,13 +146,15 @@ The 18 selected stations with available data over the simulation period and an a
     }
     \label{table:stations_data}
 \end{table*}
-\clearpage
 
 \clearpage
 
 \section{Influence of lateral forcing on the consistency of the LAM}
 \label{sec:forcing_influence}
-\subsection{Structural inconsitencies and influence of domain size}
+
+This section presents the inconsistencies identified in the LAM transition zone, several possible options explored to mitigate them, and their impact on the LAM free zone and the Iberian Peninsula subdomain. In all the section, the ERA5 reanalysis is used as a reference. Although it is not considered the most realistic reference for all variables, the study of the inconsistencies mostly focused on the spatial structure of the variables, rather than on the absolute values.
+For this purpose, ERA5 has two advantages: it is available over all the simulation domain, at a resolution similar to the simulations (0.25° is close to 25km in midlatitudes), and provides all the variables of the model.
+While most figures presented are maps of biases relative to ERA5 for six variables of interest, their values in the reanalysis over the period 2010-2014 are shown in Fig. \ref{fig:ERA_var_maps} to provide a perpective on the expected structure.
 
 %figure : maps of 6 vars in ERA to see variable structure
 \begin{figure}[htbp]
@@ -136,34 +162,49 @@ The 18 selected stations with available data over the simulation period and an a
     \begin{tabular}{ccc}
         %precip
         \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
+            \caption{Precipitation (mm \perday)}
             \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_precip_ERA5.png}
         \end{subfigure} &
         \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
+            \caption{Downwelling shortwave \\radiation (W \persqm)}
             \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_SWdnSFC_ERA5.png}
         \end{subfigure} &
         \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
+            \caption{Total cloud cover \\(sky fraction in \%)}
             \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_cldt_ERA5.png}
         \end{subfigure} \\
 
         \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
+            \caption{Evapotranspiration (mm \perday)}
             \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_evap_ERA5.png}
         \end{subfigure} &
         \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
+            \caption{Downwelling longwave \\radiation (W \persqm)}
             \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_LWdnSFC_ERA5.png}
         \end{subfigure} &
         \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
+            \caption{Low cloud cover \\(sky fraction in \%)}
             \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_cldl_ERA5.png}
         \end{subfigure}
     \end{tabular}
-    \caption{}
+    \caption{Annual mean of the six variables of interest for the analysis of the LAM structural biases in ERA5 over the period 2010-2014.}
     \label{fig:ERA_var_maps}
 \end{figure}
+
+\subsection{Structural inconsistencies and influence of domain size}
+Here, three simulations over the periods 2010-2014 are compared to ERA5:
+\begin{itemize}
+    \item Small domain: $R_{domain} = 1000 km$, $NBP=40$
+    \item Intermediate domain: $R_{domain} = 1500 km$, $NBP=60$
+    \item Large domain: $R_{domain} = 2000 km$, , $NBP=80$
+\end{itemize}
+
+The inconsistencies were identified with the initial simulation setup, with the small domain, by noticing that there was little to no precipitation on the edges of the domain. The LAM presented a strong underestimation compared to ERA5 in the transition zone (Fig. \ref{fig:domain_size_P_ET_ERA_diff_maps}a), but it remained hard to know if these biases had an influence on the rest of the domain, and particularly on the Iberian Peninsula, which also exhibited underestimated precipitation in its northern and western coasts.
+This lack of precipitation appeared to lead to a lower ET on continents which received less water. However, over the Atlantic ocean and the Mediterranean sea, ET was surprisingly high, overestimating the values of ERA5 (Fig. \ref{fig:domain_size_P_ET_ERA_diff_maps}b). 
+
+Simulations with the intermediate and large domain showed that the bias in precipitation was mostly located in the transition zone, especially in the northwest of the domain which is not influenced by the presence of continents, and decreased towards the center. In these simulations, precipitation remained underestimated in the northern coast of the Peninsula, but it did not seem to result from the behaviour of the model on the edges of the domain.
+The overestimate in ET was also confined to the northwestern edge of the domain and the large overestimate in the Mediterranean was reversed to an underestimate of smaller magnitude. Relative differences (Fig. \ref{fig:domain_size_ERA_reldiff_maps}) can aslo help visualizing the structure of the biases. They highlight their intensity in the transition zone where multiple grid cells show a relative precipitation bias to ERA5 between -80\% and -100\%, meaning the model computes almost no precipitation. 
+As mentionned before, although ERA5 cannot be considered as the best reference product for all the variables considered, it is the spatial structure of the biases that is striking here, since they are independent of the structure of the variable (Fig. \ref{fig:ERA_var_maps}), and follow the edges of the domain even when the radius changes.
 
 %figure : maps of diff vs ERA for 3 domain sizes : precip, evap
 \begin{figure}[htbp]
@@ -201,12 +242,44 @@ The 18 selected stations with available data over the simulation period and an a
     \label{fig:domain_size_P_ET_ERA_diff_maps}
 \end{figure}
 
+These first findings led to the hypothesis that the physics of the LAM were not behaving in a normal way in the transition zone, and more specifically the large-scale water condensation scheme. 
+Comparisons with ERA5 show an underestimation of total cloud cover in the transition zone (Fig. \ref{fig:domain_size_clouds_ERA_diff_maps}a-c) and particularly of low cloud cover (Fig. \ref{fig:domain_size_clouds_ERA_diff_maps}d-f), which constitutes its most important component (Fig. \ref{fig:ERA_var_maps}c,f).
+The absence of clouds allows more incoming solar radiation to reach the surface, leading to higher values of the downwelling shortwave radiation flux (Fig. \ref{fig:domain_size_clouds_ERA_diff_maps}g-i). This can explain the higher ET values since it provides more available energy for evaporation of seawater.
+Having less condensed water also leads to a smaller downwelling longwave radiation flux in the transition zone (Fig. \ref{fig:domain_size_clouds_ERA_diff_maps}j-l). This is inconsistent with the bias for this variable in the central part of the domain, where it is overestimated, following the spatial patterns seen for low cloud cover.
 
 
 %figure : maps of diff vs ERA for 3 domain sizes : SW, LW, cloud cover
 \begin{figure}[htbp]
     \centering
     \begin{tabular}{ccc}
+
+        %total
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldt_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldt_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldt_era_LAM_2000km_NBP80.png}
+        \end{subfigure} \\
+        
+        %low
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldl_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldl_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldl_era_LAM_2000km_NBP80.png}
+        \end{subfigure} \\
 
         %SWdn
         \begin{subfigure}[b]{0.33\textwidth}
@@ -235,43 +308,24 @@ The 18 selected stations with available data over the simulation period and an a
             \caption{}
             \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_LWdnSFC_era_LAM_2000km_NBP80.png}
         \end{subfigure} \\
-        %total
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldt_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldt_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldt_era_LAM_2000km_NBP80.png}
-        \end{subfigure} \\
-        
-        %low
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldl_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldl_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldl_era_LAM_2000km_NBP80.png}
-        \end{subfigure} \\
         
     \end{tabular}
     \caption{}
     \label{fig:domain_size_clouds_ERA_diff_maps}
 \end{figure}
 
+
+These results confirmed the hypothesis that the LAM is not able to condense water normally in the transition zone where it is nudged towards the forcing data from the ERA5 reanalysis. This was attributed to the fact that the ERA5 data is obtained with a model that has its own physics scheme, possibly functionning very differently from the physics of ICOLMDZ, and that the continuous nudging does not give the physics of the LAM the freedom it needs to condense water. This would explain the low values of cloud cover and the low amounts or absence of precipitation in this zone.
+
+In the free zone of the LAM, the model once again behaves normally, but can partly be influenced by the transition zone through the dynamics, meaning that the influence of the forcing and of the discrepancies between the physics of ERA5 and ICOLMDZ is not strictly confined to the transition zone.
+This analysis and the comparison of three domain sizes showed that with the initial small domain, the underestimates in precipitation were impacting some parts of the Peninsula, and that biases in ET were not limited to the edges but extended to the coast of the study area. With the two larger domains, although some biases persist over the Peninsula, their structure does not seem to be the consequence of the discrepancies in the transition zone. Clear progress in the consistency of the LAM was obtained by changing from the small to the intermediate domain, but as there was no obvious improvements between the intermediate and large domain, the simulation setup with $R_{domain} = 1500 km$ and $NBP = 60$ was used for the rest of the study (results presented in Section \ref{sec:article1} and Chapter \ref{chap:liaise}).
+
+Meanwhile,  to explore the hypothesis that the biases in the transition zone are due to discrepancies between the physics of ICOLMDZ and ERA5, LAM simulations using the small domain were run using a global ICOLMDZ simulation as the source for the forcing file. The results for this analysis are presented in the following Section \ref{sec:forcing_source}.
+
 \clearpage
 
 \subsection{Impact of the source of the lateral forcing}
-
+\label{sec:forcing_source}
 %figure : maps of diff vs ERA for 2 forcing sources
 \begin{figure}[htbp]
     \centering
@@ -321,52 +375,20 @@ The 18 selected stations with available data over the simulation period and an a
 \end{figure}
 
 
-%figure : maps of diff vs ERA for 2 forcing sources
+%figure : SC of precip and evap with GLEAM and GPCC
 \begin{figure}[htbp]
     \centering
-    \begin{tabular}{cc}
-        %precip
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_precip_era_era.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_precip_ico_era.png}
-        \end{subfigure} \\
-        
-        %evap
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_evap_era_era.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_evap_ico_era.png}
-        \end{subfigure} \\
-        
-        %SWdn
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_SWdnSFC_era_era.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_SWdnSFC_ico_era.png}
-        \end{subfigure}\\
-        
-        %LWdn
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_LWdnSFC_era_era.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_LWdnSFC_ico_era.png}
-        \end{subfigure} \\
-    \end{tabular}
+    %precip
+    \begin{subfigure}[b]{0.49\textwidth}
+        \caption{}
+        \includegraphics[width=\textwidth]{images/chap4/forcing_source/IP_seasonal_cycle_precip.png}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \caption{}
+        \includegraphics[width=\textwidth]{images/chap4/forcing_source/IP_seasonal_cycle_evap.png}
+    \end{subfigure}
     \caption{}
-    \label{fig:forcing_source_ERA_diff_maps_clouds}
+    \label{fig:forcing_source_SC}
 \end{figure}
 
 \clearpage
@@ -421,12 +443,27 @@ The 18 selected stations with available data over the simulation period and an a
     \label{fig:forcing_sampling_freq_ERA_diff_maps}
 \end{figure}
 
+
+%figure : SC of precip and evap with GLEAM and GPCC
+\begin{figure}[htbp]
+    \centering
+    %precip
+    \begin{subfigure}[b]{0.49\textwidth}
+        \caption{}
+        \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/IP_seasonal_cycle_precip.png}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \caption{}
+        \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/IP_seasonal_cycle_evap.png}
+    \end{subfigure}
+    \caption{}
+    \label{fig:forcing_sampling_freq_SC}
+\end{figure}
 \clearpage
 
 \section{Impacts of irrigation under present climate (2010-2022)}
 \label{sec:article1}
-This section presents results that were included in an article currently under review in Earth System Dynamics: \url{https://egusphere.copernicus.org/preprints/2025/egusphere-2025-2491/}.
-The article was not included as a whole in the thesis manuscript to avoid redundancies with Chapters \ref{chap:introduction} and \ref{chap:methods} and enable a better integration with additional results from sections \ref{sec:forcing_influence} and \ref{sec:climate_change}.
+As mentionned in the chapter introduction, this section presents results and figures from an article currently under review in Earth System Dynamics and included as a whole in the appendix %todo:internal ref
 
 The simulations were run for 13 years from 2010 to 2022, which enables capturing some interannual variability of the current climate, making the averages less sensitive to anomalies or biases from any single year or extreme event.
 Two simulations were run with the same setup except for the inclusion of irrigation. 
@@ -696,35 +733,7 @@ In particular, it would be relevant to compare the model to field observations f
         \begin{subfigure}[b]{0.33\textwidth}
             \caption{}
             \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_2000km_NBP80.png}
-        \end{subfigure} \\
-        
-        %SWdn
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_SWdnSFC_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_SWdnSFC_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_SWdnSFC_era_LAM_2000km_NBP80.png}
-        \end{subfigure} \\
-        
-        %LWdn
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_LWdnSFC_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_LWdnSFC_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_LWdnSFC_era_LAM_2000km_NBP80.png}
-        \end{subfigure} \\
+        \end{subfigure}
     \end{tabular}
     \caption{}
     \label{fig:domain_size_ERA_reldiff_maps}
