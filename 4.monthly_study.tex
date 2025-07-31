@@ -44,7 +44,7 @@ Forcing files from two different sources were used, and the differences this cho
 Sensitivity tests on the impact of the forcing file sampling frequency are also presented in Section \ref{sec:forcing_influence}, with forcing files containing either hourly or 6-hourly data.
 This sensitivity was of interest since future climate simulations were initially supposed to use CMIP6 output variables, which are available only every six hours. However, this option was eventually discarded due to technical difficulties such as unexpected model crashes when running simulations with this sampling frequency and issues with the formatting of the forcing file from CMIP6 outputs. The future climate simulations presented here were therefore run using hourly outputs from a global ICOLMDZOR simulation.
 
-%todo: for ICOLMDZ, detail zoom parameters
+%todo: for ICOLMDZOR, detail zoom parameters
 %todo : SST (AMIP for present, fully coupled model + bias correction for future ?)
 
 %figure:altitude over hexagonal domain (native grid)
@@ -68,7 +68,6 @@ Considering the focus on land-atmosphere coupling, the analysis is often restric
 \subsection{Evaluation datasets}
 %table:ref datasets
 \begin{table*}[hbtp]
-    \caption{Gridded datasets used for evaluation.}
     \resizebox{\textwidth}{!}{%
     \begin{tabular}{lccccc}
         \toprule
@@ -86,6 +85,7 @@ Considering the focus on land-atmosphere coupling, the analysis is often restric
         \bottomrule
     \end{tabular}
     } %end resizebox
+    \caption{Gridded datasets used for evaluation.}
     \label{tab:obs-datasets}
 \end{table*}
 
@@ -151,510 +151,14 @@ The 18 selected stations with available data over the simulation period and an a
 
 \section{Influence of lateral forcing on the consistency of the LAM}
 \label{sec:forcing_influence}
-
-This section presents the inconsistencies identified in the LAM transition zone, several possible options explored to mitigate them, and their impact on the LAM free zone and the Iberian Peninsula subdomain. In all the section, the ERA5 reanalysis is used as a reference. Although it is not considered the most realistic reference for all variables, the study of the inconsistencies mostly focused on the spatial structure of the variables, rather than on the absolute values.
-For this purpose, ERA5 has two advantages: it is available over all the simulation domain, at a resolution similar to the simulations (0.25° is close to 25km in midlatitudes), and provides all the variables of the model.
-While most figures presented are maps of biases relative to ERA5 for six variables of interest, their values in the reanalysis over the period 2010-2014 are shown in Fig. \ref{fig:ERA_var_maps} to provide a perpective on the expected structure.
-
-%figure : maps of 6 vars in ERA to see variable structure
-\begin{figure}[htbp]
-    \centering
-    \begin{tabular}{ccc}
-        %precip
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{Precipitation (mm \perday)}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_precip_ERA5.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{Downwelling shortwave \\radiation (W \persqm)}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_SWdnSFC_ERA5.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{Total cloud cover \\(sky fraction in \%)}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_cldt_ERA5.png}
-        \end{subfigure} \\
-
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{Evapotranspiration (mm \perday)}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_evap_ERA5.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{Downwelling longwave \\radiation (W \persqm)}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_LWdnSFC_ERA5.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{Low cloud cover \\(sky fraction in \%)}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/var_map_cldl_ERA5.png}
-        \end{subfigure}
-    \end{tabular}
-    \caption{Annual mean of the six variables of interest for the analysis of the LAM structural biases in ERA5 over the period 2010-2014.}
-    \label{fig:ERA_var_maps}
-\end{figure}
-
-\subsection{Structural inconsistencies and influence of domain size}
-Here, three simulations over the periods 2010-2014 are compared to ERA5:
-\begin{itemize}
-    \item Small domain: $R_{domain} = 1000 km$, $NBP=40$
-    \item Intermediate domain: $R_{domain} = 1500 km$, $NBP=60$
-    \item Large domain: $R_{domain} = 2000 km$, , $NBP=80$
-\end{itemize}
-
-The inconsistencies were identified with the initial simulation setup, with the small domain, by noticing that there was little to no precipitation on the edges of the domain. The LAM presented a strong underestimation compared to ERA5 in the transition zone (Fig. \ref{fig:domain_size_P_ET_ERA_diff_maps}a), but it remained hard to know if these biases had an influence on the rest of the domain, and particularly on the Iberian Peninsula, which also exhibited underestimated precipitation in its northern and western coasts.
-This lack of precipitation appeared to lead to a lower ET on continents which received less water. However, over the Atlantic ocean and the Mediterranean sea, ET was surprisingly high, overestimating the values of ERA5 (Fig. \ref{fig:domain_size_P_ET_ERA_diff_maps}b). 
-
-Simulations with the intermediate and large domain showed that the bias in precipitation was mostly located in the transition zone, especially in the northwest of the domain which is not influenced by the presence of continents, and decreased towards the center. In these simulations, precipitation remained underestimated in the northern coast of the Peninsula, but it did not seem to result from the behaviour of the model on the edges of the domain.
-The overestimate in ET was also confined to the northwestern edge of the domain and the large overestimate in the Mediterranean was reversed to an underestimate of smaller magnitude. Relative differences (Fig. \ref{fig:domain_size_ERA_reldiff_maps}) can aslo help visualizing the structure of the biases. They highlight their intensity in the transition zone where multiple grid cells show a relative precipitation bias to ERA5 between -80\% and -100\%, meaning the model computes almost no precipitation. 
-As mentionned before, although ERA5 cannot be considered as the best reference product for all the variables considered, it is the spatial structure of the biases that is striking here, since they are independent of the structure of the variable (Fig. \ref{fig:ERA_var_maps}), and follow the edges of the domain even when the radius changes.
-
-%figure : maps of diff vs ERA for 3 domain sizes : precip, evap
-\begin{figure}[htbp]
-    \centering
-    \begin{tabular}{ccc}
-        %precip
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_precip_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_precip_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_precip_era_LAM_2000km_NBP80.png}
-        \end{subfigure} \\
-        
-        %evap
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_evap_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_evap_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_evap_era_LAM_2000km_NBP80.png}
-        \end{subfigure} 
-    \end{tabular}
-    \caption{}
-    \label{fig:domain_size_P_ET_ERA_diff_maps}
-\end{figure}
-
-These first findings led to the hypothesis that the physics of the LAM were not behaving in a normal way in the transition zone, and more specifically the large-scale water condensation scheme. 
-Comparisons with ERA5 show an underestimation of total cloud cover in the transition zone (Fig. \ref{fig:domain_size_clouds_ERA_diff_maps}a-c) and particularly of low cloud cover (Fig. \ref{fig:domain_size_clouds_ERA_diff_maps}d-f), which constitutes its most important component (Fig. \ref{fig:ERA_var_maps}c,f).
-The absence of clouds allows more incoming solar radiation to reach the surface, leading to higher values of the downwelling shortwave radiation flux (Fig. \ref{fig:domain_size_clouds_ERA_diff_maps}g-i). This can explain the higher ET values since it provides more available energy for evaporation of seawater.
-Having less condensed water also leads to a smaller downwelling longwave radiation flux in the transition zone (Fig. \ref{fig:domain_size_clouds_ERA_diff_maps}j-l). This is inconsistent with the bias for this variable in the central part of the domain, where it is overestimated, following the spatial patterns seen for low cloud cover.
-
-
-%figure : maps of diff vs ERA for 3 domain sizes : SW, LW, cloud cover
-\begin{figure}[htbp]
-    \centering
-    \begin{tabular}{ccc}
-
-        %total
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldt_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldt_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldt_era_LAM_2000km_NBP80.png}
-        \end{subfigure} \\
-        
-        %low
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldl_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldl_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_cldl_era_LAM_2000km_NBP80.png}
-        \end{subfigure} \\
-
-        %SWdn
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_SWdnSFC_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_SWdnSFC_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_SWdnSFC_era_LAM_2000km_NBP80.png}
-        \end{subfigure} \\
-        
-        %LWdn
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_LWdnSFC_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_LWdnSFC_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/diff_map_LWdnSFC_era_LAM_2000km_NBP80.png}
-        \end{subfigure} \\
-        
-    \end{tabular}
-    \caption{}
-    \label{fig:domain_size_clouds_ERA_diff_maps}
-\end{figure}
-
-
-These results confirmed the hypothesis that the LAM is not able to condense water normally in the transition zone where it is nudged towards the forcing data from the ERA5 reanalysis. This was attributed to the fact that the ERA5 data is obtained with a model that has its own physics scheme, possibly functionning very differently from the physics of ICOLMDZ, and that the continuous nudging does not give the physics of the LAM the freedom it needs to condense water. This would explain the low values of cloud cover and the low amounts or absence of precipitation in this zone.
-
-In the free zone of the LAM, the model once again behaves normally, but can partly be influenced by the transition zone through the dynamics, meaning that the influence of the forcing and of the discrepancies between the physics of ERA5 and ICOLMDZ is not strictly confined to the transition zone.
-This analysis and the comparison of three domain sizes showed that with the initial small domain, the underestimates in precipitation were impacting some parts of the Peninsula, and that biases in ET were not limited to the edges but extended to the coast of the study area. With the two larger domains, although some biases persist over the Peninsula, their structure does not seem to be the consequence of the discrepancies in the transition zone. Clear progress in the consistency of the LAM was obtained by changing from the small to the intermediate domain, but as there was no obvious improvements between the intermediate and large domain, the simulation setup with $R_{domain} = 1500 km$ and $NBP = 60$ was used for the rest of the study (results presented in Section \ref{sec:article1} and Chapter \ref{chap:liaise}).
-
-Meanwhile,  to explore the hypothesis that the biases in the transition zone are due to discrepancies between the physics of ICOLMDZ and ERA5, LAM simulations using the small domain were run using a global ICOLMDZ simulation as the source for the forcing file. The results for this analysis are presented in the following Section \ref{sec:forcing_source}.
-
-\clearpage
-
-\subsection{Impact of the source of the lateral forcing}
-\label{sec:forcing_source}
-%figure : maps of diff vs ERA for 2 forcing sources
-\begin{figure}[htbp]
-    \centering
-    \begin{tabular}{cc}
-        %precip
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_precip_era_era.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_precip_ico_era.png}
-        \end{subfigure} \\
-        
-        %evap
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_evap_era_era.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_evap_ico_era.png}
-        \end{subfigure} \\
-        
-        %SWdn
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_SWdnSFC_era_era.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_SWdnSFC_ico_era.png}
-        \end{subfigure}\\
-        
-        %LWdn
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_LWdnSFC_era_era.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_source/diff_map_LWdnSFC_ico_era.png}
-        \end{subfigure} \\
-    \end{tabular}
-    \caption{}
-    \label{fig:forcing_source_ERA_diff_maps_endvars}
-\end{figure}
-
-
-%figure : SC of precip and evap with GLEAM and GPCC
-\begin{figure}[htbp]
-    \centering
-    %precip
-    \begin{subfigure}[b]{0.49\textwidth}
-        \caption{}
-        \includegraphics[width=\textwidth]{images/chap4/forcing_source/IP_seasonal_cycle_precip.png}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.49\textwidth}
-        \caption{}
-        \includegraphics[width=\textwidth]{images/chap4/forcing_source/IP_seasonal_cycle_evap.png}
-    \end{subfigure}
-    \caption{}
-    \label{fig:forcing_source_SC}
-\end{figure}
-
-\clearpage
-
-\subsection{Impact of the forcing file sampling frequency}
-
-%figure : maps of diff vs ERA for 2 forcing sampling freqs
-\begin{figure}[htbp]
-    \centering
-    \begin{tabular}{cc}
-        %precip
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_precip_era_era.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_precip_ico_era.png}
-        \end{subfigure} \\
-        
-        %evap
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_evap_era_era.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_evap_ico_era.png}
-        \end{subfigure} \\
-        
-        %SWdn
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_SWdnSFC_era_era.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_SWdnSFC_ico_era.png}
-        \end{subfigure}\\
-        
-        %LWdn
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_LWdnSFC_era_era.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_LWdnSFC_ico_era.png}
-        \end{subfigure} \\
-    \end{tabular}
-    \caption{}
-    \label{fig:forcing_sampling_freq_ERA_diff_maps}
-\end{figure}
-
-
-%figure : SC of precip and evap with GLEAM and GPCC
-\begin{figure}[htbp]
-    \centering
-    %precip
-    \begin{subfigure}[b]{0.49\textwidth}
-        \caption{}
-        \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/IP_seasonal_cycle_precip.png}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.49\textwidth}
-        \caption{}
-        \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/IP_seasonal_cycle_evap.png}
-    \end{subfigure}
-    \caption{}
-    \label{fig:forcing_sampling_freq_SC}
-\end{figure}
-\clearpage
+% \input{4.forcing_influence}
 
 \section{Impacts of irrigation under present climate (2010-2022)}
 \label{sec:article1}
-As mentionned in the chapter introduction, this section presents results and figures from an article currently under review in Earth System Dynamics and included as a whole in the appendix %todo:internal ref
+% \input{4.article_results}
 
-The simulations were run for 13 years from 2010 to 2022, which enables capturing some interannual variability of the current climate, making the averages less sensitive to anomalies or biases from any single year or extreme event.
-Two simulations were run with the same setup except for the inclusion of irrigation. 
-They are referred to as \irr (with irrigation activated in ORCHIDEE) and \noirr (without irrigation). 
 
-\subsection{Simulated irrigation}
-
-%figure
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\textwidth]{images/chap4/article/f03.png}
-    \caption{Simulated irrigation and its drivers. Input maps of (a) grid cell irrigated fraction \citep[\% , derived from][]{hurtt_harmonization_2020} and (b) the share of irrigation equipment for surface withdrawals, as opposed to groundwater withdrawals \citep[\%, derived from ][]{siebert_groundwater_2010}. Annual means (2010-2022) of (c) simulated irrigation requirement (mm d$^{-1}$), (d) irrigation (mm d$^{-1}$), and relative changes (\irr - \noirr, \%) in water volumes in (e) groundwater and (f) river reservoirs.}
-    \label{fig:irrig_maps}
-\end{figure}
-
-The computed irrigation demand (Fig. \ref{fig:irrig_maps}c) is highly dependent on the irrigated fraction (Fig. \ref{fig:irrig_maps}a) and much greater than the applied irrigation (Fig. \ref{fig:irrig_maps}d). This shows that irrigation is often constrained by water availability, with clear regional differences. Indeed, irrigation is much greater in the northern regions (Ebro and Douro river basins) than in southern regions (Guadiana and Guadalquivir basins) even though these regions have similar levels of irrigation demand (Fig. \ref{fig:irrig_maps}c, d).
-As shown in Fig. \ref{fig:irrig_maps}b, southern regions (Guadalquivir Basin, upper Guadiana Basin) are more dependent on groundwater equipment for irrigation water withdrawals than the Ebro Basin, where withdrawals are taken mainly from surface water (overland and river reservoirs in the model).
-Considering that the groundwater reservoir is much more depleted in the presence of irrigation than the river reservoir is (Fig. \ref{fig:irrig_maps}e, f), it is not surprising that the irrigation requirement cannot be met in these regions as much as it is in the north.
-This depletion can be explained by the fact that the groundwater reservoir can only be filled with drainage in the grid cell, whereas the river reservoir can be fed from upstream grid cells. It is also important to note that ORCHIDEE does not model deep groundwater storage, which is an important source of water for irrigation in southeastern Spain \citep{custodio_groundwater_2016}.
-
-In the Ebro Basin, simulated irrigation is evaluated using the irrigation remote sensing product from \cite{dari_regional_2023} with good overall performance, particularly in summer (Fig. \ref{fig:irrig_eval}a).
-In winter, the model simulates almost no irrigation since it requires a minimum LAI to be activated, whereas the product shows irrigation all year long, which can be explained by the presence of winter crops not represented in the model.
-A delay of the summer peak in the model compared with the product is noticeable, but the model might not be very far from actual irrigation since this product was found to be slightly ahead of actual irrigation based on benchmark volumes in some districts of the Ebro Valley \citep[Fig. 5 in ][]{dari_regional_2023}.
-Spatially, the remote sensing product shows greater irrigation on the hillslopes than in the thalwegs, whereas the model simulates the opposite, with more intense irrigation next to the large rivers (Ebro, Segre, Cinca).
-The resulting bias pattern (Fig. \ref{fig:irrig_eval}b) can be explained by the fact that in the model, water is mainly withdrawn from the river reservoir in this region, which is much greater in grid cells holding a large river than in upper areas of the valley. In reality, infrastructures such as the Canal d'Urgell in the Segre basin \citep{farran_urgell_2024}, enable gravity irrigation of hillslopes by diverting water from large rivers to neighbouring croplands. Including a representation of water adduction in the irrigation scheme by enabling withdrawal from adjacent grid cells could be a way to improve this bias.
-Overall, the spatial biases of the simulated irrigation offset each other relatively well. Averaged over the subdomain where the satellite product provides values, the simulated irrigation is 0.20 mm d$^{-1}$ while the product estimates it at 0.23 mm d$^{-1}$.
-
-%figure : map of bias (irr vs obsEbro) + Seasonnal cycle over area with obs
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.5\textwidth]{images/chap4/article/f04.png}
-    \caption{Evaluation of simulated irrigation from January 2016 to July 2020 over the Ebro Valley. (a) Mean seasonal cycle of irrigation for the \irr simulation and the remote sensing product (\textit{Ebro\_estimate}, mm d$^{-1}$), and (b) mean bias compared with the product (mm d$^{-1}$). The simulation outputs are interpolated on the grid of the remote sensing product.}
-    \label{fig:irrig_eval}
-\end{figure}
-
-\subsection{Impacts of irrigation on river discharge}
-
-%%single column figure : discharge obs vs irr vs no_irr on 3 stations (3 large rivers with proper data)
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=8.3cm]{images/chap4/article/f05.png} 
-    \caption{Impacts of irrigation on river discharge. Mean seasonal cycle of river discharge (m$^3$ s$^{-1}$) in observations (black) and the \noirr (red) and \irr (blue) simulations at five stations: (a) Tortosa (Ebro), (b) Tore (Douro), (c) Talavera (Tagus), (d) Azud de Badajoz (Guadiana), and (e) Mengibar (Guadalquivir). A mask is applied to the simulations to filter out months without corresponding observation data.}
-    \label{fig:discharge_SC}
-\end{figure}
-
-Figure \ref{fig:discharge_SC} shows the average seasonal cycle of river discharge for the five largest rivers of the Peninsula (Ebro, Douro, Tagus, Guadiana, and Guadalquivir), for the two simulations and the GRDC observation data. The station with the greatest river discharge was selected for each river, to reflect integrated impacts of irrigation over the basin. A similar figure with all eighteen stations is presented in the appendix (Fig. A2).
-In most cases, the model shows a slight delay and a large overestimation of river discharge compared with observations, particularly in winter and spring. These errors can be related to the precipitation biases of the simulations, described in the next section, and to the lack of river dams in the model, which have a strong impact on actual discharge, given their high density in the Iberian Peninsula \citep[Fig. \ref{fig:selected_stations}, ][]{sabater_chapter_2022, moran-tejeda_reservoir_2012, lobera_geomorphic_2015}. In particular, the model overestimates the winter and spring discharge, a period when water is stored in dam reservoirs, which reduces the actual river flow.
-The presence of dams also leads to unnatural seasonal cycles in the observations if river discharge is artificially increased in summer by the release of stored water (Fig. \ref{fig:discharge_SC}e).
-
-The simulation of irrigation used cannot improve either of these aspects since it does not include a specific reservoir to store water. Its impact becomes noticeable in spring, with water withdrawals resulting in lower discharge during summer and autumn, generally leading to a much better match with observations (Fig. \ref{fig:discharge_SC}). 
-As shown in Table \ref{table:stations_metrics}, for all fifteen stations where the mean bias is positive in the \noirr simulation, this bias is reduced in the presence of irrigation (in three cases it becomes negative but the absolute value is reduced). However, for the three stations where the \noirr bias is negative (n°10, 13, 17), it is worsened in the \irr simulation. On average, the \irr simulation exhibits clear improvements of the mean bias (-41.8 \%) and root mean square error (RMSE, -7.12 \%). The Pearson correlation coefficient is 0.56 on average in \noirr and is slightly improved (+0.02), with mostly small changes except for stations 6 and 8 (+0.09 and +0.08). Improvements are also observed for Nash-Sutcliffe efficiency (NSE, +0.67) and Kling-Gupta efficiency (KGE, +0.2), mostly as a consequence of improvements in the mean bias. However, only eight out of eighteen stations have a positive value of NSE and KGE values in the \noirr simulation (not shown), limiting the relevance of this average increase. In particular, the average NSE value is strongly influenced by a few stations (n°5, 8, 15) with initial NSE values below -10.
-
-Overall, the performance is clearly improved for 12 stations but partly degraded for 6 stations, although three of them (n°10, 13, 17) have a very small average discharge. This may explain why small changes in the model can lead to large changes in performance and limits their relevance compared with larger stations. If only stations with an average annual discharge greater than 10 m³ s$^{-1}$ are considered, irrigation improves performance in nine out of twelve cases, and degrades it for three stations. One station (n°9) exhibits an unexpected increase in the spring discharge peak which originates mostly from a single year (2011, see Fig. A1) and worsens an already-existing 250 \% bias in this season. The other two (n°4 and 5) are close to the Pyrenees Mountains and present very strong biases in both simulations (300 \% overestimation in spring, unexpected double peak in March and June, Fig. A2). These discrepancies are likely related to biases in precipitation (discussed hereafter) and were not positively impacted by irrigation, apart from the mean bias.
-
-\begin{table*}[h]
-    \caption{Station mean discharge (\textit{obs}, m$^3$ s$^{-1}$), discharge bias (for the \noirr and \irr simulations, in \%), and change in evaluated metrics (\irr - \noirr) for the RMSE (relative change in \%), Pearson correlation coefficient $r$, Nash-Sutcliffe efficiency and Kling-Gupta efficiency. Model performance improvements when using irrigation are shown in bold. Stations marked with * are the largest of the five major basins of the Peninsula, and are shown in Fig. \ref{fig:discharge_SC}.}
-    \resizebox{\textwidth}{!}{
-    \begin{tabular}{lccccccccc}
-        \toprule
-        \textbf{Station} & \textbf{Mean discharge} & \textbf{Bias} & \textbf{Bias} & \textbf{RMSE change} & \textbf{r change} & \textbf{NSE change} & \textbf{KGE change} \\
-        & (\textit{obs}, m$^3$ s$^{-1}$) & (\noirr,  \%) & (\irr, \%)  & (\textit{irr - no\_irr}, \%) & (\textit{irr - no\_irr}) & (\textit{irr - no\_irr})  & (\textit{irr - no\_irr})  \\
-        % \textbf{Station} & \textbf{Mean discharge (obs, m³/s)} & \textbf{Bias\\(\noirr, \%)} & \textbf{Bias\\Change (\%)} & \textbf{RMSE\\Change (\%)} & \textbf{r\\change} & \textbf{NSE\\change} & \textbf{KGE\\change} \\
-
-        \midrule
-        *1 (Tortosa)        & 287.61  & 126.3 & \textbf{103.4} & \textbf{-7.88} & \textbf{0.03}  & \textbf{0.56}  & \textbf{0.13}  \\
-        2 (Zaragoza)        & 210.89  & 27.6 & \textbf{11.5}   & \textbf{-13.10}  & \textbf{0.01}  & \textbf{0.06}  & \textbf{0.10}  \\
-        3 (Castejon)        & 201.34  & 30.7 & \textbf{21.4}   & \textbf{-1.45}  & \textbf{0.01}  & \textbf{0.01}  & \textbf{0.03}  \\
-        4 (Seros)           & 52.75   & 240.3 & \textbf{227.7} & 0.81   & -0.02 & -0.54 & -0.09 \\
-        5 (Fraga)           & 49.69   & 193.2 & \textbf{179.8} & 1.81   & -0.01 & -1.78 & -0.22 \\
-        *6 (Tore)           & 109.18  & 36.9 & \textbf{-0.2}   & \textbf{-16.24} & \textbf{0.09}  & \textbf{0.21}  & \textbf{0.25}  \\
-        7 (Peral De Arlanza) & 16.44  & 40.7 & \textbf{35.2}   & \textbf{-3.12}  & \textbf{0.01}  & \textbf{0.04}  & \textbf{0.04}  \\
-        *8 (Talavera)       & 46.77   & 152.4 & \textbf{95.8}  & \textbf{-10.84} & \textbf{0.08}  & \textbf{2.29}  & \textbf{0.16}  \\
-        9 (Trillo)          & 12.70   & 60.8 & \textbf{59.7}   & 0.76   & \textbf{0.03}  & -0.15 & -0.05 \\
-        10 (Peralejos)      & 3.87    & -34.6 & -38            & 1.82   & \textbf{0.01}  & -0.03 & -0.01 \\
-        *11 (Azud de Badajoz) & 81.83 & 90.5 & \textbf{34.3}   & \textbf{-14.26} & \textbf{0.05}  & \textbf{0.24}  & \textbf{0.51}  \\
-        12 (Pulo do Lobo)   & 25.23   & 287.3 & \textbf{162.0} & \textbf{-18.53} & \textbf{0.03}  & \textbf{1.48}  & \textbf{1.17}  \\
-        13 (La Cubeta)      & 3.37    & -10.7 & -36.2          & 5.82   & -0.01 & -0.12 & -0.12 \\
-        14 (Villarubia)     & 0.82    & 152.4 & \textbf{61.0}  & \textbf{-3.53} & -0.03 & \textbf{0.29}  & \textbf{0.53}  \\
-        15 (Quintanar)      & 0.71    & 312.7 & \textbf{149.3} & \textbf{-17.89} & 0.00  & \textbf{9.31}  & \textbf{0.98}  \\
-        *16 (Mengibar)      & 30.25   & 19.4 & \textbf{-16.9}  & \textbf{-4.52} & \textbf{0.01}  & \textbf{0.46}  & \textbf{0.09}  \\
-        17 (Arroyo Maria)   & 6.19    & -35.4 & -47.5 & 8.44   & -0.04 & -0.28 & -0.10 \\
-        18 (Pinos Puente)   & 1.00    & 27.0 & \textbf{-3.0}   & \textbf{-5.59}  & \textbf{0.03}  & \textbf{0.06}  & \textbf{0.12}  \\
-        \midrule
-        Mean                & 63.37   & 95.4 & \textbf{55.5}   & \textbf{-7.12} & \textbf{0.02}  & \textbf{0.67}  & \textbf{0.20}  \\
-        \bottomrule
-    \end{tabular}
-    }
-    \label{table:stations_metrics}
-\end{table*}
-
-\clearpage
-
-\subsection{Evaluation of precipitation and ET and influence of irrigation}
-
-%figure: precip and ET eval, side by side Seasonal Cycle (with obs products) and bias to GPCC/GLEAM
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\textwidth]{images/chap4/article/f06.png}
-    \caption{Evaluation of simulated precipitation (P) and evapotranspiration (ET) over the Iberian Peninsula continental subdomain, from 2010 to 2019. 
-    (a) Mean seasonal cycle of P (mm d$^{-1}$) for the two simulations and GPCC product, annual mean P bias of the (b) \noirr and (c) \irr simulations relative to the GPCC product (mm d$^{-1}$).
-    (d) Mean seasonal cycle of ET (mm d$^{-1}$) for the two simulations and GLEAM4 product, annual mean ET bias of the (e) \noirr and (f) \irr simulations relative to the GLEAM4 product (mm d$^{-1}$).}
-    \label{fig:sim_eval_ET_P}
-\end{figure}
-
-The simulated precipitation and ET are evaluated from 2010 to 2019 using the GPCC and GLEAM4 products, respectively (Fig. \ref{fig:sim_eval_ET_P}).
-On average over the domain, the two simulations present very similar seasonal cycles of precipitation. The model is in good agreement with GPCC until June (Fig. \ref{fig:sim_eval_ET_P}a), but presents a strong underestimation of precipitation in summer, followed by a delayed and overestimated peak in autumn, which likely contributes to the biases of river discharge winter peaks visible in Fig. \ref{fig:discharge_SC}. 
-This seasonal cycle is largely representative of the whole peninsula, although some spatial disparities persist. The two simulations exhibit very similar spatial patterns of annual mean precipitation, with a strong overestimation in elevated areas (Fig. \ref{fig:sim_eval_ET_P}b,c), which is a known bias of climate models \citep{arjdal_modeling_2024, adhikari_evaluation_2024}.
-This is partly compensated by smaller underestimates of precipitation over large neighbouring areas, as seen in the Ebro Valley.
-
-Both simulations match the GLEAM4 ET product well from January to May but underestimate ET for the rest of the year, particularly in summer (Fig. \ref{fig:sim_eval_ET_P}d). As expected, ET increases when irrigation is accounted for, particularly from May to September, which is the period where vegetation is the most developed and irrigation is the greatest. This partially alleviates the dry bias, but ET remains underestimated, even in the \irr simulation.
-No similar patterns of biases between ET and incoming radiative fluxes were identified, and the remaining ET bias can be related to the underestimation of precipitation in the southwestern part of the Peninsula and in plains, such as the northern Ebro Valley (Fig. \ref{fig:sim_eval_ET_P}b, e). 
-Along large rivers, the ET underestimation almost disappears in the \irr simulation (Fig. \ref{fig:sim_eval_ET_P}f). The increase in soil moisture due to irrigation directly translates into an increase in ET, corroborating the hypothesis that the region lies within the transition regime described by \citet{Budyko_1956}. 
-In contrast, the ET bias remains significant in lightly irrigated grid cells such as hillslopes, which is consistent with the limits of simulated irrigation described in Section 3.1 (Fig. \ref{fig:irrig_eval}).
-
-\subsection{Atmospheric impacts of irrigation in summer}
-
-\subsubsection{Statistical significance} %todo:integrate or remove ?
-To assess the influence of irrigation on the model, the two simulations (\irr and \noirr) are compared and a statistical significance test is used to filter out differences that may be the result of natural variability only. For the maps of changes induced by irrigation in %todo:ref fig ou section
-, a Student t-test is used to assess for each grid cell whether the mean difference between the two simulations  (\irr - \noirr) significantly differs from 0, with a p-value of 0.05 as the limit to reject the null hypothesis. Grid cells with nonsignificant changes are partly hidden with hatches.
-
-\subsubsection{Results}
-%figure : maps of JJA diff with non-sig grid cells hatched 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=15cm]{images/chap4/article/f07.png}
-    \caption{Summer irrigation and its impacts (JJA, 2010-2022). (a) Irrigation (mm d$^{-1}$) and 10 m wind (\irr simulation). Mean changes in the presence of irrigation (\irr - \noirr): (b) evaporative fraction, (c) 2 m temperature (K), (d) atmospheric boundary layer height (m), (e) lifting condensation level (m), (f) precipitation (mm d$^{-1}$), (g) convective available potential energy (J kg$^{-1}$), (h) moisture convergence (mm d$^{-1}$). Hatching indicates areas where the change is not statistically significant.}
-    \label{fig:diff_sig_6vars}
-\end{figure}
-
-Here, the impacts of irrigation on atmospheric variables are studied in summer (JJA) since it is the season with the highest levels of simulated irrigation, with seasonal mean values of up to 1.5 mm d$^{-1}$ in the most intensely irrigated grid cells (Fig. \ref{fig:diff_sig_6vars}a).
-In the presence of irrigation, the simulated latent heat flux ($LE$) increases across the entire Iberian Peninsula, by up to 50 W m$^{-2}$ in the Ebro Valley. As expected from the surface energy partitioning, this is compensated by a decrease in the sensible heat flux ($H$), which is almost equivalent in irrigated areas and leads to large increases in the evaporative fraction ($EF = \frac{LE}{LE+H}$) shown in Fig. \ref{fig:diff_sig_6vars}b.
-When the sensible heat flux decreases, less energy is transmitted from the surface to the air, leading to a decrease in the 2 m air temperature which spatially matches the increase in $EF$. The order of magnitude remains low over most of the Peninsula, with the most important changes reaching -0.35 K in the Ebro Valley (Fig. \ref{fig:diff_sig_6vars}c).
-The decreases in sensible heat flux and temperature also lead to a more stable boundary layer over most of the peninsula, but mostly in intensely irrigated areas where it is lowered by 100 m (Fig. \ref{fig:diff_sig_6vars}d).
-Moreover, the presence of irrigation results in a moister lower atmosphere, with an average specific humidity over the Peninsula increasing by 2.8 10$^{-4}$ kg kg$^{-1}$ in summer (+3.4 \%) and maximal local increases in the Ebro Valley of 1 10$^{-3}$ kg kg$^{-1}$ (+10 \%). Since air temperature changes in the atmospheric column are rather small, the lowering of the lifting condensation level (LCL) reflects this atmospheric moistening very well. It is most marked in the Ebro Valley, where the LCL is lowered by 250 m (-13 \%) in the most intensely irrigated grid cells, and remains significant even in areas where irrigation is low (Fig. \ref{fig:diff_sig_6vars}e).
-
-The lowering of the ABL and LCL theoretically favour opposite effects on precipitation. On the one hand,  a lower and more stable ABL inhibits vertical mixing and convection, reducing the likelihood of cloud formation and deep convection initiation. On the other hand, if the LCL is lower, air parcels do not need to be lifted as high to condense, which increases the likelihood of cloud formation.
-Over the most intensely irrigated areas, ABL stabilization seems to dominate and inhibit convective development since no significant change in precipitation is observed.
-However, mountainous areas surrounding the Ebro Valley show significant increases in precipitation (Fig. \ref{fig:diff_sig_6vars}f). This can be understood because ABL stabilization remains weak in these zones whereas humidity can still be increased if moisture is advected (Fig. \ref{fig:diff_sig_6vars}d, e). In particular, the dominant wind patterns in the Ebro Valley (Fig. \ref{fig:diff_sig_6vars}a) indicate that the additional atmospheric moisture from irrigated areas is driven towards the valley slopes, which is consistent with the increases in moisture convergence (Fig. \ref{fig:diff_sig_6vars}h) and precipitation over the Pyrenees.
-The competing interactions of ABL stabilization and atmospheric moistening are reflected by the increases in convective available potential energy (CAPE) which are most important in elevated areas around the valley (Fig. \ref{fig:diff_sig_6vars}g), where increases in precipitation are significant. 
-
-% \clearpage
-
-\subsection{Atmospheric moisture recycling over the Iberian Peninsula}
-On average over the continental domain, the monthly change in ET in the presence of irrigation is well correlated with the amount of water added by irrigation and even exceeds it, particularly in summer months (the orange JJA data points in Fig. \ref{fig:scatter_IP}a are all on or above the 1:1 line).
-In the simulation, ET is constrained by available water, and almost all the water added by irrigation is evaporated or transpired, meaning that this additional increase in ET comes from an additional input of water into the soil.
-This is explained by a systematic increase in precipitation over the domain (all the data points are on or above the x-axis on Fig. \ref{fig:scatter_IP}b). This increase is also roughly proportional to the amount of applied irrigation, although the correlation is weaker than that for the increase in ET, and its values remain lower than the amount of water added by irrigation.
-Therefore, it appears that irrigation contributes to an increase in atmospheric moisture, and that a part of this moisture is recycled as continental precipitation, which can then be reevaporated.
-
-%figure: 2 scatter plots over IP domain, rainDiff vs irrig
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\textwidth]{images/chap4/article/f08_colorblind.png}
-    \caption{Domain-averaged influence of irrigation on monthly changes in ET and P (2010-2022). Each data point corresponds to the average value over the Iberian Peninsula continental domain for a single month of simulation (156 data points for 12 months over 13 years). The average amount of water added by irrigation in the \irr simulation (mm d$^{-1}$) is plotted against the average change (\textit{irr - no\_irr}) in (a) ET (mm d$^{-1}$) and (b) P (mm d$^{-1}$). The data points for the winter months are all concentrated around (0,0) for both figures because of very small irrigation volumes and changes in ET and P during this season.}
-    \label{fig:scatter_IP}
-\end{figure}
-
-To look further into this recycling, three subdomains were defined, namely, low, medium and high irrigation areas, on the basis of the mean irrigation thresholds given in Table \ref{tab:irrig_lvl_areas}. In the map of simulated irrigation (Fig. \ref{fig:irrig_maps}d), the low irrigation domain corresponds to the first colour bin (yellow), the medium irrigation domain to the second bin (light green), and the high irrigation domain to the eight other bins. The three subdomains are also shown distinctly in Fig. \ref{fig:moisture_budget_annual}e.
-On average, the increase in ET is slightly superior to irrigation for each subdomain (Fig. \ref{fig:moisture_budget_annual}).
-However, the increase in precipitation is more than twice as large for the low irrigation subdomain than for the medium and high irrigation subdomains. Since irrigated areas are mostly in plains and valleys, this result is consistent with the increase in precipitation already described over mountainous areas in summer (Fig. \ref{fig:diff_sig_6vars}f). It points towards a nonlocal moisture recycling, with atmospheric moisture transfer from intensely irrigated areas to neighbouring lightly irrigated areas, meaning that a significant part of the additional rainfall does not occur on irrigated crops.
-Over the entire Iberian Peninsula, the increase in precipitation represents 25 \% of the irrigated volume, whereas the increase in ET amounts to 112 \% of irrigation.
-
-%t
-% \begin{table}[t]
-\begin{table}[h]
-    \caption{Subdomains of different irrigation intensity.}
-        \begin{tabular}{lcccc}
-            \toprule
-            \textbf{Subdomain} & \textbf{Areal fraction} & \textbf{Min. irrigation} & \textbf{Max. irrigation} & \textbf{Mean irrigation}\\
-            & (\% of Iberian Peninsula) & (mm d$^{-1}$) & (mm d$^{-1}$) & (mm d$^{-1}$)\\
-            \midrule
-            Low irrigation      & 56.3    & 0.0   & 0.06  & 0.033 \\
-            \midrule
-            Medium irrigation   &  34.0   & 0.06  & 0.12  & 0.082\\
-            \midrule
-            High irrigation     &  9.7   & 0.12  & 0.61  & 0.210\\
-            \bottomrule
-        \end{tabular}
-    \label{tab:irrig_lvl_areas}
-\end{table}
-
-%figure: moisture budget : barplot for 3 zones +IP
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=12cm]{images/chap4/article/f09.png}
-    \caption{Changes in the atmospheric moisture budget for subdomains with different irrigation intensities. Each bar plot shows the annual mean irrigation in the \irr simulation (2010-2022, mm d$^{-1}$) alongside the changes (\textit{irr - no\_irr}) in ET (mm d$^{-1}$) and P (mm d$^{-1}$) averaged over distinct subsets of the domain: (a) low irrigation, grid cells with an annual average irrigation lower than 0.06 mm d$^{-1}$, (b) medium irrigation, those where it is between 0.06 and 0.12 mm d$^{-1}$, (c) high irrigation those where it is higher than 0.12 mm d$^{-1}$, and (d) the Iberian Peninsula includes all 3 subsets. The three subdomains are shown in (e).}
-    \label{fig:moisture_budget_annual}
-\end{figure}
-
-\clearpage
-
-\section{Study of the impacts of irrigation under climate change (2050-2062)}
+\section{Future climate of the Iberian Peninsula and impacts of irrigation under climate change (2050-2062)}
 \label{sec:climate_change}
 This section is based on the results of Mariame Maiga's internship for her 1st year of Masters at Sorbonne Université, which I co-supervised with Frédérique Cheruy from April to July 2025.
 \subsection{Lateral forcing and simulation setup}
@@ -664,80 +168,42 @@ This section is based on the results of Mariame Maiga's internship for her 1st y
 
 \section{Chapter conclusions}
 
+This chapter presents results from coupled simulations with the ICOLMDZOR LAM to study the regional climate of the Iberian Peninsula, and the impacts irrigation has on this climate and the water cycle, through land-atmosphere interactions. 
 
-%todo:remove or integrate all the stuff below...
-This study analyses the regional impacts of simulated irrigation on land surface-atmosphere coupling variables and the water cycle over the Iberian Peninsula. It uses a regional model at 25 km resolution, with the same physics as the global IPSL-CM, to better understand the strengths and limits of its parameterizations in representing the impacts of irrigation.
+To identify an appopriate simulation setup for the study, the sensitivities of the LAM to the size of the domain and the choice of lateral forcing (both its source and sampling frequency) were analysed. They revealed an inconsistent behaviour of the LAM in the transition zone when forced by ERA5 data, in particular unexpectedly low cloud cover and precipitation. These biases were attributed to discrepancies between the physics used to produce the ERA5 reanalysis and the physics of LMDZ, which kept the large-scale condensation scheme from forming clouds and precipitation properly.
+These analyses also showed that this inconsistent behaviour in the transition zone could have impacts in the centre of the domain, and in particular over the Iberian Peninsula. Using large domains did not make these inconsistencies disappear but limited their influence over the Peninsula since the transition zone was futher away.
+Simulations with forced with ICOLMDZOR outputs were compared to the initial setup with forcing data from ERA5 and showed large improvements in the consistency of the model in the transition zone. These findings confirmed that in the transition zone, the model was sensitive to the choice of the forcing data, and identified a possibly better forcing source for future studies with the LAM. However, in the central zone, the inherent biases of the ICOLMDZOR model were stronger, which limited the improvements in performance over the Iberian Peninsula, since winter precipitation was strongly overestimated in mountainous areas.
 
-It first shows that the ORCHIDEE irrigation scheme simulates realistic values from April to September in areas where surface water withdrawals are most important, such as the Ebro Valley. However, it cannot represent winter irrigation, or satisfy irrigation demand in southern regions, where actual irrigation is more dependent on groundwater pumping and river dams, due to low available volumes in rivers and groundwater routing reservoirs. Ongoing developments to add river dams into the ORCHIDEE routing scheme \citep{baratgin_modeling_2024} could very likely improve this aspect by representing interseasonal water storage, making more water available in summer.
+Sensitivity experiments to look into the impact of the forcing file sampling frequency were also conducted and showed that using 6-hourly ERA5 data for the lateral forcing instead of hourly data amplified the biases in the transition zone, and degraded performance in the rest of the domain for precipitation and ET. This analysis was conducted with the idea that 6-hourly forcing data could be used for future climate simulation but this option was eventually discarded for technical reasons and all simulations in the rest of this manuscript were run using hourly forcing data.
+
+
+\hfill
+
+To study the impacts of irrigation on land surface-atmosphere coupling variables and the water cycle over the Iberian Peninsula, two simulations were run, with an without irrigation. They were conducted using ERA5 forcing data, which was the only option technically available at the time, with a larger domain size than initially envisionned (the intermediate domain size) to limit the impact of the transition zone discrepancies on the study area.
+
+This study first showed that the ORCHIDEE irrigation scheme simulates realistic values from April to September in areas where surface water withdrawals are most important, such as the Ebro Valley. However, it cannot represent winter irrigation, or satisfy irrigation demand in southern regions, where actual irrigation is more dependent on groundwater pumping and river dams, due to low available volumes in rivers and groundwater routing reservoirs. Ongoing developments to add river dams into the ORCHIDEE routing scheme \citep{baratgin_modeling_2024} could very likely improve this aspect by representing interseasonal water storage, making more water available in summer.
 Explicit dam representation could also limit the winter and spring overestimates of river discharge in anthropized areas, since water would be stored in the dam reservoirs during this season instead of flowing in the rivers. 
 Overall, the irrigation parameterization reduces river discharge and enables better agreement with observations, but since it is only active when the LAI is above a defined threshold, these impacts are mostly visible in summer and autumn. Future work with a looser activation threshold for irrigation could help to represent winter crop irrigation, although it is not expected to have as significant an impact on discharge as an explicit dam representation since simulated irrigation demand would still remain low in winter. Nevertheless, precipitation biases are very likely to remain a major driver of discharge biases, largely independent of irrigation or dam representation.
 
-The simulation of precipitation and ET over the Iberian Peninsula is satisfactory in winter and spring, but this study highlights underestimates in summer and contrasted spatial patterns with positive precipitation biases in elevated regions and negative biases in plains. ET underestimation is partly improved by simulated irrigation, but remains present on average and over most of the domain.
-These linked biases might be improved with a different simulation setup, particularly in the lateral forcing. Preliminary analyses (not shown) revealed an abnormal behaviour of the model in the transition zone between the ERA5 forcing zone and the central free zone, which was attributed to discrepancies between the physics used in the model and in the reanalysis. This resulted in precipitation underestimations throughout the entire simulation domain, which were largely improved by using a larger domain for the simulations presented here. A good lead for future works would be to use lateral forcing from global simulations of the ICOLMDZ model or nested LAM simulations rather than a reanalysis, but these options are not yet technically available.
-The precipitation biases can also be due to structural flaws of the IPSL-CM parameterizations, as mentioned for mountain precipitation in \citet{arjdal_modeling_2024}, and improving them might require more work in the modelling of radiative processes, shallow and deep convection (whose tuning often focuses on tropical regions), or surface processes (roughness, albedo, components of ET). This highlights the fact that the results of this study are necessarily limited by the modelling choices, uncertainties, and biases of the IPSL-CM, and therefore remain largely model-specific.
+The simulation of precipitation and ET over the Iberian Peninsula is satisfactory in winter and spring, but this study highlighted a large underestimation in summer and contrasted spatial patterns with positive precipitation biases in elevated regions and negative biases in plains. ET underestimation is partly improved by simulated irrigation, but remains present on average and over most of the domain. 
+It was only a hypothesis at the time, but it is now clear that running simulations with ICOLMZOR output as forcing data would improve the underestimation of summer precipitation and ET, but also degrade the performance in winter river discharge due to excessive precipitation in moutainous areas.
+% These linked biases might be improved with a different simulation setup, particularly in the lateral forcing. Preliminary analyses (not shown) revealed an abnormal behaviour of the model in the transition zone between the ERA5 forcing zone and the central free zone, which was attributed to discrepancies between the physics used in the model and in the reanalysis. This resulted in precipitation underestimations throughout the entire simulation domain, which were largely improved by using a larger domain for the simulations presented here. A good lead for future works would be to use lateral forcing from global simulations of the ICOLMDZOR model or nested LAM simulations rather than a reanalysis, but these options are not yet technically available.
+To improve these biases would likely require more work in ICOLMDZOR, regarding the modelling of radiative processes, shallow and deep convection (whose tuning often focuses on tropical regions), or surface processes (roughness, albedo, components of ET). This highlighted the fact that the results of this study are necessarily limited by the modelling choices, uncertainties, and biases of the IPSL-CM, and therefore remain largely model-specific.
 
-The atmospheric impacts of irrigation are analysed in more detail in summer, since it is the season with the largest irrigation values and the most significant response for all variables of interest, although it is the driest season, with very little precipitation. 
+The atmospheric impacts of irrigation were analysed in detail in summer, since it is the season with the largest irrigation values and the most significant response for all variables of interest, although it is the driest season, with very little precipitation. 
 In JJA, the strong response of turbulent fluxes to irrigation leads to cooling and moistening of the lower atmosphere and significantly affects its structure (LCL and ABL height), with stronger effects on intensely irrigated regions, which is consistent with the findings of \citet{rappin_landatmosphere_2022}. In contrast, significant increases in precipitation are mostly detected in lightly irrigated mountainous areas surrounding the highly irrigated Ebro Valley. This points to a dominant effect of ABL stabilization, described by \citet{findell_atmospheric_2003-1, ek_influence_2004}, in intensely irrigated areas, and remote effects of atmospheric moistening as in \citet{deangelis_evidence_2010, lo_irrigation_2013, yang_impact_2017}. 
 An improved representation of winter and spring irrigation could either allow to generalize the following results or to identify different responses to irrigation under moister atmospheric conditions.
 Furthermore, over the Iberian Peninsula, increases in ET are proportional to applied irrigation and actually exceed it for almost every simulation month. This is made possible by small but systematic increases in average precipitation over the domain, forming evidence of continental moisture recycling over the Iberian Peninsula. The precipitation increases are of lower magnitude than those of ET and occur much more in lightly irrigated regions than in intensely irrigated regions, confirming that the recycling is partial and mostly nonlocal.
 
-These findings call for an analysis of surface-atmosphere coupling processes in the presence of irrigation at the diurnal scale to better describe the impacts on the ABL structure in both irrigated areas and neighbouring regions.
-In particular, it would be relevant to compare the model to field observations from the LIAISE campaign held in the Ebro Valley in July 2021 \citep{boone_land_2025}. High resolution modelling experiments using irrigation parameterizations have shown large improvements of performance relative to LIAISE observations for turbulent fluxes, air temperature and humidity \citep{lunel_irrigation_2024, udina_irrigation_2024}; stressed the importance of the convection parameterization for the response of precipitation to irrigation \citep{udina_irrigation_2024}; and identified interactions of irrigation-induced heterogeneities with regional breeze circulations \citep{lunel_marinada_2024}. Conducting similar analyses with the simulation setup used in this study should provide insights into the ability of an ESM to reproduce the complex structure of these heterogeneities \citep{mangan_surface-boundary_2023} and their impacts on the ABL and atmospheric water cycle. 
+These findings called for an analysis of surface-atmosphere coupling processes in the presence of irrigation at the diurnal scale to better describe the impacts on the ABL structure in both irrigated areas and neighbouring regions.
+Therefore, the LAM was compared to field observations from the LIAISE campaign, held in the Ebro Valley in July 2021 \citep{boone_land_2025}, and to mesoscale simulations which had already been run over the campaign area and analysed in \citet{lunel_irrigation_2024,lunel_marinada_2024}. These results are presented in Chapter \ref{chap:liaise}.
+%High resolution modelling experiments using irrigation parameterizations have shown large improvements of performance relative to LIAISE observations for turbulent fluxes, air temperature and humidity \citep{lunel_irrigation_2024, udina_irrigation_2024}; stressed the importance of the convection parameterization for the response of precipitation to irrigation \citep{udina_irrigation_2024}; and identified interactions of irrigation-induced heterogeneities with regional breeze circulations \citep{lunel_marinada_2024}. Conducting similar analyses with the simulation setup used in this study should provide insights into the ability of an ESM to reproduce the complex structure of these heterogeneities \citep{mangan_surface-boundary_2023} and their impacts on the ABL and atmospheric water cycle. 
+
+
+\hfill
+
+%todo:ccl on climate change stuff
 
 \clearpage
-
-\section{Chapter appendix} %todo:déplacer en fin de manuscrit
-%f
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\textwidth]{images/chap4/article/18_stations_TS.png}
-    \caption{Time series of river discharge for the \irr and \noirr simulations and GRDC observations.}
-\end{figure}
-
-%f
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\textwidth]{images/chap4/article/18_stations_SC.png}
-    \caption{Mean seasonnal cycle of river discharge for the \irr and \noirr simulations and GRDC observations. A mask is applied to the simulations to filter out months without corresponding observation data.}
-\end{figure}
-
-
-%figure : maps of relative diff vs ERA for 3 domain sizes
-%todo:captions
-\begin{figure}[htbp]
-    \centering
-    \begin{tabular}{ccc}
-        %precip
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_precip_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_precip_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_precip_era_LAM_2000km_NBP80.png}
-        \end{subfigure} \\
-        
-        %evap
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_2000km_NBP80.png}
-        \end{subfigure}
-    \end{tabular}
-    \caption{}
-    \label{fig:domain_size_ERA_reldiff_maps}
-\end{figure}
- 
 
 %final line
