@@ -71,20 +71,20 @@ Four simulations were run, two without irrigation (labeled as \textit{no\_irr}) 
             \includegraphics[width=\textwidth]{images/chap3/maps/slowr_interp.png}
         \end{subfigure} &
         \begin{subfigure}[b]{0.33\textwidth}
-            \caption{Groundwater reservoir (difference, \native - \std)}
+            \caption{Groundwater reservoir difference (\native -\std)}
             \includegraphics[width=\textwidth]{images/chap3/maps/slowr_diff.png}
         \end{subfigure} \\
         
         \begin{subfigure}[b]{0.33\textwidth}
-            \caption{Surface water reservoir\\(annual mean, \std)}
+            \caption{Overland reservoir\\(annual mean, \std)}
             \includegraphics[width=\textwidth]{images/chap3/maps/fastr_subgrid.png}
         \end{subfigure} &
         \begin{subfigure}[b]{0.33\textwidth}
-            \caption{Surface water reservoir\\(annual mean, \native)}
+            \caption{Overland reservoir\\(annual mean, \native)}
             \includegraphics[width=\textwidth]{images/chap3/maps/fastr_interp.png}
         \end{subfigure} &
         \begin{subfigure}[b]{0.33\textwidth}
-            \caption{Surface water reservoir (difference, \native - \std)}
+            \caption{Overland reservoir difference (\native -\std)}
             \includegraphics[width=\textwidth]{images/chap3/maps/fastr_diff.png}
         \end{subfigure} \\
         
@@ -97,7 +97,7 @@ Four simulations were run, two without irrigation (labeled as \textit{no\_irr}) 
             \includegraphics[width=\textwidth]{images/chap3/maps/streamr_interp.png}
         \end{subfigure} &
         \begin{subfigure}[b]{0.33\textwidth}
-            \caption{River reservoir (difference, \native - \std)}
+            \caption{River reservoir difference \\(\native -\std)}
             \includegraphics[width=\textwidth]{images/chap3/maps/streamr_diff.png}
         \end{subfigure} \\
         
@@ -110,7 +110,7 @@ Four simulations were run, two without irrigation (labeled as \textit{no\_irr}) 
             \includegraphics[width=\textwidth]{images/chap3/maps/hydrographs_interp.png}
         \end{subfigure} &
         \begin{subfigure}[b]{0.33\textwidth}
-            \caption{River discharge (difference, \native - \std)}
+            \caption{River discharge difference \\(\native -\std)}
             \includegraphics[width=\textwidth]{images/chap3/maps/hydrographs_diff.png}
         \end{subfigure} \\
     \end{tabular}
@@ -119,30 +119,36 @@ Four simulations were run, two without irrigation (labeled as \textit{no\_irr}) 
     \label{fig:routing_reservoirs_halfdeg}
 \end{figure}
 
-The comparison of the mean volumes for the groundwater and overland reservoirs (Fig. \ref{fig:routing_reservoirs_halfdeg}a-f) shows differences only on coastal grid cells, which are very low in \std but can have significant values in \native. This is particularly visible in the northern moutain ranges, and it must be noted that the values computed by \native are in the expected order of magnitude, considering these are regions of high precipitation, and therefore high drainage and surface runoff.
+The comparison of the mean volumes for the groundwater and overland reservoirs (Fig. \ref{fig:routing_reservoirs_halfdeg}a-f) shows differences only on coastal grid cells, which are very low in \std but can have significant values in \native, particularly in the northern strip of the Peninsula. Considering these are mostly moutainous regions which receivre large precipitation, and therefore exhibit high drainage and surface runoff, the values computed by \native in this region are in the expected order of magnitude, whereas the values in \std are 10 to 70 times smaller.
+Therefore, the cause considered most likely is that \std does not hold water in the reservoir of these coastal grid cells as long as it should, compared to neighbouring non-coastal grid cells. In the routing scheme, coastal grid cells have to be managed differently since they flow to the sea rather than to the river reservoir of the downstream grid cell. It is therefore possible that different modelling or implementation choices were made when developping the code for \std. Another possible explanation is that, as explained in Section\ref{sec:routing_methods} \std preprocesses the DEM, which could possibly alter the slope on these coastal grid cells in a way that empties them much faster than expected.
+However these discrepancies are still not completely understood and still under investigation, in collaboration with Antoine Bierjon (research engineer at IPSL), to clarify their cause and determine whether they introduced errors or corrected existing flaws of the previous code for coastal grid cells.
 
-These differences are thought to be the consequence of a different handling of water quantities and their units in \native compared to \std. 
-As detailed in Section \ref{sec:irrig_interp_variables}, in \native, drainage and surface runoff are computed on the ORCHIDEE grid, in $kg \cdot m^{-2}$ (equivalent to $mm$ over the grid cell) and converted to absolute water quantities (in $kg$) before being interpolated to the DEM grid. These absolute quantities are routed on the DEM grid and the new water quantities in the reservoirs are reinterpolated to the ORCHIDEE grid (even when the two grids have the same resolution). 
-To express them as an areal value, in $kg \cdot m^{-2}$, the absolute water quantity has to be divided by the area of the grid cell. It is considered likely that this back-and-forth interpolation and change of units introduces the differences, by accounting for continental fraction (to obtain the exact area on coastal points) whereas in \std this was not necessary since all computations were on the same grid cell. Such subtleties in the code were introduced to enable compatibility with any DEM grid and are still under investigation by its developers to clarify the cause of the observed discrepancies and determine whether they introduced errors or corrected existing flaws of the previous code in coastal grid cells.
-Since this issue affected only the groundwater and overland reservoirs and was located only on coastal grid cells, it was considered that for the purpose of this thesis, the impacts should not affect the results substantially and that \native could be used in its current version.
+%old possible explanation with Contfrac, further tested and doesn't seem to be the problem...
+% These differences are thought to be the consequence of a different handling of water quantities and their units in \native compared to \std. 
+% As detailed in Section \ref{sec:irrig_interp_variables}, in \native, drainage and surface runoff are computed on the ORCHIDEE grid, in $kg \cdot m^{-2}$ (equivalent to $mm$ over the grid cell) and converted to absolute water quantities (in $kg$) before being interpolated to the DEM grid. These absolute quantities are routed on the DEM grid and the new water quantities in the reservoirs are reinterpolated to the ORCHIDEE grid (even when the two grids have the same resolution). To express them as an areal value, in $kg \cdot m^{-2}$, the absolute water quantity has to be divided by the area of the grid cell. It is considered likely that this back-and-forth interpolation and change of units introduces the differences, by accounting for continental fraction (to obtain the exact area on coastal points) whereas in \std this was not necessary since all computations were on the same grid cell. Such subtleties in the code were introduced to enable compatibility with any DEM grid.
+
+Since this issue affected only the groundwater and overland reservoirs and was located only on coastal grid cells, it was considered that for the purpose of this work, the impacts should not affect the results substantially and that \native could be used in its current version.
 %todo:continuer à clarifier avec Antoine et/ou Yann pour mieux expliquer...? 
 
 \hfill
 
-Regarding the river reservoir (Fig. \ref{fig:routing_reservoirs_halfdeg}g-i), a new modelling choice was made on coastal grid cells. In \std, there was a river reservoir for these grid cells, whereas it was removed in \native. This choice was made during the development of the scheme and might be changed in future versions to ensure consistency with the other two reservoirs. 
-The way to compute river discharge in these coastal points is also slightly different in \native, as it includes the flow from the river reservoir of the upstream grid cell, as well as the flow from the groundwater and overland reservoirs of the grid cell, whereas drainage and surface runoff were considered to flow directly in the ocean in \std. This explains why discharge values are or similar order of magnitude but larger in \native (Fig. \ref{fig:routing_reservoirs_halfdeg}l). 
-Figure \ref{fig:coastal_routing_behaviour} schematizes the differences in implementation that explain the differences seen in the river reservoir and in the discharge on coastal grid cells.
+Regarding the river reservoir (Fig. \ref{fig:routing_reservoirs_halfdeg}g-i), a new modelling choice was made on coastal grid cells. In \std, there was a river reservoir for these grid cells, whereas it was removed in \native as schematized in Fig. \ref{fig:coastal_routing_behaviour}. This choice was made during the development of the code and might be changed in future versions to ensure consistency with the other two reservoirs. It is responsible for the large differences in river reservoir on large river outlets (Fig. \ref{fig:routing_reservoirs_halfdeg}i).
+
+However, this difference does not translate to values of river discharge since it is still computed in coastal grid cells in \native using the outflow from the river reservoir of the upstream grid cells, and from the groundwater and overland reservoirs (Fig. \ref{fig:routing_reservoirs_halfdeg}j-l). River discharge is also larger in \native than in \std on all coastal grid cells, although it must be noted that the scale for the river discharge was specifically chosen to be able to visualise this difference (Fig. \ref{fig:routing_reservoirs_halfdeg}l). This is very likely the consequence of the differences noticed in the groundwater and overland reservoir, which both contribute to the discharge and are much larger in \native for coastal grid cells, as explained previously.
+
+% The way to compute river discharge in these coastal points is also slightly different in \native, as it includes the flow from the river reservoir of the upstream grid cell, as well as the flow from the groundwater and overland reservoirs of the grid cell, whereas drainage and surface runoff were considered to flow directly in the ocean in \std. This explains why discharge values are or similar order of magnitude but larger in \native (Fig. \ref{fig:routing_reservoirs_halfdeg}l). Figure \ref{fig:coastal_routing_behaviour} schematizes the differences in implementation that explain the differences seen in the river reservoir and in the discharge on coastal grid cells.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{images/chap3/coastal_routing_behaviour_v2.png
+    \includegraphics[width=\textwidth]{images/chap3/coastal_routing_behaviour_v3.png
 }
     \caption{Differences in implementation between \std and \native on coastal grid cells.}
     \label{fig:coastal_routing_behaviour}
 \end{figure}
 
 \subsection{Differences in routing path, average impacts on reservoir volumes}
-Appart from coastal grid cell, the most noticeable discrepancy on the river reservoir and river discharge is that some non-coastal points have different values in both routing versions. It can be seen on Fig. \ref{fig:routing_reservoirs_halfdeg}j-l particularly that the water does not flow exactly in the same path, meaning that the DEM is not interpreted exactly in the same way. This has been attributed to preprocessings of the DEM implemented in \std to avoid creating dead-ends, grid cells where the water would not keep flowing and accumulate in the river reservoir. These changes in the routing graph were implemented when developing the routing scheme for global applications, likely with a focus on other ORCHIDEE grid resolutions (1° or 2° instead of the 0.5° used here) and are not necessary when routing water directly on the DEM, which is why they were not implemented in \native. In the large rivers where there are differences, \native seems to use shorter paths that \std, often flowing diagonally to the next grid cell whereas the alteration of the path in \std sometimes make it take two 90° turns instead. In most of the domain, on annual average, this seems to lead to smaller amounts of water in the river reservoir and smaller discharge in \native compared to \std, as clearly visible on the Duero river in Fig. \ref{fig:routing_reservoirs_halfdeg}l.
+Appart from coastal grid cells, the most noticeable discrepancy on the river reservoir and river discharge is that some non-coastal points have different values in both routing versions. It can be seen on Fig. \ref{fig:routing_reservoirs_halfdeg}j-l particularly that the water does not flow exactly in the same path, meaning that the DEM is not interpreted exactly in the same way. 
+This has been attributed to preprocessings of the DEM implemented in \std, mentionned in Section \ref{sec:routing_methods}, which were specific to its structure and therefore not implemented in \native. In the large rivers where there are differences, \native seems to use shorter paths that \std, often flowing diagonally to the next grid cell whereas \native takes two 90° turns instead due to its altered routing path. In most of the domain, on annual average, this leads to smaller amounts of water in the river reservoir and smaller discharge in \native compared to \std, as clearly visible on the Duero river in Fig. \ref{fig:routing_reservoirs_halfdeg}l.
 
 %figure : 3 time series (3 reservoirs)on average over the IP for both routings
 \begin{figure}[htbp]
@@ -152,7 +158,7 @@ Appart from coastal grid cell, the most noticeable discrepancy on the river rese
         \includegraphics[width=\textwidth]{images/chap3/time_series/slowr_time_series.png}
     \end{subfigure}
     \begin{subfigure}[b]{0.32\textwidth}
-        \caption{Surface water reservoir average}
+        \caption{Overland reservoir average}
         \includegraphics[width=\textwidth]{images/chap3/time_series/fastr_time_series.png}
     \end{subfigure}
     \begin{subfigure}[b]{0.32\textwidth}
@@ -165,7 +171,7 @@ Appart from coastal grid cell, the most noticeable discrepancy on the river rese
         \includegraphics[width=\textwidth]{images/chap3/time_series/slowr_seasonal_cycle.png}
     \end{subfigure}
     \begin{subfigure}[b]{0.32\textwidth}
-        \caption{Surface water reservoir average seasonal cycle}
+        \caption{Overland reservoir average seasonal cycle}
         \includegraphics[width=\textwidth]{images/chap3/time_series/fastr_seasonal_cycle.png}
     \end{subfigure}
     \begin{subfigure}[b]{0.32\textwidth}
@@ -196,7 +202,7 @@ Regarding the river reservoir (Fig. \ref{fig:reservoir_time_series}f), \std simu
         \includegraphics[width=\textwidth]{images/chap3/maps/irrigation_interp.png}
     \end{subfigure}
     \begin{subfigure}[b]{0.32\textwidth}
-        \caption{Irrigation difference\\(\native - \std)}
+        \caption{Irrigation difference\\(\native -\std)}
         \includegraphics[width=\textwidth]{images/chap3/maps/irrigation_diff.png}
     \end{subfigure} \\
 
@@ -229,7 +235,7 @@ In both simulations, irrigation progressively increases in spring, decreases in 
 The seasonal cycle of river discharge reflects the general agreement of the two routing versions. Without irrigation, the red and yellow lines follow each other closely, and with irrigation, the purple and green are also very similar. Some differences persist, due to the differences in the routing graph already described, mostly for the Ebro river since the station is downstream of several important discrepancies visible on Fig. \ref{fig:routing_reservoirs_halfdeg}l.
 %todo:add the general overestimation without irrig, limits in representation of dam storage ; slight delay in winter peak...
 
-\subsection{Preliminary conclusions on \native routing consistency}
+\subsection{Conclusions on \native routing consistency}
 This comparison of the \native routing version with \std showed that this new version is generally reproducing the modelling principles correctly, but several differences were identified between the two versions. All three reservoirs are handled differently in \native on coastal grid cells, which affects the average volumes stored over the Iberian Peninsula, but does not have a significant impact on irrigation or river dicharge. However, differences in the path followed by water as it flows from one grid cell to another in the river reservoirs are also clearly identified in large rivers of the Peninsula. This leads to local changes in the simulated river dicharge, and slightly less water stored in the river reservoir by \native since it simulated shorter paths in several occurrences. These discrepancies also have an impact on irrigation since it is strongly reliant on the volumes of water available in the river reservoir, but this impact remains limited on average over the domain.
 
 \section{Calibration over the Iberian Peninsula}
@@ -290,7 +296,7 @@ Four simulations without irrigation were therefore carried out with these four s
 Volumes in each of the reservoirs were first compared to the volumes simulated by the \std routing. As a reminder, this version, with the 0.5° DEM, has long been used in ORCHIDEE and was evaluated against groundwater reference products from GRACE, as well as river discharge observations  \citep{ngo-duc_53-year_2005, ngo-duc_validation_2007}.
 It is also the version that was used for the evaluation and validation of the irrigation scheme at global scale \citep{arboleda-obando_validation_2024}, which makes it a relevant reference for the reservoir volumes since available water is a major driver of simulated irrigation in the model. 
 
-On average over the Peninsula, for the groundwater and surface water reservoirs, the TCST3 simulation showed values closest to \std (Fig. \ref{fig:reservoir_time_series_tcsts}a, b, d, e), while TCST1 and TCST2 hold almost no water in these reservoirs, meaning that they flow more quickly in the river reservoir. On the river reservoir however (Fig. \ref{fig:reservoir_time_series_tcsts}c, f), TCST3 is one order of magnitude above the other simulation, including \std, hinting that the value to TCST\_STREAM is too large for this reservoir, meaning that water circulates too slowly. This is confirmed looking at river discharge (Fig. \ref{fig:merit_tcsts_stations_SC}), as TCST3 cannot reproduce the observed structure of the seasonal cycle for any of the four rivers considered. These results, as well as a few intermediate tests not shown here, led to the choice of a new set of parameters (TCST4), which has values similar to TCST3 for the groundwater and overland reservoirs, but closer to TCST2 (even slightly faster) for the river reservoir (\ref{table:tcst_exp}), shown in red in Fig. \ref{fig:reservoir_time_series_tcsts} and \ref{fig:merit_tcsts_stations_SC}.
+On average over the Peninsula, for the groundwater and Overland reservoirs, the TCST3 simulation showed values closest to \std (Fig. \ref{fig:reservoir_time_series_tcsts}a, b, d, e), while TCST1 and TCST2 hold almost no water in these reservoirs, meaning that they flow more quickly in the river reservoir. On the river reservoir however (Fig. \ref{fig:reservoir_time_series_tcsts}c, f), TCST3 is one order of magnitude above the other simulation, including \std, hinting that the value to TCST\_STREAM is too large for this reservoir, meaning that water circulates too slowly. This is confirmed looking at river discharge (Fig. \ref{fig:merit_tcsts_stations_SC}), as TCST3 cannot reproduce the observed structure of the seasonal cycle for any of the four rivers considered. These results, as well as a few intermediate tests not shown here, led to the choice of a new set of parameters (TCST4), which has values similar to TCST3 for the groundwater and overland reservoirs, but closer to TCST2 (even slightly faster) for the river reservoir (\ref{table:tcst_exp}), shown in red in Fig. \ref{fig:reservoir_time_series_tcsts} and \ref{fig:merit_tcsts_stations_SC}.
 Average simulated volumes for TCST4 are clos to \std on all reservoirs, and match discharge observations with similar performance to TCST1 and TCST2.
 %option:add metrics ? KGE, BIAS
 
@@ -318,7 +324,7 @@ It can be noted that the performance of TCST1 for river dischage is good, but th
         \includegraphics[width=\textwidth]{images/chap3/time_series/slowr_seasonal_cycle_tcsts.png}
     \end{subfigure}
     \begin{subfigure}[b]{0.32\textwidth}
-        \caption{Surface water reservoir average seasonal cycle}
+        \caption{Overland reservoir average seasonal cycle}
         \includegraphics[width=\textwidth]{images/chap3/time_series/fastr_seasonal_cycle_tcsts.png}
     \end{subfigure}
     \begin{subfigure}[b]{0.32\textwidth}
