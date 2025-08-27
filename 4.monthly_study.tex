@@ -51,7 +51,7 @@ Forcing files from two different sources were used, and the differences this cho
 Sensitivity tests on the impact of the forcing file sampling frequency are also presented in Section \ref{sec:forcing_influence}, with forcing files containing either hourly or 6-hourly data.
 This sensitivity was of interest since future climate simulations were initially supposed to use CMIP6 output variables, which are available only every six hours. However, this option was eventually discarded due to technical difficulties such as unexpected model crashes when running simulations with this sampling frequency and issues with the formatting of the forcing file from CMIP6 outputs. The future climate simulations presented here were therefore run using hourly outputs from a global ICOLMDZOR simulation.
 
-%todo: for ICOLMDZOR, detail zoom parameters
+%option: for ICOLMDZOR, detail zoom parameters
 %todo : SST (AMIP for present, fully coupled model + bias correction for future ?)
 
 The main study period under current climate is from 2010 to 2022, since before and after that period not all forcing variables were readily available on the IPSL servers and running the LAM would have required substantial manual data collection work. Some sensitivity analysis of Section \ref{sec:forcing_influence} were run on specific or shorter periods to overcome technical issues or to limit the computing time and ressources used.
@@ -157,7 +157,7 @@ The 18 selected stations with available data over the simulation period and an a
 
 %table:description of discharge station used
 \begin{table*}[htbp]
-    \caption{Characteristics of river discharge stations used for evaluation. Stations marked with * are the largest of the five major basins of the Peninsula, and are shown in Fig. \ref{fig:discharge_SC}.%todo:check still the case
+    \caption{Characteristics of river discharge stations used for evaluation. Stations marked with * are the largest of the five major basins of the Peninsula, and are shown in Fig. \ref{fig:discharge_SC}.
     }
     \resizebox{\textwidth}{!}{%
     \begin{tabular}{lcccccc}
@@ -213,14 +213,14 @@ This chapter presents results from coupled simulations with the ICOLMDZOR LAM to
 
 \hfill
 
-To identify an appopriate simulation setup for the study, the sensitivities of the LAM to the size of the domain and the choice of lateral forcing (both its source and sampling frequency) were analysed. They revealed an inconsistent behaviour of the LAM in the transition zone when forced by ERA5 data, in particular unexpectedly low cloud cover and precipitation. These biases were attributed to discrepancies between the physics used to produce the ERA5 reanalysis and the LMDZ physics, which keep the large-scale condensation scheme from forming clouds and precipitation properly.
+To identify an appropriate simulation setup for the study, the sensitivities of the LAM to the size of the domain and the choice of lateral forcing (both its source and sampling frequency) were analysed. They revealed an inconsistent behaviour of the LAM in the transition zone when forced by ERA5 data, in particular unexpectedly low cloud cover and precipitation. These biases were attributed to discrepancies between the physics used to produce the ERA5 reanalysis and the LMDZ physics, which keep the large-scale condensation scheme from forming clouds and precipitation properly.
 These analyses also showed that this inconsistent behaviour in the transition zone can have impacts in the central part of the domain, and in particular over the Iberian Peninsula. Using larger domains does not make these inconsistencies disappear but limits their influence over the Peninsula since the transition zone is futher away.
 
 Simulations with forced with outputs from a global ICOLMDZOR simulation were compared to the initial setup with forcing data from ERA5 and showed large improvements in the consistency of the model in the transition zone. These findings confirmed that in the transition zone, the model is sensitive to the choice of the forcing data, and identified a possibly better forcing source for future studies with the LAM. However, with this setup, the inherent biases of the ICOLMDZOR model are stronger  in the central zone, which limits the improvements in performance over the Iberian Peninsula.
 
 Sensitivity experiments to look into the impact of the forcing file sampling frequency were also conducted and showed that using 6-hourly ERA5 data for the lateral forcing instead of hourly data amplifies the biases in the transition zone, and degrades performance in the rest of the domain for precipitation and ET. This analysis was conducted with the idea that 6-hourly forcing data could be used for future climate simulation but this option was eventually discarded for technical reasons and all simulations in the rest of this manuscript were run using hourly forcing data.
-%todo:extend into perspective to improve knowledge on the LAM ?
 
+Although simplifications were made due to technical and time constraints, several dependencies of the ICOLMDZOR LAM on the choice of the domain and forcing data were identified. This work is of high interest for the IPSL modelling community since the LAM is a recent tool, still in development, that is expected to be used in a more and more regional modelling and parameterization development studies.
 
 \hfill
 
@@ -251,5 +251,11 @@ Following this study of regional climate under present conditions, another exper
 Hourly lateral boundary conditions for the LAM are obtained from a global ICOLMDZOR simulation under SSP5-8.5 climate change scenario. 
 One simulation was run for the present period (2010-2022), without irrigation, and two for the future period (2050-2062), with and without irrigation. This allowed for an analysis of the impacts of climate change on the region, and of the behaviour and impact of irrigation in the future. 
 Although some new simulations are needed (and ongoing) to strengthen the preliminary results presented in Section \ref{sec:climate_change}, several conclusions were drawn from this study. 
-%todo:finish ccl and perspectives
+
+Under SSP5-8.5, mid-century simulated climate is 2.3°C warmer than present climate on average over the Iberian Peninsula. Although specific humidity increases due to the water-holding capacity of the air, relative humidity decreases over all the domain, particularly in the northern mountain ranges. Cloud cover and precipitation decrease over most of the domain, with the exception of a coastal region in the Southeast, leading to a decrease in latent heat flux and an increase in sensible heat flux. Using the UNEP aridity index, a clear shift in the aridity was identified over the Peninsula, with humid regions in the North evolving towards a semiarid climate, and the arid areas in the valleys extending to cover large share of the Ebro, Guadian and Guadalquivir basins.
+
+The simulation of future climate with irrigation showed that irrigation can counteract the effect of climate change on evapotranspiration, whereas its cooling effect is much weaker than the warming induced by climate change. Irrigation is not associated with large changes in precipitation, and the only significant increases occur in mountainous humid regions, where land-atmosphere interactions are not very impacted by additional moisture. Therefore, the impact of irrigation on the aridification of the Peninsula induced by climate change remains limited to a few grid cells.
+
+This work on climate change and the impact of irrigation in the future, conducted in the context of a Masters student's internship, remains preliminary and calls for further investigation. Longer simulations are currently being run over 30-year periods to strengthen the statistical significance of the results. They will also include a simulation of present climate with irrigation, run with the same setup as the other three simulations, to enable a relevant comparison of irrigation demand and irrigated volumes in the two periods.
+
 \clearpage
