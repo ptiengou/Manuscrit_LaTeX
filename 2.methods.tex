@@ -1,34 +1,72 @@
-\chapter{Methods and tools: regional simulations with the IPSL Climate Model}
+\chapter{Methods and tools: regional simulations with the ICOLMDZOR LAM}
 \label{chap:methods}
 \minitoc
 \pagebreak
 
-This thesis uses the ICOLMDZOR limited area model (LAM) to study the impacts of simulated irrigation on the atmosphere and the water cycle. This model relies on the atmosphere (ICOLMDZ) and land surface (ORCHIDEE) components of the IPSL-CM, which has been a regular participant in CMIP simulation experiments, including CMIP6 \citep{boucher_presentation_2020}. 
+This thesis uses the ICOLMDZOR limited area model (LAM) to study the impacts of simulated irrigation on the atmosphere and the water cycle. This model relies on the atmosphere (ICOLMDZ) and land surface (ORCHIDEE) components of the IPSL-CM in its latest version. 
+Historically, the LMD General Circulation Model was first developed with a regular longitude-latitude grid \citep{sadourny_laval_1984}, before introducing the zoom capability \citep{li_ensemble_1999} which led to the name LMDZ. 
+A land surface scheme named SECHIBA, was introduced in \citet{ducoudre_sechiba_1993} to represent water and energy budgets on continental surfaces. 
+IPSL was founded in 1995 and the LMD GCM became part of the IPSL-CM1 where it was coupled to an ocean and sea ice model \citep{braconnot_adjustment_1997}.
+Later, the IPSL-CM4 contributed to the third phase of the Coupled Model Intercomparison Project (CMIP3) with simulations using LMDZ4 \citep{hourdin_lmdz4_2006} and the land surface model (LSM) ORCHIDEE \citep{krinner_dynamic_2005}, largely based on the aforementioned surface scheme of LMDZ.
+Two versions of the IPSL-CM5 contributed to CMIP5, including one with a new version of the atmospheric physics, LMDZ5B \citep{hourdin_lmdz5b_2013}.
+For CMIP6, the model evolved into IPSL-CM6-LR \citep{boucher_presentation_2020}, with a new version of the atmospheric GCM, LMDZ6A \citep{hourdin_lmdz6a_2020}, and of the LSM, ORCHIDEE 2.0 \citep{cheruy_improved_2020}. 
+While preparing CMIP7, the IPSL-CM is undergoing a major evolution in its atmospheric component by changing to a new dynamical core, DYNAMICO \citep{dubos_dynamico-10_2015}, which used an icosahedral grid instead of a regular longitude-latitude discretization. Within IPSL-CM7, which is still under development, the atmospheric component is now referred to as ICOLMDZ. Although a new version of the physics scheme is expected to be integrated into IPSL-CM7, ICOLMDZ can also function with the pre-existing physics of LMDZ, as was the case for the present work.
+
+This chapter first presents the version of the ORCHIDEE LSM used, with a special focus on the most relevant processes for this work such as the water and energy budgets, river routing and irrigation. ORCHIDEE was used as a stand-alone LSM in Chapter \ref{chap:routing} and in coupled regional simulations with ICOLMDZ for Chapters \ref{chap:monthly} and \ref{chap:liaise}. The second part of this chapter describes ICOLMDZ, as well as the LAM setups used for these coupled simulations.
+%todo:check si cette description de la structure est bonne
 
 \section{ICOLMDZ atmospheric model}
-\subsection{Dynamical core and parameterizations}
+\subsection{Dynamical core and parametrizations}
 The atmospheric component of the model is the association of the dynamical core DYNAMICO \citep{dubos_dynamico-10_2015}, and the LMDZ6A physics used for CMIP6 \citep{hourdin_lmdz6a_2020}. 
+Icosahedral dynamical cores already existed in some models, such as ICON \citep{zangl_icon_2015,giorgetta_icon-_2018,prill_icon_2022}, and was introduced in the IPSL-CM with the main objective of standardizing grid cells for global simulations and unlocking a high level of parallelization. In particular, it avoids the discrepancies of a regular longitude-latitude grid that appear at the poles, opening new prospects for modelling projects in the Arctic \citep{raillard_leveraging_2024} and Antarctic regions \citep{wiener_extensive_2025}.
+All ICOLMDZ simulations run in the thesis used a 30-second time step for the dynamics.
 
-Icosahedral dynamical cores already existed in some models, such as ICON \citep{zangl_icon_2015,giorgetta_icon-_2018,prill_icon_2022}, and was introduced in the IPSL-CM with the main objective of standardizing grid cells for global simulations. In particular, it avoids the discrepancies of a regular longitude-latitude grid that appear at the poles, opening new prospects for modelling projects in the Arctic \citep{raillard_leveraging_2024} and Antarctic regions \citep{wiener_extensive_2025}.
-All ICOLMDZ simulations run in the thesis used a 30s time step for the dynamics.
-
-The physics of the model are version NPv6.2 with 79 vertical levels, and are run every 15 mn.
-They include the following parameterizations:
+The physics of the model is version NPv6.2 with 79 vertical levels, and is run every 15 min, although some processes are not called at every time step to limit computation time.
+They include the following parametrizations:
 \begin{itemize}
     \item a surface layer description based on Monin-Obukhov similarity theory \citep{monin1954osnovnye}, using formulations from \cite{louis_parametric_1979} and \cite{king_sensitivity_2001}; 
     \item an Eddy-Diffusivity Mass Flux (EDMF) scheme of boundary layer vertical transfer composed of a turbulent diffusion scheme based on \cite{yamada_simulations_1983} with recent improvements described in \cite{vignon_modeling_2018}, and a thermal plume model for shallow convection \citep{rio_thermal_2008, hourdin_unified_2019}; 
-    \item a mass-flux scheme for deep convection based on Emanuel's scheme \citep{emanuel_scheme_1991, grandpeix_improved_2004, rio_control_2013}, with stochastic triggering \citep{rochetin_deep_2014, rochetin_deep_2014-1}; 
-    \item a parameterization of the cold pools created below cumulonimbus by reevaporation of convective rainfall \citep{grandpeix_density_2010-1,grandpeix_density_2010};
-    \item a large scale condensation scheme based on a statistical distribution of subgrid total water content, from which cloud fraction and water contents are derived \citep{madeleine_improved_2020}; 
-    \item radiative transfer model RRTM \citep{mlawer_radiative_1997}.
+    \item a mass-flux scheme for deep convection based on Emanuel's scheme \citep{emanuel_scheme_1991, grandpeix_improved_2004, rio_control_2013}, with stochastic triggering \citep{rochetin_deep_2014, rochetin_deep_2014-1}, called every 30 minutes; 
+    \item a parametrization of the cold pools created below cumulonimbus by reevaporation of convective rainfall \citep{grandpeix_density_2010-1,grandpeix_density_2010};
+    \item a large scale condensation scheme based on a statistical distribution of sub-grid total water content, from which cloud fraction and water contents are derived \citep{madeleine_improved_2020}; 
+    \item the radiative transfer model RRTM \citep{mlawer_radiative_1997}, which is called every 1.5 hours (six time steps).
 \end{itemize}
 
 All simulations were run with spectral solar irradiance from CMIP6 solar forcing \citep{matthes_solar_2017}, distinguishing between the historical period (until 2014) and future reference scenario (from 2015).
 The atmospheric model is not coupled with an ocean model and uses prescribed sea surface temperature (SST) and sea ice content (SIC) from the AMIP forcing dataset.
 
 \subsection{Limited area model configuration}
-Simulations are run in a limited area model (LAM) configuration, first used and described in \citet{raillard_leveraging_2024}. It must be noted that the use of this model in the IPSL community is very recent, and that its development and evaluation are still ongoing. In particular, the simulations presented in chapter \ref{chap:monthly} constitute the first case study focusing on the water cycle and land-atmosphere interactions, as well as the first use case at the midlatitudes.
+Simulations are run in a limited area model (LAM) configuration, first used and described in \citet{raillard_leveraging_2024}. It must be noted that the use of this model in the IPSL community is very recent, and that its development and evaluation are still ongoing. In particular, the simulations presented in Chapter \ref{chap:monthly} constitute the first case study focusing on the water cycle and land-atmosphere interactions, as well as the first use case at the mid-latitudes.
 
+\subsubsection{Lateral boundary conditions}
+Since simulations with the LAM only cover a portion of the globe, lateral boundary conditions are read by the model from a forcing file, which can be obtained from various sources. 
+In most of the work presented here, lateral boundary conditions for the LAM were taken from ERA5 reanalysis hourly values at 0.25° resolution \citep{hersbach_era5_2020}. This product uses a climate model with observation data assimilation techniques to produce outputs that are as close as possible to actual conditions. When simulating recent climate, using this forcing enables having rather realistic synoptic conditions. 
+It is also possible to run the model with other sources for the forcing file, in particular using outputs from global climate simulations, either from the ICOLMDZOR global model or from other models. The modelling community at IPSL is also currently investigating the possibility of using outputs from the CMIP6 simulations under various SSPs to run the LAM in projected future climate conditions.
+
+To run a regional simulation, the forcing file must contain data for the nudged variables (temperature, humidity, wind), two variables describing clouds (liquid and ice water content) used on the edge of the domain but not nudged, and three other variables at the surface that are used to manage initialization (2-meter temperature, geopotential height), and vertical interpolation (surface pressure). In the future, the model developers are considering a simpler forcing file without the cloud liquid and ice water content, as it is not very standard to use such variables in regional modelling, and these variables are not available in CMIP standardised outputs. 
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Variables nudged on vertical levels}} \\ \hline
+Air temperature                & t     \\ \hline
+Zonal wind                    & u     \\ \hline
+Meridional wind               & v     \\ \hline
+Relative humidity             & r     \\ \hline
+Specific humidity             & q     \\ \hline
+\multicolumn{2}{|c|}{\textbf{Cloud variables, on vertical levels}} \\ \hline
+Specific liquid water content & clwc  \\ \hline
+Specific ice water content    & ciwc  \\ \hline
+\multicolumn{2}{|c|}{\textbf{Surface variables}} \\ \hline
+2-meter air temperature            & t2m   \\ \hline
+Surface geopotential          & z     \\ \hline
+Surface pressure              & p     \\ \hline
+\end{tabular}
+\caption{List of variables required in the LAM forcing file.}
+\end{table}
+
+%option:explain init ? orography ?
 \subsubsection{Domain structure and nudging method}
 
 The simulation domain is a large hexagon composed of hexagonal grid cells, and defined by three parameters:
@@ -52,146 +90,118 @@ The simulation domain is separated in 3 concentric zones, as shown on Fig. \ref{
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\textwidth]{images/methods/LAM_domain_zones.png}
-    \caption{LAM domain structure example with NBP=27 \citep[from][]{raillard_leveraging_2024}}
+    \caption{LAM domain structure example with NBP=27 \citep[from][]{raillard_leveraging_2024}}. The raw forcing zone is in red on the outside, the transition zone in pink, and the free zone in white at the center.
     \label{fig:LAM_domain}
 \end{figure}
 
-The concept of nudging is well known in climate modelling and NWP, since it is often used to manage boundary conditions in regional models. It is also used to reproduce actual situations to enable the comparison to local observations with realistic synoptic conditions, or to study specific observed events with a model. The model is nudged by adding a forcing term in the equation that governs the evolution of a given prognostic variable V in the model, to drive it towards a reference value $V_{ref}$ over a given time scale $\tau$.
+The concept of nudging is well known in climate modelling and NWP, since it is used to manage lateral boundary conditions in regional models. It is also used to reproduce real situations to enable the comparison to local observations with realistic synoptic conditions, or to study specific observed events with a model. 
+Multiple studies were conducted using the zoom capability of LMDZ to enhance resolution over a given area, while nudging the model towards a reanalysis in the rest of the world to make sure the synoptic conditions are as close to reality as possible. In particular, land-atmosphere interactions were studied with zoomed-nudged LMDZOR simulations at the SIRTA observation site in France \citep{cheruy_combined_2013, campoy_response_2013} and over Morocco \citep{balhane_global_2022, arjdal_modeling_2024}. The main downside of this approach is that it still requires to run the model in a global simulation setup, although the grid is stretched to focus on the area of interest. With the LAM, the resolution remains the same in all the domain and the model is only run over the area of interest, which results in lower computation times than zoomed-nudged setups for a given resolution.
+
+The model is nudged by adding a forcing term in the equation that governs the evolution of a given prognostic variable $V$ in the model, to drive it towards a reference value $V_{ref}$ over a given time scale $\tau$:
 
 \begin{equation}
-    \frac{\partial V}{\partial t} = \frac{\partial V}{\partial t}_{\text{model}}+ \frac{V_{\text{ref}} - V}{\tau}
+    \frac{\partial V}{\partial t} = \frac{\partial V}{\partial t}_{\text{model}}+ \frac{V_{\text{ref}} - V}{\tau}.
 \end{equation}
 
 The strength of the nudging can be modulated by adjusting the time scale $\tau$.
-In the raw forcing zone, $\tau = 3600s$ and in the free zone, $\tau$ is infinite, meaning the forcing term does not alter the equation. In the transition zone inbetween, the value of $\tau$ is gradually increased over the 8 grid cells, following an arctan profile, to smooth the transition.
+In the raw forcing zone, the values of the state variables in the model are directly prescribed to those of the forcing file. 
+In the central free zone, $\tau$ is infinite, meaning the forcing term does not alter the equation. 
+In the transition zone, the value of $\tau$ is gradually increased over the 8 grid cells, following an arctan profile to smooth the transition, starting from $\tau = 3600$ s on the outer edge.
 
-Nudging is applied at every time step of the dynamics (30s here). The reference value for each variable is obtained by temporally interpolating a forcing file to this time step. The sampling frequency of the forcing file can have an impact on the simulation. In this work, hourly forcing files were used for most of the simulations, but some sensitivity experiments were made using forcing data sampled every six hours.
-
-\subsubsection{Boundary conditions}
-Since simulations with the LAM only cover a portion of the globe, lateral boundary conditions are read by the model from a forcing file, which can be obtained from various sources. 
-In most of the work presented here, lateral boundary conditions for the LAM were taken from ERA5 reanalysis hourly values at 0.25° resolution \citep{hersbach_era5_2020}.  This product uses a model with observation data assimilation techniques to produce outputs that are as close as possible to actual conditions. When simulating recent climate, using this forcing enables having rather realistic synoptic conditions. 
-It is also possible to run the model with other sources for the forcing file, in particular using outputs from global climate simulations, either from the ICOLMDZ global model or from other models. The modelling community at IPSL is also currently investigating the possibility of using mean outputs from the CMIP6 simulations under various SSPs to run the LAM in projected future climate conditions.
-
-To run a regional simulation, the forcing file must contain data for the nudged variables (temperature, humidity, wind), two variables describing clouds (liquid and ice water content)used on the edge of the domain but not nudged, and three other variables at the surface that are used to manage initialization (two meter temperature, geopotential height), and vertical interpolation (surface pressure).
-
-\begin{table}[htbp]
-\centering
-\begin{tabular}{|l|l|}
-\hline
-\multicolumn{2}{|c|}{\textbf{Variables nudged on vertical levels}} \\ \hline
-Air temperature                & t     \\ \hline
-Zonal wind                    & u     \\ \hline
-Meridional wind               & v     \\ \hline
-Relative humidity             & r     \\ \hline
-Specific humidity             & q     \\ \hline
-\multicolumn{2}{|c|}{\textbf{Cloud variables, on vertical levels}} \\ \hline
-Specific liquid water content & clwc  \\ \hline
-Specific ice water content    & ciwc  \\ \hline
-\multicolumn{2}{|c|}{\textbf{Surface variables}} \\ \hline
-2m air temperature            & t2m   \\ \hline
-Surface geopotential          & z     \\ \hline
-Surface pressure              & p     \\ \hline
-\end{tabular}
-\caption{List of variables required in the LAM forcing file.}
-\end{table}
-
-%option:explain init ? orography ?
+Nudging is applied on all vertical levels at every time step of the dynamics (30 s). The reference value for each variable is obtained by temporally interpolating the forcing file to this time step. The sampling frequency of the forcing file can have an impact on the simulation. In this work, hourly forcing files were used for most of the simulations, but some sensitivity experiments were made using forcing data sampled every six hours.
 
 \subsubsection{Technical specificities}
 
-While running the first simulations with the LAM, various occurrences of inappropriate model behaviour were observed at the top of the atmosphere, reaching temperatures over 373K. Based on prior expereience of the model developper, this was attributed to inconsistent quantities of air in these layers of very low density, which could lead to excessive heating over one model time step. The unusual interaction of advection from the dynamics and nudging were thought to be responsible for anomalies in the matter and energy budgets, in or near the transition zone.
-To solve this issue, an additionnal nudging of temperature and wind components was applied for the upper layers of the atmosphere (above 1hPa) over the whole domain, to ensure that values remains in a reasonible order of magnitude. 
+While running the first simulations with the LAM, various occurrences of inappropriate model behaviour were observed at the top of the atmosphere, reaching temperatures over 373 K. Based on prior experience of the model developers, this was attributed to inconsistent quantities of air in these layers of very low density, which could lead to excessive heating over one model time step. The unusual interaction of advection from the dynamics and nudging were thought to be responsible for anomalies in the mass and energy budgets, in or near the transition zone.
+To solve this issue, an additional nudging of temperature and wind components was applied for the upper layers of the atmosphere (above 1hPa) over the whole domain (including the free zone), to ensure that values remains in a reasonable order of magnitude. Given the focus on land-atmosphere interactions, this technical fix for the upper atmosphere is not considered to have any influence on the results.
 
-\hfill
-
-On a different topic, it must also be noted that the model computes all variables on its hexagonal grid cells. However, it is not very straightfroward to analyse and display simulation data on such a grid since most usual tools (ferret, ncview, matplotlib) struggle with the coordinates system. 
+It must also be noted that the model computes all variables on its hexagonal grid cells. However, analysing and displaying simulation data on such a grid is challenging because most standard tools (Ferret, ncview, Matplotlib) do not natively support its coordinate system. 
 By default, LAM outputs are therefore interpolated to a regular longitude-latitude grid, but can be obtained on the native hexagonal grid if needed.
-In this work, the simulations used in Chapter \ref{chap:monthly} were analysed solely using the interpolated outputs, while simulations used in Chapter \ref{chap:liaise}, which focused on specific grid cells for comparison to observation, were analysed using outputs on the native hexagonal grid.
-
-%option:discuss choice of domain (100 vs 1500 vs 2000km ?) -> methods or result ??
+In this work, the simulations used in Chapter \ref{chap:monthly} were analysed solely using the interpolated outputs, while simulations used in Chapter \ref{chap:liaise}, which focused on specific grid cells for comparison to observation, were analysed using outputs on the native hexagonal grid.%todo:check if chapter structure has changed
 
 \section{ORCHIDEE land surface model}
 \subsection{General structure, running modes, and input data}
-ORCHIDEE (Organizing Carbon and Hydrology In Dynamic EcosystEms) is a land surface model. Various "branches" and versions exist within the model, as the base structure presented in \citet{krinner_dynamic_2005} has been adapted and extended to meet different research objectives. 
-This work uses branch 2.2 \citep{cheruy_improved_2020}, which served as the land component of the IPSL climate model for CMIP6 simulations \citep{boucher_presentation_2020}. While the version chosen for CMIP7 simulations is ORCHIDEE v.4.2, which integrates recent developments for the modelling of snow, permafrost, vegetation, carbon, nitrogen and phosphorus cycles, branch 2.2 is still used for development focused on surface hydrology, that can then be introduced in other branches.
+ORCHIDEE (Organizing Carbon and Hydrology In Dynamic EcosystEms) is a land surface model (LSM). Various "branches" and versions exist within the model, as the base structure presented in \citet{krinner_dynamic_2005} has been adapted and extended to meet different research objectives. 
+This PhD work uses branch 2.2 which is similar to the ORCHIDEE 2.0 model used in CMIP6 \citep{cheruy_improved_2020, boucher_presentation_2020} but for minor bug corrections. It also includes a global irrigation scheme that was recently developed and evaluated \citep{arboleda-obando_validation_2024}. While the version chosen for CMIP7 simulations is ORCHIDEE v4.2, which integrates recent developments for the modelling of snow, permafrost, vegetation, carbon, nitrogen and phosphorus cycles, branch 2.2 is still used for developments focused on surface hydrology, that can later be introduced in other branches.
 %Coupling with an atmosphere and ocean model imposes significant computational constraints, leading to the simplification or omission of certain processes for global climate simulations.
-The description of this model version provided here is partly based on Section 2 of previous PhD thesis \citep{campoy_influence_2013,arboleda-obando_feedback_2023}.
+The following description of this model version is partly based on two PhD theses \citep{campoy_influence_2013,arboleda-obando_feedback_2023}.
 
 ORCHIDEE v2.2 includes several modules:
 \begin{itemize}
-    \item SECHIBA (\textit{Schématisation des Échanges Hydriques à l’Interface entre la Biosphère et l’Atmosphère}, \cite{ducoudre_sechiba_1993}). Initially integrated into the surface scheme of the LMDZ GCM, this module computes surface energy and water budgets, including interactions with the atmosphere. It models water infiltration into the soil and horizontal transfers, allowing for river representation.
-    \item STOMATE \citep{krinner_dynamic_2005}. This module simulates biochemical surface processes such as photosynthesis and phenology evolution, enabling the representation of seasonal variations in transpiration.
-    \item LPJ \citep{sitch_evaluation_2003}. This module controls the dynamical evolution of vegetation to represent land-use changes. In this work, to reduce computational costs, this module is inactive, and vegetation evolution is instead prescribed using annual land-cover maps from \citet{belward1999igbp}.%check...annual ? PFT_2014 only ?
+    \item SECHIBA \citep[\textit{Schématisation des Échanges Hydriques à l’Interface entre la Biosphère et l’Atmo\-sphère}][]{ducoudre_sechiba_1993}. Initially developed as the surface scheme of the LMDZ GCM, this module computes surface energy and water budgets, including interactions with the atmosphere. As detailed in section \ref{sec:water}, it models water vertical infiltration and redistribution into the soil, as well as horizontal transfers through the river network.
+    \item STOMATE \citep{krinner_dynamic_2005}. This module simulates biological surface processes such as photosynthesis and phenology evolution, enabling the representation of seasonal variations in leaf area index (LAI), and thus evapotranspiration.
+    \item LPJ \citep{sitch_evaluation_2003}. This optional module describes the long-term evolution of vegetation to represent land use adaptation to climate and is not capable of representing fast evolutions of land use induced by human activities. Therefore, in this work, this module is inactive, and vegetation evolution is instead prescribed using annual land-cover maps from \citet{belward1999igbp}.%check...annual ? PFT_2014 only ?
 \end{itemize}
 
 ORCHIDEE can interface with the atmosphere in either offline mode (also called forced) or coupled mode. The simulation domain is discretized into grid cells, with a resolution that adapts to the atmospheric forcing or to the grid of the coupled atmospheric model.
-In the first case, a meteorological forcing (typically obtained from a reanalysis) provides values for downward radiation (shortwave and longwave), precipitation (rain and snow), air temperature and specific humidity at 2m, wind speed at 10m (eastward and northward components), and surface pressure. 
-In the second case, ORCHIDEE is coupled with an atmospheric model that calculates these variables in real time while receiving certain variables computed by ORCHIDEE (surface roughness, albedo, turbulent fluxes, surface temperature).
-Within the IPSL climate model, ORCHIDEE can be coupled with the atmospheric model ICOLMDZ in a standard configuration called ICOLMDZOR, using a semi-implicit coupling scheme \citep{polcher_proposal_1998}. This scheme computes thermal and turbulent diffusion in soil and atmospheric column by using zero-flux boundary conditions at the top of the atmospheric column and at the bottom of a 90-m soil column.
+In the first case, a meteorological forcing (typically obtained from a bias-corrected reanalysis) provides values for downward radiation (shortwave and longwave), precipitation (rain and snow), air temperature and specific humidity at 2 m, wind speed at 10 m (eastward and northward components), and surface pressure. 
+In the second case, ORCHIDEE is coupled with an atmospheric model that calculates these variables in real time while receiving certain variables computed by ORCHIDEE (surface roughness, albedo, turbulent fluxes, surface temperature). ORCHIDEE's time step also adapts to the forcing, using 30 minutes when forced, and the same as the atmospheric physics when coupled (15 minutes for LMDZ).
+Within the IPSL climate model, ORCHIDEE can be coupled with the atmospheric model ICOLMDZ in a standard configuration called ICOLMDZOR, using a semi-implicit coupling scheme \citep{polcher_proposal_1998, Hourdin_phdthesis, hourdin_2002}. This scheme calculates the vertical transfer of heat by two distinct processes: thermal diffusion in the soil and turbulent diffusion in the atmospheric column. It uses zero-flux boundary conditions at the top of the atmosphere and at the bottom of a 18-meter soil column \citep{dufresne2009description}, assuming no energy is transferred to the system at these interfaces.
 
-In addition to meteorological variables, the LSM requires other input data. Each grid cell must be assigned a soil texture from three main classes (sandy loam, silt loam, clay loam), which determines various hydrological and thermal soil parameters. 
-For CMIP6 simulations, the map from \citet{zobler87802world} was used to assign the dominant texture in each grid cell, with a resolution of 1°. For the coupled simulations described in this work, the dominant USDA texture was obtained from the map \citet{reynolds_estimating_2000}, which has a resolution of 5 arcmin and distinguishes 12 soil textures.
+In addition to meteorological variables, the LSM requires other input data. Each grid cell must be assigned a soil texture which determines various hydrological and thermal soil parameters. 
+For CMIP6 simulations, the map from \citet{zobler87802world} was used to assign the dominant texture in each grid cell, with a resolution of 1°. For the coupled simulations described in this work, the dominant USDA texture was obtained from the map of \citet{reynolds_estimating_2000}, which has a resolution of 5 arcmin and distinguishes 12 soil textures.
 
 To characterize vegetation, ORCHIDEE v2.2 defines 15 Plant Functional Types (PFTs), each associated with a set of characteristic parameters such to compute their average height, leaf area index (LAI), and albedo. The fraction of each PFT in a grid cell is obtained from a 0.1° resolution input map based on the Land Use Harmonization 2 (LUHv2) dataset \citep{hurtt_harmonization_2020, lurton_implementation_2020}. 
-Each grid cell is divided into three tiles with independent soil columns, grouping multiple PFTs: one for bare soil, one for forests, and one for low vegetation (crops and grasses), as shown on Fig. \ref{fig:water_balance_AD}. 
+Each grid cell is divided into three tiles with distinct soil columns for subsurface hydrology, grouping multiple PFTs: one for bare soil, one for trees, and one for low vegetation (crops and grasses), as shown in Fig. \ref{fig:ORC_discretization} and \ref{fig:water_balance_AD}. 
+Although they share the same soil texture within a grid cell, these soil tiles feature an independent water budget because the PFTs influence infiltration and evapotranspiration.
 %There is also a fraction of the soil called "nobio", dedicated to surfaces with such as ice, free water in lakes, cities \citep{ducharne_hydrol_nodate}.
-
-\subsection{Water and energy budgets}
-
-This section describes how the different terms of water and energy budgets identified in the introduction are computed by ORCHIDEE, within the SECHIBA module. 
-
-To determine the soil water content in each soil tile of a grid cell, ORCHIDEE first separates the fraction of precipitation intercepted by vegetation and the fraction that actually reaches the ground. In the case of liquid precipitation (snow is treated separately), it further discriminates between the portion that infiltrates into the soil and surface runoff, which occurs when the surface layers are saturated and water cannot infiltrate. As shown in Fig. \ref{fig:water_balance_AD}, the surface runoff and drainage computed in each grid cell then serve as input to the routing scheme, later described in Section \ref{section:routing_methods}.
-
-\begin{figure}[hbtp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/methods/water_balance_AD.png}
-    \caption{Visualisation of surface hydrology within an ORCHIDEE grid cell. (A. Ducharne, \href{https://forge.ipsl.fr/orchidee/attachment/wiki/GroupActivities/Training/cours_orchidee_feb2024_ducharne.pdf}{ORCHIDEE training}).}
-    \label{fig:water_balance_AD}
-\end{figure}
-
-Soil hydrology is based on the one-dimensional Richards equation, with a 2-m soil column discretized over 11 vertical layers of increasing thickness \citep{de_rosnay_impact_2002, dorgeval_sensitivity_2008}. A free drainage condition is applied at the bottom of the column. ORCHIDEE models the infiltration front velocity, which progressively saturates the layers. The values of hydraulic conductivity and diffusivity are computed based on soil texture according to \citet{mualem_new_1976, van_genuchten_closed-form_1980}.
 
 \begin{figure}[hbtp]
     \centering
     \includegraphics[width=0.5\textwidth]{images/methods/ORC_discretization.png}
-    \caption{Visualisation of the ORCHIDEE PFTs and vertical discretization within one grid cell, (from \href{https://orchidee.ipsl.fr/introduction/}{ORCHIDEE online documentation}).}
+    \caption{Visualisation of the ORCHIDEE PFTs and vertical discretization within one grid cell, (\href{https://orchidee.ipsl.fr/introduction/}{ORCHIDEE online documentation}).}
     \label{fig:ORC_discretization}
 \end{figure}
 
-The missing term to complete the surface water balance is evapotranspiration $E$, which also appears in the energy balance via the latent heat flux $\lambda E$. The total evaporation value depends on potential evaporation, which represents the evaporation that would occur over a water surface and thus serves as an upper limit. It is calculated using the formulation of \citet{Budyko_1956}:  
+\subsection{Water and energy budgets}\label{sec:water}
+
+This section describes how the different terms of the water and energy budgets identified in the introduction are computed by ORCHIDEE, within the SECHIBA module. 
+
+To determine the soil water content in each soil tile of a grid cell, ORCHIDEE first separates the fraction of precipitation intercepted by vegetation and the fraction that actually reaches the ground. In the case of liquid precipitation (snow is treated separately), it further discriminates between the portion that infiltrates into the soil and surface runoff, which occurs when the surface layers are saturated and infiltration is limited by hydraulic conductivity. Soil hydrology fluxes are based on the one-dimensional Richards equation, with a 2-meter soil column discretized over 11 vertical layers of increasing thickness \citep{de_rosnay_impact_2002, dorgeval_sensitivity_2008}, as shown in Fig. \ref{fig:ORC_discretization}. A free drainage condition is applied at the bottom of the column. ORCHIDEE models the infiltration front velocity, which progressively saturates the layers. The values of hydraulic conductivity and diffusivity are computed based on soil texture according to \citet{mualem_new_1976, van_genuchten_closed-form_1980}. As shown in Fig. \ref{fig:water_balance_AD}, the surface runoff and drainage computed in each grid cell then serve as input to the routing scheme, later described in Section \ref{section:routing_methods}.
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/methods/water_balance_AD.png}
+    \caption{Visualisation of surface hydrology within an ORCHIDEE grid cell. (source: A. Ducharne, \href{https://forge.ipsl.fr/orchidee/attachment/wiki/GroupActivities/Training/cours_orchidee_feb2024_ducharne.pdf}{ORCHIDEE training}).}
+    \label{fig:water_balance_AD}
+\end{figure}
+
+The missing term to close the surface water balance is evapotranspiration $E$, which also appears in the energy balance via the latent heat flux $\lambda E$. The total evaporation value depends on potential evaporation, which represents the evaporation that would occur without water stress and thus serves as an upper limit. It is calculated using the formulation of \citet{Budyko_1956}:  
 
 \begin{equation}
     E_{pot} = \rho_{air}  \lVert \vec{V} \rVert C_{drag} (q_{sat}(T_S) - q_{air})
 \end{equation}
 
 where $\rho_{air}$ is the air density, $\lVert \vec{V} \rVert$ is the horizontal wind speed, $C_{drag}$ is the surface drag coefficient, $q_{air}$ is the specific humidity of the air (typically taken at 2m), and $q_{sat}(T_S)$ is the specific humidity of saturated air at the surface temperature $T_S$.
-%option:check en couplé si on prend l'humidité au premier niveau ou interpolée à 2m (même question pour vent, 10m ou premier niveau?...)
+%todo:préciser en couplé si on prend l'humidité au premier niveau ou interpolée à 2m (même question pour vent, 10m ou premier niveau?...) On prend tout au premier niveau
 
-$C_{drag}$ is computed for the whole grid cell and depends on two roughness lengths: $z_{0m}$, below which wind speed is assumed to be zero, and $z_{0h}$, below which temperature is assumed to be equal to the soil temperature. These roughness length are computed for each PFT and later aggregated to obtain a unique value for the grid cell. This modelling choice is referred to as \textit{parameter aggregation}, as opposed to \textit{flux aggregation} methods, used in some land surface models, which compute turbulent fluxes for each PFT before computing an average value to represent the grid cell.
-The default parameterization of roughness lengths in ORCHIDEE is based on \citet{su_evaluation_2001} and evaluates them both dynamically, using empirical formulations. However, some of the obtained values are not always consistent (particularly for $z_{0h}$), and another parameterization was introduced in ORCHIDEE, which will serve as default for CMIP7.
-This simpler approach relies on two prescribed parameters for each PFT:  
+$C_{drag}$ is computed for the whole grid cell and depends on two roughness lengths: $z_{0m}$, below which wind speed is assumed to be zero, and $z_{0h}$, below which air temperature is assumed to be equal to the surface soil temperature. These roughness lengths are computed for each PFT then aggregated to obtain a unique value for the grid cell. This modelling choice is referred to as \textit{parameter aggregation}, as opposed to \textit{flux aggregation} methods, used in some land surface models, which compute turbulent fluxes for each PFT before computing an average value to represent the grid cell.
+The default parametrization of roughness lengths in ORCHIDEE 2.2 is based on \citet{su_evaluation_2001} and calculates them both dynamically, using empirical formulations. However, some of the obtained values are not always consistent (particularly for $z_{0h}$), and another parametrization was introduced in ORCHIDEE, which will serve as default for CMIP7.
+With this simpler approach, the two roughness lengths are constant over time, and depend on two prescribed parameters for each PFT:  %todo:check car doute sur le fait que la canopy height soit constante...
 \begin{itemize}
-    \item The ratio between $z_{0m}$ and the canopy height, with a typical value of $\frac{1}{15}$.
-    \item The ratio between $z_{0m}$ and $z_{0h}$, with a typical value of $\frac{1}{10}$.  
+    \item The ratio between $z_{0m}$ and the canopy height, with a typical value of $\frac{z_{0m}}{h} = \frac{1}{15}$.
+    \item The ratio between $z_{0h}$ and $z_{0m}$, with a typical value of $\frac{z_{0h}}{z_{0m}} = \frac{1}{10}$.  
 \end{itemize}
 
 To obtain the actual evapotranspiration $E$ from the maximum theoretical value $E_{pot}$, ORCHIDEE computes the ratio of actual evapotranspiration to potential evapotranspiration $\beta = \frac{E}{E_{pot}}$, accounting for the four components of evapotranspiration:  
 
 \begin{itemize}
-    \item Bare soil evaporation, which is the minimum between $E_{pot}^*$, the potential evaporation reduced according to \citet{milly_potential_1992}, and $Q_{up}$, the maximum volume that can be extracted from the soil column.
-    \item Vegetation transpiration, which involves the stomatal resistance of vegetation.
-    \item Evaporation of water intercepted by vegetation, which depends on vegetation structure.
-    \item Snow sublimation, which only occurs in certain regions and seasons.
+    \item Bare soil evaporation, which is limited by the maximum volume that can be extracted from the soil column by upward water diffusion across one time step.
+    %which is the minimum between $E_{pot}^*$, the potential evaporation reduced according to \citet{milly_potential_1992} and $Q_{up}$, the maximum volume that can be extracted from the soil column.
+    %option:Tu peux preciser pourquoi on a besoin de Milly - Le sol n est pas une surface d'eau. Comment on evalue Q\_up - peut etre trop detaillé? 
+    \item Vegetation transpiration, which involves the stomatal resistance of vegetation and a so-called architectural resistance which depends on vegetation structure.
+    \item Evaporation of water intercepted by vegetation, which is also dependent on the architectural resistance.
+    \item Snow sublimation, which only concerns the regions and seasons where snowfall occurs.
 \end{itemize}
 
-A resistance to evaporation is computed for each of the terms, and $\beta$ is computed as a conductance controlled by these resistances, taking into account the fractions of the grid cell occupied by bare soil, vegetation and snow:
+A resistance to evaporation is computed for each of the terms, and $\beta$ is computed as an effective conductance controlled by these resistances, taking into account the fractions of the grid cell occupied by bare soil, vegetation and snow:
 
 \begin{equation}
-    \beta = frac_{bare} \times \frac{1}{R_{bare}} + frac_{veget} \times ( \frac{1}{R_{transpiration}} + \frac{1}{R_{interception}} ) + frac_{snow} \times  \frac{1}{R_{sublimation}}
+    \beta = f_{bare} \times \frac{1}{R_{bare}} + f_{veget} \times ( \frac{1}{R_{transpiration}} + \frac{1}{R_{interception}} ) + f_{snow} \times  \frac{1}{R_{sublimation}}
 \end{equation}
 
-It is important to note that although soil moisture might be different in each soil tile, $z_{0m}$, $z_{0h}$ (therefore $E_{pot}$), and $\beta$ are computed for the whole grid cell. This means that there is a single evapotranspiration value for the grid cell, and therefore a single latent heat flux value.
-This approach is often referred to as a composite approach, as opposed to a mosaic approach where independent fluxes are computed for each soiltile, before averaging them for coupling to the atmospheric model. 
+It is important to note that although soil moisture might be different in each soil tile, $T_s$ (surface temperature), $z_{0m}$, $z_{0h}$ (therefore $E_{pot}$), and $\beta$ are computed for the whole grid cell. This means that there is a single evapotranspiration value for the grid cell, and therefore a single latent heat flux value.
+This approach is often referred to as a composite approach, as opposed to a mosaic approach where independent fluxes are computed for each soil tile, before averaging them for coupling to the atmospheric model. 
 %option: more details, limitations when comparing to obs (not able to obtain LE for a specific soiltile or PFT...), reference to Alice ?
 
 % Bare soil evaporation is expressed as a relationship between supply and demand:
@@ -224,38 +234,42 @@ The sensible heat flux is also computed using the surface drag coefficient deriv
 where $\rho_{air}$ is the air density, $\lVert \vec{V} \rVert$ is the horizontal wind speed, $C_p$ is the is the specific heat of air, $C_{drag}$ is the surface drag coefficient, $T_{air}$ is the air temperature (typically taken at 2m), and $T_{surf}$ is the surface temperature (sometimes referred to as the skin temperature).
 %option:check si on prend l'humidité au premier niveau ou interpolée à 2m (même question pour vent...)
 
-The heat flux in the ground is computed using the semi-implicit coupling scheme mentionned earlier, at the same time as the turbulent diffusion is the atmospheric column \citep{polcher_proposal_1998}. 
+The heat flux in the ground is computed using the semi-implicit coupling scheme mentioned earlier, at the same time as the turbulent diffusion is the atmospheric column \citep{polcher_proposal_1998}
+%todo:refs cf plus haut idem mettre toutes les ref surtout pour le flux dans le sol, cela vient de la these d hourdin . 
 Finally, regarding radiative fluxes, ORCHIDEE does not modify the incoming radiation terms but determines the outgoing terms by calculating the albedo (with distinct values for infrared and for visible light) and the surface temperature, which controls the outgoing longwave radiation and closes the energy budget.
 %option:check ordre, véracité de ce que je dis ? besoin de plus de détails ou ok de dire que Tsurf est la variable d'ajustement ? citer thèse ou HDR Hourdin ?
+Le bilan d energie a la surface est evalué implicitement en utilisant les formulation des sensibilites des flux turbulents et LW up aux variations aux variations de température de surface d'une part et deux systemes tridiagonaux dans l atmosphere et dans le sol pour resoudre implicitement les equations de diffusion.  Tu peux aller voir mon cours de cet année sur le couplage eventuellement
 
 \subsection{Routing scheme}
 \label{section:routing_methods}
-The routing scheme is a sub-module of SECHIBA, which simulates horizontal water transfers between cascading reservoirs and transports it to the oceans \citep{ducharne_development_2003, ngo-duc_validation_2007}. 
+The routing scheme is a sub-module of SECHIBA, which simulates horizontal water transfers between grid cells and transports water to the oceans \citep{ducharne_development_2003, ngo-duc_validation_2007}. 
 Water routing is necessary to maintain water conservation on a global scale in fully coupled simulations with a dynamic ocean model, and it also enables simulation of river discharge and groundwater volumes. 
-This scheme generally runs at a larger time step than the rest of the model (once per day by default). However, the irrigation scheme (detailed in the next section) requires routing to run at each time step of the ORCHIDEE model.
+This scheme generally runs at a larger time step than the rest of the model (once per day by default in global simulations). However, the irrigation scheme (detailed in the next section) requires the routing to be performed at the same time step as the soil hydrology computed by SECHIBA. 
 
 The routing scheme subdivides the simulation domain into hydrological transfer units (HTU) and uses a digital elevation model (DEM) constructed from topographic data to define flow directions and characterize the HTUs (dimensions, slope, upstream/downstream relationships). The grid upon which the routing flows are solved can be independent of the ORCHIDEE grid, and is hereafter referred to as the routing grid.
 
-Within each HTU, three linear reservoirs are represented: the \textit{slow} reservoir (groundwater), the \textit{fast} reservoir (overland), and the \textit{stream} reservoir (rivers). For each reservoir, the characteristic residence time of water in a grid cell depends on a fixed transfer coefficient (denoted TCST\_SLOW, as TCST\_FAST, and TCST\_STREAM in Fig. \ref{fig:routing_principles}) and on the local slope obtained from the DEM.
-Surface runoff and drainage computed for each ORCHIDEE soil column are interpolated to the routing grid to respectively feed the overland and groundwater reservoirs. All three reservoirs then flow into the river reservoir of the downstream HTU. The river reservoir is therefore the only one connected to neighboring HTU, as no other horizontal transfer is modeled in ORCHIDEE. This assumption may have limitations at high resolutions as it ignores direct groundwater transfers between grid cells.
+Within each HTU, three linear reservoirs are represented: the \textit{slow} reservoir (groundwater), the \textit{fast} reservoir (overland water), and the \textit{stream} reservoir (rivers). For each reservoir, the characteristic residence time of water in one HTU depends on a fixed transfer coefficient (denoted TCST\_SLOW, TCST\_FAST, and TCST\_STREAM in Fig. \ref{fig:routing_principles}), on the size of the HTU and on the local slope obtained from the DEM.
+Surface runoff and drainage computed for each ORCHIDEE soil column are interpolated to the routing grid to respectively feed the overland and groundwater reservoirs. All three reservoirs then flow into the river reservoir of the downstream HTU. The river reservoir is therefore the only one connected to neighbouring HTUs, as no other horizontal transfer is modelled in ORCHIDEE. This assumption may have limitations at high resolutions as it ignores direct groundwater transfers between HTUs.
 
-The outgoing water quantity $Q$ (given in $kg$) from a reservoir over one routing time step is expressed using the reservoir volume in the routing grid cell $V$ ($kg$), the transfer coefficient of the reservoir $TCST$ ($day \cdot km^{-1}$), a topographic index $topoindex$ ($km$) derived from the DEM that indicates the slope, and the routing time step $dt_{routing}$ ($s$):
+The outgoing water quantity $Q$ (given in $kg$) from a reservoir over one routing time step is expressed using the reservoir volume in the routing grid cell $V$ ($kg$), the transfer coefficient of the reservoir $TCST$ ($day \cdot km^{-1}$), a topographic index $topoindex$ ($km$) derived from the DEM slope and grid cell length, and the routing time step $dt_{routing}$ ($s$):
 
 \begin{equation}
     Q = \frac{V}{topoindex \times TCST} \times \frac{dt_{routing}}{86400}
 \end{equation}
 
-Several versions of the routing scheme have been developed in ORCHIDEE, all based on these modelling principles but corresponding to different relationships between the routing grid, the ORCHIDEE grid, and the definition of the HTUs used.
+Several versions of the routing scheme have been developed in ORCHIDEE, all based on these modelling principles but corresponding to different relationships between the routing grid, the ORCHIDEE grid, and the definition of the HTUs used:
 
 \begin{itemize}
-\item \textbf{\textit{Subgrid\_halfdeg} routing}, which was the default option in branch 2.2 until CMIP6. It is designed to work with a specific DEM at a resolution of 0.5°. Additionally, it requires each ORCHIDEE grid cell to contain a finite number of DEM grid cells, which limits its use to ORCHIDEE resolutions that are multiples of 0.5° (the most frequently used being 0.5°, 1° and 2°). It must be noted that this routing code preprocesses the DEM to adapt to the ORCHIDEE grid resolution. When running with ORCHIDEE at 1° or 2° it identifies a given number of sub-basins per ORCHIDEE grid cell and possibly changes the routing paths to distribute water in the corresponding directions, with special procedures to avoid creating dead-ends where the water would accumulate. In this manuscript, this routing was always used with an ORCHIDEE grid of 0.5° resolution, similar to the DEM, meaning there is always only one sub-basin per ORCHIDEE grid. However, the preprocessing script can still alter the flow directions of the DEM and the topographic index. 
+\item \textbf{\textit{Subgrid\_halfdeg} routing}, which was the default option in branch 2.2 until CMIP6. It is designed to work with a specific DEM at a resolution of 0.5°. Additionally, it requires each ORCHIDEE grid cell to contain a integer number of DEM grid cells, which limits its use to ORCHIDEE resolutions that are multiples of 0.5° (the most frequently used being 0.5°, 1° and 2°). It must be noted that this routing code preprocesses the DEM to adapt to the ORCHIDEE grid resolution. When running at a resolution higher than 0.5°, it identifies a given number of sub-basins per ORCHIDEE grid cell and possibly changes the routing paths to distribute water in the corresponding directions, with special procedures to avoid creating dead-ends where the water would accumulate. In this manuscript, this routing was only used in Chapter \ref{chap:routing},  with an ORCHIDEE grid of 0.5° resolution, similar to the DEM, meaning there is always only one sub-basin per ORCHIDEE grid cell. However, the preprocessing script can still alter the flow directions of the DEM and the topographic index. 
 
-\item \textbf{\textit{Interp\_topo} routing}, recently implemented into ORCHIDEE to become the default version in IPSL-CM7. It is designed to adapt to any DEM and to be completely independent of ORCHIDEE’s resolution and even of the shape of the grid cells. This is particularly necessary for compatibility with the hexagonal grid of the new atmospheric dynamics (DYNAMICO) of IPSL-CM7.
-In this version, the routing grid is exactly the same as the DEM grid, meaning HTUs are exactly the DEM grid cells. It relies on a robust interpolation of runoff and drainage from the ORCHIDEE grid to the routing grid, where horizontal transfers between reservoirs are performed. Once these transfers are completed, water volumes in the reservoirs are re-interpolated from the routing grid back to the ORCHIDEE grid, allowing them to be used for irrigation within ORCHIDEE grid cells. Its principles are presented in Fig.\ref{fig:routing_principles}.
+\item \textbf{\textit{Interp\_topo} routing}, recently implemented in ORCHIDEE to become the default version in IPSL-CM7. It is designed to adapt to any DEM resolution and to be completely independent of ORCHIDEE’s resolution and even of the shape of the grid cells. This is particularly necessary for compatibility with the icosahedral grid of the new atmospheric dynamics (DYNAMICO) of IPSL-CM7.
+In this version, the routing grid is exactly the same as the DEM grid, meaning that the HTUs are exactly the DEM grid cells. This scheme relies on a robust interpolation %todo:ref Kritsikis, E., Aechtner, M., Meurdesoif, Y., and Dubos, T.: Conservative interpolation between general spherical meshes, Geosci. Model Dev., 10, 425–431, https://doi.org/10.5194/gmd-10-425-2017, 2017
+of runoff and drainage from the ORCHIDEE grid to the routing grid, where horizontal transfers between reservoirs are performed. Once these transfers are completed, water volumes in the reservoirs are re-interpolated from the routing grid back to the ORCHIDEE grid, allowing them to be used for irrigation within ORCHIDEE grid cells. Its principles are presented in Fig.\ref{fig:routing_principles}.
 
 %option: confirmer si pertinent de mentionner cette option (mentionné en Chap 3 comme une des références)
-\item \textbf{\textit{Subgrid\_HTU} routing}, developed before the introduction of the \textit{interp\_topo} routing to operate at a higher resolution than \textit{subgrid\_halfdeg} routing. In this version, HTUs are constructed from a high-resolution DEM by aggregating grid cells into sub-basins. However, this routing still maintains the constraint of having an integer number of HTUs within each ORCHIDEE grid cell, making it incompatible with the icosahedral grid. It was not used in the simulations presented in this thesis, but the manuscript occasionnaly refers to it.
+\item \textbf{\textit{Subgrid\_HTU} routing}, developed before the introduction of the \textit{interp\_topo} routing to operate at a higher resolution than \textit{subgrid\_halfdeg} routing. In this version, HTUs are constructed from a high-resolution DEM by aggregating DEM grid cells into sub-basins. However, this routing  also presents the constraint of having an integer number of HTUs within each ORCHIDEE grid cell, making it incompatible with the icosahedral grid. It was not used in the simulations presented in this thesis, but the manuscript occasionally refers to it.
 \end{itemize}
+
 
 \begin{figure}[ht]
     \centering
@@ -263,67 +277,69 @@ In this version, the routing grid is exactly the same as the DEM grid, meaning H
     \caption{Modelling principles of the \textit{interp\_topo} routing.}
     \label{fig:routing_principles}
 \end{figure}
+%todo:refaire figure sans corrections orthographiques ppt
 
 Two DEMs are used in this work, with different resolutions. 
 The first one is the 0.5° resolution DEM that has long been used within ORCHIDEE with the \std routing, based on the topography and flow directions of \citet{vorosmarty_geomorphometric_2000}.
-The second one is a 2-km resolution DEM based on the MERIT Hydro DEM \citep{yamazaki_merit_2019}.
+The second one is a 1-arcminute ($\approx$ 2 km) resolution DEM based on the MERIT Hydro DEM \citep{yamazaki_merit_2019}.
 The \std routing can only use the 0.5° DEM whereas the \native can be used with any DEM.
 
-%option:show map of DEMs over the regions -> not easy because big files on JZ but doable ?
+%option:show map of DEMs over the region -> not easy because big files on JZ but doable ?
 %option:mention river discharge stations, positionning on DEM ? Or keep that for dedicated chapter ?
 
 \subsection{Irrigation scheme}
-\subsubsection{Modelling principles, parameters, and input data}
-A new irrigation scheme has recently been implemented in ORCHIDEE, presented and validated in \citet{arboleda-obando_validation_2024}. An irrigation representation already existed in ORCHIDEE \citep{de_rosnay_integrated_2003, guimberteau_global_2012}, but this work relies solely on this new modelling approach. The scheme is based on a water-conservative supply-and-demand approach, summarized in Figure \ref{fig:schema_pedro}
+\subsubsection{Modelling principles}
+
+Irrigation has long been described in ORCHIDEE, using potential evapotranspiration as a target to define the irrigation amounts \citep{de_rosnay_integrated_2003, guimberteau_global_2012}. A new irrigation scheme was recently implemented in ORCHIDEE, presented and validated in \citet{arboleda-obando_validation_2024}. It is based on a water-conservative supply-and-demand approach, and uses a target soil moisture, more easily comparable with real irrigation practices, with more complex water allocation rules than the previous scheme. The present work relies solely on the new modelling approach, summarized in Figure \ref{fig:schema_pedro}.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=1\textwidth]{images/methods/schema_pedro.png}
-    \caption{Principles of the new irrigation scheme \citep[from][]{arboleda-obando_validation_2024}.}
+    \caption{Principles of the new irrigation scheme \citep[from][]{arboleda-obando_validation_2024}. Here, target parameter \betairrig is simply denoted $\beta$.}
     \label{fig:schema_pedro}
 \end{figure}
 
-First, a root zone is defined using parameter $Root_{lim} \in [0;1]$, which determines the depth of the considered root zone. In all the simulations presented here, $Root_{lim} = 0.64m$ was used, accounting for a 64cm root zone. It is important to note that irrigation only applies to the column of low vegetation PFTs (grasses and crops), and the root zone is defined exclusively within this column.%todo:gros doute entre ce qu'il y a dans les commentaires du code et dans le papier de Pedro, où intervient le 90% du système racinaire si la valeur donnée est déjà en m ?
-A target soil moisture value is also defined to sustain plant growth. It is expressed as a fraction of the soil moisture at field capacity water content (parameter $\beta$).
+First, an irrigated root zone is defined using parameter $z_{IRZ}$ in meters, which determines the depth of the considered root zone. In all the simulations presented here, $z_{IRZ} = 0.64$ was used, accounting for a 64-centimetre root zone. This value was selected in \citet{arboleda-obando_validation_2024} to account for 90\% of the root density in global simulations, and defined as the default parameter value. It is important to note that irrigation only applies to the column of low vegetation PFTs (grasses and crops), and the irrigated root zone is defined exclusively within this column.
+A target soil moisture value is also defined, supposed to be optimal to sustain plant growth. It is expressed as a fraction of the soil moisture at field capacity water content (parameter \betairrig).
 
 Given this target value and the soil moisture in the root zone, a soil moisture deficit $D$ (mm) is calculated as the sum of deficits across all layers of the root zone:
 \begin{equation}
-    D = \sum_{i \in Rootzone} min(0,\beta \times W_i^{fc} - W_i)
+    D = \sum_{z_i < z_{IRZ}} min(0,\beta_{irrig} \times W_i^{fc} - W_i)
 \end{equation}
-where $W_i$ and $W_i^{fc}$ are respectively the soil moisture and field capacity soil moisture of layer $i$ (in mm), .
+where $W_i$ and $W_i^{fc}$ are respectively the soil moisture and field capacity soil moisture of layer $i$ (in mm).
 
 In the absence of active vegetation (notably in winter), it is not relevant to compute a soil moisture deficit and an irrigation demand. A parameter $LAI_{lim}$ is therefore defined as a threshold LAI value below which the soil moisture deficit is zero. The default value is $LAI_{lim}=0.1$.
 
-For a SECHIBA module time step $dt$ (by default 15 minutes in ICOLMDZOR simulations), the irrigation demand hourly rate is $D/dt$ (mm/h). However, if the hourly irrigation rate is significantly higher than the infiltration rate into the soil, the model may produce excessive runoff that is not representative of reality. To prevent this, even if the moisture deficit is very high, the hourly irrigation rate is capped by a maximum value $I_{max}$.
+For a SECHIBA module time step $dt$ (by default 15 minutes in ICOLMDZOR simulations, 30 minutes in offline ORCHIDEE simulations), the irrigation demand hourly rate is $D/dt$ (mm/h). However, if the hourly irrigation rate is significantly higher than the infiltration rate into the soil, the model may produce excessive runoff that is not representative of reality. To prevent this, even if the moisture deficit is very high, the irrigation demand hourly rate is capped by a maximum value $I_{\max} = 3 mm \cdot h^{-1}$.
 
 Finally, the water demand for the column is weighted by the fraction of the grid cell that is irrigated: $f_{irr}$. This fraction is obtained from the HID map at 5 arc-min resolution \citep{siebert_quantifying_2010}, and can be updated each year over the course of the simulation.
 This irrigated fraction must not exceed the fraction of the soil column containing grasses and crops, as irrigation is only applied to this column.
 
 The irrigation demand $I_{req}$ is therefore:
 \begin{equation}
-    I_{req} = f_{irr} min(D/dt, I_{max})
+    I_{req} = f_{irr} \, \min(D/dt, I_{\max}).
 \end{equation}
 
-Once this demand is computed, the irrigation scheme searches for available water in the three reservoirs of the routing scheme in the grid cell.
+Once this demand is computed, the irrigation scheme searches for available water in the three routing reservoirs of the grid cell.
 The volume of water available for irrigation is expressed as:
 \begin{equation}
-    A_w = f_{sw} (a_1 S_1 + a_2 S_2)+ f_{gw}a_3 S_3
+    A_w = f_{sw} \, (a_1 S_1 + a_2 S_2)+ f_{gw} \, a_3 S_3,
 \end{equation}
 where $S_i$ represents the water volume (in mm) in each of the reservoirs (rivers, overland, groundwater), and for each reservoir, a parameter $a_i \in [0;1]$ limits the total volume that can be withdrawn. This ensures that a certain amount of water remains in each reservoir, representing physical constraints and environmental regulations on irrigation withdrawals.
-The fractions $f_{sw}$ and $f_{gw}$, ranging from 0 to 1, represent the accessibility of different reservoirs (surface water and groundwater, respectively) within the grid cell. These fractions are obtained from the global map from \citet{siebert_groundwater_2010} of areas equipped for irrigation. A key feature of this map is that a given area cannot be equipped for both surface water and groundwater use simultaneously, which translates to $f_{sw} + f_{gw} =1$.
+The fractions $f_{sw}$ and $f_{gw}$, ranging from 0 to 1, represent the accessibility of different reservoirs (surface water and groundwater, respectively) within the grid cell. These fractions are obtained from the global map of areas equipped for irrigation, from \citet{siebert_groundwater_2010}. A key feature of this map is that a given pumping point cannot be equipped for both surface water and groundwater use simultaneously, which translates to $f_{sw} + f_{gw} =1$.
 
-Once the demand $I_{req}$ and supply $A_w$ are calculated, the applied irrigation is determined as:
+Once the demand $I_{req}$ and supply $A_w$ are calculated, the applied irrigation is simply  determined as:
 \begin{equation}
-    I = min(A_w/dt, I_{req})
+    I = \min(A_w/dt, I_{req}).
 \end{equation}
 
-Water is primarily withdrawn from the river reservoir, and only if this is insufficient to meet the demand are the other reservoirs tapped, in the limit of $f_{sw}$ and $f_{gw}$.
-At the next time step, the amount of water withdrawn from the reservoirs is added at the top of the ORCHIDEE soil column and infiltrates, simulating a gravity-fed or drip irrigation method.
-It must be noted that although the original irrigation scheme from \citet{arboleda-obando_validation_2024} included the possibility to withdraw water from neighboring grid cells to represent adduction systems, this option is not compatible with the new version of the routing scheme used with ICOLMDZOR and was therefore not used in this work.
+Within the limit of $f_{sw}$ and $f_{gw}$, water is primarily withdrawn from the river reservoir, and only if this is insufficient to meet the demand are the other reservoirs tapped.
+At the next time step, the amount of water withdrawn from the reservoirs, $I$, is added at the top of the ORCHIDEE soil column and infiltrates, simulating a gravity-fed or drip irrigation method.
+It must be noted that although the original irrigation scheme from \citet{arboleda-obando_validation_2024} included the possibility to withdraw water from neighboring grid cells to represent adduction systems, this option is not yet compatible with the new version of the routing scheme used with ICOLMDZOR and was therefore not used in this work.
 
 To summarize, Table \ref{tab:irrigation_parameters} gives the default value of all the parameters used by the irrigation scheme, while Fig. \ref{fig:irrig_inputs} shows the two input maps over the Iberian Peninsula: the map of irrigated fractions, to obtain $f_{irr}$, and the map of areas equipped for irrigation, to obtain $f_{sw}$ and $f_{gw}$.
-The sensitivity analyses described in \citet{arboleda-obando_validation_2024} identified default values for all parameters to best represent the impact of irrigation on the global climate and showed that the target parameter $\beta$ has the greatest impact on the volume of water withdrawn for irrigation.
-In the default version of the global model, this parameter is set to 0.9, defining a soil moisture target at 90 \% of SM at field capacity. However, this value reflects a wide variety of irrigation practices, from drip irrigation to flooding of rice paddies, and can be adjusted for simulations focused on a specific region as discussed in Chapter \ref{chap:routing}.
+The sensitivity analyses described in \citet{arboleda-obando_validation_2024} allowed the authors to define default values for all parameters to best match observed global irrigation when used uniformly, and showed that the target parameter $\beta$ has the greatest impact on the volume of water withdrawn for irrigation.
+In the default version of the global model, this parameter is set to 0.9, defining a soil moisture target at 90 \% of field capacity. However, this value reflects a wide variety of irrigation practices, from drip irrigation to flooding of rice paddies, and might need to be adjusted for simulations focused on a specific region as discussed in Chapter \ref{chap:routing}.
 
 \begin{table}[htbp]
     \centering
@@ -331,15 +347,15 @@ In the default version of the global model, this parameter is set to 0.9, defini
         \hline
         \textbf{Parameter name} & \textbf{Description} & \textbf{Default value} \\
         \hline
-        $Root_{lim}$ & Root zone depth. & 64cm \\ %cum_dh_thr
+        $z_{IRZ}$ & Root zone depth. & 64 cm \\ %cum_dh_thr
         \hline
-        $\beta$ & Target soil moisture (as a percentage of soil moisture at field capacity). & 90\% \\%beta_irrig
+        \betairrig & Target soil moisture (as a percentage of soil moisture at field capacity). & 90 \% \\%beta_irrig
         \hline
         $LAI_{lim}$ & Minimum leaf area index (LAI) threshold for irrigation activation. & 0.1 \\ %lai_irrig_min
         \hline
-        $I_{max}$ & Maximum allowable irrigation rate. & 3 mm hour$^{-1}$ \\ %irrig_dosmax
+        $I_{max}$ & Maximum allowable irrigation rate. & 3 mm $\cdot h^{-1}$ \\ %irrig_dosmax
         \hline
-        $a_i$ & Fraction of reservoirs that can be withdrawn. & 90\%  (for each reservoir)\\ %avail_reserv
+        $a_i$ & Fraction of reservoirs that can be withdrawn. & 90 \%  (for each reservoir)\\ %avail_reserv
         \hline
     \end{tabular}
     \caption{Parameters used in the irrigation scheme and their default values.}
@@ -362,16 +378,17 @@ In the default version of the global model, this parameter is set to 0.9, defini
 %todo: comment for future links : main irrigated valleys (mention coast no irrigated ?), dependency to GW or surface water (identify Ebro vs Andalousia)
 
 \subsubsection{Irrigation scheme with the \native routing.}
-This irrigation scheme was initially developed with the \std routing version, and adjustments were made when developing the \native routing to make it compatible with this new code. Since in \native the routing grid is completely independent of the ORCHIDEE grid, it is important to identify which variables are computed directly on the ORCHIDEE grid and which ones are computed on the routing grid, and then interpolated to the ORCHIDEE grid to be used as ORCHIDEE outputs.
+\label{sec:irrig_interp_variables}
+
+This irrigation scheme was initially developed for the \std routing version, and adjustments were made when developing the \native routing to make it compatible with this new routing code. Since the routing grid is completely independent of the ORCHIDEE grid in \native, it is important to identify which variables are computed directly on the ORCHIDEE grid and which ones are computed on the routing grid, and then interpolated to the ORCHIDEE grid to be used as ORCHIDEE outputs.
 In particular, reservoir volumes are computed on the routing grid, which means that irrigation (which withdraws from these reservoirs) must be computed on the same grid.
-To ensure water conservation, the \native routing uses absolute values in $kg$ of water (as opposed to areal values in $kg m^{-2}$). Therefore, when interpolating variables from one grid to another, the variables are also converted to a different unit, accounting for the area of the ORCHIDEE grid cells.
-The only variable that is output directly on the routing grid is the river discharge, which only has relevance in relation to the topography. Figure \ref{fig:irrig_interpolations_outputvars} summarizes the interactions between the two grids for routing and irrigation variables in \native.
+To ensure water conservation, the \native routing uses absolute values in $kg$ of water (as opposed to areal values in $kg \cdot m^{-2}$). Therefore, when interpolating variables from one grid to another, the variables are also converted to a different unit, accounting for the continental area of the ORCHIDEE grid cells.
+The only variable that is output directly on the routing grid is the river discharge. This enables a more relevant comparison to discharge observation stations than using an average discharge value over the ORCHIDEE grid cell. 
+Figure \ref{fig:irrig_interpolations_outputvars} summarizes the interactions between the two grids for routing and irrigation variables in \native.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{images/methods/routing_irrig_interpolation_outputvars.png}
     \caption{River routing and irrigation variables and interactions between the ORCHIDEE and routing grids in \native. Variables shown in red are used as model outputs while the others are only intermediate computations.}
     \label{fig:irrig_interpolations_outputvars}
-\end{figure}
-
-%chapter end
+\end{figure}  %todo:refaire screenshot sans corrections orthographiques ppt
