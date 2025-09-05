@@ -18,7 +18,7 @@ This chapter first presents the version of the ORCHIDEE LSM used, with a special
 \section{ICOLMDZ atmospheric model}
 \subsection{Dynamical core and parametrizations}
 The atmospheric component of the model is the association of the dynamical core DYNAMICO \citep{dubos_dynamico-10_2015}, and the LMDZ6A physics used for CMIP6 \citep{hourdin_lmdz6a_2020}. 
-Icosahedral dynamical cores already existed in some models, such as ICON \citep{zangl_icon_2015,giorgetta_icon-_2018,prill_icon_2022}, and was introduced in the IPSL-CM with the main objective of standardizing grid cells for global simulations and unlocking a high level of parallelization. In particular, it avoids the discrepancies of a regular longitude-latitude grid that appear at the poles, opening new prospects for modelling projects in the Arctic \citep{raillard_leveraging_2024} and Antarctic regions \citep{wiener_extensive_2025}.
+Icosahedral dynamical cores already existed in some models, such as ICON \citep{zangl_icon_2015,giorgetta_icon-_2018,prill_icon_2022}, and was introduced in the IPSL-CM with the main objective of unlocking a high level of parallelization and standardizing grid cells for global simulations. In particular, it avoids the discrepancies of a regular longitude-latitude grid that appear at the poles, opening new prospects for modelling projects in the Arctic \citep{raillard_leveraging_2024} and Antarctic regions \citep{wiener_extensive_2025}.
 All ICOLMDZ simulations run in the thesis used a 30-second time step for the dynamics.
 
 The physics of the model is version NPv6.2 with 79 vertical levels, and is run every 15 min, although some processes are not called at every time step to limit computation time.
@@ -32,8 +32,15 @@ They include the following parametrizations:
     \item the radiative transfer model RRTM \citep{mlawer_radiative_1997}, which is called every 1.5 hours (six time steps).
 \end{itemize}
 
+\subsection{Forcings}
+
 All simulations were run with spectral solar irradiance from CMIP6 solar forcing \citep{matthes_solar_2017}, distinguishing between the historical period (until 2014) and future reference scenario (from 2015).
-The atmospheric model is not coupled with an ocean model and uses prescribed sea surface temperature (SST) and sea ice content (SIC) from the AMIP forcing dataset.
+Greenhouse gases concentrations in the atmosphere were taken from the CMIP6 historical forcing dataset for CO2, CH4, N2O, as well as CFC 11 and 12.
+Aerosols forcings were also taken from the forcing created for CMIP6 runs with the INCA module of the IPSL-CM \citep{hauglustaine_global_2014}, as detailed in \citet{lurton_implementation_2020}.
+Considering that the simulations were rather short and that the focus was on the impact of irrigation, the greenhouse gases and aerosol values from 2014 were used for the period 2015-2022. For future climate simulations with a focus on climate change (Section \ref{sec:climate_change}), the values that follow the SSP5-8.5 were used.
+The atmospheric model is not coupled with an ocean model and uses prescribed sea surface temperature (SST) and sea ice content (SIC). F
+or recent climate simulations (2010-2022), monthly values at 1° resolution are taken from the PCMDI-AMIP-1.1.9 boundary conditions dataset, which is based reanalysis products \citep{taylor_sea_2000, hurrell_new_2008}.
+%todo:future : voir avec Frédérique (SST corrigées, par qui et comment ?)
 
 \subsection{Limited area model configuration}
 Simulations are run in a limited area model (LAM) configuration, first used and described in \citet{raillard_leveraging_2024}. It must be noted that the use of this model in the IPSL community is very recent, and that its development and evaluation are still ongoing. In particular, the simulations presented in Chapter \ref{chap:monthly} constitute the first case study focusing on the water cycle and land-atmosphere interactions, as well as the first use case at the mid-latitudes.
@@ -120,7 +127,7 @@ By default, LAM outputs are therefore interpolated to a regular longitude-latitu
 In this work, the simulations used in Chapter \ref{chap:monthly} were analysed solely using the interpolated outputs, while simulations used in Chapter \ref{chap:liaise}, which focused on specific grid cells for comparison to observation, were analysed using outputs on the native hexagonal grid.%todo:check if chapter structure has changed
 
 \section{ORCHIDEE land surface model}
-\subsection{General structure, running modes, and input data}
+\subsection{General structure}
 ORCHIDEE (Organizing Carbon and Hydrology In Dynamic EcosystEms) is a land surface model (LSM). Various "branches" and versions exist within the model, as the base structure presented in \citet{krinner_dynamic_2005} has been adapted and extended to meet different research objectives. 
 This PhD work uses branch 2.2 which is similar to the ORCHIDEE 2.0 model used in CMIP6 \citep{cheruy_improved_2020, boucher_presentation_2020} but for minor bug corrections. It also includes a global irrigation scheme that was recently developed and evaluated \citep{arboleda-obando_validation_2024}. While the version chosen for CMIP7 simulations is ORCHIDEE v4.2, which integrates recent developments for the modelling of snow, permafrost, vegetation, carbon, nitrogen and phosphorus cycles, branch 2.2 is still used for developments focused on surface hydrology, that can later be introduced in other branches.
 %Coupling with an atmosphere and ocean model imposes significant computational constraints, leading to the simplification or omission of certain processes for global climate simulations.
@@ -130,20 +137,30 @@ ORCHIDEE v2.2 includes several modules:
 \begin{itemize}
     \item SECHIBA \citep[\textit{Schématisation des Échanges Hydriques à l’Interface entre la Biosphère et l’Atmo\-sphère}][]{ducoudre_sechiba_1993}. Initially developed as the surface scheme of the LMDZ GCM, this module computes surface energy and water budgets, including interactions with the atmosphere. As detailed in section \ref{sec:water}, it models water vertical infiltration and redistribution into the soil, as well as horizontal transfers through the river network.
     \item STOMATE \citep{krinner_dynamic_2005}. This module simulates biological surface processes such as photosynthesis and phenology evolution, enabling the representation of seasonal variations in leaf area index (LAI), and thus evapotranspiration.
-    \item LPJ \citep{sitch_evaluation_2003}. This optional module describes the long-term evolution of vegetation to represent land use adaptation to climate and is not capable of representing fast evolutions of land use induced by human activities. Therefore, in this work, this module is inactive, and vegetation evolution is instead prescribed using annual land-cover maps from \citet{belward1999igbp}.%check...annual ? PFT_2014 only ?
+    \item LPJ \citep{sitch_evaluation_2003}. This optional module describes the long-term evolution of vegetation to represent land use adaptation to climate and is not capable of representing fast evolutions of land use induced by human activities. Therefore, in this work, this module is inactive, and vegetation evolution is instead prescribed using annual land-cover maps described in Section \ref{sec:ORCH_input_data}.
 \end{itemize}
 
+\subsection{Atmospheric forcing}
 ORCHIDEE can interface with the atmosphere in either offline mode (also called forced) or coupled mode. The simulation domain is discretized into grid cells, with a resolution that adapts to the atmospheric forcing or to the grid of the coupled atmospheric model.
 In the first case, a meteorological forcing (typically obtained from a bias-corrected reanalysis) provides values for downward radiation (shortwave and longwave), precipitation (rain and snow), air temperature and specific humidity at 2 m, wind speed at 10 m (eastward and northward components), and surface pressure. 
 In the second case, ORCHIDEE is coupled with an atmospheric model that calculates these variables in real time while receiving certain variables computed by ORCHIDEE (surface roughness, albedo, turbulent fluxes, surface temperature). ORCHIDEE's time step also adapts to the forcing, using 30 minutes when forced, and the same as the atmospheric physics when coupled (15 minutes for LMDZ).
 Within the IPSL climate model, ORCHIDEE can be coupled with the atmospheric model ICOLMDZ in a standard configuration called ICOLMDZOR, using a semi-implicit coupling scheme \citep{polcher_proposal_1998, Hourdin_phdthesis, hourdin_2002}. This scheme calculates the vertical transfer of heat by two distinct processes: thermal diffusion in the soil and turbulent diffusion in the atmospheric column. It uses zero-flux boundary conditions at the top of the atmosphere and at the bottom of a 18-meter soil column \citep{dufresne2009description}, assuming no energy is transferred to the system at these interfaces.
 
-In addition to meteorological variables, the LSM requires other input data. Each grid cell must be assigned a soil texture which determines various hydrological and thermal soil parameters. 
+\subsection{Input data}
+\label{sec:ORCH_input_data}
+In addition to meteorological variables, the LSM requires input data that describe the continental surface. 
+
+Each grid cell must be assigned a soil texture which determines various hydrological and thermal soil parameters. 
 For CMIP6 simulations, the map from \citet{zobler87802world} was used to assign the dominant texture in each grid cell, with a resolution of 1°. For the coupled simulations described in this work, the dominant USDA texture was obtained from the map of \citet{reynolds_estimating_2000}, which has a resolution of 5 arcmin and distinguishes 12 soil textures.
 
-To characterize vegetation, ORCHIDEE v2.2 defines 15 Plant Functional Types (PFTs), each associated with a set of characteristic parameters such to compute their average height, leaf area index (LAI), and albedo. The fraction of each PFT in a grid cell is obtained from a 0.1° resolution input map based on the Land Use Harmonization 2 (LUHv2) dataset \citep{hurtt_harmonization_2020, lurton_implementation_2020}. 
+To characterize vegetation, ORCHIDEE v2.2 defines 15 Plant Functional Types (PFTs), each associated with a set of characteristic parameters used to compute their average height, leaf area index (LAI), and albedo. 
+The fraction of each PFT in a grid cell is obtained from annual input maps derived from the Medium Resolution (300\,m) Land Cover product from the Climate Change Initiative (CCI) of the European Space Agency (ESA) \citep{bontemps_multi-year_2015}, and the Land Use Harmonization dataset \citep[LUH, ][]{hurtt_harmonization_2020} with the method described in \citet{lurton_implementation_2020}.
+The offline simulations of Chapter \ref{chap:routing} use 0.25° resolution maps, whereas the coupled simulations in Chapter \ref{chap:monthly} and \ref{chap:liaise} use 0.1° resolution input maps. These maps change annually until 2014 and the PFT map was frozen to 2014 for the rest of the simulations (2015-2022).
+For future climate simulations presented in \ref{sec:climate_change} the PFT maps were extended following the SSP5-8.5 scenario.
+
 Each grid cell is divided into three tiles with distinct soil columns for subsurface hydrology, grouping multiple PFTs: one for bare soil, one for trees, and one for low vegetation (crops and grasses), as shown in Fig. \ref{fig:ORC_discretization} and \ref{fig:water_balance_AD}. 
-Although they share the same soil texture within a grid cell, these soil tiles feature an independent water budget because the PFTs influence infiltration and evapotranspiration.
+Although they share the same soil texture within a grid cell, these columns were 
+defined with independent water budgets to avoid large trees from extracting unrealistic amounts of moisture from the soil at the expense of the lower vegetation \citep{de1999representation}. Each PFT can influence evapotranspiration but also water infiltration into the soil through its root density.
 %There is also a fraction of the soil called "nobio", dedicated to surfaces with such as ice, free water in lakes, cities \citep{ducharne_hydrol_nodate}.
 
 \begin{figure}[hbtp]
@@ -157,7 +174,11 @@ Although they share the same soil texture within a grid cell, these soil tiles f
 
 This section describes how the different terms of the water and energy budgets identified in the introduction are computed by ORCHIDEE, within the SECHIBA module. 
 
-To determine the soil water content in each soil tile of a grid cell, ORCHIDEE first separates the fraction of precipitation intercepted by vegetation and the fraction that actually reaches the ground. In the case of liquid precipitation (snow is treated separately), it further discriminates between the portion that infiltrates into the soil and surface runoff, which occurs when the surface layers are saturated and infiltration is limited by hydraulic conductivity. Soil hydrology fluxes are based on the one-dimensional Richards equation, with a 2-meter soil column discretized over 11 vertical layers of increasing thickness \citep{de_rosnay_impact_2002, dorgeval_sensitivity_2008}, as shown in Fig. \ref{fig:ORC_discretization}. A free drainage condition is applied at the bottom of the column. ORCHIDEE models the infiltration front velocity, which progressively saturates the layers. The values of hydraulic conductivity and diffusivity are computed based on soil texture according to \citet{mualem_new_1976, van_genuchten_closed-form_1980}. As shown in Fig. \ref{fig:water_balance_AD}, the surface runoff and drainage computed in each grid cell then serve as input to the routing scheme, later described in Section \ref{section:routing_methods}.
+\subsubsection*{Liquid water partitioning}
+
+To determine the soil water content in each soil tile of a grid cell, ORCHIDEE first separates the fraction of precipitation intercepted by vegetation and the fraction that actually reaches the ground. In the case of liquid precipitation (snow is treated separately), 
+%todo: compléter un peu, 3 couches, ref Wang 2013
+it further discriminates between the portion that infiltrates into the soil and surface runoff, which occurs when infiltration is limited by hydraulic conductivity. Soil hydrology fluxes are based on the one-dimensional Richards equation, with a 2-meter soil column discretized over 11 vertical layers of increasing thickness \citep{de_rosnay_impact_2002, dorgeval_sensitivity_2008}, as shown in Fig. \ref{fig:ORC_discretization}. A free drainage condition is applied at the bottom of the column. ORCHIDEE models the infiltration front velocity, which progressively saturates the layers. The values of hydraulic conductivity and diffusivity are computed based on soil texture according to \citet{mualem_new_1976, van_genuchten_closed-form_1980}. As shown in Fig. \ref{fig:water_balance_AD}, the surface runoff and drainage computed in each grid cell then serve as input to the routing scheme, later described in Section \ref{section:routing_methods}.
 
 \begin{figure}[hbtp]
     \centering
@@ -166,22 +187,16 @@ To determine the soil water content in each soil tile of a grid cell, ORCHIDEE f
     \label{fig:water_balance_AD}
 \end{figure}
 
+
+\subsubsection*{Potential and actual evapotranspiration}
+
 The missing term to close the surface water balance is evapotranspiration $E$, which also appears in the energy balance via the latent heat flux $\lambda E$. The total evaporation value depends on potential evaporation, which represents the evaporation that would occur without water stress and thus serves as an upper limit. It is calculated using the formulation of \citet{Budyko_1956}:  
 
 \begin{equation}
-    E_{pot} = \rho_{air}  \lVert \vec{V} \rVert C_{drag} (q_{sat}(T_S) - q_{air})
+    E_{pot} = \rho_{air}  \lVert \vec{V} \rVert C_{drag, m} (q_{sat}(T_S) - q_{air})
 \end{equation}
 
-where $\rho_{air}$ is the air density, $\lVert \vec{V} \rVert$ is the horizontal wind speed, $C_{drag}$ is the surface drag coefficient, $q_{air}$ is the specific humidity of the air (typically taken at 2m), and $q_{sat}(T_S)$ is the specific humidity of saturated air at the surface temperature $T_S$.
-%todo:préciser en couplé si on prend l'humidité au premier niveau ou interpolée à 2m (même question pour vent, 10m ou premier niveau?...) On prend tout au premier niveau
-
-$C_{drag}$ is computed for the whole grid cell and depends on two roughness lengths: $z_{0m}$, below which wind speed is assumed to be zero, and $z_{0h}$, below which air temperature is assumed to be equal to the surface soil temperature. These roughness lengths are computed for each PFT then aggregated to obtain a unique value for the grid cell. This modelling choice is referred to as \textit{parameter aggregation}, as opposed to \textit{flux aggregation} methods, used in some land surface models, which compute turbulent fluxes for each PFT before computing an average value to represent the grid cell.
-The default parametrization of roughness lengths in ORCHIDEE 2.2 is based on \citet{su_evaluation_2001} and calculates them both dynamically, using empirical formulations. However, some of the obtained values are not always consistent (particularly for $z_{0h}$), and another parametrization was introduced in ORCHIDEE, which will serve as default for CMIP7.
-With this simpler approach, the two roughness lengths are constant over time, and depend on two prescribed parameters for each PFT:  %todo:check car doute sur le fait que la canopy height soit constante...
-\begin{itemize}
-    \item The ratio between $z_{0m}$ and the canopy height, with a typical value of $\frac{z_{0m}}{h} = \frac{1}{15}$.
-    \item The ratio between $z_{0h}$ and $z_{0m}$, with a typical value of $\frac{z_{0h}}{z_{0m}} = \frac{1}{10}$.  
-\end{itemize}
+where $\rho_{air}$ is the air density, $\lVert \vec{V} \rVert$ is the horizontal wind speed, $C_{drag, m}$ is the surface drag coefficient for momentum (detailed description below), $q_{air}$ is the specific humidity of the air and $q_{sat}(T_S)$ is the specific humidity of saturated air at the surface temperature $T_S$. Wind speed and air temperature and humidity are taken at the first level of the atmospheric model in coupled simulations, or at the height of the atmospheric forcing in offline simulations.
 
 To obtain the actual evapotranspiration $E$ from the maximum theoretical value $E_{pot}$, ORCHIDEE computes the ratio of actual evapotranspiration to potential evapotranspiration $\beta = \frac{E}{E_{pot}}$, accounting for the four components of evapotranspiration:  
 
@@ -222,23 +237,92 @@ This approach is often referred to as a composite approach, as opposed to a mosa
 % \end{equation}
 % where $W_L$ is the moisture content in the top four layers of the soil column, and $W_L^s$ is the saturation moisture content in these same layers.
 
-The latent heat flux is computed directly from the evapotranspiration:
-\begin{equation}
-    LE = \lambda \beta E_{pot} = \lambda \beta \rho_{air} \lVert \vec{V} \rVert C_{drag} (q_{sat}(T_S) - q_{air})
-\end{equation}
+\hfill
 
-The sensible heat flux is also computed using the surface drag coefficient derived from the composite roughness lengths:
-\begin{equation}
-    H = \rho_{air}  \lVert \vec{V} \rVert C_p C_{drag} (T_{surf} - T_{air})
-\end{equation}
-where $\rho_{air}$ is the air density, $\lVert \vec{V} \rVert$ is the horizontal wind speed, $C_p$ is the is the specific heat of air, $C_{drag}$ is the surface drag coefficient, $T_{air}$ is the air temperature (typically taken at 2m), and $T_{surf}$ is the surface temperature (sometimes referred to as the skin temperature).
-%option:check si on prend l'humidité au premier niveau ou interpolée à 2m (même question pour vent...)
+\subsubsection*{Drag coefficients and roughness lengths}
 
-The heat flux in the ground is computed using the semi-implicit coupling scheme mentioned earlier, at the same time as the turbulent diffusion is the atmospheric column \citep{polcher_proposal_1998}
-%todo:refs cf plus haut idem mettre toutes les ref surtout pour le flux dans le sol, cela vient de la these d hourdin . 
-Finally, regarding radiative fluxes, ORCHIDEE does not modify the incoming radiation terms but determines the outgoing terms by calculating the albedo (with distinct values for infrared and for visible light) and the surface temperature, which controls the outgoing longwave radiation and closes the energy budget.
-%option:check ordre, véracité de ce que je dis ? besoin de plus de détails ou ok de dire que Tsurf est la variable d'ajustement ? citer thèse ou HDR Hourdin ?
-Le bilan d energie a la surface est evalué implicitement en utilisant les formulation des sensibilites des flux turbulents et LW up aux variations aux variations de température de surface d'une part et deux systemes tridiagonaux dans l atmosphere et dans le sol pour resoudre implicitement les equations de diffusion.  Tu peux aller voir mon cours de cet année sur le couplage eventuellement
+There are two surface drag coefficients in ORCHIDEE, $C_{drag, m}$ for momentum and water vapour transfers, and $C_{drag, h}$ for heat transfers.
+They can be computed for every PFT and depend on two roughness lengths: $z_{0m}$, below which wind speed is assumed to be zero, and $z_{0h}$, below which air temperature is assumed to be equal to the surface soil temperature. 
+The default parametrization of roughness lengths in ORCHIDEE 2.2, used in this thesis, is based on \citet{su_evaluation_2001} and calculates them both dynamically, using empirical formulations which depend on the LAI. 
+% However, some of the obtained values are not always consistent (particularly for $z_{0h}$), and another parametrization was introduced in ORCHIDEE, which will serve as default for CMIP7.
+% With this simpler approach, the two roughness lengths depend on the canopy height of each PFT: 
+% \begin{itemize}
+%     \item The ratio between $z_{0m}$ and the canopy height, with a typical value of $\frac{z_{0m}}{h} = \frac{1}{15}$.
+%     \item The ratio between $z_{0h}$ and $z_{0m}$, with a typical value of $\frac{z_{0h}}{z_{0m}} = \frac{1}{10}$.  
+% \end{itemize}
+
+Both drag coefficients car be expressed using a drag coefficient in neutral conditions and a stability function $f_H$:
+\begin{align}
+    &C_{drag,m} = C_{drag,m,neutral} f_H(Ri, z_{0m})\\
+    &C_{drag,h} = C_{drag,h,neutral} f_H(Ri, z_{0m})
+\end{align}
+
+The coefficients for neutral conditions are calculated by taking into account the roughness lengths of all PFTs:
+\begin{align}
+    &C_{drag,m,neutral} = \sum_{i=1}^{N_\mathsf{PFT}} f_{veg,\max,i} \left[ \frac{k^2}{\left(\ln\left(\frac{z-d_{0,i}}{z_{0m,i}}\right)\right)^2} \right]\\
+    &C_{drag,h,neutral} = \sum_{i=1}^{N_\mathsf{PFT}} f_{veg,\max,i} \left[ \frac{k^2}{\ln\left(\frac{z-d_{0,i}}{z_{0m,i}}\right)\ln\left(\frac{z-d_{0,i}}{z_{0h,i}}\right)} \right]
+\end{align}
+where ${d_{0,PFT}}$ is the displacement height, assumed equal to two thirds of the canopy height, ${k}$ is von Karman's constant and $z$ is the altitude of the atmospheric forcing.
+
+The stability function depends on the Richardson number $Ri$, defined as the ratio of the two source terms for turbulent kinetic energy: buoyancy and wind shear, which depend on the gradient of temperature near the surface and on the surface wind speed. 
+\begin{equation}
+Ri= \frac{g}{\overline \theta} \frac{\frac{\partial \overline \theta}{\partial z}}{(\frac{\partial \overline u}{ \partial z})^2}
+\end{equation}
+A negative $Ri$ corresponds to an unstable atmosphere while positive values correspond to a stable one, and $Ri=0$ is the neutral case.
+The stability function is defined differently for the unstable and stable cases, with two formulations from \citet{louis_short_1982}, which both converge towards $f_H(0)=1$.
+
+\begin{equation}
+f_H(Ri) = 
+\begin{cases}
+1 - \dfrac{3 B Ri}{1 + 3 B C C_{d,m,neutral} \sqrt{|Ri| \dfrac{z}{z_{0m}}}} & \text{if } Ri < 0 \\
+\\
+1 & \text{if } Ri=0\\
+\dfrac{1}{1 + 3 B Ri \sqrt{1 + D |Ri|}} & \text{if } Ri > 0
+\end{cases}
+\end{equation}
+with $B=C=D=5$.
+
+\hfill
+
+It must be noted that when ORCHIDEE is used in coupled mode with the atmospheric component of the IPSL-CM, LMDZ, ORCHIDEE does not fully compute the drag coefficients.
+Instead, it computes only the neutral coefficients and provides LMDZ with effective roughness lengths for the grid cell $z_{0m,eff}$ and $z_{0h,eff}$. This modelling choice is referred to as \textit{parameter aggregation}, as opposed to \textit{flux aggregation} methods, used in some land surface models, which compute turbulent fluxes for each PFT before computing an average flux value to represent the grid cell.
+Effective roughness lengths can be expressed as:
+\begin{equation}
+    z_{0m,eff}=z \exp{\left(\frac{-k}{\sqrt{C_{drag,m,neutral}}}\right)}
+     \text{ and } 
+    z_{0h,eff}=z \exp{\left(\frac{-k}{\sqrt{C_{drag,h,neutral}}}\right)}
+\end{equation}
+LMDZ then computes the drag coefficients using values from the surface layer for the Richardson number and its own stability functions. The formulation is similar for unstable cases, but for stable cases, functions from \cite{king_sensitivity_2001} are used:
+
+\begin{equation}
+f_{H, LMDZ}(Ri) = 
+\begin{cases}
+1 - \dfrac{3 B Ri}{1 + 3 B C C_{d,h,neutral} \sqrt{|Ri| \dfrac{z}{z_{0m}}}} & \text{if } Ri < 0 \\
+1 & \text{if } Ri=0\\
+(1-Ri/C_2)^2 & \text{if } 0 < Ri < C_2/2\\
+(C_3(C_2/Ri)^2 & \text{if } Ri \geq C_2/2\\
+\end{cases}
+\end{equation}
+with $B=C=5$, $C_2 = 0.25$, $C_3 = 0.0625$.
+
+\hfill
+
+\subsubsection*{Energy budget}
+
+ORCHIDEE does not modify the incoming radiation terms but determines the outgoing reflected radiation terms by calculating the albedo (with distinct values for infrared and for visible light).
+
+The heat flux into the ground, surface temperature (which controls the outgoing longwave radiation) and radiative fluxes are computed with an implicit scheme which accounts for thermal diffusion in an 18-meter soil column, with a zero-flux condition at the bottom. 
+The vertical discretization matches the one used for water infiltration in the first two meters, and thermal conductivity and heat capacity are parametrized as a function of soil moisture and texture \citep{wang_improvement_2016}.
+When coupled to LMDZ, the aforementioned semi-implicit coupling scheme is used, which also computes turbulent diffusion is the atmospheric column at the same time as thermal diffusion in the soil \citep{polcher_proposal_1998, Hourdin_phdthesis, hourdin_2002}. 
+
+The latent heat flux is expressed directly from the evapotranspiration, while the sensible heat flux uses a similar formulation:
+\begin{equation}
+    LE = \lambda \beta E_{pot} = \lambda \beta \rho_{air} \lVert \vec{V} \rVert C_{drag, m} (q_{sat}(T_S) - q_{air})
+\end{equation}
+\begin{equation}
+    H = \rho_{air}  \lVert \vec{V} \rVert C_p C_{drag, h} (T_{surf} - T_{air})
+\end{equation}
+where $\rho_{air}$ is the air density, $\lVert \vec{V} \rVert$ is the horizontal wind speed, $C_p$ is the is the specific heat of air, $C_{drag, h}$ is the surface drag coefficient for heat, $T_{air}$ is the air temperature, and $T_{surf}$ is the surface temperature (sometimes referred to as the skin temperature).
 
 \subsection{Routing scheme}
 \label{section:routing_methods}
@@ -277,7 +361,6 @@ of runoff and drainage from the ORCHIDEE grid to the routing grid, where horizon
     \caption{Modelling principles of the \textit{interp\_topo} routing.}
     \label{fig:routing_principles}
 \end{figure}
-%todo:refaire figure sans corrections orthographiques ppt
 
 Two DEMs are used in this work, with different resolutions. 
 The first one is the 0.5° resolution DEM that has long been used within ORCHIDEE with the \std routing, based on the topography and flow directions of \citet{vorosmarty_geomorphometric_2000}.
@@ -383,7 +466,7 @@ In the default version of the global model, this parameter is set to 0.9, defini
 This irrigation scheme was initially developed for the \std routing version, and adjustments were made when developing the \native routing to make it compatible with this new routing code. Since the routing grid is completely independent of the ORCHIDEE grid in \native, it is important to identify which variables are computed directly on the ORCHIDEE grid and which ones are computed on the routing grid, and then interpolated to the ORCHIDEE grid to be used as ORCHIDEE outputs.
 In particular, reservoir volumes are computed on the routing grid, which means that irrigation (which withdraws from these reservoirs) must be computed on the same grid.
 To ensure water conservation, the \native routing uses absolute values in $kg$ of water (as opposed to areal values in $kg \cdot m^{-2}$). Therefore, when interpolating variables from one grid to another, the variables are also converted to a different unit, accounting for the continental area of the ORCHIDEE grid cells.
-The only variable that is output directly on the routing grid is the river discharge. This enables a more relevant comparison to discharge observation stations than using an average discharge value over the ORCHIDEE grid cell. 
+The only variable that is output directly on the routing grid is the river discharge, which cannot be averaged in a conservative way. Since the routing grid is of higher resolution than the ORCHIDEE grid, it also enables a more relevant comparison to discharge observation stations.
 Figure \ref{fig:irrig_interpolations_outputvars} summarizes the interactions between the two grids for routing and irrigation variables in \native.
 
 \begin{figure}[htbp]
@@ -391,4 +474,4 @@ Figure \ref{fig:irrig_interpolations_outputvars} summarizes the interactions bet
     \includegraphics[width=\textwidth]{images/methods/routing_irrig_interpolation_outputvars.png}
     \caption{River routing and irrigation variables and interactions between the ORCHIDEE and routing grids in \native. Variables shown in red are used as model outputs while the others are only intermediate computations.}
     \label{fig:irrig_interpolations_outputvars}
-\end{figure}  %todo:refaire screenshot sans corrections orthographiques ppt
+\end{figure}
