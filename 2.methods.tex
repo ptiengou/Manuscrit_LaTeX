@@ -1,8 +1,3 @@
-\chapter{Methods and tools: regional simulations with the ICOLMDZOR LAM}
-\label{chap:methods}
-\minitoc
-\pagebreak
-
 This thesis uses the ICOLMDZOR limited area model (LAM) to study the impacts of simulated irrigation on the atmosphere and the water cycle. This model relies on the atmosphere (ICOLMDZ) and land surface (ORCHIDEE) components of the IPSL-CM in its latest version. 
 Historically, the LMD General Circulation Model was first developed with a regular longitude-latitude grid \citep{sadourny_laval_1984}, before introducing the zoom capability \citep{li_ensemble_1999} which led to the name LMDZ. 
 A land surface scheme named SECHIBA, was introduced in \citet{ducoudre_sechiba_1993} to represent water and energy budgets on continental surfaces. 
@@ -146,14 +141,16 @@ ORCHIDEE v2.2 includes several modules:
 ORCHIDEE can interface with the atmosphere in either offline mode (also called forced) or coupled mode. The simulation domain is discretized into grid cells, with a resolution that adapts to the atmospheric forcing or to the grid of the coupled atmospheric model.
 In the first case, a meteorological forcing (typically obtained from a bias-corrected reanalysis) provides values for downward radiation (shortwave and longwave), precipitation (rain and snow), air temperature and specific humidity at 2 m, wind speed at 10 m (eastward and northward components), and surface pressure. 
 In the second case, ORCHIDEE is coupled with an atmospheric model that calculates these variables in real time while receiving certain variables computed by ORCHIDEE (surface roughness, albedo, turbulent fluxes, surface temperature). ORCHIDEE's time step also adapts to the forcing, using 30 minutes when forced, and the same as the atmospheric physics when coupled (15 minutes for LMDZ).
-Within the IPSL climate model, ORCHIDEE can be coupled with the atmospheric model ICOLMDZ in a standard configuration called ICOLMDZOR, using a semi-implicit coupling scheme \citep{polcher_proposal_1998, Hourdin_phdthesis, hourdin_2002}. This scheme calculates the vertical transfer of heat by two distinct processes: thermal diffusion in the soil and turbulent diffusion in the atmospheric column. It uses zero-flux boundary conditions at the top of the atmosphere and at the bottom of a 18-meter soil column \citep{dufresne2009description}, assuming no energy is transferred to the system at these interfaces.
+Within the IPSL climate model, ORCHIDEE can be coupled with the atmospheric model ICOLMDZ in a standard configuration called ICOLMDZOR, using a semi-implicit coupling scheme \citep{polcher_proposal_1998, Hourdin_phdthesis,hourdin_parameterization_2002}. This scheme calculates the vertical transfer of heat by two distinct processes: thermal diffusion in the soil and turbulent diffusion in the atmospheric column. It uses zero-flux boundary conditions at the top of the atmosphere and at the bottom of a 18-meter soil column \citep{dufresne2009description}, assuming no energy is transferred to the system at these interfaces.
 
 \subsection{Input data}
 \label{sec:ORCH_input_data}
 In addition to meteorological variables, the LSM requires input data that describe the continental surface. 
 
 Each grid cell must be assigned a soil texture which determines various hydrological and thermal soil parameters. 
-For CMIP6 simulations, the map from \citet{zobler87802world} was used to assign the dominant texture in each grid cell, with a resolution of 1°. For the coupled simulations described in this work, the dominant USDA texture was obtained from the map of \citet{reynolds_estimating_2000}, which has a resolution of 5 arcmin and distinguishes 12 soil textures.
+For CMIP6 simulations, the map from \citet{zobler87802world} was used to assign the dominant texture in each grid cell, with a resolution of 1°. 
+This map was used for the offline simulations of Chapter \ref{chap:routing}
+whereas the coupled simulations of Chapters \ref{chap:monthly}, the dominant USDA texture was obtained from the map of \citet{reynolds_estimating_2000}, which has a resolution of 5 arcmin and distinguishes 12 soil textures.
 
 To characterize vegetation, ORCHIDEE v2.2 defines 15 Plant Functional Types (PFTs), each associated with a set of characteristic parameters used to compute their average height, leaf area index (LAI), and albedo. 
 The fraction of each PFT in a grid cell is obtained from annual input maps derived from the Medium Resolution (300\,m) Land Cover product from the Climate Change Initiative (CCI) of the European Space Agency (ESA) \citep{bontemps_multi-year_2015}, and the Land Use Harmonization dataset \citep[LUH, ][]{hurtt_harmonization_2020} with the method described in \citet{lurton_implementation_2020}.
@@ -316,7 +313,7 @@ ORCHIDEE does not modify the incoming radiation terms but determines the outgoin
 
 The heat flux into the ground, surface temperature (which controls the outgoing longwave radiation) and radiative fluxes are computed with an implicit scheme which accounts for thermal diffusion in an 18-meter soil column, with a zero-flux condition at the bottom. 
 The vertical discretization matches the one used for water infiltration in the first two meters, and thermal conductivity and heat capacity are parametrized as a function of soil moisture and texture \citep{wang_improvement_2016}.
-When coupled to LMDZ, the aforementioned semi-implicit coupling scheme is used, which also computes turbulent diffusion is the atmospheric column at the same time as thermal diffusion in the soil \citep{polcher_proposal_1998, Hourdin_phdthesis, hourdin_2002}. 
+When coupled to LMDZ, the aforementioned semi-implicit coupling scheme is used, which also computes turbulent diffusion is the atmospheric column at the same time as thermal diffusion in the soil \citep{polcher_proposal_1998, Hourdin_phdthesis,hourdin_parameterization_2002}. 
 
 The latent heat flux is expressed directly from the evapotranspiration, while the sensible heat flux uses a similar formulation:
 \begin{equation}
@@ -345,10 +342,13 @@ The outgoing water quantity $Q$ (given in $kg$) from a reservoir over one routin
 \end{equation}
 
 The transfer coefficient reflects the roughness that creates a resistance to flow in this reservoir. The model assumes this parameter to be unique over the whole simulation domain, with a smaller value for the river reservoir than for the overland reservoir, and a larger one for the groundwater reservoir.
-For a given DEM grid cell, the topographic index is defined as the length of the grid cell in the flow direction ($d$) divided by the slope ($\delta z / d$):
+For a given DEM grid cell, the topographic index is defined as the length of the grid cell in the flow direction ($d$) divided by the square root of the slope, obtained from the altitude change $\delta z$ and $d$:
+
 \begin{equation}
     topoindex = \frac{d}{\sqrt{\frac{\delta z}{d}}} = \sqrt{ \frac{d^3}{\delta z} } 
 \end{equation}
+
+\hfill
 
 Several versions of the routing scheme have been developed in ORCHIDEE, all based on these modelling principles but corresponding to different relationships between the routing grid and the ORCHIDEE grid:
 
