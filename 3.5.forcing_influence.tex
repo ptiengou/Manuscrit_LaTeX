@@ -1,4 +1,21 @@
-This section presents the inconsistencies identified in the LAM transition zone, several possible options explored to mitigate them, and their impact on the LAM free zone and the Iberian Peninsula subdomain. In all the section, the ERA5 reanalysis is used as a reference. Although it is not considered the most realistic reference for all variables, the study of the inconsistencies mostly focused on the spatial structure of the variables, rather than on the absolute values.
+\section{Chapter introduction}
+
+The main objective of this PhD work was to study the impact of irrigation in coupled ICOLMDZOR LAM simulations.
+In the process of identifying an adequate simulation setup for the LAM, considering how recent the model is, particular attention was paid to the consistency of the model. 
+Structural biases were identified in the transition zone on the edges of the LAM, with possible associated impacts in the central free zone. 
+A sensitivity analysis on the size of the domain enabled pursuing the work with a limited influence of these biases, leading to the results presented in Chapters \ref{chap:monthly} and \ref{chap:liaise}, but several secondary questions were identified as to their source and other ways to reduce them. 
+These were further investigated separately, during Mariame Maiga's'internship for her first year of Masters at Sorbonne Université, which I co-supervised with Frédérique Cheruy from April to July 2025. 
+
+These analyses provided valuable understanding of the sensitivities of the LAM to its lateral forcing and addressed the following questions: 
+\begin{itemize}
+    \item Which variables have an inconsistent behaviour in the transition zone ? How can these inconsistencies be explained ?
+    \item How can the size of the domain limit the extent of these inconsistencies to ensure the LAM is not influenced in the free zone ?
+    \item How dependent on the choice of lateral forcing are the inconsistencies in the transition zone and the general performance of the model ?
+    \item How much does the sampling frequency of the forcing file influence the consistency and performance of the LAM ?
+\end{itemize}
+
+In this chapter, the inconsistencies identified in the transition zone are analysed in simulations without irrigation, as well as several possible options explored to mitigate them, and their impact on the LAM free zone and the Iberian Peninsula subdomain. 
+In all the chapter, the ERA5 reanalysis is used as a reference. Although it is not considered the most realistic reference for all variables, the study of the inconsistencies mostly focused on the spatial structure of the variables, rather than on the absolute values.
 For this purpose, ERA5 has two advantages: it is available over all the simulation domain, at a resolution similar to the simulations (0.25° is close to 25km in midlatitudes), and provides all the variables of the model.
 Most figures presented are maps of biases relative to ERA5 for six variables of interest, and their values in the reanalysis over the period 2010-2014 are shown in Fig. \ref{fig:ERA_var_maps} to provide a perpective on the expected structure and order of magnitudes.
 
@@ -37,7 +54,7 @@ Most figures presented are maps of biases relative to ERA5 for six variables of 
     \label{fig:ERA_var_maps}
 \end{figure}
 
-\subsection{Structural inconsistencies and influence of domain size}
+\section{Structural inconsistencies and influence of domain size}
 \label{sec:domain_size}
 Here, three simulations over the periods 2010-2014 are compared to ERA5:
 \begin{itemize}
@@ -170,7 +187,7 @@ Meanwhile,  to explore the hypothesis that the biases in the transition zone are
 
 \clearpage
 
-\subsection{Impact of the source of the lateral forcing}
+\section{Impact of the source of the lateral forcing}
 \label{sec:forcing_source}
 
 %figure : maps of diff vs ERA for 2 forcing sources
@@ -259,7 +276,7 @@ To summarise, the comparison of the two LAM simulations, \forcingERA and \forcin
 
 \clearpage
 
-\subsection{Impact of the forcing file sampling frequency}
+\section{Impact of the forcing file sampling frequency}
 \label{sec:forcing_frequency}
 %figure : maps of diff vs ERA for 2 forcing sampling freqs
 \begin{figure}[!h]
@@ -347,3 +364,14 @@ On average over the Iberian Peninsula, the seasonal cycle of precipitation and E
 Although this study only focused on a single year, it revealed that the model is sensitive to the sampling frequency of the forcing file. The inconsistencies in the transition zone, attributed to discrepancies between the ERA5 forcing and LMDZ physics, are strengthened when using 6-hourly data, which contributes to the degradation of model performance for precipitation and ET over the Iberian Peninsula.
 
 \clearpage
+
+\section{Chapter conclusions}
+
+To identify an appropriate simulation setup for the study, the sensitivities of the LAM to the size of the domain and the choice of lateral forcing (both its source and sampling frequency) were analysed. They revealed an inconsistent behaviour of the LAM in the transition zone when forced by ERA5 data, in particular unexpectedly low cloud cover and precipitation. These biases were attributed to discrepancies between the physics used to produce the ERA5 reanalysis and the LMDZ physics, which keep the large-scale condensation scheme from forming clouds and precipitation properly.
+These analyses also showed that this inconsistent behaviour in the transition zone can have impacts in the central part of the domain, and in particular over the Iberian Peninsula. Using larger domains does not make these inconsistencies disappear but limits their influence over the Peninsula since the transition zone is futher away.
+
+Simulations with forced with outputs from a global ICOLMDZOR simulation were compared to the initial setup with forcing data from ERA5 and showed large improvements in the consistency of the model in the transition zone. These findings confirmed that in the transition zone, the model is sensitive to the choice of the forcing data, and identified a possibly better forcing source for future studies with the LAM. However, with this setup, the inherent biases of the ICOLMDZOR model are stronger  in the central zone, which limits the improvements in performance over the Iberian Peninsula.
+
+Sensitivity experiments to look into the impact of the forcing file sampling frequency were also conducted and showed that using 6-hourly ERA5 data for the lateral forcing instead of hourly data amplifies the biases in the transition zone, and degrades performance in the rest of the domain for precipitation and ET. This analysis was conducted with the idea that 6-hourly forcing data could be used for future climate simulation but this option was eventually discarded for technical reasons and all simulations in the rest of this manuscript were run using hourly forcing data.
+
+Although simplifications were made due to technical and time constraints, several dependencies of the ICOLMDZOR LAM on the choice of the domain and forcing data were identified. This work is of high interest for the IPSL modelling community since the LAM is a recent tool, still in development, that is expected to be used in a more and more regional modelling and parameterization development studies.

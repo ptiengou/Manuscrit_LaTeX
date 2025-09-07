@@ -35,6 +35,53 @@ The resulting bias pattern (Fig. \ref{fig:irrig_eval}b) can be explained by the 
 Overall, the spatial biases of the simulated irrigation offset each other relatively well. Averaged over the subdomain where the satellite product provides values, the simulated irrigation is 0.20 mm d$^{-1}$ while the product estimates it at 0.23 mm d$^{-1}$.
 
 \subsection{Impacts of irrigation on river discharge}
+%todo:check que l'ajout des stations reste propre et cohérent
+
+The simulated river discharge was evaluated against monthly data from 18 stations of the GRDC datbase (described in Section \ref{sec:eval_datasets}).
+These stations, selected since they provided data over the simulation period and an had adequate position on the DEM grid, are described in Table \ref{table:stations_data} and shown in Fig. \ref{fig:selected_stations}. Most stations have available data from January 2010 to September 2017, and river discharge was therefore evaluated using the first eight years of simulation (2010-2017).
+
+%figure:discharge stations and dams
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{images/chap4/article/f02.pdf}
+    \caption{Stations used for river discharge evaluation, river dams from \citet{aquastat_dams}, and main rivers of the study area from the CCM2.1 dataset \citep{vogt_pan-european_2007}, showing only rivers longer than 50 km for readability.}
+    \label{fig:selected_stations}
+\end{figure}
+
+%table:description of discharge station used
+\begin{table*}[htbp]
+    \caption{Characteristics of river discharge stations used for evaluation. Stations marked with * are the largest of the five major basins of the Peninsula, and are shown in Fig. \ref{fig:discharge_SC}.
+    }
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{lcccccc}
+        \toprule
+        % \textbf{Station} & \textbf{Altitude (m)} & \textbf{River} & \textbf{Area (km²)} & \textbf{Mean discharge (m³/s)} & \textbf{Coverage (2010-2017, \%)} \\
+        \textbf{Station} & \textbf{Altitude (m)} & \textbf{River} & \textbf{Area} & \textbf{Mean discharge} & \textbf{Coverage} \\
+         & & & (km²) &  (m³/s) &  (2010-2017, \%) \\
+        \midrule
+        *1 (Tortosa)            & 25    & Ebro      & 84230     & 287.61 & 96.9 \\
+        2 (Zaragoza)            & 189   & Ebro      & 40434     & 210.89 & 96.9 \\
+        3 (Castejon)            & 265   & Ebro      & 25194     & 201.34 & 96.9 \\
+        4 (Seros)               & 85    & Segre     & 12782     & 52.75  & 96.9 \\
+        5 (Fraga)               & 100   & Cinca     & 9612      & 49.69  & 93.8 \\
+        *6 (Tore)               & 637   & Douro     & 41808     & 109.18 & 96.9 \\
+        7 (Peral De Arlanza)    & 766   & Arlanza   & 2413      & 16.44  & 96.9\\
+        *8 (Talavera)           & 366   & Tagus     & 33849     & 46.77  & 34.4\\
+        9 (Trillo)              & 727   & Tagus     & 3253      & 12.70  & 96.9 \\
+        10 (Peralejos)          & 1143  & Tagus     & 410       & 3.87   & 96.9 \\
+        *11 (Azud de Badajoz)   & 166   & Guadiana  & 48530     & 81.83  & 83.3 \\
+        12 (Pulo do Lobo)       & 28    & Guadiana  & 61884     & 25.23  & 58.3 \\
+        13 (La Cubeta)          & 758   & Guadiana  & 856       & 3.37   & 92.7 \\
+        14 (Villarubia)         & 628   & Guadiana  & 10319     & 0.82   & 66.7 \\
+        15 (Quintanar)          & 694   & Giguela   & 995       & 0.71   & 55.2 \\
+        *16 (Mengibar)          & 240   & Guadalquivir & 16166  & 30.25  & 75.0 \\
+        17 (Arroyo Maria)       & 538   & Guadalquivir & 583    & 6.19   & 86.5 \\
+        18 (Pinos Puente)       & 561   & Frailes   & 357       & 1.00   & 87.5 \\
+        \bottomrule
+    \end{tabular}
+    }
+    \label{table:stations_data}
+\end{table*}
 
 %%single column figure : discharge obs vs irr vs no_irr on 3 stations (3 large rivers with proper data)
 \begin{figure}[htbp]

@@ -5,142 +5,35 @@ IPSL was founded in 1995 and the LMD GCM became part of the IPSL-CM1 where it wa
 Later, the IPSL-CM4 contributed to the third phase of the Coupled Model Intercomparison Project (CMIP3) with simulations using LMDZ4 \citep{hourdin_lmdz4_2006} and the land surface model (LSM) ORCHIDEE \citep{krinner_dynamic_2005}, largely based on the aforementioned surface scheme of LMDZ.
 Two versions of the IPSL-CM5 contributed to CMIP5, including one with a new version of the atmospheric physics, LMDZ5B \citep{hourdin_lmdz5b_2013}.
 For CMIP6, the model evolved into IPSL-CM6-LR \citep{boucher_presentation_2020}, with a new version of the atmospheric GCM, LMDZ6A \citep{hourdin_lmdz6a_2020}, and of the LSM, ORCHIDEE 2.0 \citep{cheruy_improved_2020}. 
-While preparing CMIP7, the IPSL-CM is undergoing a major evolution in its atmospheric component by changing to a new dynamical core, DYNAMICO \citep{dubos_dynamico-10_2015}, which used an icosahedral grid instead of a regular longitude-latitude discretization. Within IPSL-CM7, which is still under development, the atmospheric component is now referred to as ICOLMDZ. Although a new version of the physics scheme is expected to be integrated into IPSL-CM7, ICOLMDZ can also function with the pre-existing physics of LMDZ, as was the case for the present work.
+While preparing CMIP7, the IPSL-CM is undergoing a major evolution in its atmospheric component by changing to a new dynamical core, DYNAMICO \citep{dubos_dynamico-10_2015}, which uses an icosahedral grid instead of a regular longitude-latitude discretization. Within IPSL-CM7, which is still under development, the atmospheric component is now called ICOLMDZ, and its association with ORCHIDEE is referred to as ICOLMDZOR. Although a new version of the physics scheme is expected to be integrated into IPSL-CM7, ICOLMDZ can also function with the pre-existing physics of LMDZ, as was the case for the present work. 
+Coincidentally with the development of DYNAMICO, a new functionality was implemented, to run ICOLMDZOR as a LAM, unlocking new perspectives in regional modelling with the IPSL-CM. 
 
-This chapter first presents the version of the ORCHIDEE LSM used, with a special focus on the most relevant processes for this work such as the water and energy budgets, river routing and irrigation. ORCHIDEE was used as a stand-alone LSM in Chapter \ref{chap:routing} and in coupled regional simulations with ICOLMDZ for Chapters \ref{chap:monthly} and \ref{chap:liaise}. The second part of this chapter describes ICOLMDZ, as well as the LAM setups used for these coupled simulations.
+Section \ref{sec:ORCHIDEE} first presents the version of the ORCHIDEE LSM used, with a special focus on the most relevant processes for this work such as the water and energy budgets, river routing and irrigation. ORCHIDEE was used as a stand-alone LSM in Chapter \ref{chap:routing} and in coupled regional simulations with ICOLMDZ for \atmchapters. 
+Section \ref{sec:ICOLMDZLAM} describes the ICOLMDZ LAM, as well as the simulations setups used for these coupled simulations. 
+Finally, the evaluation datasets used in this thesis are presented in Section \ref{sec:eval_datasets}.
 %todo:check si cette description de la structure est bonne
 
-\section{ICOLMDZ atmospheric model}
-\subsection{Dynamical core and parametrizations}
-The atmospheric component of the model is the association of the dynamical core DYNAMICO \citep{dubos_dynamico-10_2015}, and the LMDZ6A physics used for CMIP6 \citep{hourdin_lmdz6a_2020}. 
-Icosahedral dynamical cores already existed in some models, such as ICON \citep{zangl_icon_2015,giorgetta_icon-_2018,prill_icon_2022}, and was introduced in the IPSL-CM with the main objective of unlocking a high level of parallelization and standardizing grid cells for global simulations. In particular, it avoids the discrepancies of a regular longitude-latitude grid that appear at the poles, opening new prospects for modelling projects in the Arctic \citep{raillard_leveraging_2024} and Antarctic regions \citep{wiener_extensive_2025}.
-All ICOLMDZ simulations run in the thesis used a 30-second time step for the dynamics.
-
-The physics of the model is version NPv6.2 with 79 vertical levels, and is run every 15 min, although some processes are not called at every time step to limit computation time.
-They include the following parametrizations:
-\begin{itemize}
-    \item a surface layer description based on Monin-Obukhov similarity theory \citep{monin1954osnovnye}, using formulations from \cite{louis_parametric_1979} and \cite{king_sensitivity_2001}; 
-    \item an Eddy-Diffusivity Mass Flux (EDMF) scheme of boundary layer vertical transfer composed of a turbulent diffusion scheme based on \cite{yamada_simulations_1983} with recent improvements described in \cite{vignon_modeling_2018}, and a thermal plume model for shallow convection \citep{rio_thermal_2008, hourdin_unified_2019}; 
-    \item a mass-flux scheme for deep convection based on Emanuel's scheme \citep{emanuel_scheme_1991, grandpeix_improved_2004, rio_control_2013}, with stochastic triggering \citep{rochetin_deep_2014, rochetin_deep_2014-1}, called every 30 minutes; 
-    \item a parametrization of the cold pools created below cumulonimbus by reevaporation of convective rainfall \citep{grandpeix_density_2010-1,grandpeix_density_2010};
-    \item a large scale condensation scheme based on a statistical distribution of sub-grid total water content, from which cloud fraction and water contents are derived \citep{madeleine_improved_2020}; 
-    \item the radiative transfer model RRTM \citep{mlawer_radiative_1997}, which is called every 1.5 hours (six time steps).
-\end{itemize}
-
-\subsection{Forcings}
-
-All simulations were run with spectral solar irradiance from CMIP6 solar forcing \citep{matthes_solar_2017}, distinguishing between the historical period (until 2014) and future reference scenario (from 2015).
-Greenhouse gases concentrations in the atmosphere were taken from the CMIP6 historical forcing dataset for CO2, CH4, N2O, as well as CFC 11 and 12.
-Aerosols forcings were also taken from the forcing created for CMIP6 runs with the INCA module of the IPSL-CM \citep{hauglustaine_global_2014}, as detailed in \citet{lurton_implementation_2020}.
-Considering that the simulations were rather short and that the focus was on the impact of irrigation, the greenhouse gases and aerosol values from 2014 were used for the period 2015-2022. For future climate simulations with a focus on climate change (Section \ref{sec:climate_change}), the values that follow the SSP5-8.5 were used.
-The atmospheric model is not coupled with an ocean model and uses prescribed sea surface temperature (SST) and sea ice content (SIC). F
-or recent climate simulations (2010-2022), monthly values at 1° resolution are taken from the PCMDI-AMIP-1.1.9 boundary conditions dataset, which is based reanalysis products \citep{taylor_sea_2000, hurrell_new_2008}.
-%todo:future : voir avec Frédérique (SST corrigées, par qui et comment ?)
-
-\subsection{Limited area model configuration}
-Simulations are run in a limited area model (LAM) configuration, first used and described in \citet{raillard_leveraging_2024}. It must be noted that the use of this model in the IPSL community is very recent, and that its development and evaluation are still ongoing. In particular, the simulations presented in Chapter \ref{chap:monthly} constitute the first case study focusing on the water cycle and land-atmosphere interactions, as well as the first use case at the mid-latitudes.
-
-\subsubsection{Lateral boundary conditions}
-Since simulations with the LAM only cover a portion of the globe, lateral boundary conditions are read by the model from a forcing file, which can be obtained from various sources. 
-In most of the work presented here, lateral boundary conditions for the LAM were taken from ERA5 reanalysis hourly values at 0.25° resolution \citep{hersbach_era5_2020}. This product uses a climate model with observation data assimilation techniques to produce outputs that are as close as possible to actual conditions. When simulating recent climate, using this forcing enables having rather realistic synoptic conditions. 
-It is also possible to run the model with other sources for the forcing file, in particular using outputs from global climate simulations, either from the ICOLMDZOR global model or from other models. The modelling community at IPSL is also currently investigating the possibility of using outputs from the CMIP6 simulations under various SSPs to run the LAM in projected future climate conditions.
-
-To run a regional simulation, the forcing file must contain data for the nudged variables (temperature, humidity, wind), two variables describing clouds (liquid and ice water content) used on the edge of the domain but not nudged, and three other variables at the surface that are used to manage initialization (2-meter temperature, geopotential height), and vertical interpolation (surface pressure). In the future, the model developers are considering a simpler forcing file without the cloud liquid and ice water content, as it is not very standard to use such variables in regional modelling, and these variables are not available in CMIP standardised outputs. 
-
-\begin{table}[htbp]
-\centering
-\begin{tabular}{|l|l|}
-\hline
-\multicolumn{2}{|c|}{\textbf{Variables nudged on vertical levels}} \\ \hline
-Air temperature                & t     \\ \hline
-Zonal wind                    & u     \\ \hline
-Meridional wind               & v     \\ \hline
-Relative humidity             & r     \\ \hline
-Specific humidity             & q     \\ \hline
-\multicolumn{2}{|c|}{\textbf{Cloud variables, on vertical levels}} \\ \hline
-Specific liquid water content & clwc  \\ \hline
-Specific ice water content    & ciwc  \\ \hline
-\multicolumn{2}{|c|}{\textbf{Surface variables}} \\ \hline
-2-meter air temperature            & t2m   \\ \hline
-Surface geopotential          & z     \\ \hline
-Surface pressure              & p     \\ \hline
-\end{tabular}
-\caption{List of variables required in the LAM forcing file.}
-\end{table}
-
-%option:explain init ? orography ?
-\subsubsection{Domain structure and nudging method}
-
-The simulation domain is a large hexagon composed of hexagonal grid cells, and defined by three parameters:
-\begin{itemize}
-    \item The centre of the hexagon (latitude and longitude).
-    \item The radius of hexagon, distance between the centre and one of the vertices, in kilometers.
-    \item The number of grid cells on this radius, referred to as NBP.
-\end{itemize}
-
-The resolution of the model (diameter of one grid cell) is directly obtained by dividing the radius by the NBP.
-
-\hfill
-
-The simulation domain is separated in 3 concentric zones, as shown on Fig. \ref{fig:LAM_domain}: 
-\begin{itemize}
-    \item The "raw forcing zone" which contains values directly given by the forcing, consisting of 5 grid cells.
-    \item The "transition zone"  where the model is nudged toward the forcing with decreasing strength, consisting of 8 grid cells.
-    \item The "free zone" at the centre of the domain where there is no direct influence of the lateral forcing, with all the remaining grid cells (NBP - 8 - 5).
-\end{itemize} 
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.5\textwidth]{images/methods/LAM_domain_zones.png}
-    \caption{LAM domain structure example with NBP=27 \citep[from][]{raillard_leveraging_2024}}. The raw forcing zone is in red on the outside, the transition zone in pink, and the free zone in white at the center.
-    \label{fig:LAM_domain}
-\end{figure}
-
-The concept of nudging is well known in climate modelling and NWP, since it is used to manage lateral boundary conditions in regional models. It is also used to reproduce real situations to enable the comparison to local observations with realistic synoptic conditions, or to study specific observed events with a model. 
-Multiple studies were conducted using the zoom capability of LMDZ to enhance resolution over a given area, while nudging the model towards a reanalysis in the rest of the world to make sure the synoptic conditions are as close to reality as possible. In particular, land-atmosphere interactions were studied with zoomed-nudged LMDZOR simulations at the SIRTA observation site in France \citep{cheruy_combined_2013, campoy_response_2013} and over Morocco \citep{balhane_global_2022, arjdal_modeling_2024}. The main downside of this approach is that it still requires to run the model in a global simulation setup, although the grid is stretched to focus on the area of interest. With the LAM, the resolution remains the same in all the domain and the model is only run over the area of interest, which results in lower computation times than zoomed-nudged setups for a given resolution.
-
-The model is nudged by adding a forcing term in the equation that governs the evolution of a given prognostic variable $V$ in the model, to drive it towards a reference value $V_{ref}$ over a given time scale $\tau$:
-
-\begin{equation}
-    \frac{\partial V}{\partial t} = \frac{\partial V}{\partial t}_{\text{model}}+ \frac{V_{\text{ref}} - V}{\tau}.
-\end{equation}
-
-The strength of the nudging can be modulated by adjusting the time scale $\tau$.
-In the raw forcing zone, the values of the state variables in the model are directly prescribed to those of the forcing file. 
-In the central free zone, $\tau$ is infinite, meaning the forcing term does not alter the equation. 
-In the transition zone, the value of $\tau$ is gradually increased over the 8 grid cells, following an arctan profile to smooth the transition, starting from $\tau = 3600$ s on the outer edge.
-
-Nudging is applied on all vertical levels at every time step of the dynamics (30 s). The reference value for each variable is obtained by temporally interpolating the forcing file to this time step. The sampling frequency of the forcing file can have an impact on the simulation. In this work, hourly forcing files were used for most of the simulations, but some sensitivity experiments were made using forcing data sampled every six hours.
-%todo:compléter selon commentaire Frédérique Pas seulement le time sampling.  Tu peux peut etre mentionner la qualité du forcing. peut etre voir biblio dans les modeles regionaux
-
-\subsubsection{Technical specificities}
-
-While running the first simulations with the LAM, various occurrences of inappropriate model behaviour were observed at the top of the atmosphere, reaching temperatures over 373 K. Based on prior experience of the model developers, this was attributed to inconsistent quantities of air in these layers of very low density, which could lead to excessive heating over one model time step. The unusual interaction of advection from the dynamics and nudging were thought to be responsible for anomalies in the mass and energy budgets, in or near the transition zone.
-To solve this issue, an additional nudging of temperature and wind components was applied for the upper layers of the atmosphere (above 1hPa) over the whole domain (including the free zone), to ensure that values remains in a reasonable order of magnitude. Given the focus on land-atmosphere interactions, this technical fix for the upper atmosphere is not considered to have any influence on the results.
-
-It must also be noted that the model computes all variables on its hexagonal grid cells. However, analysing and displaying simulation data on such a grid is challenging because most standard tools (Ferret, ncview, Matplotlib) do not natively support its coordinate system. 
-By default, LAM outputs are therefore interpolated to a regular longitude-latitude grid, but can be obtained on the native hexagonal grid if needed.
-In this work, the simulations used in Chapter \ref{chap:monthly} were analysed solely using the interpolated outputs, while simulations used in Chapter \ref{chap:liaise}, which focused on specific grid cells for comparison to observation, were analysed using outputs on the native hexagonal grid.%todo:check if chapter structure has changed
-%todo:Ajouter commentaires et odg sur le temps de calcul, cf simus de Frédérique : global vs LAM, nombre de tasks donc d'heures de calcul. Avantages ou non par rapport au zoomé-guidé (qui peut être forcé par ERA)
-
 \section{ORCHIDEE land surface model}
+\label{sec:ORCHIDEE}
 \subsection{General structure}
 ORCHIDEE (Organizing Carbon and Hydrology In Dynamic EcosystEms) is a land surface model (LSM). Various "branches" and versions exist within the model, as the base structure presented in \citet{krinner_dynamic_2005} has been adapted and extended to meet different research objectives. 
 This PhD work uses branch 2.2 which is similar to the ORCHIDEE 2.0 model used in CMIP6 \citep{cheruy_improved_2020, boucher_presentation_2020} but for minor bug corrections. It also includes a global irrigation scheme that was recently developed and evaluated \citep{arboleda-obando_validation_2024}. While the version chosen for CMIP7 simulations is ORCHIDEE v4.2, which integrates recent developments for the modelling of snow, permafrost, vegetation, carbon, nitrogen and phosphorus cycles, branch 2.2 is still used for developments focused on surface hydrology, that can later be introduced in other branches.
 %Coupling with an atmosphere and ocean model imposes significant computational constraints, leading to the simplification or omission of certain processes for global climate simulations.
 The following description of this model version is partly based on two PhD theses \citep{campoy_influence_2013,arboleda-obando_feedback_2023}.
 
-ORCHIDEE v2.2 includes several modules:
+\hfill
+
+ORCHIDEE v2.2 contains several modules:
 \begin{itemize}
-    \item SECHIBA \citep[\textit{Schématisation des Échanges Hydriques à l’Interface entre la Biosphère et l’Atmo\-sphère}][]{ducoudre_sechiba_1993}. Initially developed as the surface scheme of the LMDZ GCM, this module computes surface energy and water budgets, including interactions with the atmosphere. As detailed in section \ref{sec:water}, it models water vertical infiltration and redistribution into the soil, as well as horizontal transfers through the river network.
+    \item SECHIBA \citep[\textit{Schématisation des Échanges Hydriques à l’Interface entre la Biosphère et l’Atmo\-sphère}][]{ducoudre_sechiba_1993}. Initially developed as the surface scheme of the LMDZ GCM, this module computes surface energy and water budgets, including interactions with the atmosphere. As detailed in section \ref{sec:water}, it models vertical infiltration and redistribution of water into the soil, as well as horizontal transfers through the river network.
     \item STOMATE \citep{krinner_dynamic_2005}. This module simulates biological surface processes such as photosynthesis and phenology evolution, enabling the representation of seasonal variations in leaf area index (LAI), and thus evapotranspiration.
-    \item LPJ \citep{sitch_evaluation_2003}. This optional module describes the long-term evolution of vegetation to represent land use adaptation to climate and is not capable of representing fast evolutions of land use induced by human activities. Therefore, in this work, this module is inactive, and vegetation evolution is instead prescribed using annual land-cover maps described in Section \ref{sec:ORCH_input_data}.
+    \item LPJ \citep{sitch_evaluation_2003}. This optional module describes the long-term evolution of vegetation to represent land use adaptation to climate, but it is not capable of representing fast evolutions of land use induced by human activities. Therefore, in this work, this module is inactive, and vegetation evolution is instead prescribed using annual land-cover maps described in Section \ref{sec:ORCH_input_data}.
 \end{itemize}
 
 \subsection{Atmospheric forcing}
-ORCHIDEE can interface with the atmosphere in either offline mode (also called forced) or coupled mode. The simulation domain is discretized into grid cells, with a resolution that adapts to the atmospheric forcing or to the grid of the coupled atmospheric model.
+ORCHIDEE can interface with the atmosphere in either offline mode (also called forced) or coupled mode. The simulation domain is discretized into grid cells, with a resolution that follows the atmospheric forcing or the grid of the coupled atmospheric model.
 In the first case, a meteorological forcing (typically obtained from a bias-corrected reanalysis) provides values for downward radiation (shortwave and longwave), precipitation (rain and snow), air temperature and specific humidity at 2 m, wind speed at 10 m (eastward and northward components), and surface pressure. 
-In the second case, ORCHIDEE is coupled with an atmospheric model that calculates these variables in real time while receiving certain variables computed by ORCHIDEE (surface roughness, albedo, turbulent fluxes, surface temperature). ORCHIDEE's time step also adapts to the forcing, using 30 minutes when forced, and the same as the atmospheric physics when coupled (15 minutes for LMDZ).
+In the second case, ORCHIDEE is coupled with an atmospheric model that calculates these variables in real time while receiving certain variables computed by ORCHIDEE (surface roughness, albedo, turbulent fluxes, surface temperature). ORCHIDEE's time step also adapts to the forcing, usually 30 minutes in oflline simulations, and is the same as the atmospheric physics when coupled (15 minutes for LMDZ).
 Within the IPSL climate model, ORCHIDEE can be coupled with the atmospheric model ICOLMDZ in a standard configuration called ICOLMDZOR, using a semi-implicit coupling scheme \citep{polcher_proposal_1998, Hourdin_phdthesis,hourdin_parameterization_2002}. This scheme calculates the vertical transfer of heat by two distinct processes: thermal diffusion in the soil and turbulent diffusion in the atmospheric column. It uses zero-flux boundary conditions at the top of the atmosphere and at the bottom of a 18-meter soil column \citep{dufresne2009description}, assuming no energy is transferred to the system at these interfaces.
 
 \subsection{Input data}
@@ -490,3 +383,239 @@ Figure \ref{fig:irrig_interpolations_outputvars} summarizes the interactions bet
     \caption{River routing and irrigation variables and interactions between the ORCHIDEE and routing grids in \native. Variables shown in red are used as model outputs while the others are only intermediate computations.}
     \label{fig:irrig_interpolations_outputvars}
 \end{figure}
+
+\section{Atmospheric model : the ICOLMDZ LAM}
+\label{sec:ICOLMDZLAM}
+
+In \atmchapters, coupled simulations are run with ORCHIDEE and atmospheric model ICOLMDZ in a limited area model (LAM) configuration, first used and described in \citet{raillard_leveraging_2024}. 
+It must be noted that the use of the LAM in the IPSL community is very recent, and that its development and evaluation are still ongoing. In particular, the simulations presented in Chapter \ref{chap:monthly} constitute the first case study focusing on the water cycle and land-atmosphere interactions, as well as the first use case at the mid-latitudes.
+
+\subsection{Dynamical core and parametrizations}
+ICOLMDZ, the atmospheric component of the model is the association of the dynamical core DYNAMICO \citep{dubos_dynamico-10_2015}, and the LMDZ6A physics used for CMIP6 \citep{hourdin_lmdz6a_2020}. 
+Icosahedral dynamical cores already existed in some models, such as ICON \citep{zangl_icon_2015,giorgetta_icon-_2018,prill_icon_2022}, and DYNAMICO was introduced in the IPSL-CM with the main objectives of unlocking a high level of parallelization and standardizing grid cells for global simulations. 
+In particular, it avoids the discrepancies of a regular longitude-latitude grid that appear at the poles, opening new prospects for modelling projects in the Arctic \citep{raillard_leveraging_2024} and Antarctic regions \citep{wiener_extensive_2025}.
+All ICOLMDZ simulations run in the thesis used a 30-second time step for the dynamics.
+
+The physics of the model is version NPv6.2 with 79 vertical levels, and is run every 15 min, although some processes are not called at every time step to limit computation time.
+The physics include the following parametrizations:
+\begin{itemize}
+    \item a surface layer description based on Monin-Obukhov similarity theory \citep{monin1954osnovnye}, using formulations from \cite{louis_parametric_1979} and \cite{king_sensitivity_2001}; 
+    \item an Eddy-Diffusivity Mass Flux (EDMF) scheme of boundary layer vertical transfer composed of a turbulent diffusion scheme based on \cite{yamada_simulations_1983} with recent improvements described in \cite{vignon_modeling_2018}, and a thermal plume model for shallow convection \citep{rio_thermal_2008, hourdin_unified_2019}; 
+    \item a mass-flux scheme for deep convection based on Emanuel's scheme \citep{emanuel_scheme_1991, grandpeix_improved_2004, rio_control_2013}, with stochastic triggering \citep{rochetin_deep_2014, rochetin_deep_2014-1}, called every 30 minutes; 
+    \item a parametrization of the cold pools created below cumulonimbus by reevaporation of convective rainfall \citep{grandpeix_density_2010-1,grandpeix_density_2010};
+    \item a large scale condensation scheme based on a statistical distribution of sub-grid total water content, from which cloud fraction and water contents are derived \citep{madeleine_improved_2020}; 
+    \item the radiative transfer model RRTM \citep{mlawer_radiative_1997}, which is called every 1.5 hours (six time steps).
+\end{itemize}
+
+\subsection{Forcings}
+
+All simulations were run with spectral solar irradiance from CMIP6 solar forcing \citep{matthes_solar_2017}, distinguishing between the historical period (until 2014) and future reference scenario (from 2015).
+Greenhouse gases concentrations in the atmosphere were taken from the CMIP6 historical forcing dataset for CO2, CH4, N2O, as well as CFC 11 and 12.
+Aerosols forcings were also taken from the forcing created for CMIP6 runs with the INCA module of the IPSL-CM \citep{hauglustaine_global_2014}, as detailed in \citet{lurton_implementation_2020}.
+Considering that the simulations were rather short and that the focus was on the impact of irrigation, the greenhouse gases and aerosol values from 2014 were used for the period 2015-2022. For future climate simulations with a focus on climate change (Section \ref{sec:climate_change}), the values that follow the SSP5-8.5 were used.
+
+The atmospheric model is not coupled with an ocean model and uses prescribed sea surface temperature (SST) and sea ice content (SIC). For recent climate simulations (2010-2022), monthly values at 1° resolution are taken from the PCMDI-AMIP-1.1.9 boundary conditions dataset, which is based reanalysis products \citep{taylor_sea_2000, hurrell_new_2008}.
+%todo:future : voir avec Frédérique (SST corrigées, par qui et comment ?)
+
+\hfill
+
+Since simulations with the LAM only cover a portion of the globe, lateral boundary conditions are read by the model from a forcing file, which can be obtained from various sources of different spatial resolution and sampling frequency. 
+
+%todo:improve with refs : Denis 2003, Wu 2005, Koltzow 2011, Rocheta 2017
+In this work, hourly forcing files were used for most of the simulations, but some sensitivity experiments were made using forcing data sampled every six hours.
+
+In most of the work presented here, lateral boundary conditions for the LAM were taken from ERA5 reanalysis hourly values at 0.25° resolution \citep{hersbach_era5_2020}. This product uses a climate model with observation data assimilation techniques to produce outputs that are as close as possible to actual conditions. When simulating recent climate, using this forcing enables having rather realistic synoptic conditions. 
+It is also possible to run the model with other sources for the forcing file, in particular using outputs from global climate simulations, either from the ICOLMDZOR global model or from other models. The modelling community at IPSL is also currently investigating the possibility of using outputs from the CMIP6 simulations under various SSPs to run the LAM in projected future climate conditions.
+
+To run a regional simulation, the forcing file must contain data for the nudged variables (temperature, humidity, wind), two variables describing clouds (liquid and ice water content) used on the edge of the domain but not nudged, and three other variables at the surface that are used to manage initialization (2-meter temperature, geopotential height), and vertical interpolation (surface pressure). In the future, the model developers are considering a simpler forcing file without the cloud liquid and ice water content, as it is not very standard to use such variables in regional modelling, and these variables are not available in CMIP standardised outputs. 
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Variables nudged on vertical levels}} \\ \hline
+Air temperature                & t     \\ \hline
+Zonal wind                    & u     \\ \hline
+Meridional wind               & v     \\ \hline
+Relative humidity             & r     \\ \hline
+Specific humidity             & q     \\ \hline
+\multicolumn{2}{|c|}{\textbf{Cloud variables, on vertical levels}} \\ \hline
+Specific liquid water content & clwc  \\ \hline
+Specific ice water content    & ciwc  \\ \hline
+\multicolumn{2}{|c|}{\textbf{Surface variables}} \\ \hline
+2-meter air temperature            & t2m   \\ \hline
+Surface geopotential          & z     \\ \hline
+Surface pressure              & p     \\ \hline
+\end{tabular}
+\caption{List of lateral boundary conditions and surface variables required in the LAM forcing file.}
+\end{table}
+
+\subsection{LAM domain structure and nudging method}
+
+The simulation domain is a large hexagon divided into hexagonal grid cells, and defined by three parameters:
+\begin{itemize}
+    \item The centre of the hexagon (latitude and longitude).
+    \item The radius of hexagon, distance between the centre and one of the vertices, in kilometers.
+    \item The number of grid cells on this radius, referred to as NBP.
+\end{itemize}
+
+The resolution of the model (diameter of one grid cell) is directly obtained by dividing the radius by the NBP.
+
+\hfill
+
+The simulation domain is separated in 3 concentric zones, as shown on Fig. \ref{fig:LAM_domain}: 
+\begin{itemize}
+    \item The "raw forcing zone" which contains values directly given by the forcing, consisting of 5 grid cells.
+    \item The "transition zone"  where the model is nudged toward the forcing with decreasing strength, consisting of 8 grid cells.
+    \item The "free zone" at the centre of the domain where there is no direct influence of the lateral forcing, with all the remaining grid cells (NBP - 8 - 5).
+\end{itemize} 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/methods/LAM_domain_zones.png}
+    \caption{LAM domain structure example with NBP=27 \citep[from][]{raillard_leveraging_2024}}. The raw forcing zone is in red on the outside, the transition zone in pink, and the free zone in white at the center.
+    \label{fig:LAM_domain}
+\end{figure}
+
+The concept of nudging is well known in climate modelling and NWP, since it is used to manage lateral boundary conditions in regional models. It is also used to reproduce real situations to enable the comparison to local observations with realistic synoptic conditions, or to study specific observed events with a model. 
+Multiple studies were conducted using the zoom capability of LMDZ to enhance resolution over a given area, while nudging the model towards a reanalysis in the rest of the world to make sure the synoptic conditions are as close to reality as possible. In particular, land-atmosphere interactions were studied with zoomed-nudged LMDZOR simulations at the SIRTA observation site in France \citep{cheruy_combined_2013, campoy_response_2013} and over Morocco \citep{balhane_global_2022, arjdal_modeling_2024}. The main downside of this approach is that it still requires to run the model in a global simulation setup, although the grid is stretched to focus on the area of interest. With the LAM, the resolution remains the same in all the domain and the model is only run over the area of interest, which results in lower computation times than zoomed-nudged setups for a given resolution.
+%todo:Ajouter commentaires et odg sur le temps de calcul, cf simus de Frédérique : global vs LAM, nombre de tasks donc d'heures de calcul. Avantages ou non par rapport au zoomé-guidé (qui peut être forcé par ERA) 
+
+The model is nudged by adding a forcing term in the equation that governs the evolution of a given prognostic variable $V$ in the model, to drive it towards a reference value $V_{ref}$ over a given time scale $\tau$:
+
+\begin{equation}
+    \frac{\partial V}{\partial t} = \frac{\partial V}{\partial t}_{\text{model}}+ \frac{V_{\text{ref}} - V}{\tau}.
+\end{equation}
+
+The strength of the nudging can be modulated by adjusting the time scale $\tau$.
+In the raw forcing zone, the values of the state variables in the model are directly prescribed to those of the lateral boundary conditions in the forcing file. 
+In the central free zone, $\tau$ is infinite, meaning the forcing term does not alter the equation. 
+In the transition zone, the value of $\tau$ is gradually increased over the 8 grid cells, following an arctan profile to smooth the transition, starting from $\tau = 3600$ s on the outer edge.
+Nudging is applied on all vertical levels at every time step of the dynamics (30 s). The reference value for each variable is obtained by temporally interpolating the forcing file to this time step. 
+
+\section{Coupled simulation setups}
+
+\subsection{Simulation domains, periods and forcing data}
+
+Several simulation setups and periods were used to produce the results presented in \atmchapters, but they all used a hexagonal domain centered at (40.4°N, -3.7°E), with a radius ($R_{domain}$) of either 1000km, 1500km or 2000km. When changing the radius of the domain, the $NBP$ parameter (number of grid cells on the domain radius) was adapted to either 40, 60, or 80, to ensure that grid cells kept the same diameter of 25km. The setup with a $R_{domain}=1500 km$ and $NBP=60$ is presented in Fig. \ref{fig:domain_full_hex}. 
+Since the spatial resolution was always the same, the timesteps were also fixed, to 30s for the dynamical core, and 15mn for the atmospheric physics and the LSM (including routing and irrigation). 
+
+%figure:altitude over hexagonal domain (native grid)
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/chap4/article/f01.png}
+    \caption{Altitude (m) over the simulation domain on the native hexagonal grid for a simulation with $R_{domain}=1500 km$ and $NBP=60$.}
+    \label{fig:domain_full_hex}
+\end{figure}
+
+
+Forcing files from two different sources were used, and the differences this choice can induce are analysed in Chapter \ref{chap:forcing}. In Chapter \ref{chap:monthly}, the forcing variables are from the ERA5 reanalysis over the period 2010-2022 (Section \ref{sec:article1}), while for the study of climate change over the Iberian Peninsula (Section \ref{sec:climate_change}), outputs from a global ICOLMDZOR simulation under greenhouse gases emission scenario SSP5-8.5 were used as forcing variables.
+Sensitivity tests on the impact of the forcing file sampling frequency are also presented in Chapter \ref{chap:forcing}, with forcing files containing either hourly or 6-hourly data.
+This sensitivity was of interest since future climate simulations were initially supposed to use CMIP6 output variables, which are available only every six hours. However, this option was eventually discarded due to technical difficulties such as unexpected model crashes when running simulations with this sampling frequency and issues with the formatting of the forcing file from CMIP6 outputs. The future climate simulations presented in Chapter \ref{chap:monthly} were therefore run using hourly outputs from a global ICOLMDZOR simulation.
+
+%option: for ICOLMDZOR forcing, detail zoom parameters
+
+The main study period under current climate is from 2010 to 2022, since before and after that period not all forcing variables were readily available on the IPSL servers and running the LAM would have required substantial manual data collection work. Some sensitivity analysis of Chapter \ref{chap:forcing} were run on specific or shorter periods to overcome technical issues or to limit the computing time and ressources used.
+All simulations were run after a 3-year spinup period to make sure that vegetation and hydrological variables had reached an equilibrium. 
+To analyse the impact of domain size, simulations were only run between 2010 and 2014. 
+For the analysis of the forcing file sampling frequency, simulations were only run over the year 2013 because of unexpected model crashes in other simulation years. This same year was run 10 times in chained simulations (starting each new simulation year at the end of the previous one) that can act as a small ensemble, although it must be noted that this secific year cannot represent the diversity of current climate by itself.
+Simulations of future climate were run over the period 2050-2062, using hourly outputs from a global ICOLMDZOR simulation, and the smaller domain configuration. 
+
+The characteristics of all the coupled simulation used in this thesis are summarized in Table \ref{table:coupled_simulations}.
+
+%table:all coupled simulation details
+\begin{table}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{|l|l|l|l|l|l|l|l|}
+            \hline
+            \textbf{Section} & \textbf{Simulation name} & \textbf{Period} & \textbf{Diameter} & \textbf{NBP} & \textbf{Forcing (source, frequency)} & \textbf{Irrigation} \\
+            \hline
+            \ref{sec:domain_size} & \smalld & 2010-2014 & 1000km & 40 & ERA5, 1h & No \\
+            \hline
+            \ref{sec:domain_size}  & \interd & 2010-2014 & 1500km & 60 & ERA5, 1h & No \\
+            \hline
+            \ref{sec:domain_size}  & \larged & 2010-2014 & 2000km & 80 & ERA5, 1h & No \\
+            \hline
+            \ref{sec:forcing_source} & \forcingERA & 2010-2022 & 1000km & 40 & ERA5, 1h & No \\
+            \hline
+            \ref{sec:forcing_source} & \forcingICO & 2010-2022 & 1000km & 40 & ICOLMDZOR, 1h & No \\
+            \hline
+            \ref{sec:forcing_frequency} & \forcingoneh & 2013 (* 10) & 1500km & 60 & ERA5, 1h & No \\
+            \hline
+            \ref{sec:forcing_frequency} & \forcingsixh & 2013 (* 10) & 1500km & 60 & ERA5, 6h & No \\
+            \hline
+            \ref{sec:article1} & \irr & 2010-2022 & 1500km & 60 & ERA5, 1h & Yes \\
+            \hline
+            \ref{sec:article1} & \noirr & 2010-2022 & 1500km & 60 & ERA5, 1h & No \\
+            \hline
+            \ref{sec:climate_change} & \presnoirr & 2010-2022 & 1000km & 40 & ICOLMDZOR, 1h & No \\
+            \hline
+            \ref{sec:climate_change} & \futnoirr & 2050-2062 & 1000km & 40 & ICOLMDZOR, 1h & No \\
+            \hline
+            \ref{sec:climate_change} & \futirr & 2050-2062 & 1000km & 40 & ICOLMDZOR, 1h & Yes \\
+            \hline
+        \end{tabular}
+    }
+    \caption{Coupled simulations characteristics.}
+    \label{table:coupled_simulations}
+\end{table}
+
+\subsection{Technical specificities}
+
+While running the first simulations with the LAM, various occurrences of inappropriate model behaviour were observed at the top of the atmosphere, reaching temperatures over 373 K. Based on prior experience of the model developers, this was attributed to inconsistent quantities of air in these layers of very low density, which could lead to excessive heating over one model time step. The unusual interaction of advection from the dynamics and nudging were thought to be responsible for anomalies in the mass and energy budgets, in or near the transition zone.
+To solve this issue, an additional nudging of temperature and wind components was applied for the upper layers of the atmosphere (above 1hPa) over the whole domain (including the free zone), to ensure that values remains in a reasonable order of magnitude. Given the focus on land-atmosphere interactions, this technical fix for the upper atmosphere is not considered to have any influence on the results.
+
+It must also be noted that the model computes all variables on its hexagonal grid cells. However, analysing and displaying simulation data on such a grid is challenging because most standard tools (Ferret, ncview, Matplotlib) do not natively support its coordinate system. 
+By default, LAM outputs are therefore interpolated to a more traditional longitude-latitude grid of similar resolution, to simplify posttreatment and comparisons to evaluation products, but can be obtained on the native hexagonal grid if needed.
+The simulations used in Chapters \ref{chap:forcing} and \ref{chap:monthly} were analysed solely using the interpolated outputs, while simulations used in Chapter \ref{chap:liaise}, which focused on specific grid cells for comparison to observation, were analysed using outputs on the native hexagonal grid.
+
+Considering the focus on land-atmosphere coupling, the analysis is often restricted to the Iberian Peninsula, thus excluding ocean grid cells and the land grid cells north of the Pyrenees, which flow to France. To prevent mismatches between the simulations and the evaluation datasets because of different coastlines, the analysis is further reduced to grid cells where the continental fraction is greater than 95\%. 
+
+\section{Evaluation datasets}
+\label{sec:eval_datasets}
+%todo:adapt to section relocation
+
+The simulations in present climate conditions (Chapter \ref{chap:forcing}, Section \ref{sec:article1}) were evaluated against the monthly mean values of several reference gridded products listed in Table \ref{tab:obs-datasets}.
+The ERA5 reanalysis \citep{hersbach_era5_2020} at 0.25° resolution was first used as a reference product to asses the realism of multiple variables (precipitation, ET, 2-m temperature), and this is how some inconsistencies studied in Chapter \ref{chap:forcing} were identified. However, in most simulations, ERA5 was the source used for the lateral boundary conditions which does not make it the most appropriate reference product for evaluation. Moreover, although ERA5 contains a lot of variables and has the advantage of being available over all the domain and present simulation period, some variables are more dependent on the model used to produce the reanalysis than on data assimilation and may not be the best reference for evaluation. Therefore, other reference products were also used, for precipitation and evapotranspiration.
+
+Precipitation data from the Global Precipitation Climatology Centre (GPCC) Full Data Monthly Product Version 2020 \citep{gpcc_v2020} was used. This product provides precipitation data until 2019 over land on a 0.25° x 0.25° grid using in situ rain gauges. 
+
+For ET, the Global Land Evaporation Amsterdam Model (GLEAM) dataset was used, in its fourth version \citep{miralles_gleam4_2025}. This product computes ET using a large set of input variables obtained from reanalyses as well as in situ and satellite observations. Monthly values at 0.25° resolution were used, initially given in mm month$^{-1}$ and converted to mm d$^{-1}$. GLEAM4 is available until 2022 but when precipitation and ET were evaluated jointly (Sections \ref{chap:forcing}, \ref{sec:article1}), it was only used over the availability period of GPCC data (2010-2019).
+
+Simulated irrigation was evaluated in the Ebro Valley region using a high resolution remote sensing product from the European Space Agency (ESA) Irrigation+ project \citep{dari_regional_2023}. This product estimates irrigation with a soil moisture based approach using satellite measurements from Sentinel-1, and provides data for three intensely irrigated areas: the Ebro Basin in Spain, the Po Valley in Italy and the Murray-Darling Basin in Australia. From 2016 to 2020 in the Ebro Basin, the median values of the RMSE, Pearson correlation coefficient $r$ and bias are 12.4 mm over 14 days, 0.66, and -4.62 mm over 14 days, respectively. Weekly values are aggregated to a monthly average in mm d$^{-1}$. 
+
+Simulated river discharge was evaluated using monthly observation data from the Global Runoff Data Center \citep[GRDC, https://grdc.bafg.de,][]{fekete_global_2003}.
+Stations were positioned on the MERIT DEM grid with tools presented in \cite{polcher_hydrological_2023}, which use the GPS position of the stations as well as the upstream catchment area to find the most appropriate grid cell for comparison with the observations. 
+Different stations were used in Chapters \ref{chap:routing} and \ref{chap:monthly} to ensure data availability over the simulation period in each case(2003-2012 or 2010-2022), and they will be described in these chapters.
+
+%table:ref datasets
+\begin{table*}[h]
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{lccccc}
+        \toprule
+        \textbf{Dataset} & \textbf{Variables used} & \textbf{Unit} & \textbf{Resolution} & \textbf{Available period} & \textbf{References}\\
+        \midrule
+        ERA5  & P, ET & mm d$^{-1}$ & 0.25° & 2010-2022 & \cite{hersbach_era5_2020}\\ %tocheck: variables used
+        \midrule
+        GPCC  & Precipitation & mm d$^{-1}$ & 0.25° & 2010-2019 & \cite{gpcc_v2020}\\
+        \midrule
+        GLEAMv4.1a & ET  & mm d$^{-1}$ & 0.25° & 2010-2022 & \cite{martens_gleam_2017, miralles_gleam4_2025}\\
+        \midrule
+        % FluxCom & Turbulent fluxes & 0.5° & 2010-2013 & \cite{jung_fluxcom_2019}\\
+        % \midrule
+        Ebro irrigation estimate  &  Irrigation & mm d$^{-1}$ & 1 km & 01/2016-07/2020 & \cite{dari_regional_2023}\\
+        \midrule
+        GRDC  &  River discharge & $m^3 \cdot s^{-1}$ & - & 2003-2017 & \citet{fekete_global_2003}\\
+        \bottomrule
+    \end{tabular}
+    } %end resizebox
+    \caption{Datasets used for evaluation.}
+    \label{tab:obs-datasets}
+\end{table*}
+
+\clearpage
+
+\section{Chapter conclusions}
+
+%todo

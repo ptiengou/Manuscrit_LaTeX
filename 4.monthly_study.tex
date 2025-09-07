@@ -1,6 +1,7 @@
 \section{Chapter introduction}
 
-This chapter presents results of coupled regional climate simulations run with ICOLMDZ and ORCHIDEE to study the impacts of irrigation on land-atmosphere coupling variables and the water cycle over several years of simulation, with a focus on annual and seasonal means. The initial objective was to address the following questions:
+This chapter presents results of coupled regional climate simulations run with the ICOLMDZOR LAM to study the impacts of irrigation on land-atmosphere coupling variables and the water cycle over several years of simulation, with a focus on annual and seasonal means. 
+The objective was to address the following questions:
 \begin{itemize}
     \item Is simulated irrigation realistic in coupled simulations ? What are its limits and perspectives for improvements ?
     \item What impacts does simulated irrigation have on the water cycle and land-atmosphere interactions ? Does irrigation improve the ability of the model to represent them ?
@@ -8,188 +9,16 @@ This chapter presents results of coupled regional climate simulations run with I
     \item How are the impacts of irrigation modulated in a future climate, under a strong climate change scenario ?
 \end{itemize}
 
-In the process of identifying the adequate simulation setup for the LAM, considering how recent the model is, particular attention was paid to the consistency of the model. Structural biases were identified in the transition zone on the edges of the LAM, with possible associated impacts in the central free zone. A sensitivity analysis on the size of the domain enabled pursuing the work with a limited influence of these biases but several secondary questions were identified as to their source and other ways to reduce them. These were further investigated afterwards, during Mariame Maiga's'internship for her first year of Masters at Sorbonne Université, which I co-supervised with Frédérique Cheruy from April to July 2025. 
-These analyses provided valuable understanding of the sensitivities of the LAM to its lateral forcing and addressed the following questions: 
-\begin{itemize}
-    \item Which variables have an inconsistent behaviour in the transition zone ? How can these inconsistencies be explained ?
-    \item How can the size of the domain limit the extent of these inconsistencies to ensure the LAM is not influenced in the free zone ?
-    \item How dependent on the choice of lateral forcing are the inconsistencies in the transition zone and the general performance of the model ?
-    \item How much does the sampling frequency of the forcing file influence the consistency and performance of the LAM ?
-\end{itemize}
-
+%todo:check this abd update
 This chapter first contains methodological aspects regarding the simulation setups used and the reference products used for evaluation of the LAM. 
-In Section \ref{sec:forcing_influence}, the inconsistencies in the transition zone are analysed in simulations without irrigation, focusing on the impact of the domain size, and the characteristics of the forcing file.
 
 Section \ref{sec:article1} then presents the impacts of irrigation on land-atmosphere interactions and the water cycle, under the present climate of the Iberian Peninsula. These results were presented in an article currently under review in Earth System Dynamics: \url{https://egusphere.copernicus.org/preprints/2025/egusphere-2025-2491/}.
-The article was not included as a whole in this chapter but many elements were reused and adapted, to avoid redundancies with Chapters \ref{chap:introduction} and \ref{chap:methods} and enable a better integration with additional results from Sections \ref{sec:forcing_influence} and \ref{sec:climate_change}, and Chapter \ref{chap:liaise}. The full article in its current version is available as an appendix to this manuscript.
+The article was not included as a whole in this chapter but many elements were reused and adapted, to avoid redundancies with Chapters \ref{chap:introduction} and \ref{chap:methods} and enable a better integration with additional results from Sections \ref{chap:forcing} and \ref{sec:climate_change}, and Chapter \ref{chap:liaise}. The full article in its current version is available as an appendix to this manuscript.
 Finally, Section \ref{sec:climate_change} presents preliminary results obtained from coupled simulations of future climate under a strong climate change scenario, highlighting the impacts of climate change over the Iberian Peninsula, and how they interact with irrigation.
 
-\clearpage
+%todo: evaluate need to metion this again 
+% All the results presented in this chapter are derived from coupled simulation run with ICOLMDZ and ORCHIDEE using the LAM described in Chapter \ref{chap:methods}. The routing and irrigation schemes were used with the parameter set identified after the offline calibration presented in Chapter \ref{chap:routing}, and the MERIT DEM at 2-km resolution.
 
-\section{Chapter-specific methods}
-\subsection{Coupled simulations}
-All the results presented in this chapter are derived from coupled simulation run with ICOLMDZ and ORCHIDEE using the LAM described in Chapter \ref{chap:methods}. The routing and irrigation schemes were used with the parameter set identified after the offline calibration presented in Chapter \ref{chap:routing}, and the MERIT DEM at 2-km resolution.
-
-Several simulation setups and periods were used to produce the results presented here but they all used a hexagonal domain centered at (40.4°N, -3.7°E), with a radius ($R_{domain}$) of either 1000km, 1500km or 2000km. When changing the radius of the domain, the $NBP$ parameter (number of grid cells on the domain radius) was adapted to either 40, 60, or 80, to ensure that grid cells kept the same diameter of 25km. The setup with a $R_{domain}=1500 km$ and $NBP=60$ is presented in Fig. \ref{fig:domain_full_hex}. 
- 
-%figure:altitude over hexagonal domain (native grid)
-\begin{figure}[hbtp]
-    \centering
-    \includegraphics[width=0.7\textwidth]{images/chap4/article/f01.png}
-    \caption{Altitude (m) over the simulation domain on the native hexagonal grid for a simulation with $R_{domain}=1500 km$ and $NBP=60$.}
-    \label{fig:domain_full_hex}
-\end{figure}
-
-Since the spatial resolution was always the same, the timesteps were also fixed, to 30s for the dynamical core, and 15mn for the atmospheric physics and the LSM (including routing and irrigation).
-The forcing file is interpolated temporally so that lateral conditions can be read at every time step of the dynamics.
-Forcing files from two different sources were used, and the differences this choice can induce are analysed in Section \ref{sec:forcing_influence}. In Section \ref{sec:article1}, the forcing variables are from the ERA5 reanalysis over the period 2010-2022, while for future climate simulations, in Section \ref{sec:climate_change}, outputs from a global ICOLMDZOR simulation under greenhouse gases emission scenario SSP5-8.5 were used as forcing variables.
-Sensitivity tests on the impact of the forcing file sampling frequency are also presented in Section \ref{sec:forcing_influence}, with forcing files containing either hourly or 6-hourly data.
-This sensitivity was of interest since future climate simulations were initially supposed to use CMIP6 output variables, which are available only every six hours. However, this option was eventually discarded due to technical difficulties such as unexpected model crashes when running simulations with this sampling frequency and issues with the formatting of the forcing file from CMIP6 outputs. The future climate simulations presented here were therefore run using hourly outputs from a global ICOLMDZOR simulation.
-
-%option: for ICOLMDZOR, detail zoom parameters
-%todo : SST (AMIP for present, fully coupled model + bias correction for future ?)
-
-The main study period under current climate is from 2010 to 2022, since before and after that period not all forcing variables were readily available on the IPSL servers and running the LAM would have required substantial manual data collection work. Some sensitivity analysis of Section \ref{sec:forcing_influence} were run on specific or shorter periods to overcome technical issues or to limit the computing time and ressources used.
-All simulations were run after a 3-year spinup period to make sure that vegetation and hydrological variables had reached an equilibrium. 
-To analyse the impact of domain size, simulations were only run between 2010 and 2014. 
-For the analysis of the forcing file sampling frequency, simulations were only run over the year 2013 because of unexpected model crashes in other simulation years. This same year was run 10 times in chained simulations (starting each new simulation year at the end of the previous one) that can act as a small ensemble, although it must be noted that this secific year cannot represent the diversity of current climate by itself.
-Simulations of future climate were run over the period 2050-20262, using hourly outputs from a global ICOLMDZOR simulation, and the smaller domain configuration. 
-
-The characteristics of all the simulation used in this chapter are summarized in Table \ref{table:coupled_simulations}.
-
-%table:all coupled simulation details
-\begin{table}[h]
-    \centering
-    \resizebox{\textwidth}{!}{%
-    \begin{tabular}{|l|l|l|l|l|l|l|l|}
-        \hline
-        \textbf{Section} & \textbf{Simulation name} & \textbf{Period} & \textbf{Diameter} & \textbf{NBP} & \textbf{Forcing (source, frequency)} & \textbf{Irrigation} \\
-        \hline
-        \ref{sec:domain_size} & \smalld & 2010-2014 & 1000km & 40 & ERA5, 1h & No \\
-        \hline
-        \ref{sec:domain_size}  & \interd & 2010-2014 & 1500km & 60 & ERA5, 1h & No \\
-        \hline
-        \ref{sec:domain_size}  & \larged & 2010-2014 & 2000km & 80 & ERA5, 1h & No \\
-        \hline
-        \ref{sec:forcing_source} & \forcingERA & 2010-2022 & 1000km & 40 & ERA5, 1h & No \\
-        \hline
-        \ref{sec:forcing_source} & \forcingICO & 2010-2022 & 1000km & 40 & ICOLMDZOR, 1h & No \\
-        \hline
-        \ref{sec:forcing_frequency} & \forcingoneh & 2013 (* 10) & 1500km & 60 & ERA5, 1h & No \\
-        \hline
-        \ref{sec:forcing_frequency} & \forcingsixh & 2013 (* 10) & 1500km & 60 & ERA5, 6h & No \\
-        \hline
-        \ref{sec:article1} & \irr & 2010-2022 & 1500km & 60 & ERA5, 1h & Yes \\
-        \hline
-        \ref{sec:article1} & \noirr & 2010-2022 & 1500km & 60 & ERA5, 1h & No \\
-        \hline
-        \ref{sec:climate_change} & \presnoirr & 2010-2022 & 1000km & 40 & ICOLMDZOR, 1h & No \\
-        \hline
-        \ref{sec:climate_change} & \futnoirr & 2050-2062 & 1000km & 40 & ICOLMDZOR, 1h & No \\
-        \hline
-        \ref{sec:climate_change} & \futirr & 2050-2062 & 1000km & 40 & ICOLMDZOR, 1h & Yes \\
-        \hline
-    \end{tabular}
-    } %end resizebox
-    \caption{Coupled simulations characteristics.}
-    \label{table:coupled_simulations}
-\end{table}
-
-As a technical reminder, although the outputs of the model are natively on a hexagonal grid, in this chapter they are interpolated to a more traditional longitude-latitude grid of similar resolution, to simplify posttreatment and comparisons to evaluation products.
-
-Considering the focus on land-atmosphere coupling, the analysis is often restricted to the Iberian Peninsula, thus excluding ocean grid cells and the land grid cells north of the Pyrenees, which flow to France. To prevent mismatches between the simulations and the evaluation datasets because of different coastlines, the analysis is further reduced to grid cells where the continental fraction is greater than 95\%. 
-
-\subsection{Evaluation datasets}
-
-The simulations in present climate conditions were evaluated against the monthly mean values of several reference gridded products listed in Table \ref{tab:obs-datasets}.
-The ERA5 reanalysis \citep{hersbach_era5_2020} at 0.25° resolution was first used as a reference product to asses the realism of multiple variables (precipitation, ET, 2-m temperature), and this is how the inconsistencies studied in Section \ref{sec:forcing_influence} were identified. However, in most simulations ERA5 was the source used for the lateral boundary conditions which does not make it the most appropriate reference product for evaluation. Moreover, although ERA5 contains a lot of variables and has the advantage of being available over all the domain and present simulation period, some variables are more dependent on the model used to produce the reanalysis than on data assimilation and may not be the best reference for evaluation. Therefore, other reference products were also used, for precipitation and evapotranspiration.
-
-Precipitation data from the Global Precipitation Climatology Centre (GPCC) Full Data Monthly Product Version 2020 \citep{gpcc_v2020} was used. This product provides precipitation data until 2019 over land on a 0.25° x 0.25° grid using in situ rain gauges. 
-
-For ET, the Global Land Evaporation Amsterdam Model (GLEAM) dataset was used, in its fourth version \citep{miralles_gleam4_2025}. This product computes ET using a large set of input variables obtained from reanalyses as well as in situ and satellite observations. Monthly values at 0.25° resolution were used, initially given in mm month$^{-1}$ and converted to mm d$^{-1}$. GLEAM4 is available until 2022 but when precipitation and ET were evaluated jointly (Sections \ref{sec:forcing_influence}, \ref{sec:article1}), it was only used over the availability period of GPCC data (2010-2019).
-
-Simulated irrigation was evaluated in the Ebro Valley region using a high resolution remote sensing product from the European Space Agency (ESA) Irrigation+ project \citep{dari_regional_2023}. This product estimates irrigation with a soil moisture based approach using satellite measurements from Sentinel-1, and provides data for three intensely irrigated areas: the Ebro Basin in Spain, the Po Valley in Italy and the Murray-Darling Basin in Australia. From 2016 to 2020 in the Ebro Basin, the median values of the RMSE, Pearson correlation coefficient $r$ and bias are 12.4 mm over 14 days, 0.66, and -4.62 mm over 14 days, respectively. Weekly values are aggregated to a monthly average in mm d$^{-1}$. 
-
-
-%table:ref datasets
-\begin{table*}[h]
-    \resizebox{\textwidth}{!}{%
-    \begin{tabular}{lccccc}
-        \toprule
-        \textbf{Dataset} & \textbf{Variables used} & \textbf{Unit} & \textbf{Resolution} & \textbf{Available period} & \textbf{References}\\
-        \midrule
-        ERA5  & P, ET & mm d$^{-1}$ & 0.25° & 2010-2022 & \cite{hersbach_era5_2020}\\ %tocheck: variables used
-        \midrule
-        GPCC  & Precipitation & mm d$^{-1}$ & 0.25° & 2010-2019 & \cite{gpcc_v2020}\\
-        \midrule
-        GLEAMv4.1a & ET  & mm d$^{-1}$ & 0.25° & 2010-2022 & \cite{martens_gleam_2017, miralles_gleam4_2025}\\
-        \midrule
-        % FluxCom & Turbulent fluxes & 0.5° & 2010-2013 & \cite{jung_fluxcom_2019}\\
-        % \midrule
-        Ebro irrigation estimate  &  Irrigation & mm d$^{-1}$ & 1 km & 01/2016-07/2020 & \cite{dari_regional_2023}\\
-        \midrule
-        GRDC  &  River discharge & $m^3 \cdot s^{-1}$ & - & 2010-2017 & \citet{fekete_global_2003}\\
-        \bottomrule
-    \end{tabular}
-    } %end resizebox
-    \caption{Datasets used for evaluation.}
-    \label{tab:obs-datasets}
-\end{table*}
-
-% \hfill
-
-The simulated river discharge was evaluated against monthly observation data from discharge stations of the Global Runoff Data Center \citep[GRDC, https://grdc.bafg.de,][]{fekete_global_2003}.
-Stations were positioned on the MERIT DEM grid with tools presented in \cite{polcher_hydrological_2023}, which use the GPS position of the stations as well as the upstream catchment area to find the most appropriate grid cell for comparison with the observations. 
-The 18 selected stations with available data over the simulation period and an adequate position on the DEM grid are described in Table \ref{table:stations_data} and shown in Fig. \ref{fig:selected_stations}. Most stations have available data from January 2010 to September 2017, and in Section \ref{sec:article1}, river discharge was therefore evaluated using the first eight years of simulation (2010-2017).
-
-%figure:discharge stations and dams
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\textwidth]{images/chap4/article/f02.pdf}
-    \caption{Stations used for river discharge evaluation, river dams from \citet{aquastat_dams}, and main rivers of the study area from the CCM2.1 dataset \citep{vogt_pan-european_2007}, showing only rivers longer than 50 km for readability.}
-    \label{fig:selected_stations}
-\end{figure}
-
-%table:description of discharge station used
-\begin{table*}[htbp]
-    \caption{Characteristics of river discharge stations used for evaluation. Stations marked with * are the largest of the five major basins of the Peninsula, and are shown in Fig. \ref{fig:discharge_SC}.
-    }
-    \resizebox{\textwidth}{!}{%
-    \begin{tabular}{lcccccc}
-        \toprule
-        % \textbf{Station} & \textbf{Altitude (m)} & \textbf{River} & \textbf{Area (km²)} & \textbf{Mean discharge (m³/s)} & \textbf{Coverage (2010-2017, \%)} \\
-        \textbf{Station} & \textbf{Altitude (m)} & \textbf{River} & \textbf{Area} & \textbf{Mean discharge} & \textbf{Coverage} \\
-         & & & (km²) &  (m³/s) &  (2010-2017, \%) \\
-        \midrule
-        *1 (Tortosa)            & 25    & Ebro      & 84230     & 287.61 & 96.9 \\
-        2 (Zaragoza)            & 189   & Ebro      & 40434     & 210.89 & 96.9 \\
-        3 (Castejon)            & 265   & Ebro      & 25194     & 201.34 & 96.9 \\
-        4 (Seros)               & 85    & Segre     & 12782     & 52.75  & 96.9 \\
-        5 (Fraga)               & 100   & Cinca     & 9612      & 49.69  & 93.8 \\
-        *6 (Tore)               & 637   & Douro     & 41808     & 109.18 & 96.9 \\
-        7 (Peral De Arlanza)    & 766   & Arlanza   & 2413      & 16.44  & 96.9\\
-        *8 (Talavera)           & 366   & Tagus     & 33849     & 46.77  & 34.4\\
-        9 (Trillo)              & 727   & Tagus     & 3253      & 12.70  & 96.9 \\
-        10 (Peralejos)          & 1143  & Tagus     & 410       & 3.87   & 96.9 \\
-        *11 (Azud de Badajoz)   & 166   & Guadiana  & 48530     & 81.83  & 83.3 \\
-        12 (Pulo do Lobo)       & 28    & Guadiana  & 61884     & 25.23  & 58.3 \\
-        13 (La Cubeta)          & 758   & Guadiana  & 856       & 3.37   & 92.7 \\
-        14 (Villarubia)         & 628   & Guadiana  & 10319     & 0.82   & 66.7 \\
-        15 (Quintanar)          & 694   & Giguela   & 995       & 0.71   & 55.2 \\
-        *16 (Mengibar)          & 240   & Guadalquivir & 16166  & 30.25  & 75.0 \\
-        17 (Arroyo Maria)       & 538   & Guadalquivir & 583    & 6.19   & 86.5 \\
-        18 (Pinos Puente)       & 561   & Frailes   & 357       & 1.00   & 87.5 \\
-        \bottomrule
-    \end{tabular}
-    }
-    \label{table:stations_data}
-\end{table*}
-
-\clearpage
-
-\section{Influence of lateral forcing on the consistency of the LAM}
-\label{sec:forcing_influence}
-\input{4.forcing_influence}
 \clearpage
 
 \section{Impacts of irrigation under present climate}
@@ -208,18 +37,7 @@ This chapter presents results from coupled simulations with the ICOLMDZOR LAM to
 
 \hfill
 
-To identify an appropriate simulation setup for the study, the sensitivities of the LAM to the size of the domain and the choice of lateral forcing (both its source and sampling frequency) were analysed. They revealed an inconsistent behaviour of the LAM in the transition zone when forced by ERA5 data, in particular unexpectedly low cloud cover and precipitation. These biases were attributed to discrepancies between the physics used to produce the ERA5 reanalysis and the LMDZ physics, which keep the large-scale condensation scheme from forming clouds and precipitation properly.
-These analyses also showed that this inconsistent behaviour in the transition zone can have impacts in the central part of the domain, and in particular over the Iberian Peninsula. Using larger domains does not make these inconsistencies disappear but limits their influence over the Peninsula since the transition zone is futher away.
-
-Simulations with forced with outputs from a global ICOLMDZOR simulation were compared to the initial setup with forcing data from ERA5 and showed large improvements in the consistency of the model in the transition zone. These findings confirmed that in the transition zone, the model is sensitive to the choice of the forcing data, and identified a possibly better forcing source for future studies with the LAM. However, with this setup, the inherent biases of the ICOLMDZOR model are stronger  in the central zone, which limits the improvements in performance over the Iberian Peninsula.
-
-Sensitivity experiments to look into the impact of the forcing file sampling frequency were also conducted and showed that using 6-hourly ERA5 data for the lateral forcing instead of hourly data amplifies the biases in the transition zone, and degrades performance in the rest of the domain for precipitation and ET. This analysis was conducted with the idea that 6-hourly forcing data could be used for future climate simulation but this option was eventually discarded for technical reasons and all simulations in the rest of this manuscript were run using hourly forcing data.
-
-Although simplifications were made due to technical and time constraints, several dependencies of the ICOLMDZOR LAM on the choice of the domain and forcing data were identified. This work is of high interest for the IPSL modelling community since the LAM is a recent tool, still in development, that is expected to be used in a more and more regional modelling and parameterization development studies.
-
-\hfill
-
-The impacts of irrigation on land surface-atmosphere coupling variables and the water cycle over the Iberian Peninsula were then studied in the present climate. Two simulations were run, with and without irrigation, using hourly ERA5 forcing data, which was the only option technically available at the time. A larger domain size than initially envisionned was selected (the intermediate domain size), to limit the impact of the transition zone discrepancies on the study area.
+The impacts of irrigation on land surface-atmosphere coupling variables and the water cycle over the Iberian Peninsula were first studied in the present climate. Two simulations were run, with and without irrigation, using hourly ERA5 forcing data, which was the only option technically available at the time. A larger domain size than initially envisionned was selected (the intermediate domain size), to limit the impact of the transition zone discrepancies on the study area.
 
 This study first showed that the ORCHIDEE irrigation scheme simulates realistic values from April to September in areas where surface water withdrawals are most important, such as the Ebro Valley. However, it cannot represent winter irrigation, or satisfy irrigation demand in southern regions, where actual irrigation is more dependent on groundwater pumping and river dams, due to low available volumes in rivers and groundwater routing reservoirs. Ongoing developments to add river dams into the ORCHIDEE routing scheme \citep{baratgin_modeling_2024} could very likely improve this aspect by representing interseasonal water storage, making more water available in summer.
 Explicit dam representation could also limit the winter and spring overestimates of river discharge in anthropized areas, since water would be stored in the dam reservoirs during this season instead of flowing in the rivers. 
