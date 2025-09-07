@@ -116,6 +116,7 @@ In the central free zone, $\tau$ is infinite, meaning the forcing term does not 
 In the transition zone, the value of $\tau$ is gradually increased over the 8 grid cells, following an arctan profile to smooth the transition, starting from $\tau = 3600$ s on the outer edge.
 
 Nudging is applied on all vertical levels at every time step of the dynamics (30 s). The reference value for each variable is obtained by temporally interpolating the forcing file to this time step. The sampling frequency of the forcing file can have an impact on the simulation. In this work, hourly forcing files were used for most of the simulations, but some sensitivity experiments were made using forcing data sampled every six hours.
+%todo:compléter selon commentaire Frédérique Pas seulement le time sampling.  Tu peux peut etre mentionner la qualité du forcing. peut etre voir biblio dans les modeles regionaux
 
 \subsubsection{Technical specificities}
 
@@ -125,6 +126,7 @@ To solve this issue, an additional nudging of temperature and wind components wa
 It must also be noted that the model computes all variables on its hexagonal grid cells. However, analysing and displaying simulation data on such a grid is challenging because most standard tools (Ferret, ncview, Matplotlib) do not natively support its coordinate system. 
 By default, LAM outputs are therefore interpolated to a regular longitude-latitude grid, but can be obtained on the native hexagonal grid if needed.
 In this work, the simulations used in Chapter \ref{chap:monthly} were analysed solely using the interpolated outputs, while simulations used in Chapter \ref{chap:liaise}, which focused on specific grid cells for comparison to observation, were analysed using outputs on the native hexagonal grid.%todo:check if chapter structure has changed
+%todo:Ajouter commentaires et odg sur le temps de calcul, cf simus de Frédérique : global vs LAM, nombre de tasks donc d'heures de calcul. Avantages ou non par rapport au zoomé-guidé (qui peut être forcé par ERA)
 
 \section{ORCHIDEE land surface model}
 \subsection{General structure}
@@ -174,11 +176,12 @@ defined with independent water budgets to avoid large trees from extracting unre
 
 This section describes how the different terms of the water and energy budgets identified in the introduction are computed by ORCHIDEE, within the SECHIBA module. 
 
-\subsubsection*{Liquid water partitioning}
+\subsubsection*{Precipitation partitioning}
 
-To determine the soil water content in each soil tile of a grid cell, ORCHIDEE first separates the fraction of precipitation intercepted by vegetation and the fraction that actually reaches the ground. In the case of liquid precipitation (snow is treated separately), 
-%todo: compléter un peu, 3 couches, ref Wang 2013
-it further discriminates between the portion that infiltrates into the soil and surface runoff, which occurs when infiltration is limited by hydraulic conductivity. Soil hydrology fluxes are based on the one-dimensional Richards equation, with a 2-meter soil column discretized over 11 vertical layers of increasing thickness \citep{de_rosnay_impact_2002, dorgeval_sensitivity_2008}, as shown in Fig. \ref{fig:ORC_discretization}. A free drainage condition is applied at the bottom of the column. ORCHIDEE models the infiltration front velocity, which progressively saturates the layers. The values of hydraulic conductivity and diffusivity are computed based on soil texture according to \citet{mualem_new_1976, van_genuchten_closed-form_1980}. As shown in Fig. \ref{fig:water_balance_AD}, the surface runoff and drainage computed in each grid cell then serve as input to the routing scheme, later described in Section \ref{section:routing_methods}.
+To determine the soil water content in each soil tile of a grid cell, ORCHIDEE first separates the fraction of precipitation intercepted by vegetation and the fraction that actually reaches the ground. 
+For liquid water that reaches the surface (either from rain or melted snow), it further discriminates between the portion that infiltrates into the soil and surface runoff, which occurs when infiltration is limited by hydraulic conductivity. Soil hydrology fluxes are based on the one-dimensional Richards equation, with a 2-meter soil column discretized over 11 vertical layers of increasing thickness \citep{de_rosnay_impact_2002, dorgeval_sensitivity_2008}, as shown in Fig. \ref{fig:ORC_discretization}. A free drainage condition is applied at the bottom of the column. ORCHIDEE models the infiltration front velocity, which progressively saturates the layers. The values of hydraulic conductivity and diffusivity are computed based on soil texture according to \citet{mualem_new_1976, van_genuchten_closed-form_1980}. As shown in Fig. \ref{fig:water_balance_AD}, the surface runoff and drainage computed in each grid cell then serve as input to the routing scheme, later described in Section \ref{section:routing_methods}.
+
+Snow is represented with three layers of varying density and thermal conductivity \citep{wang_evaluation_2013}. The energy budget of the snowpack is computed, and when a layer's simulated temperature exceeds freezing, it is automatically reset to 0°C in the snow, and the excess energy is used to melt snow. The resulting liquid water may then percolate through the snowpack or be refrozen. If it reaches the soil surface, it is integrated into the surface water budget, contributing to infiltration and runoff in the same manner as rainwater.
 
 \begin{figure}[hbtp]
     \centering
@@ -196,7 +199,7 @@ The missing term to close the surface water balance is evapotranspiration $E$, w
     E_{pot} = \rho_{air}  \lVert \vec{V} \rVert C_{drag, m} (q_{sat}(T_S) - q_{air})
 \end{equation}
 
-where $\rho_{air}$ is the air density, $\lVert \vec{V} \rVert$ is the horizontal wind speed, $C_{drag, m}$ is the surface drag coefficient for momentum (detailed description below), $q_{air}$ is the specific humidity of the air and $q_{sat}(T_S)$ is the specific humidity of saturated air at the surface temperature $T_S$. Wind speed and air temperature and humidity are taken at the first level of the atmospheric model in coupled simulations, or at the height of the atmospheric forcing in offline simulations.
+where $\rho_{air}$ is the air density, $\lVert \vec{V} \rVert$ is the horizontal wind speed, $C_{drag, m}$ is the surface drag coefficient for momentum (detailed description below), $q_{air}$ is the specific humidity of the air and $q_{sat}(T_S)$ is the specific humidity of saturated air at the surface temperature $T_S$. Air temperature, humidity, and wind speed are taken at the first level of the atmospheric model in coupled simulations, or at the height of the atmospheric forcing in offline simulations.
 
 To obtain the actual evapotranspiration $E$ from the maximum theoretical value $E_{pot}$, ORCHIDEE computes the ratio of actual evapotranspiration to potential evapotranspiration $\beta = \frac{E}{E_{pot}}$, accounting for the four components of evapotranspiration:  
 
@@ -204,18 +207,18 @@ To obtain the actual evapotranspiration $E$ from the maximum theoretical value $
     \item Bare soil evaporation, which is limited by the maximum volume that can be extracted from the soil column by upward water diffusion across one time step.
     %which is the minimum between $E_{pot}^*$, the potential evaporation reduced according to \citet{milly_potential_1992} and $Q_{up}$, the maximum volume that can be extracted from the soil column.
     %option:Tu peux preciser pourquoi on a besoin de Milly - Le sol n est pas une surface d'eau. Comment on evalue Q\_up - peut etre trop detaillé? 
-    \item Vegetation transpiration, which involves the stomatal resistance of vegetation and a so-called architectural resistance which depends on vegetation structure.
-    \item Evaporation of water intercepted by vegetation, which is also dependent on the architectural resistance.
+    \item Vegetation transpiration, which is limited by the stomatal resistance of vegetation and a so-called architectural resistance which depends on vegetation structure.
+    \item Evaporation of water intercepted by vegetation, which is also limited by the architectural resistance.
     \item Snow sublimation, which only concerns the regions and seasons where snowfall occurs.
 \end{itemize}
 
-A resistance to evaporation is computed for each of the terms, and $\beta$ is computed as an effective conductance controlled by these resistances, taking into account the fractions of the grid cell occupied by bare soil, vegetation and snow:
+To take into account these various limitations and the aerodynamic resistance which affects these four components of ET ($\frac{1}{\lVert \vec{V} \rVert C_{drag, m}}$), a conductance is identified for each component, and $\beta$ is computed as an effective conductance taking into account the fractions of the grid cell occupied by bare soil, vegetation and snow:
 
 \begin{equation}
-    \beta = f_{bare} \times \frac{1}{R_{bare}} + f_{veget} \times ( \frac{1}{R_{transpiration}} + \frac{1}{R_{interception}} ) + f_{snow} \times  \frac{1}{R_{sublimation}}
+    \beta = f_{bare} \times \beta_{bare} + f_{veget} \times ( \beta_{transpiration} + \beta_{interception} ) + f_{snow} \times  \beta_{sublimation}
 \end{equation}
 
-It is important to note that although soil moisture might be different in each soil tile, $T_s$ (surface temperature), $z_{0m}$, $z_{0h}$ (therefore $E_{pot}$), and $\beta$ are computed for the whole grid cell. This means that there is a single evapotranspiration value for the grid cell, and therefore a single latent heat flux value.
+It is important to note that although soil moisture might be different in each soil tile, $T_s$ (surface temperature), $C_{drag}$, and $\beta$ are computed for the whole grid cell. This means that there is a single $E_{pot}$ and evapotranspiration value for the grid cell, and therefore a single latent heat flux value.
 This approach is often referred to as a composite approach, as opposed to a mosaic approach where independent fluxes are computed for each soil tile, before averaging them for coupling to the atmospheric model. 
 %option: more details, limitations when comparing to obs (not able to obtain LE for a specific soiltile or PFT...), reference to Alice ?
 
@@ -285,7 +288,7 @@ with $B=C=D=5$.
 \hfill
 
 It must be noted that when ORCHIDEE is used in coupled mode with the atmospheric component of the IPSL-CM, LMDZ, ORCHIDEE does not fully compute the drag coefficients.
-Instead, it computes only the neutral coefficients and provides LMDZ with effective roughness lengths for the grid cell $z_{0m,eff}$ and $z_{0h,eff}$. This modelling choice is referred to as \textit{parameter aggregation}, as opposed to \textit{flux aggregation} methods, used in some land surface models, which compute turbulent fluxes for each PFT before computing an average flux value to represent the grid cell.
+Instead, it computes only the neutral coefficients and provides LMDZ with effective roughness lengths for the grid cell $z_{0m,eff}$ and $z_{0h,eff}$. This modelling choice derives from the composite approach mentioned above, which is based on \textit{parameter aggregation}. Other land surface models use a mosaic approach, based on\textit{flux aggregation}, and compute turbulent fluxes for each PFT before averaging them to represent the grid cell.
 Effective roughness lengths can be expressed as:
 \begin{equation}
     z_{0m,eff}=z \exp{\left(\frac{-k}{\sqrt{C_{drag,m,neutral}}}\right)}
@@ -307,7 +310,7 @@ with $B=C=5$, $C_2 = 0.25$, $C_3 = 0.0625$.
 
 \hfill
 
-\subsubsection*{Energy budget}
+\subsubsection*{Energy fluxes}
 
 ORCHIDEE does not modify the incoming radiation terms but determines the outgoing reflected radiation terms by calculating the albedo (with distinct values for infrared and for visible light).
 
@@ -328,30 +331,41 @@ where $\rho_{air}$ is the air density, $\lVert \vec{V} \rVert$ is the horizontal
 \label{section:routing_methods}
 The routing scheme is a sub-module of SECHIBA, which simulates horizontal water transfers between grid cells and transports water to the oceans \citep{ducharne_development_2003, ngo-duc_validation_2007}. 
 Water routing is necessary to maintain water conservation on a global scale in fully coupled simulations with a dynamic ocean model, and it also enables simulation of river discharge and groundwater volumes. 
-This scheme generally runs at a larger time step than the rest of the model (once per day by default in global simulations). However, the irrigation scheme (detailed in the next section) requires the routing to be performed at the same time step as the soil hydrology computed by SECHIBA. 
+This scheme generally runs at a larger time step than the rest of the model (once per day by default in global simulations). However, the irrigation scheme (Section \ref{sec:irrig_methods}) requires the routing to be performed at the same time step as the soil hydrology computed by SECHIBA. 
 
-The routing scheme subdivides the simulation domain into hydrological transfer units (HTU) and uses a digital elevation model (DEM) constructed from topographic data to define flow directions and characterize the HTUs (dimensions, slope, upstream/downstream relationships). The grid upon which the routing flows are solved can be independent of the ORCHIDEE grid, and is hereafter referred to as the routing grid.
+The routing scheme subdivides the simulation domain into hydrological transfer units (HTU) and uses a digital elevation model (DEM) constructed from topographic data to define flow directions and characterize the HTUs (dimensions, slope, upstream/downstream relationships). The grid of the HTUs, upon which the routing flows are solved, is often different from the ORCHIDEE grid, and is hereafter referred to as the routing grid.
 
 Within each HTU, three linear reservoirs are represented: the \textit{slow} reservoir (groundwater), the \textit{fast} reservoir (overland water), and the \textit{stream} reservoir (rivers). For each reservoir, the characteristic residence time of water in one HTU depends on a fixed transfer coefficient (denoted TCST\_SLOW, TCST\_FAST, and TCST\_STREAM in Fig. \ref{fig:routing_principles}), on the size of the HTU and on the local slope obtained from the DEM.
-Surface runoff and drainage computed for each ORCHIDEE soil column are interpolated to the routing grid to respectively feed the overland and groundwater reservoirs. All three reservoirs then flow into the river reservoir of the downstream HTU. The river reservoir is therefore the only one connected to neighbouring HTUs, as no other horizontal transfer is modelled in ORCHIDEE. This assumption may have limitations at high resolutions as it ignores direct groundwater transfers between HTUs.
+Surface runoff and drainage computed for each ORCHIDEE soil column are regridded to the routing grid to respectively feed the overland and groundwater reservoirs. All three reservoirs then flow into the river reservoir of the downstream HTU. The river reservoir is therefore the only one connected to neighbouring HTUs, as no other horizontal transfer is modelled in ORCHIDEE. This assumption may have limitations at high resolutions as it ignores direct groundwater transfers between HTUs.
 
-The outgoing water quantity $Q$ (given in $kg$) from a reservoir over one routing time step is expressed using the reservoir volume in the routing grid cell $V$ ($kg$), the transfer coefficient of the reservoir $TCST$ ($day \cdot km^{-1}$), a topographic index $topoindex$ ($km$) derived from the DEM slope and grid cell length, and the routing time step $dt_{routing}$ ($s$):
+The outgoing water quantity $Q$ (given in $kg$) from a reservoir over one routing time step is expressed using the reservoir volume in the routing grid cell $V$ ($kg$), the transfer coefficient of the reservoir $TCST$ ($day \cdot km^{-1}$), a topographic index $topoindex$ ($km$), and the routing time step $dt_{routing}$ ($s$):
 
 \begin{equation}
     Q = \frac{V}{topoindex \times TCST} \times \frac{dt_{routing}}{86400}
 \end{equation}
 
-Several versions of the routing scheme have been developed in ORCHIDEE, all based on these modelling principles but corresponding to different relationships between the routing grid, the ORCHIDEE grid, and the definition of the HTUs used:
+The transfer coefficient reflects the roughness that creates a resistance to flow in this reservoir. The model assumes this parameter to be unique over the whole simulation domain, with a smaller value for the river reservoir than for the overland reservoir, and a larger one for the groundwater reservoir.
+For a given DEM grid cell, the topographic index is defined as the length of the grid cell in the flow direction ($d$) divided by the slope ($\delta z / d$):
+\begin{equation}
+    topoindex = \frac{d}{\sqrt{\frac{\delta z}{d}}} = \sqrt{ \frac{d^3}{\delta z} } 
+\end{equation}
+
+Several versions of the routing scheme have been developed in ORCHIDEE, all based on these modelling principles but corresponding to different relationships between the routing grid and the ORCHIDEE grid:
 
 \begin{itemize}
-\item \textbf{\textit{Subgrid\_halfdeg} routing}, which was the default option in branch 2.2 until CMIP6. It is designed to work with a specific DEM at a resolution of 0.5°. Additionally, it requires each ORCHIDEE grid cell to contain a integer number of DEM grid cells, which limits its use to ORCHIDEE resolutions that are multiples of 0.5° (the most frequently used being 0.5°, 1° and 2°). It must be noted that this routing code preprocesses the DEM to adapt to the ORCHIDEE grid resolution. When running at a resolution higher than 0.5°, it identifies a given number of sub-basins per ORCHIDEE grid cell and possibly changes the routing paths to distribute water in the corresponding directions, with special procedures to avoid creating dead-ends where the water would accumulate. In this manuscript, this routing was only used in Chapter \ref{chap:routing},  with an ORCHIDEE grid of 0.5° resolution, similar to the DEM, meaning there is always only one sub-basin per ORCHIDEE grid cell. However, the preprocessing script can still alter the flow directions of the DEM and the topographic index. 
+\item \textbf{\textit{Subgrid\_halfdeg} routing}, which was the default option in branch 2.2 until CMIP6. It is designed to work with a specific DEM at a resolution of 0.5°.
+Depending on the resolution of the ORCHIDEE grid, a given (whole) number of HTUs are defined within each ORCHIDEE grid cell. Since there are a whole number of HTUs in each ORCHIDEE grid cell, the regridding of surface runoff and drainage to the routing grid is only a partitioning using the areal fraction covered by each HTU.
+Based on the DEM, a $topoindex$ value and slope direction are defined for each HTU using preprocessing scripts before starting the simulation.
+In this manuscript, this routing was only used in Chapter \ref{chap:routing},  with an ORCHIDEE grid at 0.5° resolution, similar to the DEM, meaning there is always only one HTU per ORCHIDEE grid cell. 
+It must be noted that this routing code is not compatible with non-regular ORCHIDEE grid cells, and can therefore not be used with the icosahedral grid of ICOLMDZOR.
 
-\item \textbf{\textit{Interp\_topo} routing}, recently implemented in ORCHIDEE to become the default version in IPSL-CM7. It is designed to adapt to any DEM resolution and to be completely independent of ORCHIDEE’s resolution and even of the shape of the grid cells. This is particularly necessary for compatibility with the icosahedral grid of the new atmospheric dynamics (DYNAMICO) of IPSL-CM7.
-In this version, the routing grid is exactly the same as the DEM grid, meaning that the HTUs are exactly the DEM grid cells. This scheme relies on a robust interpolation %todo:ref Kritsikis, E., Aechtner, M., Meurdesoif, Y., and Dubos, T.: Conservative interpolation between general spherical meshes, Geosci. Model Dev., 10, 425–431, https://doi.org/10.5194/gmd-10-425-2017, 2017
-of runoff and drainage from the ORCHIDEE grid to the routing grid, where horizontal transfers between reservoirs are performed. Once these transfers are completed, water volumes in the reservoirs are re-interpolated from the routing grid back to the ORCHIDEE grid, allowing them to be used for irrigation within ORCHIDEE grid cells. Its principles are presented in Fig.\ref{fig:routing_principles}.
+\item \textbf{\textit{Subgrid\_HTU} routing}, largely based on \std, but adapted to used higher resolution DEMs \citep{nguyen-quang_orchidee-routing_2018, polcher_hydrological_2023}. However, this routing  also presents the constraint of having an integer number of HTUs within each ORCHIDEE grid cell, making it incompatible with the icosahedral grid of ICOLMDZOR. It was not used in the simulations presented in this thesis, but the manuscript occasionally refers to it.
 
-%option: confirmer si pertinent de mentionner cette option (mentionné en Chap 3 comme une des références)
-\item \textbf{\textit{Subgrid\_HTU} routing}, developed before the introduction of the \textit{interp\_topo} routing to operate at a higher resolution than \textit{subgrid\_halfdeg} routing. In this version, HTUs are constructed from a high-resolution DEM by aggregating DEM grid cells into sub-basins. However, this routing  also presents the constraint of having an integer number of HTUs within each ORCHIDEE grid cell, making it incompatible with the icosahedral grid. It was not used in the simulations presented in this thesis, but the manuscript occasionally refers to it.
+\item \textbf{\textit{Interp\_topo} routing}, recently implemented by Yann Meurdesoif in ORCHIDEE to become the default version in IPSL-CM7. 
+It is designed to adapt to any DEM resolution and to be completely independent of ORCHIDEE’s resolution and even of the shape of the grid cells. This is particularly necessary for compatibility with the icosahedral grid of the new atmospheric dynamics (DYNAMICO) of IPSL-CM7.
+In this version, the routing grid is exactly the same as the DEM grid, meaning that the HTUs are exactly the DEM grid cells. This scheme relies on a robust interpolation \citep{kritsikis_conservative_2017} of runoff and drainage from the ORCHIDEE grid to the routing grid, where horizontal transfers between reservoirs are performed. Once these transfers are completed, water volumes in the reservoirs are re-interpolated from the routing grid back to the ORCHIDEE grid, allowing them to be used for irrigation within ORCHIDEE grid cells. 
+A simplified calibration experiment had been carried out over the Danube basin \citep{kilic_evaluation_2023} but this PhD thesis provides the first evaluation and use case of this new routing in both offline and coupled simulations (Chapters \ref{chap:routing} and \ref{chap:monthly}).
+Its principles are presented in Fig.\ref{fig:routing_principles}.
 \end{itemize}
 
 
@@ -371,6 +385,7 @@ The \std routing can only use the 0.5° DEM whereas the \native can be used with
 %option:mention river discharge stations, positionning on DEM ? Or keep that for dedicated chapter ?
 
 \subsection{Irrigation scheme}
+\label{sec:irrig_methods}
 \subsubsection{Modelling principles}
 
 Irrigation has long been described in ORCHIDEE, using potential evapotranspiration as a target to define the irrigation amounts \citep{de_rosnay_integrated_2003, guimberteau_global_2012}. A new irrigation scheme was recently implemented in ORCHIDEE, presented and validated in \citet{arboleda-obando_validation_2024}. It is based on a water-conservative supply-and-demand approach, and uses a target soil moisture, more easily comparable with real irrigation practices, with more complex water allocation rules than the previous scheme. The present work relies solely on the new modelling approach, summarized in Figure \ref{fig:schema_pedro}.
