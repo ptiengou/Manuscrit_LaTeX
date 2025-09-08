@@ -34,7 +34,7 @@ ORCHIDEE v2.2 contains several modules:
 ORCHIDEE can interface with the atmosphere in either offline mode (also called forced) or coupled mode. The simulation domain is discretized into grid cells, with a resolution that follows the atmospheric forcing or the grid of the coupled atmospheric model.
 In the first case, a meteorological forcing (typically obtained from a bias-corrected reanalysis) provides values for downward radiation (shortwave and longwave), precipitation (rain and snow), air temperature and specific humidity at 2 m, wind speed at 10 m (eastward and northward components), and surface pressure. 
 In the second case, ORCHIDEE is coupled with an atmospheric model that calculates these variables in real time while receiving certain variables computed by ORCHIDEE (surface roughness, albedo, turbulent fluxes, surface temperature). ORCHIDEE's time step also adapts to the forcing, usually 30 minutes in oflline simulations, and is the same as the atmospheric physics when coupled (15 minutes for LMDZ).
-Within the IPSL climate model, ORCHIDEE can be coupled with the atmospheric model ICOLMDZ in a standard configuration called ICOLMDZOR, using a semi-implicit coupling scheme \citep{polcher_proposal_1998, Hourdin_phdthesis,hourdin_parameterization_2002}. This scheme calculates the vertical transfer of heat by two distinct processes: thermal diffusion in the soil and turbulent diffusion in the atmospheric column. It uses zero-flux boundary conditions at the top of the atmosphere and at the bottom of a 18-meter soil column \citep{dufresne2009description}, assuming no energy is transferred to the system at these interfaces.
+Within the IPSL climate model, ORCHIDEE can be coupled with the atmospheric model ICOLMDZ in a standard configuration called ICOLMDZOR using a semi-implicit coupling scheme described in Section \ref{sec:energy}.
 
 \subsection{Input data}
 \label{sec:ORCH_input_data}
@@ -201,21 +201,23 @@ with $B=C=5$, $C_2 = 0.25$, $C_3 = 0.0625$.
 \hfill
 
 \subsubsection*{Energy fluxes}
-
+\label{sec:energy}
 ORCHIDEE does not modify the incoming radiation terms but determines the outgoing reflected radiation terms by calculating the albedo (with distinct values for infrared and for visible light).
 
-The heat flux into the ground, surface temperature (which controls the outgoing longwave radiation) and radiative fluxes are computed with an implicit scheme which accounts for thermal diffusion in an 18-meter soil column, with a zero-flux condition at the bottom. 
+The heat flux into the ground, surface temperature (which controls the outgoing longwave radiation) and turbulent fluxes are computed with an implicit scheme which accounts for thermal diffusion in an 90-meter soil column discretized into 18 layers, with a zero-flux condition at the bottom. 
 The vertical discretization matches the one used for water infiltration in the first two meters, and thermal conductivity and heat capacity are parametrized as a function of soil moisture and texture \citep{wang_improvement_2016}.
-When coupled to LMDZ, the aforementioned semi-implicit coupling scheme is used, which also computes turbulent diffusion is the atmospheric column at the same time as thermal diffusion in the soil \citep{polcher_proposal_1998, Hourdin_phdthesis,hourdin_parameterization_2002}. 
+When coupled to LMDZ, semi-implicit coupling scheme is used to calculate the vertical transfer of heat by turbulent diffusion in the atmospheric column at the same time as thermal diffusion in the soil \citep{polcher_proposal_1998, Hourdin_phdthesis, hourdin_parameterization_2002, dufresne2009description}.
+ It uses zero-flux boundary conditions at the top of the atmosphere and at the bottom of the 90-meter soil column, assuming no energy is transferred to the system at these interfaces.
 
-The latent heat flux is expressed directly from the evapotranspiration, while the sensible heat flux uses a similar formulation:
+The latent heat flux is expressed directly from the evapotranspiration detailed above:
 \begin{equation}
-    LE = \lambda \beta E_{pot} = \lambda \beta \rho_{air} \lVert \vec{V} \rVert C_{drag, m} (q_{sat}(T_S) - q_{air})
+    LE = \lambda \beta E_{pot} = \lambda \beta \rho_{air} \lVert \vec{V} \rVert C_{drag, m} (q_{sat}(T_S) - q_{air}),
 \end{equation}
+and the sensible heat flux:
 \begin{equation}
-    H = \rho_{air}  \lVert \vec{V} \rVert C_p C_{drag, h} (T_{surf} - T_{air})
+    H = \rho_{air}  \lVert \vec{V} \rVert C_p C_{drag, h} (T_{s} - T_{air})
 \end{equation}
-where $\rho_{air}$ is the air density, $\lVert \vec{V} \rVert$ is the horizontal wind speed, $C_p$ is the is the specific heat of air, $C_{drag, h}$ is the surface drag coefficient for heat, $T_{air}$ is the air temperature, and $T_{surf}$ is the surface temperature (sometimes referred to as the skin temperature).
+where $\rho_{air}$ is the air density, $\lVert \vec{V} \rVert$ is the horizontal wind speed, $C_p$ is the is the specific heat of air, $C_{drag, h}$ is the surface drag coefficient for heat, $T_{air}$ is the air temperature, and $T_{s}$ is the surface temperature (sometimes referred to as the skin temperature).
 
 \subsection{Routing scheme}
 \label{section:routing_methods}
