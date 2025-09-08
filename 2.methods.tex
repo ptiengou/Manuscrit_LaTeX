@@ -8,10 +8,9 @@ For CMIP6, the model evolved into IPSL-CM6-LR \citep{boucher_presentation_2020},
 While preparing CMIP7, the IPSL-CM is undergoing a major evolution in its atmospheric component by changing to a new dynamical core, DYNAMICO \citep{dubos_dynamico-10_2015}, which uses an icosahedral grid instead of a regular longitude-latitude discretization. Within IPSL-CM7, which is still under development, the atmospheric component is now called ICOLMDZ, and its association with ORCHIDEE is referred to as ICOLMDZOR. Although a new version of the physics scheme is expected to be integrated into IPSL-CM7, ICOLMDZ can also function with the pre-existing physics of LMDZ, as was the case for the present work. 
 Coincidentally with the development of DYNAMICO, a new functionality was implemented, to run ICOLMDZOR as a LAM, unlocking new perspectives in regional modelling with the IPSL-CM. 
 
-Section \ref{sec:ORCHIDEE} first presents the version of the ORCHIDEE LSM used, with a special focus on the most relevant processes for this work such as the water and energy budgets, river routing and irrigation. ORCHIDEE was used as a stand-alone LSM in Chapter \ref{chap:routing} and in coupled regional simulations with ICOLMDZ for \atmchapters. 
-Section \ref{sec:ICOLMDZLAM} describes the ICOLMDZ LAM, as well as the simulations setups used for these coupled simulations. 
+Section \ref{sec:ORCHIDEE} first presents the version of the ORCHIDEE LSM used, with a special focus on the most relevant processes for this work such as the water and energy budgets, river routing and irrigation. 
+Section \ref{sec:ICOLMDZLAM} describes the ICOLMDZ LAM, and Section \ref{sec:sim_setups} details the simulations setups used for these coupled simulations. 
 Finally, the evaluation datasets used in this thesis are presented in Section \ref{sec:eval_datasets}.
-%todo:check si cette description de la structure est bonne
 
 \section{ORCHIDEE land surface model}
 \label{sec:ORCHIDEE}
@@ -421,13 +420,15 @@ The atmospheric model is not coupled with an ocean model and uses prescribed sea
 
 \hfill
 
-Since simulations with the LAM only cover a portion of the globe, lateral boundary conditions are read by the model from a forcing file, which can be obtained from various sources of different spatial resolution and sampling frequency. 
-
-%todo:improve with refs : Denis 2003, Wu 2005, Koltzow 2011, Rocheta 2017
-In this work, hourly forcing files were used for most of the simulations, but some sensitivity experiments were made using forcing data sampled every six hours.
+Since simulations with the LAM only cover a portion of the globe, lateral boundary conditions (LBC) must be read by the model from a forcing file. They can be obtained from various sources of different type, spatial resolution, and sampling frequency. 
+The influence of the LBC is a well known problem in regional climate modelling or dynamical downscaling. 
+\citet{denis_sensitivity_2003} analysed the dependency of the simulated climate to the resolution of the LBC and found that a 12 times lower spatial resolution in the forcing compared to the domain could still yield acceptable performance. This study also explored the influence of the temporal sampling and little difference between a 3-hour and a 6-hour sampling, but a degradation of performance with a 12-hour sampling frequency.
+\citet{wu_estimating_2005} performed regional climate model simulations with LBC obtained from 16 different sources and found them to be more impactful than the initial conditions, and that climate variables such as precipitation could be affected by the choice of forcing source over the whole simulation domain. 
+The sensitivity of variables such as precipitation or sea level pressure to the LBC was found to be improved with larger simulation domains \citep{koltzow_importance_2011}, although \citet{leduc_sensitivity_2011} showed that this effect was very dependent on the local climate and even on the season.
 
 In most of the work presented here, lateral boundary conditions for the LAM were taken from ERA5 reanalysis hourly values at 0.25° resolution \citep{hersbach_era5_2020}. This product uses a climate model with observation data assimilation techniques to produce outputs that are as close as possible to actual conditions. When simulating recent climate, using this forcing enables having rather realistic synoptic conditions. 
 It is also possible to run the model with other sources for the forcing file, in particular using outputs from global climate simulations, either from the ICOLMDZOR global model or from other models. The modelling community at IPSL is also currently investigating the possibility of using outputs from the CMIP6 simulations under various SSPs to run the LAM in projected future climate conditions.
+In this work, hourly forcing files were used for most of the simulations, but some sensitivity experiments were made using forcing data sampled every six hours, which is the sampling frequency of CMIP6 outputs. Section \ref{sec:sim_setups} details all the simulation setups used to produce the results presented in Chapters \ref{chap:forcing} and \ref{chap:monthly}.
 
 To run a regional simulation, the forcing file must contain data for the nudged variables (temperature, humidity, wind), two variables describing clouds (liquid and ice water content) used on the edge of the domain but not nudged, and three other variables at the surface that are used to manage initialization (2-meter temperature, geopotential height), and vertical interpolation (surface pressure). In the future, the model developers are considering a simpler forcing file without the cloud liquid and ice water content, as it is not very standard to use such variables in regional modelling, and these variables are not available in CMIP standardised outputs. 
 
@@ -496,7 +497,7 @@ In the transition zone, the value of $\tau$ is gradually increased over the 8 gr
 Nudging is applied on all vertical levels at every time step of the dynamics (30 s). The reference value for each variable is obtained by temporally interpolating the forcing file to this time step. 
 
 \section{Coupled simulation setups}
-
+\label{sec:sim_setups}
 \subsection{Simulation domains, periods and forcing data}
 
 Several simulation setups and periods were used to produce the results presented in \atmchapters, but they all used a hexagonal domain centered at (40.4°N, -3.7°E), with a radius ($R_{domain}$) of either 1000km, 1500km or 2000km. When changing the radius of the domain, the $NBP$ parameter (number of grid cells on the domain radius) was adapted to either 40, 60, or 80, to ensure that grid cells kept the same diameter of 25km. The setup with a $R_{domain}=1500 km$ and $NBP=60$ is presented in Fig. \ref{fig:domain_full_hex}. 
@@ -547,9 +548,9 @@ The characteristics of all the coupled simulation used in this thesis are summar
             \hline
             \ref{sec:forcing_frequency} & \forcingsixh & 2013 (* 10) & 1500km & 60 & ERA5, 6h & No \\
             \hline
-            \ref{sec:article1} & \irr & 2010-2022 & 1500km & 60 & ERA5, 1h & Yes \\
+            \ref{sec:article1}, \ref{chap:liaise} & \irr & 2010-2022 & 1500km & 60 & ERA5, 1h & Yes \\
             \hline
-            \ref{sec:article1} & \noirr & 2010-2022 & 1500km & 60 & ERA5, 1h & No \\
+            \ref{sec:article1}, \ref{chap:liaise} & \noirr & 2010-2022 & 1500km & 60 & ERA5, 1h & No \\
             \hline
             \ref{sec:climate_change} & \presnoirr & 2010-2022 & 1000km & 40 & ICOLMDZOR, 1h & No \\
             \hline
@@ -619,5 +620,10 @@ Different stations were used in Chapters \ref{chap:routing} and \ref{chap:monthl
 \clearpage
 
 \section{Chapter conclusions}
-
-%todo
+This chapter presented the components of the ICOLMDZOR LAM, used in this thesis to run regional climate simulations over the Iberian Peninsula.
+The ORCHIDEE LSM was first described, with details on the surface water and energy budgets, as well as the routing and irrigation schemes. 
+Several routing versions were presented, in particular the \native routing, recently developed by Yann Meurdesoif and introduced in ORCHIDEE to become the default routing scheme in IPSL-CM7. The work presented in Chapter \ref{chap:routing} is the first use case of this new routing. It uses ORCHIDEE offline simulations over the Iberian Peninsula, to compare it to the previous routing and discharge observations, leading to a choice of parameters that allow a study of the impacts of irrigation over the region.
+Secondly, the ICOLMDZ atmospheric model was presented, with a specific focus on the limited area model configuration used in this thesis. 
+The sensitivities of this LAM to the choice of lateral boundary conditions is presented in Chapter \ref{chap:forcing}, while Chapters \ref{chap:monthly} and \ref{chap:liaise} were the first coupled simulations using the ICOLMDZOR LAM with the new routing scheme. 
+All the coupled ICOLMDZOR LAM simulation setups used in \atmchapters were described, to provide an overview of the domain and period studied, and of the various lateral boundary conditions used. 
+Finally, several datasets used for evaluation of the ICOLMDZOR LAM simulations were described.
