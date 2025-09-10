@@ -329,9 +329,10 @@ Within the limit of $f_{sw}$ and $f_{gw}$, water is primarily withdrawn from the
 At the next time step, the amount of water withdrawn from the reservoirs, $I$, is added at the top of the ORCHIDEE soil column and infiltrates, simulating a gravity-fed or drip irrigation method.
 It must be noted that although the original irrigation scheme from \citet{arboleda-obando_validation_2024} included the possibility to withdraw water from neighboring grid cells to represent adduction systems, this option is not yet compatible with the new version of the routing scheme used with ICOLMDZOR and was therefore not used in this work.
 
-To summarize, Table \ref{tab:irrigation_parameters} gives the default value of all the parameters used by the irrigation scheme, while Fig. \ref{fig:irrig_inputs} shows the two input maps over the Iberian Peninsula: the map of irrigated fractions, to obtain $f_{irr}$, and the map of areas equipped for irrigation, to obtain $f_{sw}$ and $f_{gw}$.
-The sensitivity analyses described in \citet{arboleda-obando_validation_2024} allowed the authors to define default values for all parameters to best match observed global irrigation when used uniformly, and showed that the target parameter $\beta$ has the greatest impact on the volume of water withdrawn for irrigation.
-In the default version of the global model, this parameter is set to 0.9, defining a soil moisture target at 90 \% of field capacity. However, this value reflects a wide variety of irrigation practices, from drip irrigation to flooding of rice paddies, and might need to be adjusted for simulations focused on a specific region as discussed in Chapter \ref{chap:routing}.
+To summarize, Table \ref{tab:irrigation_parameters} gives the default value of all the parameters used by the irrigation scheme, while Fig. \ref{fig:irrig_inputs} shows the two input maps over the Iberian Peninsula: the map of irrigated fractions, to obtain $f_{irr}$, and the map of areas equipped for irrigation, to obtain $f_{sw}$ and $f_{gw}$. On Fig. \ref{fig:irrig_inputs}a, three main irrigated basins can already be noticed : the Ebro river basin in the Northeast, and the Guadiana and Guadalquivir basins in the South of the Peninsula. Differences can already be noticed between the Ebro, which has a large dependency on surface withdrawals, and the other two, which depend much more on groundwater withdrawals for irrigation (Fig. \ref{fig:irrig_inputs}b). This reflects different methods since in the Ebro valley water is mainly adducted from the Pyrenees, wheareas goundwater pumping is much more common and important in southern Spain.
+
+The sensitivity analyses described in \citet{arboleda-obando_validation_2024} allowed the authors to define default values for all parameters to best match observed global irrigation when used uniformly, and showed that the target parameter \betairrig has the greatest impact on the volume of water withdrawn for irrigation.
+In the default version of the global model, this parameter is set to 0.9, defining a soil moisture target at 90 \% of field capacity. However, this value reflects a wide variety of irrigation practices, from drip irrigation to flooding of rice paddies, and had to be adjusted for simulations over the Iberian Peninsula as discussed in Chapter \ref{chap:routing}.
 
 \begin{table}[htbp]
     \centering
@@ -367,7 +368,6 @@ In the default version of the global model, this parameter is set to 0.9, defini
     \caption{Input maps of the irrigation scheme over the study area: (a) grid cell irrigated fraction \citep[\%, derived from][]{hurtt_harmonization_2020}, and (b) the share of surface equipments for irrigation withdrawals, as opposed to groundwater withdrawals \citep[\%, derived from][]{siebert_groundwater_2010}.}
     \label{fig:irrig_inputs}
 \end{figure}
-%todo: comment for future links : main irrigated valleys (mention coast no irrigated ?), dependency to GW or surface water (identify Ebro vs Andalousia)
 
 \subsubsection{Irrigation scheme with the \native routing.}
 \label{sec:irrig_interp_variables}
@@ -577,7 +577,6 @@ Considering the focus on land-atmosphere coupling, the analysis is often restric
 
 \section{Evaluation datasets}
 \label{sec:eval_datasets}
-%todo:adapt to section relocation
 
 The simulations in present climate conditions (Chapter \ref{chap:forcing}, Section \ref{sec:article1}) were evaluated against the monthly mean values of several reference gridded products listed in Table \ref{tab:obs-datasets}.
 The ERA5 reanalysis \citep{hersbach_era5_2020} at 0.25° resolution was first used as a reference product to asses the realism of multiple variables (precipitation, ET, 2-m temperature), and this is how some inconsistencies studied in Chapter \ref{chap:forcing} were identified. However, in most simulations, ERA5 was the source used for the lateral boundary conditions which does not make it the most appropriate reference product for evaluation. Moreover, although ERA5 contains a lot of variables and has the advantage of being available over all the domain and present simulation period, some variables are more dependent on the model used to produce the reanalysis than on data assimilation and may not be the best reference for evaluation. Therefore, other reference products were also used, for precipitation and evapotranspiration.
