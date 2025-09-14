@@ -329,10 +329,10 @@ Within the limit of $f_{sw}$ and $f_{gw}$, water is primarily withdrawn from the
 At the next time step, the amount of water withdrawn from the reservoirs, $I$, is added at the top of the ORCHIDEE soil column and infiltrates, simulating a gravity-fed or drip irrigation method.
 It must be noted that although the original irrigation scheme from \citet{arboleda-obando_validation_2024} included the possibility to withdraw water from neighboring grid cells to represent adduction systems, this option is not yet compatible with the new version of the routing scheme used with ICOLMDZOR and was therefore not used in this work.
 
-To summarize, Table \ref{tab:irrigation_parameters} gives the default value of all the parameters used by the irrigation scheme, while Fig. \ref{fig:irrig_inputs} shows the two input maps over the Iberian Peninsula: the map of irrigated fractions, to obtain $f_{irr}$, and the map of areas equipped for irrigation, to obtain $f_{sw}$ and $f_{gw}$. On Fig. \ref{fig:irrig_inputs}a, three main irrigated basins can already be noticed : the Ebro river basin in the Northeast, and the Guadiana and Guadalquivir basins in the South of the Peninsula. Differences can already be noticed between the Ebro, which has a large dependency on surface withdrawals, and the other two, which depend much more on groundwater withdrawals for irrigation (Fig. \ref{fig:irrig_inputs}b). This reflects different methods since in the Ebro valley water is mainly adducted from the Pyrenees, wheareas goundwater pumping is much more common and important in southern Spain.
+To summarize, Table \ref{tab:irrigation_parameters} gives the default value of all the parameters used by the irrigation scheme, while Fig. \ref{fig:irrig_inputs} shows the two input maps over the Iberian Peninsula: the map of irrigated fractions, to obtain $f_{irr}$, and the map of areas equipped for irrigation, to obtain $f_{sw}$ and $f_{gw}$. On Fig. \ref{fig:irrig_inputs}a, three main irrigated basins can be identified : the Ebro river basin in the Northeast, and the Guadiana and Guadalquivir basins in the South of the Peninsula. Differences can already be noticed between the Ebro, which has a large dependency on surface withdrawals, and the other two, which depend much more on groundwater withdrawals for irrigation (Fig. \ref{fig:irrig_inputs}b). This reflects different methods since in the Ebro valley water is mainly adducted from the Pyrenees, whereas groundwater pumping is much more common and important in southern Spain.
 
 The sensitivity analyses described in \citet{arboleda-obando_validation_2024} allowed the authors to define default values for all parameters to best match observed global irrigation when used uniformly, and showed that the target parameter \betairrig has the greatest impact on the volume of water withdrawn for irrigation.
-In the default version of the global model, this parameter is set to 0.9, defining a soil moisture target at 90 \% of field capacity. However, this value reflects a wide variety of irrigation practices, from drip irrigation to flooding of rice paddies, and had to be adjusted for simulations over the Iberian Peninsula as discussed in Chapter \ref{chap:routing}.
+In the default version of the global model, this parameter is set to 0.9, defining a soil moisture target at 90 \% of field capacity. However, this value reflects a wide variety of irrigation practices, from drip irrigation to flooding of rice paddies, and had to be adjusted for simulations over the Iberian Peninsula, as discussed in Chapter \ref{chap:routing}.
 
 \begin{table}[htbp]
     \centering
@@ -372,18 +372,22 @@ In the default version of the global model, this parameter is set to 0.9, defini
 \subsubsection{Irrigation scheme with the \native routing.}
 \label{sec:irrig_interp_variables}
 
-This irrigation scheme was initially developed for the \std routing version, and adjustments were made when developing the \native routing to make it compatible with this new routing code. Since the routing grid is completely independent of the ORCHIDEE grid in \native, it is important to identify which variables are computed directly on the ORCHIDEE grid and which ones are computed on the routing grid, and then interpolated to the ORCHIDEE grid to be used as ORCHIDEE outputs.
-In particular, reservoir volumes are computed on the routing grid, which means that irrigation (which withdraws from these reservoirs) must be computed on the same grid.
-To ensure water conservation, the \native routing uses absolute values in $kg$ of water (as opposed to areal values in $kg \cdot m^{-2}$). Therefore, when interpolating variables from one grid to another, the variables are also converted to a different unit, accounting for the continental area of the ORCHIDEE grid cells.
-The only variable that is output directly on the routing grid is the river discharge, which cannot be averaged in a conservative way. Since the routing grid is of higher resolution than the ORCHIDEE grid, it also enables a more relevant comparison to discharge observation stations.
-Figure \ref{fig:irrig_interpolations_outputvars} summarizes the interactions between the two grids for routing and irrigation variables in \native.
-
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{images/methods/routing_irrig_interpolation_outputvars.png}
     \caption{River routing and irrigation variables and interactions between the ORCHIDEE and routing grids in \native. Variables shown in red are used as model outputs while the others are only intermediate computations.}
     \label{fig:irrig_interpolations_outputvars}
 \end{figure}
+%todo:checker position de la figure (potentiellement dans la partie suivante)
+
+This irrigation scheme was initially developed for the \std routing version, and adjustments were made when developing the \native routing to make it compatible with this new routing code. Since the routing grid is completely independent of the ORCHIDEE grid in \native, it is important to identify which variables are computed directly on the ORCHIDEE grid and which ones are computed on the routing grid, and then interpolated to the ORCHIDEE grid to be used as ORCHIDEE outputs.
+In particular, reservoir volumes are computed on the routing grid, which means that irrigation (which withdraws from these reservoirs) must be computed on the same grid.
+To ensure water conservation, the \native routing uses absolute values in $kg$ of water (as opposed to areal values in $kg \cdot m^{-2}$). Therefore, when interpolating variables from one grid to another, the variables are also converted to a different unit, accounting for the continental area of the ORCHIDEE grid cells.
+The only variable that is output directly on the routing grid is the river discharge, which cannot be averaged in a conservative way. Since the routing grid is of higher resolution than the ORCHIDEE grid, it also enables a more relevant comparison to discharge observation stations.
+Figure \ref{fig:irrig_interpolations_outputvars} summarizes the interactions between the two grids for routing and irrigation variables in \native.
+
+
+% \pagebreak 
 
 \section{Atmospheric model : the ICOLMDZ LAM}
 \label{sec:ICOLMDZLAM}
@@ -392,7 +396,7 @@ In \atmchapters, coupled simulations are run with ORCHIDEE and atmospheric model
 It must be noted that the use of the LAM in the IPSL community is very recent, and that its development and evaluation are still ongoing. In particular, the simulations presented in Chapter \ref{chap:monthly} constitute the first case study focusing on the water cycle and land-atmosphere interactions, as well as the first use case at the mid-latitudes.
 
 \subsection{Dynamical core and parametrizations}
-ICOLMDZ, the atmospheric component of the model is the association of the dynamical core DYNAMICO \citep{dubos_dynamico-10_2015}, and the LMDZ6A physics used for CMIP6 \citep{hourdin_lmdz6a_2020}. 
+ICOLMDZ, the atmospheric component of the model is the association of the dynamical core DYNAMICO \citep{dubos_dynamico-10_2015}, and the LMDZ6A physics used for CMIP6 \citep{hourdin_lmdz6a_2020}. %todo:checker que j'ai bien fait la distinction dynamique/physique en intro
 Icosahedral dynamical cores already existed in some models, such as ICON \citep{zangl_icon_2015,giorgetta_icon-_2018,prill_icon_2022}, and DYNAMICO was introduced in the IPSL-CM with the main objectives of unlocking a high level of parallelization and standardizing grid cells for global simulations. 
 In particular, it avoids the discrepancies of a regular longitude-latitude grid that appear at the poles, opening new prospects for modelling projects in the Arctic \citep{raillard_leveraging_2024} and Antarctic regions \citep{wiener_extensive_2025}.
 All ICOLMDZ simulations run in the thesis used a 30-second time step for the dynamics.
@@ -406,6 +410,7 @@ The physics include the following parametrizations:
     \item a parametrization of the cold pools created below cumulonimbus by reevaporation of convective rainfall \citep{grandpeix_density_2010-1,grandpeix_density_2010};
     \item a large scale condensation scheme based on a statistical distribution of sub-grid total water content, from which cloud fraction and water contents are derived \citep{madeleine_improved_2020}; 
     \item the radiative transfer model RRTM \citep{mlawer_radiative_1997}, which is called every 1.5 hours (six time steps).
+    \item %todo:orographie sous maille
 \end{itemize}
 
 \subsection{Forcings}
@@ -430,7 +435,7 @@ In most of the work presented here, lateral boundary conditions for the LAM were
 It is also possible to run the model with other sources for the forcing file, in particular using outputs from global climate simulations, either from the ICOLMDZOR global model or from other models. The modelling community at IPSL is also currently investigating the possibility of using outputs from the CMIP6 simulations under various SSPs to run the LAM in projected future climate conditions.
 In this work, hourly forcing files were used for most of the simulations, but some sensitivity experiments were made using forcing data sampled every six hours, which is the sampling frequency of CMIP6 outputs. Section \ref{sec:sim_setups} details all the simulation setups used to produce the results presented in Chapters \ref{chap:forcing} and \ref{chap:monthly}.
 
-To run a regional simulation, the forcing file must contain data for the nudged variables (temperature, humidity, wind), two variables describing clouds (liquid and ice water content) used on the edge of the domain but not nudged, and three other variables at the surface that are used to manage initialization (2-meter temperature, geopotential height), and vertical interpolation (surface pressure). In the future, the model developers are considering a simpler forcing file without the cloud liquid and ice water content, as it is not very standard to use such variables in regional modelling, and these variables are not available in CMIP standardised outputs. 
+To run a regional simulation, the forcing file must contain data for the nudged variables (temperature, humidity, wind), two variables describing clouds (liquid and ice water content) used on the edge of the domain but not nudged, and three other variables at the surface that are used to manage initialization (2-meter temperature, geopotential height), and vertical interpolation to match the discretization of the model (surface pressure). In the future, the model developers are considering a simpler forcing file without the cloud liquid and ice water content, as it is not very standard to use such variables in regional modelling, and because these variables are highly model-dependent and not available in CMIP standardised outputs. 
 
 \begin{table}[htbp]
 \centering
@@ -481,7 +486,9 @@ The simulation domain is separated in 3 concentric zones, as shown on Fig. \ref{
 \end{figure}
 
 The concept of nudging is well known in climate modelling and NWP, since it is used to manage lateral boundary conditions in regional models. It is also used to reproduce real situations to enable the comparison to local observations with realistic synoptic conditions, or to study specific observed events with a model. 
-Multiple studies were conducted using the zoom capability of LMDZ to enhance resolution over a given area, while nudging the model towards a reanalysis in the rest of the world to make sure the synoptic conditions are as close to reality as possible. In particular, land-atmosphere interactions were studied with zoomed-nudged LMDZOR simulations at the SIRTA observation site in France \citep{cheruy_combined_2013, campoy_response_2013} and over Morocco \citep{balhane_global_2022, arjdal_modeling_2024}. The main downside of this approach is that it still requires to run the model in a global simulation setup, although the grid is stretched to focus on the area of interest. With the LAM, the resolution remains the same in all the domain and the model is only run over the area of interest, which results in lower computation times than zoomed-nudged setups for a given resolution.
+Multiple studies were conducted using the zoom capability of LMDZ to enhance resolution over a given area, while nudging the model towards a reanalysis in the rest of the world to make sure the synoptic conditions are as close to reality as possible. In particular, land-atmosphere interactions were studied with zoomed-nudged LMDZOR simulations at the SIRTA observation site in France \citep{cheruy_combined_2013, campoy_response_2013} and over Morocco \citep{balhane_global_2022, arjdal_modeling_2024}.
+%todo:corriger ref balhane 2024
+The main downside of this approach is that it still requires to run the model in a global simulation setup, although the grid is stretched to focus on the area of interest. With the LAM, the resolution remains the same in all the domain and the model is only run over the area of interest, which results in lower computation times than zoomed-nudged setups for a given resolution.
 %todo:Ajouter commentaires et odg sur le temps de calcul, cf simus de Frédérique : global vs LAM, nombre de tasks donc d'heures de calcul. Avantages ou non par rapport au zoomé-guidé (qui peut être forcé par ERA) 
 
 The model is nudged by adding a forcing term in the equation that governs the evolution of a given prognostic variable $V$ in the model, to drive it towards a reference value $V_{ref}$ over a given time scale $\tau$:
@@ -493,7 +500,7 @@ The model is nudged by adding a forcing term in the equation that governs the ev
 The strength of the nudging can be modulated by adjusting the time scale $\tau$.
 In the raw forcing zone, the values of the state variables in the model are directly prescribed to those of the lateral boundary conditions in the forcing file. 
 In the central free zone, $\tau$ is infinite, meaning the forcing term does not alter the equation. 
-In the transition zone, the value of $\tau$ is gradually increased over the 8 grid cells, following an arctan profile to smooth the transition, starting from $\tau = 3600$ s on the outer edge.
+In the transition zone, the value of $\tau$ is gradually increased over the 8 grid cells, following an arctan profile to smooth the transition, starting from $\tau = 3600$ s on the outer edge. %todo:ajouter valeur au centre suite à réponse Mattermost
 Nudging is applied on all vertical levels at every time step of the dynamics (30 s). The reference value for each variable is obtained by temporally interpolating the forcing file to this time step. 
 
 \section{Coupled simulation setups}
@@ -521,12 +528,13 @@ This sensitivity was of interest since future climate simulations were initially
 The main study period under current climate is from 2010 to 2022, since before and after that period not all forcing variables were readily available on the IPSL servers and running the LAM would have required substantial manual data collection work. Some sensitivity analysis of Chapter \ref{chap:forcing} were run on specific or shorter periods to overcome technical issues or to limit the computing time and ressources used.
 All simulations were run after a 3-year spinup period to make sure that vegetation and hydrological variables had reached an equilibrium. 
 To analyse the impact of domain size, simulations were only run between 2010 and 2014. 
-For the analysis of the forcing file sampling frequency, simulations were only run over the year 2013 because of unexpected model crashes in other simulation years. This same year was run 10 times in chained simulations (starting each new simulation year at the end of the previous one) that can act as a small ensemble, although it must be noted that this secific year cannot represent the diversity of current climate by itself.
+For the analysis of the forcing file sampling frequency, simulations were only run over the year 2013 because of unexpected model crashes in other simulation years. This same year was run 10 times in chained simulations (starting each new simulation year at the end of the previous one) that can act as a small ensemble, although it must be noted that this specific year cannot represent the diversity of current climate by itself.
 Simulations of future climate were run over the period 2050-2062, using hourly outputs from a global ICOLMDZOR simulation, and the smaller domain configuration. 
 
 The characteristics of all the coupled simulation used in this thesis are summarized in Table \ref{table:coupled_simulations}.
 
 %table:all coupled simulation details
+%todo:add SST/SIC
 \begin{table}[h]
     \centering
     \resizebox{\textwidth}{!}{
@@ -579,7 +587,7 @@ Considering the focus on land-atmosphere coupling, the analysis is often restric
 \label{sec:eval_datasets}
 
 The simulations in present climate conditions (Chapter \ref{chap:forcing}, Section \ref{sec:article1}) were evaluated against the monthly mean values of several reference gridded products listed in Table \ref{tab:obs-datasets}.
-The ERA5 reanalysis \citep{hersbach_era5_2020} at 0.25° resolution was first used as a reference product to asses the realism of multiple variables (precipitation, ET, 2-m temperature), and this is how some inconsistencies studied in Chapter \ref{chap:forcing} were identified. However, in most simulations, ERA5 was the source used for the lateral boundary conditions which does not make it the most appropriate reference product for evaluation. Moreover, although ERA5 contains a lot of variables and has the advantage of being available over all the domain and present simulation period, some variables are more dependent on the model used to produce the reanalysis than on data assimilation and may not be the best reference for evaluation. Therefore, other reference products were also used, for precipitation and evapotranspiration.
+The ERA5 reanalysis \citep{hersbach_era5_2020} at 0.25° resolution was first used as a reference product to asses the realism of multiple variables (precipitation, ET, 2-m temperature), and this is how some inconsistencies studied in Chapter \ref{chap:forcing} were identified. However, in most simulations, ERA5 was the source used for the lateral boundary conditions which does not make it the most appropriate reference product for evaluation. Moreover, although ERA5 contains a lot of variables and has the advantage of being available over all the domain and present simulation period, some variables are very dependent on the model used to produce the reanalysis and may not be the best reference for evaluation. Therefore, other reference products were also used, for precipitation and evapotranspiration.
 
 Precipitation data from the Global Precipitation Climatology Centre (GPCC) Full Data Monthly Product Version 2020 \citep{gpcc_v2020} was used. This product provides precipitation data until 2019 over land on a 0.25° x 0.25° grid using in situ rain gauges. 
 
@@ -616,12 +624,10 @@ Different stations were used in Chapters \ref{chap:routing} and \ref{chap:monthl
     \label{tab:obs-datasets}
 \end{table*}
 
-\clearpage
-
 \section{Chapter conclusions}
 This chapter presented the components of the ICOLMDZOR LAM, used in this thesis to run regional climate simulations over the Iberian Peninsula.
 The ORCHIDEE LSM was first described, with details on the surface water and energy budgets, as well as the routing and irrigation schemes. 
-Several routing versions were presented, in particular the \native routing, recently developed by Yann Meurdesoif and introduced in ORCHIDEE to become the default routing scheme in IPSL-CM7. The work presented in Chapter \ref{chap:routing} is the first use case of this new routing. It uses ORCHIDEE offline simulations over the Iberian Peninsula, to compare it to the previous routing and discharge observations, leading to a choice of parameters that allow a study of the impacts of irrigation over the region.
+Several routing versions were presented, in particular the \native routing, recently developed by Yann Meurdesoif and introduced in ORCHIDEE to become the default routing scheme in IPSL-CM7. The work presented in Chapter \ref{chap:routing} is the first use case of this new routing. It uses ORCHIDEE offline simulations over the Iberian Peninsula to compare it to the results of the previous routing, and to discharge observations, and identify a set of parameters that allow a study of the impacts of irrigation over the region.
 Secondly, the ICOLMDZ atmospheric model was presented, with a specific focus on the limited area model configuration used in this thesis. 
 The sensitivities of this LAM to the choice of lateral boundary conditions is presented in Chapter \ref{chap:forcing}, while Chapters \ref{chap:monthly} and \ref{chap:liaise} were the first coupled simulations using the ICOLMDZOR LAM with the new routing scheme. 
 All the coupled ICOLMDZOR LAM simulation setups used in \atmchapters were described, to provide an overview of the domain and period studied, and of the various lateral boundary conditions used. 
