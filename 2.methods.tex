@@ -486,8 +486,7 @@ The simulation domain is separated in 3 concentric zones, as shown on Fig. \ref{
 \end{figure}
 
 The concept of nudging is well known in climate modelling and NWP, since it is used to manage lateral boundary conditions in regional models. It is also used to reproduce real situations to enable the comparison to local observations with realistic synoptic conditions, or to study specific observed events with a model. 
-Multiple studies were conducted using the zoom capability of LMDZ to enhance resolution over a given area, while nudging the model towards a reanalysis in the rest of the world to make sure the synoptic conditions are as close to reality as possible. In particular, land-atmosphere interactions were studied with zoomed-nudged LMDZOR simulations at the SIRTA observation site in France \citep{cheruy_combined_2013, campoy_response_2013} and over Morocco \citep{balhane_global_2022, arjdal_modeling_2024}.
-%todo:corriger ref balhane 2024
+Multiple studies were conducted using the zoom capability of LMDZ to enhance resolution over a given area, while nudging the model towards a reanalysis in the rest of the world to make sure the synoptic conditions are as close to reality as possible. In particular, land-atmosphere interactions were studied with zoomed-nudged LMDZOR simulations at the SIRTA observation site in France \citep{cheruy_combined_2013, campoy_response_2013} and over Morocco \citep{balhanebalhane_towards_2024 arjdal_modeling_2024, }.
 The main downside of this approach is that it still requires to run the model in a global simulation setup, although the grid is stretched to focus on the area of interest. With the LAM, the resolution remains the same in all the domain and the model is only run over the area of interest, which results in lower computation times than zoomed-nudged setups for a given resolution.
 %todo:Ajouter commentaires et odg sur le temps de calcul, cf simus de Frédérique : global vs LAM, nombre de tasks donc d'heures de calcul. Avantages ou non par rapport au zoomé-guidé (qui peut être forcé par ERA) 
 
@@ -534,7 +533,7 @@ Simulations of future climate were run over the period 2050-2062, using hourly o
 The characteristics of all the coupled simulation used in this thesis are summarized in Table \ref{table:coupled_simulations}.
 
 %table:all coupled simulation details
-%todo:add SST/SIC
+%todo:add SST/SIC ?
 \begin{table}[h]
     \centering
     \resizebox{\textwidth}{!}{
