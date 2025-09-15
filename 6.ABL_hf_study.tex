@@ -40,8 +40,8 @@ On IOP days, hourly radiosondes were launched, roughly from  sunrise through ear
     \centering
     \includegraphics[width=\textwidth]{images/chap5/liaise_sites_picture.png}
     \caption{Instrumented sites of La Cendrosa (a) and Els Plans (b) in July 2021 \citep[taken from ][]{lunel_interactions_2024}.}
+    \label{fig:liaise_sites_photos}
 \end{figure}
-
 
 
 %choice of IOP days, synoptic conditions
@@ -55,7 +55,6 @@ On IOP days, hourly radiosondes were launched, roughly from  sunrise through ear
 
 %option:voir si irait bien quelque part: 
 %Most of the water used for agriculture, approximately 75%, is stored in reservoirs while the rest is maintained by the snow pack in the mountains.
-
 
 \section{Simulation experiments}
 
@@ -107,70 +106,34 @@ The second, referred to as \mesomean, is an aggregation of all the MesoNH grid c
 On Fig. \ref{fig:liaise_sites_grid_cells}c, the two hexagonal ICOLMDZOR grid cells are drawn upon the average latent heat flux simulated by MesoNH. It can already be noticed that within the grid cell for La Cendrosa, there are some MesoNH grid cells with very low values of ET, and that in the grid cell for Els Plans, there are some MesoNH grid cells which fall into the irrigated zone and exhibit high ET. This will have an influence on the \mesomean values and on the spread of MesoNH surface variables within one ICOLMDZOR grid cell. 
 %option:mesoMean is not meant to be more representative of the obs than mesoExact, but to bring information on heterogeneity within one ICOLMDZOR grid cell
 
-\section{Surface variables over the SOP}
+\section{Near-surface variables over the SOP}
 \label{sec:sop}
 
-Here, surface variables simulated by ICOLMDZOR and MesoNH are compared to the observations on both sites from July 14th to July 30th (the span of the MesoNH simulation), which corresponds to the LIAISE SOP.
+Here, surface variables simulated by ICOLMDZOR and MesoNH are compared to the observations on both sites from July 14th to July 30th, the span of the MesoNH simulation, which corresponds to the LIAISE SOP.
 
-At La Cendrosa (Fig. \ref{fig:cendrosa_surfacevars}), turbulent fluxes exhibit clear diurnal cycles piloted by solar irradiation, with a maximum value between 12 and 13UTC.
-
+\hfill
 %%LA CENDROSA%%
-%turbulent fluxes
-%noirr has almost no flat and largely overestimates fsens (300%)
-%these biases are reduced in irr, which follows a good trajectory at the beginning of the day, but lacks water to sustain irrigation demand
-%in irrboost, DC structure is normal, irrigation demand is sustained throughout the day and biases on turbulent fluxes are largely improved compared to obs
-%mesoExact is not that good on flat DC because of overestimation in the beginning of the SOP -> link to vegetation development
-%mesoExact if fine on sensible heat flux, also due to a partial error compensation over 15 days
-%irrboost is very close to mesoMean for both turbulent fluxes, meaning the average grid cell flux simulated by ICOLMDOR performs very well, if mesoNH sim is considered a good reference.
 
-%t2m
-%DC of t2m is also driven by radiation and turb fluxes, the peak is shifted in the afternoon. 
-%all model sim exhibit a warm bias, especially at night, where even mesoExact is closer to ICOLMDZOR than to observed values.
-%warm bias in noirr is reduced in irrboost (2° at peak) which follows mesoMean for most of the day
+At La Cendrosa (Fig. \ref{fig:cendrosa_surfacevars}), observed turbulent fluxes(in black) exhibit a clear diurnal cycle driven by solar irradiation, with a maximum value between 12 and 13UTC.
+In the \noirr simulation (in red), ICOLMDZOR simulates a negligible latent heat flux (Fig. \ref{fig:cendrosa_surfacevars}b) and largely overestimates the sensible heat flux (+300\% at 12UTC on Fig. \ref{fig:cendrosa_surfacevars}d). 
+These major biases are partly improved in the \irr simulation (in blue), showing that additional soil moisture brought by irrigation can really improve turbulent fluxes. However, latent heat flux simulated in \irr follows a good trajectory from 5UTC to 9UTC but then drops and remains largely underestimated until the evening. This is due to a failure of the irrigation parametrization which cannot sustain the irrigation demand throughout the day since the routing reservoirs (particularly the river reservoirs) cannot provide sufficient irrigation withdrawals. 
+In the \irrboost sensitivity experiment (in green), virtually infinite amounts of water are available in the reservoirs and ET is no longer constrained by soil moisture. Both turbulent fluxes follow a diurnal cycle that is consistent with observations, although a small underestimation of latent heat flux and an overestimation of sensible heat flux remain compared to the observations. 
+However, the turbulent fluxes in \irrboost are very close to those of \mesomean (in yellow, with the envelope representing the 25th and 75th percentiles of the distribution), suggesting that ICOLMDZOR correctly represents the average fluxes over the grid cell, which does not only include intensely irrigated areas.
+It can be noted here that \mesoexact (in purple), corresponding to the exact MesoNH grid cell of the observation site, overestimates latent heat flux on average over the period. This is mostly due to the beginning of the SOP, where the alfalfa crops at La Cendrosa were still freshly cut and had not recovered their original size, LAI and transpiration levels.
 
-%q2m
-%DC less structured, variable more sensitive to wind (mixing and advection)
-%LAM is not good in daytime, dries very fast (link to wind, overestimated in the day ?), bias reduced with irrig. Irr boost fall within spread of mesoMean but structure still far from good
-%With irrig, LAM is better in nighttime whereas mesoNH underestimates. Possibly a feat of the irrigation parameterization which bring a little water at every tme step
+The diurnal cycle of 2-meter temperature is also driven by solar irradiation but its shape is slightly shifted with a peak in the afternoon around 4UTC (Fig. \ref{fig:cendrosa_surfacevars}f). Figure \ref{fig:cendrosa_surfacevars}e shows that temperatures were consistently rising throughout the SOP, from July 14th to 22nd, and that this evolution is well captured by ICOLMDZOR and MesoNH.
+On average over the SOP, all simulations exhibit a warm bias, of at least 1.5° at night, where \mesoexact is closer to ICOLMDZOR than to observations, and of varying amplitude during the day. The \irr simulation has the strongest warm bias, which is consistent with the simulated turbulent fluxes, and this bias is slightly reduced in \irr. In \irrboost, it is largely improved, with a peak temperature 2°C lower than \irr, and simulated values that follow \mesomean throughout most of the day. In the evening, \irrboost even falls closer to observed values than to \mesomean, which suggests that if turbulent fluxes are correctly simulated, the structural nighttime warm bias is smaller in ICOLMDZOR than in MesoNH.
+The diurnal cycle for 2-meter specific humidity is less structured than turbulent fluxes or temperatures.
+On Fig. \ref{fig:cendrosa_surfacevars}h, MesoNH appears to present a dry bias a night, with an underestimation of specific humidity in \mesoexact as strong as in \mesomean. With ICOLMDZOR, a similar bias is present in \noirr, but it is absent in \irr and \irrboost, likely thanks to local ET enabled by irrigation.
+In daytime, \mesoexact matches observed values from 8UTC to 18UTC, and \mesomean follows a similar structure through the diurnal cycle. 
+ICOLMDZOR, on the contrary, presents an incorrect diurnal cycle of specific humidity, with an extensive drying in daytime. The strength of this drying is largest in \noirr but \irrboost still falls below the values of \mesomean, at the limit of the 25th percentile. 
+The differences between ICOLMDZOR and observed values increase largely from July 20th, where humidity drops in the simulations but not in reality or in MesoNH simulation (Fig. \ref{fig:cendrosa_surfacevars}g).
+This shows that in certain daytime conditions, increasing ET by accounting for irrigation is not sufficient to simulate a realistic 2-meter specific humidity. In particular, incorrect advection terms and surface wind can neutralise the effect of this local improvement of land-atmosphere interactions.
 
-%wind
-%speed variations small but direction shift has a clear mean DC
-%mesoNH very close to obs
-%ICOLMDZ overestimates speed, partly improved with irr (LAI or ET ??)
-%Variations of direction less pronouced in ICOLMDZ and mesoMean
-%some afternoon variations (20-21-22) absolutely not captured by LMDZ whereas seen in obs and mesoExact (discussed later)
-
-%%ELS PLANS%%
-%Very different energy partitionning : latent heat flux lower than 20W/m² whereas sensible heat flux peak be 3x larger than in La Cendrosa
-%ICOLMDZ underestimates latent heat flux and overestimates sensible heat flux
-%very little difference between 3 LAM sims (a bit of irrig in irrboost due to the shape of the routing grid vs shape of ICOLMDZOR grid)
-%mesoExact has a sharper latent heat flux peak than obs, and overestimates sens in the afternoon
-%mesoMean strongly influenced by few outliers (mean above 75th percentile) for flat, reasonable for fsens, still far from ICOLMDZOR
-
-%t2m q2m
-%mesoNH overestimates nightime temp and underestimates daytime peak (even though more fsens ?)
-%ICOLMDZOR good odg but early peak (as in La Cendrosa)
-%q2m structure in obs different from La Cendrosa, minimal peak in afternoon
-%q2m in ICOLMDZ look a bit like La Cendrosa... dominated by wind rather than local ET ?
-%mesoNH underestimates q2m at night but shows less variations in the day so catches up with obs in daytime
-
-%wind
-%Stronger than La Cendrosa (roughness), clearer DC in obs and mesoNH
-%DC structure in ICOLMDZ is good but speed underestimated
-%direction shows less variations and is quite well reproduced by models on average, although some events are clearly missed (TS)
-
-%%CCL%%
-%irrigation param in ICOLMDZ can significantly improve the results for surface vars at La Cendrosa, especially when functioning without the limitation of available water
-%Even if 4 vars don't reach the obs in irr_boost, they can be very close to the mesoMean, meaning they achieve the objective of representing the grid cell mean flux
-%differences in q2m at La Cendrosa, daytime structure and dry bias
-%possibly linked to excess wind that limits impact of local ET by mixing 
-%At Els Plans, model quite good, overestimate sens but not t2m, dry bias in q2m (not linked to excess wind here)
-%wind similar at both sites in ICOLMDZOR but differences in obs -> roughness ? larger sclae effects not seen in irr_boost because of irr structure ?
-
-%discussion
-% flat in irrboost is mostly driven by bare soil evap : realistic ? error compensation? need further developments in plant behaviour ?
-%setup not good for dynamical effects, very strong irrig for some grid cells and no irrig at Els Plans
-
+This hypothesis is corroborated by the 10-meter wind regime at La Cendrosa (Fig. \ref{fig:bothsites_wind}a-d), which is quite well structured in the beginning of the SOP with low wind speeds, but shows important variations in direction and an increased wind speed from July 20th. ICOLMDZOR seems to be capturing the variations quite well until July 19th but clearly misses part of the regime changes afterwards. 
+On average over the SOP, \mesoexact follows observations closely, and the diurnal cycle simulated by ICOLMDZOR has the same structure as \mesomean, particularly for wind direction.
+Irrigation only has an impact on the 10-meter wind speed: in \noirr it is overestimated, and that bias is partly reduced in \irr and \irrboost. This was expected since in the presence of irrigation, the vegetation is more developed and LAI is larger, leading to a larger surface drag and therefore lower surface wind speed. 
+Wind direction is not impacted by irrigation (red, blue and green lines overlap in Fig. \ref{fig:bothsites_wind}d), which was also expected since only a few grid cells are intensely irrigated in the region, which limits the possibilities of influencing the dynamics of the LAM.
 
 %fig : Cendrosa turbulent fluxes + t2m, q2m
 \begin{figure}[hbtp]
@@ -214,9 +177,81 @@ At La Cendrosa (Fig. \ref{fig:cendrosa_surfacevars}), turbulent fluxes exhibit c
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_q2m.png}
         \end{subfigure} \\
     \end{tabular}
-    \caption{Time series and mean diurnal cycle of surface turbulent fluxes at La Cendrosa (irrigated site), July 14-30 2021.}
+    \caption{Time series and mean diurnal cycle of surface turbulent fluxes at La Cendrosa (irrigated site), July 14-30 2021. The envelope for \mesomean represents the 25th and 75th percentiles of the distribution.}
     \label{fig:cendrosa_surfacevars}
 \end{figure}
+
+
+%Fig : Wind on both sites
+\begin{figure}[hbtp]
+    \centering
+    \begin{tabular}{cc}
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_wind_speed_10m.png}
+        \end{subfigure} &
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_wind_speed_10m.png}
+        \end{subfigure} \\
+        
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_wind_direction_10m.png}
+        \end{subfigure} &
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_wind_direction_10m.png}
+        \end{subfigure} \\
+
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_wind_speed_10m.png}
+        \end{subfigure} &
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_wind_speed_10m.png}
+        \end{subfigure} \\
+        
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_wind_direction_10m.png}
+        \end{subfigure} &
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_wind_direction_10m.png}
+        \end{subfigure} \\
+    \end{tabular}
+    \caption{Time series and mean diurnal cycle of wind speed and direction on both sites, July 14-30 2021. The envelope for \mesomean represents the 25th and 75th percentiles of the distribution.}
+    \label{fig:bothsites_wind}
+\end{figure}
+
+\hfill
+
+%%ELS PLANS%%
+Looking into near-surface conditions at the Els Plans site (Fig. \ref{fig:elsplans_surfacevars}) serves as a useful comparison to assess the general performance of both models in a context that is largely independent of soil moisture.
+The energy partitioning between turbulent fluxes is very different, since the average observed latent heat flux is below 20 W \persqm while the sensible heat flux is three times larger than at La Cendrosa (Fig. \ref{fig:elsplans_surfacevars}b, d). 
+The three ICOLMDZ simulations are very similar and the lines for \noirr and \irr completely overlap, while latent heat flux is slightly increased (5-10 W \persqm) in \irrboost since ORCHIDEE still computes a small irrigation for this grid cell. 
+%option:explain the details ? Demand is 0 but then interpolated to DEM, satisfied on some grid cells near the border of the hexagon and reinterpolated to ORC heaxagonal grid.
+ICOLMDZOR underestimates the already weak latent heat flux and overestimates the sensible heat flux with a peak value higher than 400 W \persqm whereas the observed one is around 300 W \persqm. 
+Regarding the MesoNH simulation, the \mesoexact diurnal cycle of latent heat flux looks a bit different from the observed one, with a higher and sharper peak around 12UTC instead of the smooth shape seen in observations. The diurnal cycle of sensible heat flux matches the observed shape but presents an overestimation from 11UTC until the evening.
+The latent heat flux of \mesomean is clearly driven by the few irrigated grid cells that fall into the hexagon (Fig. \ref{fig:liaise_sites_grid_cells}c), leading the mean value to exceed the 75th percentile. These outliers have much less influence on the sensible heat flux which shows a smaller spread and is even closer to observations than \mesoexact.
+On the contrary to La Cendrosa, it was not really expected to see the \irr or \irrboost simulation matching \mesomean because the input map of irrigated fraction was voluntarily modified to limit irrigation on this grid cell. This was done with the initial objectives of creating a constrated situation compared to La Cendrosa and achieving a better match with on-site observations, but clearly made the comparison of grid-cell average fluxes less relevant.
+%option:add that no big reservoir here so no irrigation at all if not cheating ? (and too much if cheating ?)
+
+The average diurnal cycle of 2-meter temperature (Fig. \ref{fig:elsplans_surfacevars}f) confirms the presence of a warm bias in MesoNH at night (more than 2°C), and shows a slight underestimation of the peak value in the afternoon. 
+%option: further links to fsens, LWup, Tsurf ?
+%NB : sur les deux sites, LWdn est sous estimé de ~15W/m² en journée par les deux modèles (sauf \noirr sur La Cendrosa car air plus chaud), probablement ce qui permet d'être bon sur fsens alors que flat est surestimé (manque d'énergie incidente donc pas de compensation parfaite entre les deux)
+It also highlights the very good performance of ICOLMDZOR on this non-irrigated site, although the peak is slightly too early compared to the observed one, as also seen at La Cendrosa.
+The observed evolution of 2-meter specific humidity over the day is very different from La Cendrosa, since it is highest at night and steadliy decreases throughout the day with a minimal peak at 16UTC on average over the SOP (Fig. \ref{fig:elsplans_surfacevars}h).
+As seen in La Cendrosa, MesoNH exhibits a dry bias at night but simulates correct humidity in the day. 
+The diurnal evolution simulated by ICOLMDZOR is quite similar to the one at La Cendrosa, except that at Els Plans it is more in agreement with observations and MesoNH. On average over the SOP, ICOLMDZOR strongly underestimates 2-meter specific humidity, but as visible in Fig. \ref{fig:elsplans_surfacevars}g, this is mostly due to the second part of the SOP where excessive drying occurs in all three ICOLMDZOR simulations. 
+This supports the idea that the limitations in capturing near-surface humidity variations at La Cendrosa are mostly non-local and largely induced by large-scale advection. 
+Finally, it can be noticed that irrigation has a visible impact on specific humidity, although not very large in comparison to the dry bias, also pointing to non-local effects on this variable since irrigation is very small on the Els Plans grid cell in ICOLMDOZOR.%todo:link to irrig TS
+
+Observed wind speed at Els Plans is higher than at La Cendrosa (Fig. \ref{fig:bothsites_wind}f), which relflects the influence on roughness on a site with lower vegtation (Fig. \ref{fig:liaise_sites_photos}). On average, variations in direction are of smaller amplitude than at La Cendrosa (Fig. \ref{fig:bothsites_wind}h) but some quick regime changes can still be identified on most days (Fig. \ref{fig:bothsites_wind}g).
+In ICOLMDZOR, the simulated wind speed and direction are very similar at Els Plans and La Cendrosa, which is not surprising since the grid cells are next to each other, but there are no more dfferences between the three simulations. This confirms the hypothesis that the wind speed differences at La Cendrosa were mainly the consequence of increased roughness in \irrboost and \irr. On average, ICOLMDZOR underestimates wind speed but reproduces the diurnal changes in wind direction. As seen at La Cendrosa, it captures the variations in wind direction much better in the beginning of the SOP than after the regime change on July 20th. On this second part of the SOP, a lot of regime changes are not represented by ICOLMDZOR and \mesomean, while only some of them are simulated in \mesoexact.
+
 %Fig : Els Plans turbulent fluxes + t2m, q2m
 \begin{figure}[hbtp]
     \centering
@@ -259,54 +294,17 @@ At La Cendrosa (Fig. \ref{fig:cendrosa_surfacevars}), turbulent fluxes exhibit c
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_q2m.png}
         \end{subfigure} \\
     \end{tabular}
-    \caption{Time series and mean diurnal cycle of surface turbulent fluxes at Els Plans (rainfed site), July 14-30 2021.}
+    \caption{Time series and mean diurnal cycle of surface turbulent fluxes at Els Plans (rainfed site), July 14-30 2021. The envelope for \mesomean represents the 25th and 75th percentiles of the distribution.}
     \label{fig:elsplans_surfacevars}
 \end{figure}
-%Fig : Wind on both sites
-\begin{figure}[hbtp]
-    \centering
-    \begin{tabular}{cc}
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_wind_speed_10m.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_wind_speed_10m.png}
-        \end{subfigure} \\
-        
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_wind_direction_10m.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_wind_direction_10m.png}
-        \end{subfigure} \\
 
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_wind_speed_10m.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_wind_speed_10m.png}
-        \end{subfigure} \\
-        
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_wind_direction_10m.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_wind_direction_10m.png}
-        \end{subfigure} \\
-    \end{tabular}
-    \caption{Time series and mean diurnal cycle of wind speed and direction on both sites, July 14-30 2021.}
-    \label{fig:bothsites_wind}
-\end{figure}
+\hfill
 
-\clearpage
+%%CCL%%
+The key takeaways from this comparison of near-surface variables over the SOP is that the irrigation parametrization can significantly improve the results at La Cendrosa, especially if irrigation demand is fully satisfied, as done in the \irrboost sensitivity experiment.
+In particular, even if the observations cannot be matched perfectly, near-surface variables simulated by ICOLMDZOR are very close to the \mesomean values. Considering that the MesoNH simulation is a relevant reference (ensured by the good performance of \mesoexact), it means that a good representation of grid-cell average values is achieved in the \irrboost simulation. 
+In the second part of the SOP, a dry bias in ICOLMDZOR was identified, which could be improved be not entirely corrected by irrigation. Since this limitation is also visible at the rainfed site of Els Plans, and occurs simultaneously with a change in near-surface wind regime, it was hypothesized to be mainly the consequence of non-local effects, such as insufficient moisture advection over the LIAISE study area. The next section provides a study of the vertical structure of the ABL over two days, July 15th and July 20th, to investigate the differences between the first and second part of the SOP, and characterise the impact of irrigation and surface heterogeneities in these two different contexts.
+\clearpage %todo:keep ?
 
 \section{Vertical structure of the atmosphere}
 \label{sec:iop}
@@ -324,7 +322,7 @@ The time series at La Cendrosa over both days show that July 20th was a warmer d
 At the surface, ICOLMDZOR presents a warm bias on July 15th but almost not temperature bias in the \irrboost simulation on July 20th. As previously noticed in general over the SOP, 2-m specific humidity is overestimated by ICOLMDZOR at night, but decreases during the day. In \irrboost, it remains slightly above observed and MesoNH values during the day on July 15th, but on July 20th it is underestimated.
 %link to flat
 This may partly be explained by the simulated latent heat flux.%todo:meh
-In the first part of the SOP, the alfalfa crops at La Cendrosa were still freshly cut and had not recovered their original size, LAI and transpiration levels. 
+In the first part of the SOP, the alfalfa crops at La Cendrosa were still freshly cut and had not recovered their original size, LAI and transpiration levels. %todo:rephrase to refer to previous explanation
 Since the models do not account for this information, the latent heat flux is overestimated by MesoNH (both \mesoexact and \mesomean are above the observations) and ICOLMDZOR (in the \irrboost simulation), whereas the sensible heat flux is underestimated (Fig. \ref{fig:iop_days_TS_energy}e, g). 
 On July 20th, observed latent heat flux is higher and sensible heat flux lower, even presenting negative values in the afternoon.
 It is difficult to disentangle the increase due to the vegetation growth from the increased evaporative demand due to the warming, but in \mesoexact, the increase is rather small.%blah
@@ -422,8 +420,8 @@ For both turbulent fluxes, as noticed in Section \ref{sec:sop}, the \irrboost si
 \end{figure}
 
 %todo:figure of winds at 12UTC (10m and 850hPa) ideally mesoNH and LMDZ
-
 \clearpage
+
 \subsection{Vertical profiles at 12UTC}
 %July 15th
 %noirr : ABL too high in ICOLMDZ (also visible at Els Plans), fsens too high ?
@@ -534,14 +532,23 @@ For both turbulent fluxes, as noticed in Section \ref{sec:sop}, the \irrboost si
 \clearpage
 
 \section{Importance of surface fluxes heterogeneities}
-
 \clearpage
+
 \section{Chapter conclusions}
 %irrigation without boost does not have very significant impact
 %with boostirr, manage to get much closer to observations 
 
 %no impact on Els Plans site, not a surprise
+
+
+%discussion
+% flat in irrboost is mostly driven by bare soil evap : realistic ? error compensation? need further developments in plant behaviour ?
+%irrboost very simplified test, setup not good for dynamical effects, very strong irrig for some grid cells and no irrig at Els Plans
+%setup does not allow a study of heterogeneity at Els Plans but it was not the main aim here, it rather serves as a reference for noirr case
+
+
 \clearpage
+
 \section{Chapter appendix}
 
 \begin{figure}[hbtp]
@@ -675,7 +682,4 @@ For both turbulent fluxes, as noticed in Section \ref{sec:sop}, the \irrboost si
     \caption{}
     \label{fig:iop_days_TS_surfvars_elsplans}
 \end{figure}
-
-
-
 %todo:relocate appendix
