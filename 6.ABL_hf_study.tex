@@ -64,16 +64,33 @@ First, the two simulations studied in Section \ref{sec:article1} (\noirr and \ir
 Then, sensitivity experiments were conducted to increase irrigation over grid cell corresponding to the irrigated site of La Cendrosa, leading to the simulation henceforth referred to as \irrboost. This simulation was only run over the month of July, starting from the same state as \noirr and \irr on July 1st 2021, and involved significant changes in both on the computation of irrigation demand, and on the water availability. 
 Regarding demand, the irrigated fraction was slightly increased to make sure that all of the soiltile dedicated to low vegetation and crops was considered as irrigated land. This soiltile represents 83.5\% of the grid cell, the rest being occupied by trees (12.4\%) and bare soil (4.1\%). This fraction was also reduced to 0\% on the Els Plans site to make sure there would be no irrigation demand computed in this grid cell.
 More importantly, the \betairrig parameter, which had been set to 0.6 after the offline calibration in Chapter \ref{chap:routing} to avoid excessive depletion of the groundwater and river reservoirs, was increased to 1. This means that the irrigation scheme is aiming to maintain soil moisture in the root zone (first 64cm of soil) to field capacity, making sure that plants would not be limited in their growth by available soil moisture. 
-Regarding available water, since this was a short simulation run (one month), very large amounts of water were added in the three routing reservoirs at the simulation initial state, making virtually inifinite amounts of water available for irrigation in the LIAISE region. Obviously, this method is not realistic, nor applicable to longer climate runs, and was only used to test the limits of the irrigation scheme and explore the sensitivities of land-atmosphere interactions in a context where irrigation would be driven by the water demand rather than the supply. 
-When comparing to reality, this can also be seen as a way to compensate for the absence of water adduction in the ICOLMDZOR LAM simulations, a practice that is determinant in the actual supply of irrigated water in the area. %todo:see if this explained in previous sec, refer to it
+Regarding available water, since this was a short simulation run (one month), very large amounts of water were added in the three routing reservoirs at the initial state of the simulation, making virtually inifinite amounts of water available for irrigation in the LIAISE region. Obviously, this method is not realistic, nor applicable to longer climate runs, and was only used to test the limits of the irrigation scheme and explore the sensitivities of land-atmosphere interactions in a context where irrigation would be driven by the water demand rather than the supply. 
+When comparing to reality, this can also be seen as a way to compensate for the absence of water adduction in the ICOLMDZOR LAM simulations, a practice that is determinant in the actual supply of irrigated water in the area. 
+%todo:see if this explained in previous sec, refer to it
 %todo:see also if irrigation simulation method used by tanguy has been detailed (because that's what it does too)
+The differences in simulated irrigation between \irr and \noirr are shown on Fig. \ref{fig:sop_irrigation_orchidee} and will later be discussed in Section \ref{sec:sop}.
 
-The three ICOLMDZOR LAM simulations (\noirr, \irr, \irrboost) are compared to observations and to the MesoNH simulation from July 14th to July 30th. This covers all the LIAISE SOP and allows for the stabilization of irrigation volumes in the \irrboost simulation, since no long-term spinup was conducted with this setup.
+%fig:irrigation in irr and irr_boost
+\begin{figure}[hbtp]
+    \centering
+    \begin{tabular}{cc}
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_irrigation.png}
+        \end{subfigure} &
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_irrigation.png}
+        \end{subfigure}
+    \end{tabular} 
+    \caption{Time series and mean diurnal cycle  of simulated irrigation at La Cendrosa in \irr and \irrboost simulations, July 14-30th.}
+    \label{fig:sop_irrigation_orchidee}
+\end{figure}
 
 \hfill
 
-%todo:choice of grid cell -> figure
-For each site, an ICOLMDZOR grid cell was selected for the comparison to observations. For Els Plans, the grid cell containing the exact site location seemd appropriate since it was a very lightly irrigated cell. however, the exact position of the La Cendrosa site was not in an intensely irrigated cell, which is why the neighbouring grid cell was selected.
+The three ICOLMDZOR LAM simulations (\noirr, \irr, \irrboost) are compared to observations and to the MesoNH simulation from July 14th to July 30th. This covers all the LIAISE SOP and allows for the stabilization of irrigation volumes in the \irrboost simulation, since no long-term spinup was conducted with this setup.
+For each site, an ICOLMDZOR grid cell was selected for the comparison to observations. At Els Plans, the grid cell containing the exact site location seemd appropriate since it was a very lightly irrigated cell. however, the exact position of the La Cendrosa site was not in an intensely irrigated cell, which is why the neighbouring grid cell was selected.
 
 %fig:sites and corresponding grid cells
 \begin{figure}[hbtp]
@@ -116,8 +133,8 @@ Here, surface variables simulated by ICOLMDZOR and MesoNH are compared to the ob
 
 At La Cendrosa (Fig. \ref{fig:cendrosa_surfacevars}), observed turbulent fluxes(in black) exhibit a clear diurnal cycle driven by solar irradiation, with a maximum value between 12 and 13UTC.
 In the \noirr simulation (in red), ICOLMDZOR simulates a negligible latent heat flux (Fig. \ref{fig:cendrosa_surfacevars}b) and largely overestimates the sensible heat flux (+300\% at 12UTC on Fig. \ref{fig:cendrosa_surfacevars}d). 
-These major biases are partly improved in the \irr simulation (in blue), showing that additional soil moisture brought by irrigation can really improve turbulent fluxes. However, latent heat flux simulated in \irr follows a good trajectory from 5UTC to 9UTC but then drops and remains largely underestimated until the evening. This is due to a failure of the irrigation parametrization which cannot sustain the irrigation demand throughout the day since the routing reservoirs (particularly the river reservoirs) cannot provide sufficient irrigation withdrawals. 
-In the \irrboost sensitivity experiment (in green), virtually infinite amounts of water are available in the reservoirs and ET is no longer constrained by soil moisture. Both turbulent fluxes follow a diurnal cycle that is consistent with observations, although a small underestimation of latent heat flux and an overestimation of sensible heat flux remain compared to the observations. 
+These major biases are partly improved in the \irr simulation (in blue), showing that additional soil moisture brought by irrigation can really improve turbulent fluxes. However, latent heat flux simulated in \irr follows a good trajectory from 5UTC to 9UTC but then drops and remains largely underestimated until the evening. This is due to a failure of the irrigation parametrization which cannot sustain the irrigation demand throughout the day since the routing reservoirs (particularly the river reservoirs) cannot provide sufficient irrigation withdrawals. In \irr, the irrigation volume is nearly constant throughout the day (Fig. \ref{fig:sop_irrigation_orchidee}) because the soil moisture deficit is always large but the water withdrawals are capped by available water.
+In the \irrboost sensitivity experiment (in green), there is an effectively infinite supply of water in the reservoirs, which allows irrigation to follow a structured diurnal cycle (Fig. \ref{fig:sop_irrigation_orchidee}) and removes the constraint of soil moisture on ET. Both turbulent fluxes follow a diurnal cycle that is consistent with observations, although a small underestimation of latent heat flux and an overestimation of sensible heat flux remain compared to the observations. 
 However, the turbulent fluxes in \irrboost are very close to those of \mesomean (in yellow, with the envelope representing the 25th and 75th percentiles of the distribution), suggesting that ICOLMDZOR correctly represents the average fluxes over the grid cell, which does not only include intensely irrigated areas.
 It can be noted here that \mesoexact (in purple), corresponding to the exact MesoNH grid cell of the observation site, overestimates latent heat flux on average over the period. This is mostly due to the beginning of the SOP, where the alfalfa crops at La Cendrosa were still freshly cut and had not recovered their original size, LAI and transpiration levels.
 
@@ -147,8 +164,6 @@ Wind direction is not impacted by irrigation (red, blue and green lines overlap 
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_flat.png}
         \end{subfigure} \\
-        
-        % \vspace{1em} % Add vertical space between the rows
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_sens.png}
@@ -157,7 +172,6 @@ Wind direction is not impacted by irrigation (red, blue and green lines overlap 
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_sens.png}
         \end{subfigure} \\
-
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_t2m.png}
@@ -166,8 +180,6 @@ Wind direction is not impacted by irrigation (red, blue and green lines overlap 
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_t2m.png}
         \end{subfigure} \\
-        
-        % \vspace{1em} % Add vertical space between the rows
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_q2m.png}
@@ -175,7 +187,7 @@ Wind direction is not impacted by irrigation (red, blue and green lines overlap 
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_q2m.png}
-        \end{subfigure} \\
+        \end{subfigure}
     \end{tabular}
     \caption{Time series and mean diurnal cycle of surface turbulent fluxes at La Cendrosa (irrigated site), July 14-30 2021. The envelope for \mesomean represents the 25th and 75th percentiles of the distribution.}
     \label{fig:cendrosa_surfacevars}
@@ -194,7 +206,6 @@ Wind direction is not impacted by irrigation (red, blue and green lines overlap 
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_wind_speed_10m.png}
         \end{subfigure} \\
-        
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_wind_direction_10m.png}
@@ -203,7 +214,6 @@ Wind direction is not impacted by irrigation (red, blue and green lines overlap 
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_wind_direction_10m.png}
         \end{subfigure} \\
-
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_wind_speed_10m.png}
@@ -212,7 +222,6 @@ Wind direction is not impacted by irrigation (red, blue and green lines overlap 
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_wind_speed_10m.png}
         \end{subfigure} \\
-        
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_wind_direction_10m.png}
@@ -220,7 +229,7 @@ Wind direction is not impacted by irrigation (red, blue and green lines overlap 
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_wind_direction_10m.png}
-        \end{subfigure} \\
+        \end{subfigure}
     \end{tabular}
     \caption{Time series and mean diurnal cycle of wind speed and direction on both sites, July 14-30 2021. The envelope for \mesomean represents the 25th and 75th percentiles of the distribution.}
     \label{fig:bothsites_wind}
@@ -264,8 +273,6 @@ In ICOLMDZOR, the simulated wind speed and direction are very similar at Els Pla
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_flat.png}
         \end{subfigure} \\
-        
-        % \vspace{1em} % Add vertical space between the rows
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_sens.png}
@@ -274,7 +281,6 @@ In ICOLMDZOR, the simulated wind speed and direction are very similar at Els Pla
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_sens.png}
         \end{subfigure} \\
-
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_t2m.png}
@@ -283,8 +289,6 @@ In ICOLMDZOR, the simulated wind speed and direction are very similar at Els Pla
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_t2m.png}
         \end{subfigure} \\
-        
-        % \vspace{1em} % Add vertical space between the rows
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_q2m.png}
@@ -292,7 +296,7 @@ In ICOLMDZOR, the simulated wind speed and direction are very similar at Els Pla
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
             \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_q2m.png}
-        \end{subfigure} \\
+        \end{subfigure}
     \end{tabular}
     \caption{Time series and mean diurnal cycle of surface turbulent fluxes at Els Plans (rainfed site), July 14-30 2021. The envelope for \mesomean represents the 25th and 75th percentiles of the distribution.}
     \label{fig:elsplans_surfacevars}
@@ -309,7 +313,7 @@ In the second part of the SOP, a dry bias in ICOLMDZOR was identified, which cou
 \section{Vertical structure of the atmosphere}
 \label{sec:iop}
 
-Out of the seven IOP days over which radiosoundings were conducted on both sites, two were selected (July 15th and 20th) to investigate the atmospheric behaviour of the ICOLMDZOR LAM and the impact of irrigation on the vertical structure of the ABL.
+Out of the seven IOP days over which radiosoundings were conducted on both sites, two were selected (July 15th and 20th) to further investigate the atmospheric behaviour of the ICOLMDZOR LAM and the impact of irrigation on the vertical structure of the ABL.
 
 \subsection{Surface conditions on selected IOP days}
 %todo:reorganize, describe obs for all vars and then comment on model performance ?
@@ -317,63 +321,20 @@ Out of the seven IOP days over which radiosoundings were conducted on both sites
 
 July 15th was selected as a representative IOP day for the beginning of the SOP, showing similarities with observed profiles on the 16th and 17th. As the SOP progressed, 2-meter temperature increased and the wind regime became much more changeable, with more influence from the sea breeze circulation.
 The three following IOP days (20th, 21st, 22nd) therefore presented different conditions, and this is why July 20th was also selected to analyse the impacts of irrigation on the ABL under different conditions.
-The time series at La Cendrosa over both days show that July 20th was a warmer day than July 15th (Fig. \ref{fig:iop_days_TS_energy}a,b) and that the lower atmospher was moister (Fig. \ref{fig:iop_days_TS_energy}c,d).
+
+The time series at La Cendrosa over both days (Fig. \ref{fig:iop_days_TS_surfvars}) clearly show that July 20th was a warmer and moister day than July 15th, with important variations in wind speed and direction.
 %LMDZ biases in t2m, q2m
-At the surface, ICOLMDZOR presents a warm bias on July 15th but almost not temperature bias in the \irrboost simulation on July 20th. As previously noticed in general over the SOP, 2-m specific humidity is overestimated by ICOLMDZOR at night, but decreases during the day. In \irrboost, it remains slightly above observed and MesoNH values during the day on July 15th, but on July 20th it is underestimated.
-%link to flat
-This may partly be explained by the simulated latent heat flux.%todo:meh
-In the first part of the SOP, the alfalfa crops at La Cendrosa were still freshly cut and had not recovered their original size, LAI and transpiration levels. %todo:rephrase to refer to previous explanation
-Since the models do not account for this information, the latent heat flux is overestimated by MesoNH (both \mesoexact and \mesomean are above the observations) and ICOLMDZOR (in the \irrboost simulation), whereas the sensible heat flux is underestimated (Fig. \ref{fig:iop_days_TS_energy}e, g). 
-On July 20th, observed latent heat flux is higher and sensible heat flux lower, even presenting negative values in the afternoon.
-It is difficult to disentangle the increase due to the vegetation growth from the increased evaporative demand due to the warming, but in \mesoexact, the increase is rather small.%blah
-For both turbulent fluxes, as noticed in Section \ref{sec:sop}, the \irrboost simulation matches really well the \mesomean aggregated value throughout the day. It is also the case for 2-meter temperature but not really for specific humidity and 10m winds, which might result from limitations of the dynamics rather than the LMDZ physics.
-
-% However, MesoNH does not overestimate 2-meter specific humidity, and  
-
-
-%Fig : energy fluxes Cendrosa
-\begin{figure}[hbtp]
-    \centering
-    \begin{tabular}{cc}
-        %rad fluxes
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_SWdnSFC.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_SWdnSFC.png}
-        \end{subfigure} \\
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_LWdnSFC.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_LWdnSFC.png}
-        \end{subfigure} \\
-
-        %turb fluxes
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_flat.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_flat.png}
-        \end{subfigure} \\
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_sens.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_sens.png}
-        \end{subfigure} \\
-    \end{tabular}
-    \caption{}
-    \label{fig:iop_days_TS_energy}
-\end{figure}
+At the surface, ICOLMDZOR presents a warm bias on July 15th of varying amplitude depending on irrigation intensity, but on July 20th, this bias is of smaller amplitude, and even suppressed in the daytime in the \irrboost simulation.
+As previously noticed in general over the SOP, 2-m specific humidity is overestimated by ICOLMDZOR at night, but decreases during the day. In \irrboost, it remains slightly above observed and MesoNH values during the day on July 15th, but on July 20th it is underestimated.
+%link to flat?
+This may partly be explained by the differences in latent heat flux between the two days. As mentionned in Section \ref{sec:sop}, at the beginning of the SOP, crops had recently been cut and plant transpiration was not at its usual level.
+Since the models do not account for this information, the latent heat flux is overestimated by MesoNH (both \mesoexact and \mesomean are above the observations) and ICOLMDZOR in the \irrboost simulation, whereas the sensible heat flux is underestimated (Fig. \ref{fig:iop_days_TS_energy}e, g). 
+On July 20th, the observed latent heat flux is higher and the sensible heat flux lower, even presenting negative values in the afternoon.
+For both turbulent fluxes, as noticed in Section \ref{sec:sop}, the \irrboost simulation matches really well the \mesomean aggregated value throughout the day, confirming that ICOLDMZOR properly represents the grid-cell averaged fluxes.
+However although \mesomean has the same surface fluxes as \irrboost and very close values of 2-meter tempereature, it does not present the same biases in 2-meter specific humidity. As analysed in Section \ref{sec:sop}, near-surface humidity seems to be influenced by non-local processes on July 20th and the following days, hinting to an incorrect moisture advection in the ICOLMDZOR simulations. 
+Here, the observed 10-m wind in the morning is very low and mainly comes from the North-Northwest (NNW), which is captured by MesoNH, whereas ICOLMDZOR simulates an increasingly stronger wind from the East-Southeast (ESE). 
+%option:remove mention of sea breeze in the afternoon ? Focus on general conditions and 12UTC ?
+In the afternoon, observations show a rapid change in wind direction to a southeasterly wind, associated with an increase in wind speed from less than 1 m \persec to more than 5 m \persec. That sudden variation is very likely associated with a sea breeze phenomenon bringing moist air from the Mediterranean sea. %option:note that regional topography is complexe and sea breeze sometimes interferes with Catalan PreCoastal Range... Lunel et al 2024
 
 %Fig : surface variables Cendrosa
 \begin{figure}[hbtp]
@@ -419,17 +380,66 @@ For both turbulent fluxes, as noticed in Section \ref{sec:sop}, the \irrboost si
     \label{fig:iop_days_TS_surfvars}
 \end{figure}
 
+%Fig : energy fluxes Cendrosa
+\begin{figure}[hbtp]
+    \centering
+    \begin{tabular}{cc}
+        %turb fluxes
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_flat.png}
+        \end{subfigure} &
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_flat.png}
+        \end{subfigure} \\
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_sens.png}
+        \end{subfigure} &
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_sens.png}
+        \end{subfigure} \\
+        %rad fluxes
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_SWdnSFC.png}
+        \end{subfigure} &
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_SWdnSFC.png}
+        \end{subfigure} \\
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_LWdnSFC.png}
+        \end{subfigure} &
+        \begin{subfigure}[t]{0.5\textwidth}
+            \caption{}
+            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_LWdnSFC.png}
+        \end{subfigure}
+    \end{tabular}
+    \caption{}
+    \label{fig:iop_days_TS_energy}
+\end{figure}
+
+Overall, the downward longwave radiation flux (LW down, Fig. \ref{fig:iop_days_TS_energy}g-h) summarises several differences between July 15th and July 20th. July 15th has a smaller LW down flux since the atmosphere is cooler and drier, and ICOLMDZ overestimates it because of a warm bias. In \irrboost this warm bias is much smaller, but specific humidity is overestimated so overall, the bias in LW down is only slightly reduced. 
+On July 20th, ICOLMDZOR presents a smaller warm bias (almost no bias for \irrboost) but a strong dry bias, leading to an underestimation of LW down. The comparison of vertical profiles to radisoundings at 12UTC  provides further insight into the behaviour of the atmosphere on these two days (Section \ref{sec:vertical_profiles}).
+
 %todo:figure of winds at 12UTC (10m and 850hPa) ideally mesoNH and LMDZ
+%todo:mention somewhere that this setup is not particularly tuned to relfect synoptic conditions, and that it's already impressive to be this much in agreement with obs and mesoMean
 \clearpage
 
-\subsection{Vertical profiles at 12UTC}
-%July 15th
-%noirr : ABL too high in ICOLMDZ (also visible at Els Plans), fsens too high ?
-%ICOLMDZ wind speed lower than obs but mostly agrees with mesoNH, wind direction is Ok
-%irrboost : ABL height clearly lowered, getting much closer to mesoMean, although not fully, still missing few 100m
-%irrigation only slightly reduced warm bias, moistens whole ABL (closer to mesoExact than mesoMean or obs)
+\subsection{Impact of irrigation on vertical profiles at 12UTC}
+\label{sec:vertical_profiles}
 
-%no impact at ElsPlans, not a surprise
+%July 15th
+On July 15th at 12UTC, the surface warm bias seen in ICOLMDZOR seems to be present in all the ABL, where potential temperature is 5K higher than in observations for the \noirr simulation at La Cendrosa. At Els Plans, it is 4K higher, which suggests that this is not only due to a lack of ET. This is confirmed by the profile of specific humidity, since the \noirr and \irr simulations in the lower atmosphere are really close to the observations and \mesomean values.
+%option:mention that above ABL, ICOLMDZOR is too moist ?
+On both sites, the ABL height for \noirr and \irr is about 1700 m, which is higher than in observations (800 m at La Cendrosa, 900 at Els Plans), which can be attributed to the overestimated surface sensible heat flux (Fig. \ref{fig:iop_days_TS_energy}c,  \ref{fig:iop_days_TS_energy_elsplans}c). 
+At La Cendrosa, the warm bias is reduced by 1K in the \irrboost simulation as a consequence of surface cooling, and specific humidity in the ABL increases by 1 g \perkg, beyond the observed and \mesomean value, and is similar to the \mesoexact value. 
+The ABL is also clearly lowered compared to \noirr, down to 1200 m, likely through the reduction of the sensible heat flux. This is a good improvement of the structure, but still about 250 m higher than the average ABL height seen in \mesomean, showing that over a grid cell, a good representation of the average surface fluxes does not fully translate into a good average ABL structure.
+Among the causes of such discrepancies in vertical structure are the subgrid heterogeneities (discussed in Section \ref{sec:heterogeneities}), and variables which are mostly determined by the dynamics. The vertical profiles of wind show that the direction simulated by ICOLMDZOR is correct, but that wind speed might be too low over most of the ABL, on both sites. Although the \mesomean and \mesoexact profiles are closer to ICOLMDZOR than observations, they still show more variations, which might influence mixing in the lower atmosphere and the position of the ABL top. %à compléter, creuser ?
 
 %Fig : profiles 1507 12UTC
 \begin{figure}[hbtp]
@@ -476,12 +486,21 @@ For both turbulent fluxes, as noticed in Section \ref{sec:sop}, the \irrboost si
     \label{fig:profiles_cendrosa_1507}
 \end{figure}
 
+\hfill
 
 %July 20th
-%noirr : ABL too low (even more striking at els plans), although fsens strongly overestimated, consequence of dryness ?
-%irrboost : reduces warm bias (half) and dry bias (matches obs but mesoMean even moister
-%irrboost : lower ABL, making it worse...
-%winds: link with ABL structure, missing lower jet at Els Plans
+Compared to the observed profile on July 20th at 12UTC, the \noirr simulation still presents a warm bias of 2K in potential temperature and a dry bias of 1t o 1.5 g \perkg in the ABL at La Cendrosa, whereas at Els Plans there is no bias in potential temperature but a dry bias of 2.5 g \perkg in specific humidity. 
+The ABL height in \noirr is 1200 m at La Cendrosa whereas in the radiosounding, although it remains subject to interpretation, it is more likely around 1400 m, and in MesoNH it is slightly above 1500 m.
+At Els Plans, the observed profile is easier to interpret with a clear inversion at 1500 m, which is located higher in MesoNH (around 1650 m) and much lower in ICOLMDZOR simulations (around 850 m). 
+This is all the more surprising since surface sensible heat flux is higher than observations in ICOLMDZOR simulations (even \irrboost at La Cendrosa), suggesting that the extent of the ABL in ICOLMDZOR is mostly dominated by other factors. %todo:get more insight from FredHo or Etienne
+In particular, the wind speed at La Cendrosa is two to three times higher in ICOLDMZOR than the observed one in the first 500 m of the atmosphere (and this is the case throughout all morning).%todo:link to appendix fig
+It is similar at Els Plans until 11UTC, but at 12UTC (shown here), a strong southeasterly wind is observed up to 800 m, and although the direction is rather correct in ICOLMDZOR and MesoNH, the rapid increase in wind speed is not captured.
+
+In this context, the irrigation at La Cendrosa enables a large improvements of the warm and dry biases in \irrboost. Potential temperature is decreased by 1K, while all the mixed layer benefits from the surface moistening, allowing specific humidity to match the radiosounding profile. 
+At La Cendrosa, there seems to be an internal sublayer up to 500 m, cooler than the rest of the mixed layer. It is also visible in the MesoNH simulation, where it is also moister, but this type of process is unsurprisingly not captured by ICOLMDZOR, and potential temperature is matches observations better between 500 m and 900 m.
+The performance is not as satisfying regarding ABL structure however since the height of the mixed layer is clearly reduced to 900 m in \irrboost, worsening the limitation identified in \noirr. 
+
+%Els Plans : moister than La Cendrosa : advection process ?
 
 %Fig : profiles 2007 12UTC
 \begin{figure}[hbtp]
@@ -529,9 +548,27 @@ For both turbulent fluxes, as noticed in Section \ref{sec:sop}, the \irrboost si
     \label{fig:profiles_cendrosa_2007}
 \end{figure}
 
+\hfill
+
+The first takeaway from this analysis of vertical profiles is that the impact of irrigation in \irrboost is not limited to surface turbulent fluxes or 2-meter temperature and specific humidity, but also impacts to the atmospheric boundary layer.
+
+This allows irrigation to improve the warm bias in the ABL on both days, reducing potential temperature by 1K. 
+On July 15th, three elements suggest that the 5K bias is not only due to local processes: 2-m temperature is not completely corrected in \irrboost even though latent heat flux is overestimated, the warm bias is also very present at Els Plans and specific humidity is rather correct on both sites. Therefore, it is not very surprising that the impact of irrigation, through the surface energy budget, is not sufficient to reduce all the bias in the ABL. 
+On July 20th however, 2-meter temperature matches observations and \mesomean really well in \irrboost and potential temperature simulated by ICOLMDZOR is in good agreement with observations at Els Plans, the specific humidity in the ABL matches the radiosounding at 12UTC, although it is still underestimated at 2-meter. This suggests that the temperature bias is mostly due to local processes and a lack of soil moisture in \noirr, which is why it is largely reduced in the ABL over La Cendrosa.
+%option : It can be noted here that on this day, MesoNH seems to underestimate temperature
+In ICOLMDZOR, the impact of irrigation on potential temperature and specific humidity in the ABL is similar for the two days considered in absolute value, but the relevance compared to existing biases of ICOLMDZOR depends on the situation.
+Regarding ABL height, the same conclusion can be made, on July 15th where ABL height was inisitally too high, irrigation lowers it by 400 m, making it much closer to the \mesomean value, but on the 20th it is lowered by 300 m even though it was already lower than observations and MesoNH.
+
+In general, the impacts on wind speed and direction is quite negligible, except for wind speed around 1000 m above ground level at La Cendrosa on July 20th, where it follows the top of the boundary layer.
+The impacts on the Els Plans site are also very small, apart from a small moistening (at most 0.5 g \perkg) of the ABL, visible on both days, which is made possible by advection of moister air from neighbouring irrigated grid cells.
+
+To further investigate the mixing in the ABL and underestand what control its vertical extension, the influence of subgrid heterogeneities was explored.
+The main objective was to determine whether the average surface flux approach used in ICOLDMZOR was relevant to realistically propagate impacts of irrigation in the ABL, or if major drivers of ABL development were missed by not accounting for subgrid flux heterogeneities. 
+
 \clearpage
 
 \section{Importance of surface fluxes heterogeneities}
+\label{sec:heterogeneities}
 \clearpage
 
 \section{Chapter conclusions}
@@ -545,6 +582,7 @@ For both turbulent fluxes, as noticed in Section \ref{sec:sop}, the \irrboost si
 % flat in irrboost is mostly driven by bare soil evap : realistic ? error compensation? need further developments in plant behaviour ?
 %irrboost very simplified test, setup not good for dynamical effects, very strong irrig for some grid cells and no irrig at Els Plans
 %setup does not allow a study of heterogeneity at Els Plans but it was not the main aim here, it rather serves as a reference for noirr case
+%how much of the positive impacts of irrigation are error compensation ?
 
 
 \clearpage
