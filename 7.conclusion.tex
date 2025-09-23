@@ -1,1 +1,73 @@
-C'était bien.
+\section{Synthesis}
+Résumé des problématiques dans la littérature actuelle
+
+Feedback atmospherique dans GCM ?
+
+\hfill\\
+Main outputs of my work
+
+First use case of \native routing (obviously first use case with the LAM)
+%validated a new version against previous one
+
+First use of \native with 2km DEM
+% showed the need for a new choice of parameters
+% routing parameters only get you so far, afterwards irrigation is the main driver (and atmospheric forcing a little bit)
+
+First use case of LAM for land surface-atmosphere interactions
+% it works
+% only ERA5 lateral forcing and quite good performance overall
+% identification of some biases 
+
+Irrigation in ICOLMDZOR with atmospheric feedbacks
+% temperature impacts are very local but mositening impacts are more diffuse
+% recycling exists but is very partial
+% stabilization dominates in intensely irrigated area so recycling happens elsewhere
+
+\section{Perspectives}
+Limitations
+
+Irrigation is not performing well everywhere
+
+Impacts on river discharge are still error compensation since lack of seasonality
+
+Local impacts might also be due to error compensation (evapnu vs tran)
+
+ABL impacts are not visible without boosting irrigation
+
+\hfill\\
+Model improvements
+
+More water for irrigation
+% more appropriate routing scheme tuning with GW ressources evaluation
+% routing interp_HTU -> more relevant scale than just DEM
+% Inclusion of adduction in the irrigation scheme -> non-local ressources, especially if routing grid is very small (less problematic with routing HTU)
+% Articulte these elements with river dam representation, limit error 
+
+% irrig with beta=0.9 globally probably depletes reservoirs too fast in other semi-arid climates
+
+LAM with CMIP
+
+LMDZ new physics (CMIP7)
+
+Appropriate nudging options inside the LAM to study surface processes
+
+\hfill\\
+Further work that could be done from here
+
+Better understanding of the LAM and new possibilities
+% more extensive anlaysis of the influence of forcing on the LAM 
+% simplified metrics/test to setup a new configuration
+% LAM with CMIP format output -> lots of possibilities for studies under CC
+% explore changes in LAM resolution (resolved vs parametrized ?)
+
+ABL
+% hopefully no need to cheat on the irrigation if irrig is fixed
+% similar study on areas with larger irrigation patches to look for dynamical effects (mousson Guimberteau)
+%explore heterogeneity of wind speed (roughness, lack of thermals ?)
+
+Exploit LIAISE data better
+% LIAISE 1D case (proper synoptic forcing and initialisation) with a focus on LA interactions 
+%LAM centered on LIAISE 
+
+More down-to-Earth water ressources analysis
+% give more meaning to 
