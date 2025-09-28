@@ -1,27 +1,85 @@
-\section{Synthesis}
-Résumé des problématiques dans la littérature actuelle
+\section{Synthesis and discussion}
 
-Feedback atmospherique dans GCM ?
+%Résumé des problématiques dans la littérature actuelle
 
-\hfill\\
-Main outputs of my work
+The reliance of agriculture on irrigation has been rapidly increasing in the 20th century and is still on the rise. It is projected that irrigation demand will keep increasing in the future, especially as it is often regarded as an adaptation strategy to compensate for the effects of climate change, namely higher temperatures and disrupted precipitation patterns, and maintain high crop yields.
+However, it is already responsible for the large majority of freshwater withdrawals worldwide, and many concerns arise regarding the depletion of groundwater ressources and regional tensions over water management challenges. This is particularly the case for semi-arid regions like the Iberian Peninsula (and the rest of the Mediterranean basin), where the effects of climate change are already visible, and precipitation decreases are expected in the 21st century.
+To account for its impacts on the continental water cycle and provide relevant insights for current and future management policies, NWP models and ESMs have been increasingly incorporating irrigation parametrizations, as well as mesoscale research models.
+This brought the demonstration that its effects were not limited to withdrawals and also included atmospheric feedbacks on evapotranspiration and precipitation, through near-surface cooling and moistening, and changes in the structure of the ABL and regional winds.
+However, this is still a recent evolution for ESMs as most of them did not represent irrigation in their CMIP6 simulations, including the IPSL-CM6.
+The representation of these atmospheric feedbacks in climate models is therefore still an active research field, paving the way for a complete assessment of its impacts on the water cycle and the atmosphere.
 
-First use case of \native routing (obviously first use case with the LAM)
-%validated a new version against previous one
+\hfill
 
-First use of \native with 2km DEM
-% showed the need for a new choice of parameters
-% routing parameters only get you so far, afterwards irrigation is the main driver (and atmospheric forcing a little bit)
+This thesis presented a study of the impacts of irrigation with the ICOLMDZOR LAM over the Iberian Peninsula. 
+It constitutes the first use-case of this regional climate model focused on land-atmosphere interactions, as well as the first use-case of a new river routing scheme designed for the global IPSL-CM7.
 
-First use case of LAM for land surface-atmosphere interactions
-% it works
+\hfill
+% Main outputs of my work and discussion
+
+%% offline routing evaluation and calibration %%
+In Chapter \ref{chap:routing}, offline simulations with the ORCHIDEE LSM provided a general assessment of the new routing scheme, \native, compared to the preexisting version, \std, with the same parameter set and 0.5° resolution DEM as input. The \std routing served as a reference since it had been used and validated in multiple studies with ORCHIDEE, in particular to develop and evaluate the irrigation scheme \citep{arboleda-obando_validation_2024}.
+Appart from differences in implementation on coastal grid cells, and a few flow direction changes in the processing of the DEM, \native was shown to reproduce the behaviour of \std for reservoir volumes, river discharge and irrigation volumes.
+It was then used with a 1-arcminute resolution DEM, enabling better correspondance with discharge station and higher resolutions in ORCHIDEE. 
+A tuning of the routing parameters was conducted to match observed discharge in the main rivers of the Iberian Peninsula and enable the irrigation scheme to withdraw sufficient amounts from the reservoirs.
+An adequate representation of the seasonal river discharge cycle was achieved, establishing a satisfactory parameter set. However, sensitivity analyses showed that the relevance of a finer parameter calibration would be mitigated by the dependency on the irrigation parametrization.
+Therefore, the target parameter for irrigation was also adjusted to a lower value than in the global model, to reduce irrigation withdrawals and better represent regional irrigation practices.
+% LIMITATIONS: could have used more discharge stations (and more objective metrics....), a more formal framework for parameter calibration, GW observations (not only previous routing as reference)
+
+%% LAM configuration for regional modelling over IP %%%
+After identifying an appropriate set of parameters for the new river routing scheme in ORCHIDEE, coupled simulations with the ICOLMDZOR LAM were run over multiple years, using ERA5 data as lateral boundary conditions for the LAM.
+From a technical point of view, this demonstrated that this new modelling tool could be used to study land-atmosphere interactions and the water cycle on climatic time scales, whereas previous use cases simulated only a few months and did not include any routing scheme.
+However, the availability of ERA5 data on the IPSL or CNRS supercomputers in the proper format limited the simulations to 13 years, from 2010 to 2022. 
+Before using these coupled simulations to study the impacts of irrigation, some tests were conducted on the size of the LAM domain to identify the most adapted setup for this study. 
+This work is presented in Chapter \ref{chap:forcing} along with some investigations of the influence of the lateral boundary conditions on the results of the LAM over the region, conducted with Mariame Maiga during her master's internship. 
+By comparing the structures of several land-atmosphere coupling variables with the ERA5 reanalysis, physical inconsistencies were identified in the transition zone of the LAM, that propagated to the central \textit{free zone}.
+The main hypothesis was that in the transition zone where the nudging towards ERA5 forcing values is strong, the LAM did not behave normally, and was not able to condensate water to form clouds and precipitation. This was attributed to discrepancies between the physics of the model used to produce the ERA5 reanalysis and the LMDZ physics of the LAM.  
+Simulations with larger domains showed that the inconsistencies were indeed mainly localized in the transition zone and confirmed their concentric structure, with a progressive decrease of biases towards the center. It also made clear that using a larger domain largely decreases their direct influence on the Iberian Peninsula and, of the three domain size explored, the intermediate one was considered to satisfyingly reduce their impact on this continental region.
+Simulation experiments using outputs from ICOLMDZOR global simulations as lateral forcing corroborated the hypothesis that discrepancies with ERA5 were the main origin of the inconsistencies in the transition zone. Although they did not completely disappear, the biases in precipitation and downwelling radiative flux on the edges of the domain were greatly improved. However, using this source of forcing also amplified existing biases of the ICOLMDZOR model over the Iberian Peninsula, such as excessive winter precipitation over mountainous regions.
+Finally, a simplified exploration of the sensitivity of the LAM to the sampling frequency of the LAM showed that using 6-hourly instead of hourly forcing data could strengthen most of the biases of the model, particularly leading to underestimated precipitation over the Peninsula.
+Considering the short span of the interhsip (4 months) and some technical issues encountered while running LAM simulations in all the different setups, these results still require further consolidation. Nevertheless, they contributed to a greater understanding of the limitations of the ICOLMDZOR LAM and identified good practices for the IPSL community that will help designing new regional climate modelling experiments in the future.
+
+\hfill
+
+%% Coupled sims %%
 % only ERA5 lateral forcing and quite good performance overall
-% identification of some biases 
+Once a proper setup was identified for this study, the impacts of irrigation on climate and on the water cycle were analysed by comparing a simulation with irrigation to the another one without it, over the period 2010-2022.
+These results are presented in Chapter \ref{chap:monthly} and were also included in an article submitted to Earth System Dynamics, currently under review.
+This was the first evaluation of the new version of the routing and irrigation scheme coupled to an amotpsheric model. It was shown to simulate adequate irrigated volumes in the Ebro Valley, where it is mostly dependent on surface water withdrawals, and a consistent seasonal cycle, although it did not represent winter irrigation due to modelling assumptions.
+However, in the Guadiana and Guadalquivir basins, where groundwater provides most of the irrigation withdrawals, the model was not able to satisfy the irrigation demand due to the depletion of the groundwater reservoir in the presence of irrigation. River discharge was evaluated at 18 stations in the five major river basins, and was generally improved by irrigation withdrawals which compensated for overestimations over most of the year.
+Several biases in river discharge remain and were linked to overestimated precipitation in mountainous regions and to the absence of river dams in the model.
+Atmospheric impacts were most visible in summer, when irrigation is the largest, and in the Ebro valley. In JJA, they consist in a change in energy partitionning between turbulent fluxes over intensely irrigated areas (by up to 50 W \persqm), associated with a near-surface cooling (up to -0.35°C) and a lowering of the ABL (up to -100 m). Moistening of the air is found to extend to less intensely irrigated zones in the center of the Peninsula (Tagus and Douro basins), and to induce a lowering of the LCL over these areas and the Ebro valley (up to -250 m). The only feedback on precipitation however, occurs in the mountains ranges surrounding the Ebro valley, where it is associated by increases in CAPE and moisture convergence. 
+This suggests a dominant effect of ABL stabilization in the irrigated zones, which was confirmed by analysing precipitation on average over the Peninsula. Evidence of a partial recycling of atmospheric moisture is provided, but it is shown to be mostly nonlocal, as it occurs over lightly irrigated areas, which included mountainous regions.
+% LIMITATIONS : too short, not the best lateral forcing option (?), ET and P still not great, irrigation in half of the domain is limited by reservoir volumes
 
-Irrigation in ICOLMDZOR with atmospheric feedbacks
-% temperature impacts are very local but mositening impacts are more diffuse
-% recycling exists but is very partial
-% stabilization dominates in intensely irrigated area so recycling happens elsewhere
+%% Coupled sims in the future %%
+%todo:compléter/changer selon si j'inclus les simus de Frédérique au dernier moment, notamment le fait que l'irrig était partout et pas juste dans l'Ebre...
+In the context of Mariame Maiga's interhsip, a similar experiment was designed to study the impacts of irrigation over the region under climate change, leveraging the experience from the simulations of Chapter \ref{chap:forcing} to use global ICOLDMZOR simulations of future climate as a source for the lateral boundary conditions of the LAM. The period 2050-2062 was studied under the SSP5-8.5 scenario, with two simulations, with and without irrigation, and a simulation without irrigation under present climate (2010-2022), also conducted with forcing data from a global ICOLMDZOR simulation.
+This allowed to describe the effects of climate change over the region, independently of irrigation, such as a 2-3°C warning, decreases in evapotranspiration and relative humidity over most of the domain, and large decreases in precipitation, most marked over the northen mountain ranges. 
+The impacts of irrigation in the future compensate for the changes in evapotranspiration, but less evenly for those in relative humidity, and very partially for the increase in temperature (-0.5°C at most). As found in the present climate, ABL stabilization seems to be the dominant process in the irrigated valleys, while increases in atmospheric moisture only translate to more precipitation in mountainous regions.
+The aridification induced by climate change was also quantified using the P/PET aridity index.
+It showed a shift of several humid or sub-humid regions to a semi-arid climate, and an expansion of arid areas from the valley floor to most of the Ebro, Guadiana and Guadalquivir basins. 
+Although these valleys are expected to receive large irrigation volumes in the future, this barely impacts the aridification process, since PET is only slightly reduced while precipitation does not increase in the valleys.
+Although this study remained preliminary in many regards, it constituted a first implementation of future regional climate simulations with the LAM, opening new prospects with this tool. The results are not available at the time of writing this manuscript, but it will be followed by a proper comparisons of longer simulations, with  similar setups for irrigation and river routing over both periods. %todo:check si j'ai mentionné les pb de routage...
+
+\hfill
+
+%% LIAISE
+In Chapter \ref{chap:liaise}, to complement these analyses of the impact of irrigation on the water cycle and climate on annual and seasonal scales, hourly outputs over the month of July 2021 were analysed and compared to observation data from the LIAISE field campaign and Meso-NH simulations (at 2-kilometer resolution) over the Ebro valley. 
+This campaign was specifically design to quantify the influence of irrigation, and of the surface heterogeneities it creates, on land-atmosphere coupling variables and the structure of the ABL.
+Corresponding ICOLMDZOR grid cells were identified for two observation sites located in an irrigated field (La Cendrosa) and in a rainfed area (Els Plans).
+The first comparison in La Cendrosa showed that irrigation demand could not be sustained throughout the day by ORCHIDEE, due to a lack of available water in the reservoirs. This was to be expected as the actual supply of water over the LIAISE area mainly relies on the canal d'Urgell, and such advection infrastructure is not represented in the model.
+A sensibility experiment was therefore conducted, with virtually infinite amounts of water, to assess the impacts of irrigation if it was not limited by constraints on withdrawals.
+This simulation showed great improvements of surface turbulent fluxes and 2-meter temperature and humidity with regards to observations over the two weeks of the LIAISE SOP.
+As a small underestimation of latent heat flux and overestimation of sensible heat flux remained, the Meso-NH grid cells contained into the ICOLMDZOR grid cell was also used as a reference and showed that ICOLMDZOR was adequately representing average surface fluxes over the grid cell, which is not fully irrigated.
+The effects of the ABL were then investigated on two IOP days (15 July and 20 July), selected for their contrasting situations, both representative of a portion of the SOP.
+The cooling and moistening effects of irrigation at La Cendrosa were found to propagate to the ABL on both days simimarly, with a 1K decrease in potential temperature and a 1-1.5 g \perkg increase in specific humidity. A moistening of smaller amplitude (0.5 g \perkg at most) was also identified at Els Plans, constituting the only non-local impact of irrigation.
+At La Cendrosa, the ABL was also lowered on both days in the presence of intense irrigation by more than 300 m.
+This impacts, although consistent on both days, do not always correspond to relevant improvements. On 15 July, the ABL was excessively high and the lowering lead to a much better agreement with the mean ABL simulated by Meso-NH, but the values of potential temperature and specific humidity were not really improved. On 20 July, the values of both variables in the ABL were improved, but the structure, which was already lower than the observed one, did not benefit from the lowering induced by irrigation.
+These differences stressed the influence of external factors which cannot be locally corrected by irrigation such as large-scale advection terms, and the direction of the background wind. This was to be expected in comparisons at such fine time scales since the realism of the LAM only relies on the lateral forcing by ERA5.
+The limitations in representing the impacts of irrigation were also linked to sub-grid heterogeneities, mainly of surface fluxes on 15 July, where the average surface flux was found to be insufficient to represent the ABL over the area; and of winds on 20 July, with a sharp front simulated by Meso-NH at the border between rainfed and irrigated areas that contributed to the development of the ABL and was not accounted for in ICOLDMZOR.
+% LIMITATIONS : no analysis of SM, can't analyse heterog at Els Plans, irrig sensitivity experiment very simplified so not suitable for regional analysis, only grid cells (because irrigation in rainfed area and a very irrealistic patch)
+% discussion Beta=1 yields "perfect" LE, ok because flood irrigation ! 
 
 \section{Perspectives}
 Limitations
@@ -64,10 +122,13 @@ ABL
 % hopefully no need to cheat on the irrigation if irrig is fixed
 % similar study on areas with larger irrigation patches to look for dynamical effects (mousson Guimberteau)
 %explore heterogeneity of wind speed (roughness, lack of thermals ?)
+%exploit simulations with high frequency outputs over the rest of the IP/Ebro valley, could be done, and not require irr_boost like on LIAISE zone
 
 Exploit LIAISE data better
 % LIAISE 1D case (proper synoptic forcing and initialisation) with a focus on LA interactions 
 %LAM centered on LIAISE 
 
 More down-to-Earth water ressources analysis
-% give more meaning to 
+% give more meaning to GW modelling
+
+%the end
