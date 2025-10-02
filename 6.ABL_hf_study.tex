@@ -40,13 +40,13 @@ More recently, the Segarra-Garrigues canal was been built to the east of the Urg
     \centering
     \begin{subfigure}{\textwidth}
         \centering
-        \includegraphics[width=0.8\linewidth]{images/chap5/liaise_area_ebro_lunel.png}
+        \includegraphics[width=0.8\linewidth]{images/chap6/liaise_area_ebro_lunel.png}
         \caption{Orography of the Ebro basin region. The three mountain ranges are indicated in white, and the black box corresponds to the zoom of (b)}
     \end{subfigure}
     %
     \begin{subfigure}{\textwidth}
         \centering
-        \includegraphics[width=0.7\linewidth]{images/chap5/liaise_area_zoom_lunel.png}
+        \includegraphics[width=0.7\linewidth]{images/chap6/liaise_area_zoom_lunel.png}
         \caption{Satellite visible image of the Segre river basin and its main topographic features taken by LandSat 7 in July 2021. The Segre and Ebro rivers are shown in dark blue, the Urgell canal in cyan and the recently built Segarra-Garrigues canal in black. The mountain ranges are in light brown. In red are the two main cities of the area and in yellow are the main instrumented sites of the LIAISE campaign.}
     \end{subfigure}
     \caption{Overview of the LIAISE study area. Both figures were taken from \citet{lunel_interactions_2024}.}
@@ -71,7 +71,7 @@ Over the SOP, meteorological conditions were described as dry and hot, and only 
 
 \begin{figure}[hbtp]
     \centering
-    \includegraphics[width=\textwidth]{images/chap5/liaise_sites_picture.png}
+    \includegraphics[width=\textwidth]{images/chap6/liaise_sites_picture.png}
     \caption{Instrumented sites of La Cendrosa (a) and Els Plans (b) in July 2021 \citep[taken from ][]{lunel_interactions_2024}.}
     \label{fig:liaise_sites_photos}
 \end{figure}
@@ -117,14 +117,14 @@ More importantly, the \betairrig parameter, which had been set to 0.6 after the 
     \begin{tabular}{cc}
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_irrigation.png}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_cendrosa_irrigation.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_irrigation.png}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_cendrosa_irrigation.png}
         \end{subfigure}
     \end{tabular} 
-    \caption{Time series and mean diurnal cycle  of simulated irrigation at La Cendrosa in \irr and \irrboost simulations, 14-30 July.}
+    \caption{Time series and mean diurnal cycle  of irrigation simulated by ICOLMDZOR at La Cendrosa in \irr and \irrboost simulations, 14-30 July.}
     \label{fig:sop_irrigation_orchidee}
 \end{figure}
 
@@ -143,18 +143,18 @@ For each site, an ICOLMDZOR grid cell was selected for the comparison to observa
     \begin{tabular}{cc}
         \begin{subfigure}[t]{0.44\textwidth}
             \caption{Visible image of the LIAISE study area as seen by \textit{Sentinel-2} on 22 July 2021.}
-            \includegraphics[width=\textwidth]{images/chap5/liaise_overview_lunel.png}
+            \includegraphics[width=\textwidth]{images/chap6/liaise_overview_lunel.png}
         \end{subfigure} &
 
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{Monthly average irrigation simulated by ORCHIDEE (July 2021, \irr simulation).}
-            \includegraphics[width=\textwidth]{images/chap5/liaise_sites_irrig_ORC.png}
+            \includegraphics[width=\textwidth]{images/chap6/liaise_sites_irrig_ORC.png}
         \end{subfigure} 
     \end{tabular} 
 
     \begin{subfigure}[t]{0.75\textwidth}
             \caption{Average latent heat flux simulated by Meso-NH (14-30 July 2021, with irrigation). Red hexagons show the ICOLMDZOR grid cells for each site.}
-            \includegraphics[width=\textwidth]{images/chap5/liaise_sites_mean_mesoNH.png}
+            \includegraphics[width=\textwidth]{images/chap6/liaise_sites_mean_mesoNH.png}
         \end{subfigure} 
     
     \caption{Correspondance between actual location of La Cendrosa and Els Plans sites (red dots), selected ICOLMDZOR grid cells (centered on green dots), and Meso-NH grid. (a) was taken from \citet{lunel_irrigation_2024}.}
@@ -172,7 +172,7 @@ On Fig. \ref{fig:liaise_sites_grid_cells}c, the two hexagonal ICOLMDZOR grid cel
 
 Here, surface variables simulated by ICOLMDZOR and Meso-NH are compared to the observations on both sites from 14 to 30 July, the span of the Meso-NH simulation, which corresponds to the LIAISE SOP.
 
-\subsection*{La Cendrosa}
+\subsubsection*{La Cendrosa}
 At La Cendrosa (Fig. \ref{fig:cendrosa_surfacevars}), observed turbulent fluxes (in black) exhibit a clear diurnal cycle driven by insolation, with a maximum value between 12 and 13UTC.
 In the \noirr simulation (in red), ICOLMDZOR simulates a negligible latent heat flux (Fig. \ref{fig:cendrosa_surfacevars}b) and largely overestimates the sensible heat flux (+300\% at 12UTC on Fig. \ref{fig:cendrosa_surfacevars}d). 
 These major biases are partly improved in the \irr simulation (in blue), showing that additional soil moisture brought by irrigation can really improve turbulent fluxes. However, latent heat flux simulated in \irr follows a good trajectory from 5UTC to 9UTC but then drops and remains largely underestimated until the evening. This is due to a failure of the irrigation parametrization which cannot sustain the irrigation demand throughout the day since the routing reservoirs cannot provide sufficient water volumes for withdrawals. In \irr, the irrigation volume is nearly constant throughout the day (Fig. \ref{fig:sop_irrigation_orchidee}) because the soil moisture deficit is always large but the water withdrawals are capped by available water.
@@ -200,39 +200,39 @@ Wind direction is not impacted by irrigation (red, blue and green lines overlap 
     \centering
     \begin{tabular}{cc}
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Latent heat flux}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_flat.png}
+            \caption{Latent heat flux (La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_cendrosa_flat.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Mean diurnal cycle of latent heat flux (14-30 July)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_flat.png}
+            \caption{Mean diurnal cycle of latent heat flux\\(14-30 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_cendrosa_flat.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Sensible heat flux}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_sens.png}
+            \caption{Sensible heat flux (La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_cendrosa_sens.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Mean diurnal cycle of sensible heat flux (14-30 July)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_sens.png}
+            \caption{Mean diurnal cycle of sensible heat flux\\(14-30 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_cendrosa_sens.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{2-meter temperature}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_t2m.png}
+            \caption{2-meter temperature (La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_cendrosa_t2m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Mean diurnal cycle of 2-meter temperature (14-30 July)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_t2m.png}
+            \caption{Mean diurnal cycle of 2-meter temperature\\(14-30 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_cendrosa_t2m.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{2-meter specific humidity}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_q2m.png}
+            \caption{2-meter specific humidity (La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_cendrosa_q2m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Mean diurnal cycle of 2-meter specific humidity (14-30 July)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_q2m.png}
+            \caption{Mean diurnal cycle of 2-meter specific humidity\\(14-30 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_cendrosa_q2m.png}
         \end{subfigure}
     \end{tabular}
-    \caption{Time series and mean diurnal cycle (14-30 July) of surface turbulent fluxes, temperature and specific humidity at La Cendrosa (irrigated site). The envelope for \mesomean represents the 25th and 75th percentiles of the distribution.}
+    \caption{Time series and mean diurnal cycle (14-30 July) of surface turbulent fluxes (a-d), temperature (e-f) and specific humidity (g-h) at La Cendrosa (irrigated site). The envelope for \mesomean represents the 25th and 75th percentiles of the distribution.}
     \label{fig:cendrosa_surfacevars}
 \end{figure}
 
@@ -243,35 +243,35 @@ Wind direction is not impacted by irrigation (red, blue and green lines overlap 
     \begin{tabular}{cc}
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{10-meter wind speed (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_wind_speed_10m.png}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_cendrosa_wind_speed_10m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Mean diurnal cycle of 10-meter wind speed (14-30 July, La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_wind_speed_10m.png}
+            \caption{Mean diurnal cycle of 10-meter wind speed\\(14-30 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_cendrosa_wind_speed_10m.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{10-meter wind direction (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_cendrosa_wind_direction_10m.png}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_cendrosa_wind_direction_10m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Mean diurnal cycle of 10-meter wind direction (14-30 July, La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_cendrosa_wind_direction_10m.png}
+            \caption{Mean diurnal cycle of 10-meter wind direction\\(14-30 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_cendrosa_wind_direction_10m.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{10-meter wind speed (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_wind_speed_10m.png}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_elsplans_wind_speed_10m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Mean diurnal cycle of 10-meter wind speed (14-30 July, Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_wind_speed_10m.png}
+            \caption{Mean diurnal cycle of 10-meter wind speed\\(14-30 July - Els Plans)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_elsplans_wind_speed_10m.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{10-meter wind direction (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_wind_direction_10m.png}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_elsplans_wind_direction_10m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Mean diurnal cycle of 10-meter wind direction (14-30 July, Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_wind_direction_10m.png}
+            \caption{Mean diurnal cycle of 10-meter wind direction\\(14-30 July - Els Plans)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_elsplans_wind_direction_10m.png}
         \end{subfigure}
     \end{tabular}
     \caption{Time series and mean diurnal cycle of 10-meter wind speed and direction on both sites, 14-30 July 2021. The envelope for \mesomean represents the 25th and 75th percentiles of the distribution.}
@@ -280,7 +280,7 @@ Wind direction is not impacted by irrigation (red, blue and green lines overlap 
 
 \clearpage
 
-\subsection*{Els Plans}
+\subsubsection*{Els Plans}
 Looking into near-surface conditions at the Els Plans site (Fig. \ref{fig:elsplans_surfacevars}) serves as a useful comparison to assess the general performance of both models in a context that is much more independent of soil moisture.
 The energy partitioning between turbulent fluxes is very different, since the average observed latent heat flux is below 20 W \persqm while the sensible heat flux is three times larger than at La Cendrosa (Fig. \ref{fig:elsplans_surfacevars}b, d). 
 The three ICOLMDZ simulations are very similar and the lines for \noirr and \irr completely overlap, while latent heat flux is slightly increased (5-10 W \persqm) in \irrboost because ORCHIDEE still computes a small irrigation for this grid cell. This is due to the back-and-forth interpolation between the hexagonal ORCHIDEE grid (where irrigation demand is computed, and water is eventually infiltrated) and the regular routing grid (where irrigation is computed), which can lead to small irrigation volumes even if the initial demand is zero.
@@ -310,43 +310,43 @@ In ICOLMDZOR, the simulated wind speed and direction are very similar at Els Pla
     \centering
     \begin{tabular}{cc}
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Latent heat flux}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_flat.png}
+            \caption{Latent heat flux (Els Plans)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_elsplans_flat.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Mean diurnal cycle of latent heat flux (July 14-30)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_flat.png}
+            \caption{Mean diurnal cycle of latent heat flux\\(14-30 July - Els Plans)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_elsplans_flat.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Sensible heat flux}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_sens.png}
+            \caption{Sensible heat flux (Els Plans)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_elsplans_sens.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Mean diurnal cycle of sensible heat flux(July 14-30)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_sens.png}
+            \caption{Mean diurnal cycle of sensible heat flux\\(14-30 July - Els Plans)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_elsplans_sens.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{2-meter temperature }
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_t2m.png}
+            \caption{2-meter temperature (Els Plans)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_elsplans_t2m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Mean diurnal cycle of 2-meter temperature (July 14-30)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_t2m.png}
+            \caption{Mean diurnal cycle of 2-meter temperature\\(14-30 July - Els Plans)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_elsplans_t2m.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{2-meter specific humidity }
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/time_series_elsplans_q2m.png}
+            \caption{2-meter specific humidity (Els Plans)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_elsplans_q2m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Mean diurnal cycle of 2-meter specific humidity (July 14-30)}
-            \includegraphics[width=\textwidth]{images/chap5/SOP_TS_DC/diurnal_cycle_elsplans_q2m.png}
+            \caption{Mean diurnal cycle of 2-meter specific humidity\\(14-30 July - Els Plans)}
+            \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_elsplans_q2m.png}
         \end{subfigure}
     \end{tabular}
-    \caption{Time series and mean diurnal cycle (14-30 July) of surface turbulent fluxes, temperature and specific humidity at Els Plans (rainfed site). The envelope for \mesomean represents the 25th and 75th percentiles of the distribution.}
+    \caption{Time series and mean diurnal cycle (14-30 July) of surface turbulent fluxes (a-d), temperature (e-f) and specific humidity (g-h) at Els Plans (rainfed site). The envelope for \mesomean represents the 25th and 75th percentiles of the distribution.}
     \label{fig:elsplans_surfacevars}
 \end{figure}
 
-\subsection*{Conclusions on near-surface variables}
+\subsubsection*{Conclusions on near-surface variables}
 The key takeaways from this comparison of near-surface variables over the SOP is that the irrigation parametrization can significantly improve the results at La Cendrosa, especially if irrigation demand is fully satisfied, as done in the \irrboost sensitivity experiment.
 In particular, even if the observations cannot be matched perfectly, near-surface variables simulated by ICOLMDZOR are very close to the \mesomean values. Considering that the Meso-NH simulation is a relevant reference (ensured by the good performance of \mesoexact), it means that a good representation of grid-cell average values is achieved in the \irrboost simulation. 
 In the second part of the SOP, a dry bias in ICOLMDZOR was identified, which is reduced but not entirely corrected by irrigation. Since this limitation is also visible at the rainfed site of Els Plans, and occurs simultaneously with a change in near-surface wind regime, it was hypothesized to be mainly the consequence of non-local processes, such as insufficient moisture advection over the LIAISE study area. The next section provides a study of the vertical structure of the ABL over two days, 15 July and 20 July, to investigate the differences between the first and second part of the SOP, and characterise the impact of irrigation and surface heterogeneities in these two different contexts.
@@ -393,92 +393,90 @@ This analysis remains very simplified and assumes that some of the characteristi
 
 %todo:figure of winds at 12UTC (10m and 850hPa) in LMDZ ? (déjà mesoNH en bas, sur 4 niveaux...)
 
-%todo:refaire t2m 15/07 avec légende
 %Fig : surface variables Cendrosa
 \begin{figure}[hbtp]
     \centering
     \begin{tabular}{cc}
         %t2m, q2m
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{2-meter temperature on 15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_t2m.png}
+            \caption{2-meter temperature\\(15 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_cendrosa_t2m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{2-meter temperature on 20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_t2m.png}
+            \caption{2-meter temperature\\(20 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_cendrosa_t2m.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{2-meter specific humidity on 15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_q2m.png}
+            \caption{2-meter specific humidity\\(15 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_cendrosa_q2m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{2-meter specific humidity on 20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_q2m.png}
+            \caption{2-meter specific humidity\\(20 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_cendrosa_q2m.png}
         \end{subfigure} \\
 
         %turb fluxes
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{10-meter wind speed on 15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_wind_speed_10m.png}
+            \caption{10-meter wind speed\\(15 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_cendrosa_wind_speed_10m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{10-meter wind speed on 20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_wind_speed_10m.png}
+            \caption{10-meter wind speed\\(20 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_cendrosa_wind_speed_10m.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{10-meter wind direction on 15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_wind_direction_10m.png}
+            \caption{10-meter wind direction\\(15 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_cendrosa_wind_direction_10m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{10-meter wind direction on 20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_wind_direction_10m.png}
+            \caption{10-meter wind direction\\(20 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_cendrosa_wind_direction_10m.png}
         \end{subfigure} \\
     \end{tabular}
-    \caption{}
+    \caption{Evolution of 2-m temperature (a-b), 2-m specific humidity (c-d), 10-m wind speed (e-f) and direction (g-h) at La Cendrosa on 15 and 20 July.}
     \label{fig:iop_days_TS_surfvars}
 \end{figure}
 
-%todo:refaire flat 15/07 avec légende
 %Fig : energy fluxes Cendrosa
 \begin{figure}[hbtp]
     \centering
     \begin{tabular}{cc}
         %turb fluxes
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Latent heat flux on 15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_flat.png}
+            \caption{Latent heat flux\\(15 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_cendrosa_flat.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Latent heat flux on 20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_flat.png}
+            \caption{Latent heat flux\\(20 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_cendrosa_flat.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Sensible heat flux on 15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_sens.png}
+            \caption{Sensible heat flux\\(15 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_cendrosa_sens.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Sensible heat flux on 20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_sens.png}
+            \caption{Sensible heat flux\\(20 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_cendrosa_sens.png}
         \end{subfigure} \\
         %rad fluxes
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Downward shortwave radiation on 15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_SWdnSFC.png}
+            \caption{Downward shortwave radiation \\(15 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_cendrosa_SWdnSFC.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Downward shortwave radiation on 20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_SWdnSFC.png}
+            \caption{Downward shortwave radiation\\(20 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_cendrosa_SWdnSFC.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Downward longwave radiation on 15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-15_cendrosa_LWdnSFC.png}
+            \caption{Downward longwave radiation \\(15 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_cendrosa_LWdnSFC.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{Downward longwave radiation on 20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_TS/TS_2021-07-20_cendrosa_LWdnSFC.png}
+            \caption{Downward longwave radiation\\(20 July - La Cendrosa)}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_cendrosa_LWdnSFC.png}
         \end{subfigure}
     \end{tabular}
-    \caption{}
+    \caption{Evolution of surface latent (a-b) and sensible (c-d) heat fluxes, downward shortwave (e-f) and longwave (g-h) radiation at La Cendrosa on 15 and 20 July.}
     \label{fig:iop_days_TS_energy}
 \end{figure}
 
@@ -488,21 +486,22 @@ This analysis remains very simplified and assumes that some of the characteristi
 \label{sec:vertical_profiles}
 
 \subsubsection*{15 July 2021}
-On 15 July at 12UTC, the surface warm bias seen in ICOLMDZOR seems to be present in all the ABL, where potential temperature is 5K higher than in observations for the \noirr simulation at La Cendrosa. At Els Plans, it is 3-4K higher, which suggests that the bias at La Cendrosa is not only related to irrigation and ET. 
-The values of specific humidity in the ABL for the \noirr and \irr simulations are really close to the observations and \mesomean values, further indicating that the warm bias is not associated to a dry bias, even in \noirr.
+On 15 July at 12UTC, the surface warm bias seen in ICOLMDZOR seems to be present in all the ABL, where potential temperature is 5K higher than in observations for the \noirr simulation at La Cendrosa (Fig. \ref{fig:profiles_cendrosa_1507}a). 
+At Els Plans (Fig. \ref{fig:profiles_cendrosa_1507}e), it is 3-4K higher, which suggests that the bias at La Cendrosa is not only related to irrigation and ET. 
+The values of specific humidity in the ABL for the \noirr and \irr simulations are really close to the observations and \mesomean values, indicating that the warm bias is not associated to a dry bias, even in \noirr (Fig. \ref{fig:profiles_cendrosa_1507}b).
 Above the ABL, the three ICOLMDZOR simulations converge, and keep exhibiting a warm bias, although smaller than in the ABL, as well as excessive specific humidity, confirming that large-scale advection is imperfectly represented.
 At La Cendrosa, the warm bias is reduced by 1K in the \irrboost simulation as surface cooling propagates in the ABL. Specific humidity increases by 1 g \perkg, beyond the observed and \mesomean values, further suggesting that the atmosphere is excessively moist on that day.
 
 %option:mention that above ABL, ICOLMDZOR is too moist ?
-On both sites, the ABL height for \noirr and \irr is about 1700 m, which is higher than in observations (800 m at La Cendrosa, 900 at Els Plans). This difference can be attributed to the overestimated surface sensible heat flux in these simulations with little to no irrigation (Fig. \ref{fig:iop_days_TS_energy}c,  \ref{fig:iop_days_TS_energy_elsplans}c). 
-In comparison, the ABL is clearly lowered in \irrboost, down to 1200 m, likely through the reduction of the sensible heat flux. This is a good improvement of the structure, but still about 250 m higher than the average ABL height seen in \mesomean, showing that over a grid cell, a good representation of the average surface fluxes does not fully translate into a good average ABL structure.
-Among the possible causes of such discrepancies in vertical structure are the ABL parametrizations of LMDZ, the subgrid heterogeneities, and variables which are mostly determined by the dynamics. The vertical profiles of wind show that the direction simulated by ICOLMDZOR is correct, but that wind speed might be too low in most of the ABL on both sites, although is is really similar to \mesomean and \mesoexact. In theory, such an underestimation of wind speed would be associated to a lack of mixing and does not seem to explain the discrepancies. The possible influence of heterogeneities will be discussed in Section \ref{sec:heterogeneities}.
+On both sites, the ABL height for \noirr and \irr is about 1600 m, which is higher than in observations (800 m at La Cendrosa, 900 at Els Plans). This difference can be attributed to the overestimated surface sensible heat flux in these simulations with little to no irrigation (Fig. \ref{fig:iop_days_TS_energy}c,  \ref{fig:iop_days_TS_energy_elsplans}c). 
+In comparison, the ABL is clearly lowered in \irrboost, down to 1200 m, likely through the reduction of the sensible heat flux. This is a good improvement of the structure, but still about 250 m higher than the average ABL height seen in \mesomean, showing that over a grid cell, a good representation of the average surface fluxes does not fully translate into an equally good average ABL structure.
+Among the possible causes of such discrepancies in vertical structure are the ABL parametrizations of LMDZ, the influence of subgrid heterogeneities, and variables which are mostly determined by the dynamics. The vertical profiles of wind show that the direction simulated by ICOLMDZOR is mostly correct (Fig. \ref{fig:profiles_cendrosa_1507}d, h), but that wind speed might be too low in most of the ABL on both sites, although is is really similar to \mesomean and \mesoexact (Fig. \ref{fig:profiles_cendrosa_1507}c, g). In theory, an underestimation of wind speed would be associated to a lack of mixing and does not seem to explain the discrepancies. The possible influence of heterogeneities will be discussed in Section \ref{sec:heterogeneities}.
 %todo:demander à Etienne et/ou Fred leur avis
 
 \subsubsection*{20 July 2021}
 
-On 20 July at 12UTC, the \noirr simulation presents a warm bias of 2K in potential temperature and a dry bias of 1 to 1.5 g \perkg in the ABL, compared to observations at La Cendrosa. 
-At Els Plans potential temperature is correct in the mixed layer, but there is an even larger dry bias of 2.5 g \perkg. It must be noted that this is not because ICOLMDZOR simulates a lower specific humidity (in \noirr it is similar on both sites) but rather because the observed values are higher in the rainfed site than in the irrigated site, suggesting a strong impact of non-local processes.
+On 20 July at 12UTC, the \noirr simulation presents a warm bias of 2K in potential temperature and a dry bias of 1 to 1.5 g \perkg in the ABL, compared to observations at La Cendrosa (Fig. \ref{fig:profiles_cendrosa_2007}a, b). 
+At Els Plans potential temperature is correct in the mixed layer, but there is an even larger dry bias of 2.5 g \perkg (Fig. \ref{fig:profiles_cendrosa_2007}e, f). It must be noted that this is not because ICOLMDZOR simulates a lower specific humidity (in \noirr it is similar on both sites) but rather because the observed values are higher in the rainfed site than in the irrigated site, suggesting a strong impact of non-local processes.
 The activation of irrigation at La Cendrosa enables large improvements of the warm and dry biases in \irrboost. Potential temperature is decreased by at least 1K (more than half of the bias), and all the mixed layer benefits from the surface moistening, allowing specific humidity to match the radiosounding profile. 
 
 The ABL height in \noirr is 1200 m at La Cendrosa whereas in the radiosounding, although it remains subject to interpretation, it is more likely around 1400 m, and in Meso-NH it is slightly above 1500 m.
@@ -510,11 +509,10 @@ Moreover, there appears to be an internal sublayer up to 500 m, cooler than the 
 %option:internal BL ref from Bouzeid (when wind blow perpendicularly its expected) need to remember the proper ref
 At Els Plans, the observed profile is easier to interpret with a clear inversion at 1500 m, which is located higher in \mesoexact (around 1650 m) and much lower in ICOLMDZOR simulations (around 850 m).
 This cannot be attributed to differences in surface sensible heat flux, since it is higher in ICOLMDZOR simulations than observations (even for \irrboost at La Cendrosa, Fig. \ref{fig:iop_days_TS_energy}d).
-Considering that the observed ABL is higher than on 15 July despite a lower surface sensible heat flux (Fig. \ref{fig:iop_days_TS_energy}c-d), the most likely explanation is that ABL development on that day was control by other processes, not accounted for in ICOLDMZOR.
-In particular, the wind speed at La Cendrosa is two to three times higher in ICOLMDZOR than the observed one in the first 500 m of the atmosphere (and this is the case throughout all morning). %todo:link to appendix fig, ajotuer mention de la direction (?)
-It is similar at Els Plans until 11UTC, but at 12UTC (shown here), a strong southeasterly wind is observed up to 800 m, and although the direction is rather correct in ICOLMDZOR and Meso-NH, the rapid increase in wind speed is not captured.
+Considering that the observed ABL is higher than on 15 July despite a lower surface sensible heat flux (Fig. \ref{fig:iop_days_TS_energy}c-d), the most likely explanation is that ABL development on that day was controlled by other processes, not accounted for in ICOLDMZOR.
+In particular, the wind speed at La Cendrosa (Fig. \ref{fig:profiles_cendrosa_2007}c) is two to three times higher in ICOLMDZOR than the observed one in the first 500 m of the atmosphere (and this is the case throughout all morning). %option:link to appendix fig, ajouter mention de la direction (?)
+It is similar at Els Plans until 11UTC, but at 12UTC (Fig. \ref{fig:profiles_cendrosa_2007}g), a strong southeasterly wind is observed up to 800 m, and although the direction is rather correct in ICOLMDZOR and Meso-NH, the rapid increase in wind speed is not captured.
 In this context, the representation of ABL structure at La Cendrosa is not improved by irrigation since the height of the mixed layer is clearly reduced to 900 m in \irrboost, worsening the limitation identified in \noirr.
-%option:this an average value between internal BL and actual mixed layer (there is still a bias at Els Plans though)
 
 \subsubsection*{First conclusions on the impacts of irrigation in the ABL}
 
@@ -528,10 +526,8 @@ A similar conclusion can be made regarding ABL height. On 15 July, where ABL hei
 In general, the impact of irrigation on wind speed and direction is quite negligible, except for wind speed around 1000 m above ground level at La Cendrosa on 20 July, where it follows the top of the boundary layer (which is lowered by irrigation).
 The impacts on the Els Plans site are also imperceptible, apart from a small moistening of the ABL (0.5 g \perkg at most), visible on both days, which can be explained by advection of moister air from neighbouring irrigated grid cells.
 
-To further investigate the mixing in the ABL and underestand what control its vertical extension on both days, the influence of subgrid heterogeneities was explored.
-The main objective was to determine whether the average surface flux approach used in ICOLMDZOR was relevant to realistically propagate impacts of irrigation in the ABL, or if major drivers of ABL development were missed by not accounting for subgrid flux heterogeneities. 
+To further investigate the mixing in the ABL and underestand what control its vertical extension on both days, the influence of subgrid heterogeneities was explored in more details.
 
-%todo:refaire sans les légendes sauf le 1er
 %Fig : profiles 1507 12UTC
 \begin{figure}[hbtp]
     \centering
@@ -539,37 +535,37 @@ The main objective was to determine whether the average surface flux approach us
     \begin{tabular}{@{}cccc@{}}
         %cendrosa
         \begin{subfigure}[t]{0.382\textwidth}
-            \caption{15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_cendrosa_theta_1507_.png}
+            \caption{15 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_theta_1507_.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.289\textwidth}
-            \caption{15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_cendrosa_ovap_1507_.png}
+            \caption{15 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_ovap_1507_.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.283\textwidth}
-            \caption{15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_cendrosa_wind_speed_1507_.png}
+            \caption{15 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_wind_speed_1507_.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.283\textwidth}
-            \caption{15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_cendrosa_wind_direction_1507_.png}
+            \caption{15 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_wind_direction_1507_.png}
         \end{subfigure} \\
         %elsplans
         \begin{subfigure}[t]{0.382\textwidth}
-            \caption{15 July (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_elsplans_theta_1507_.png}
+            \caption{15 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_theta_1507_.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.289\textwidth}
-            \caption{15 July (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_elsplans_ovap_1507_.png}
+            \caption{15 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_ovap_1507_.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.283\textwidth}
-            \caption{15 July (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_elsplans_wind_speed_1507_.png}
+            \caption{15 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_wind_speed_1507_.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.283\textwidth}
-            \caption{15 July (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_elsplans_wind_direction_1507_.png}
+            \caption{15 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_wind_direction_1507_.png}
         \end{subfigure} \\
     \end{tabular}
     }
@@ -577,7 +573,6 @@ The main objective was to determine whether the average surface flux approach us
     \label{fig:profiles_cendrosa_1507}
 \end{figure}
 
-%todo:refaire sans les légendes sauf le 1er
 %Fig : profiles 2007 12UTC
 \begin{figure}[hbtp]
     \centering
@@ -585,38 +580,38 @@ The main objective was to determine whether the average surface flux approach us
     \begin{tabular}{@{}cccc@{}}
         %cendrosa
         \begin{subfigure}[t]{0.382\textwidth}
-            \caption{20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_cendrosa_theta_2007_.png}
+            \caption{20 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_theta_2007_.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.289\textwidth}
-            \caption{20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_cendrosa_ovap_2007_.png}
+            \caption{20 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_ovap_2007_.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.283\textwidth}
-            \caption{20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_cendrosa_wind_speed_2007_.png}
+            \caption{20 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_wind_speed_2007_.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.283\textwidth}
-            \caption{20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_cendrosa_wind_direction_2007_.png}
+            \caption{20 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_wind_direction_2007_.png}
         \end{subfigure} \\
         %elsplans
         \begin{subfigure}[t]{0.382\textwidth}
-            \caption{20 July (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_elsplans_theta_2007_.png}
+            \caption{20 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_theta_2007_.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.289\textwidth}
-            \caption{20 July (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_elsplans_ovap_2007_.png}
+            \caption{20 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_ovap_2007_.png}
         \end{subfigure} &
         %winds
         \begin{subfigure}[t]{0.283\textwidth}
-            \caption{20 July (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_elsplans_wind_speed_2007_.png}
+            \caption{20 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_wind_speed_2007_.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.283\textwidth}
-            \caption{20 July (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_elsplans_wind_direction_2007_.png}
+            \caption{20 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_wind_direction_2007_.png}
         \end{subfigure} \\
     \end{tabular}
     }
@@ -629,69 +624,89 @@ The main objective was to determine whether the average surface flux approach us
 \subsection{Importance of surface heterogeneities}
 \label{sec:heterogeneities}
 
-After noticing the biases in simulated boundary layer height at 12UTC in ICOLMDZOR (overestimation on 15 July and underestimation on 20 July), the influence of surface fluxes heterogeneities was investigated.
-The objective of this analysis was to determine the dependencies of the \mesomean boundary layer to the heterogeneity of surface, in particular to underestand why representing similar average surface fluxes in \irrboost is not sufficient to obtain a similar ABL structure.
+After noticing the biases in simulated boundary layer height at 12UTC in ICOLMDZOR (overestimation on 15 July and underestimation on 20 July), the influence of surface heterogeneities was investigated, in particular to underestand why representing similar average surface fluxes in \irrboost (compared to \mesomean) is not sufficient to obtain a similar ABL structure.
+The objective of this analysis was to determine the dependencies of the \mesomean boundary layer to surface heterogeneities and compare them to the tiled parameter aggregation approach used in ICOLMDZOR, to identify major drivers of ABL development that are misrepresented by not accounting for subgrid heterogeneities. It is a way to assess whether computing one equivalent roughness and one average sensible heat flux for the whole grid cell can realistically propagate the impacts of irrigation in the ABL.
 
 %questions
 %does ABL height follow the surface flux heterogeneities in MesoNH ?
 %do the driest grid cells in MesoNH have vertical profile similar to noirr, irr ?
 %can the limitations of ICOLMDZOR ABL structure be explained by the lack of surface heterogeneity ? When it's too high on 15 July and when it's too low on 20 July ? 
 
-%todo:refaire sans titre
 %Fig : bins flux sens
 \begin{figure}[hbtp]
     \centering
     \makebox[\textwidth][c]{%
     \begin{tabular}{cc}
         \begin{subfigure}[t]{0.48\textwidth}
+            \caption{Sensible heat flux on 15 July at 12UTC}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_maps/mesoNH_sens_2021-07-15_12UTC.png}
+        \end{subfigure}
+        \begin{subfigure}[t]{0.48\textwidth}
+            \caption{Sensible heat flux on 20 July at 12UTC}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_maps/mesoNH_sens_2021-07-20_12UTC.png} 
+        \end{subfigure} \\
+        \begin{subfigure}[t]{0.48\textwidth}
             \caption{15 July at 12UTC (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_bins/bins_sens_2021-07-15T12:00:00_cendrosa.png}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_bins/bins_sens_2021-07-15T12:00:00_cendrosa.png}
         \end{subfigure}
         \begin{subfigure}[t]{0.48\textwidth}
             \caption{20 July at 12UTC (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_bins/bins_sens_2021-07-20T12:00:00_cendrosa.png}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_bins/bins_sens_2021-07-20T12:00:00_cendrosa.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.48\textwidth}
             \caption{15 July at 12UTC (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_bins/bins_sens_2021-07-15T12:00:00_elsplans.png}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_bins/bins_sens_2021-07-15T12:00:00_elsplans.png}
         \end{subfigure}
         \begin{subfigure}[t]{0.48\textwidth}
             \caption{20 July at 12UTC (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_bins/bins_sens_2021-07-20T12:00:00_elsplans.png}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_bins/bins_sens_2021-07-20T12:00:00_elsplans.png}
         \end{subfigure}
     \end{tabular}
     }
-    \caption{Distribution of surface sensible heat flux at 12UTC in \mesomean at La Cendrosa (a-b) and Els Plans (c-d) on 15 July and 20 July. Colored crosses indicate the value in the simulations and observations.}
+    \caption{Map of sensible heat flux simulated by Meso-NH at 12UTC on (a) 15 July and (b) 20 July. Corresponding distribution of surface sensible heat flux in \mesomean at La Cendrosa (c-d) and Els Plans (e-f) on both days. Colored crosses indicate the value in the simulations and observations.}
     \label{fig:sens_bins}
 \end{figure}
 
 The distribution of sensible heat flux of all the Meso-NH grid cells contributing to \mesomean is represented for the subsets of La Cendrosa and Els Plans on both days at 12UTC, in Fig. \ref{fig:sens_bins}.
-It shows that at La Cendrosa (Fig. \ref{fig:sens_bins}a-b), the average (orange cross) does not correspond to the majority of Meso-NH grid cells and hides a skewed distribution. This is easily explained since several Meso-NH grid cells fall outside of the irrigated zone, and therefore have a very different surface energy partitioning than the rest.
+It shows that at La Cendrosa (Fig. \ref{fig:sens_bins}a-b), the \mesomean average (orange cross) does not correspond to the majority of Meso-NH grid cells and hides a skewed distribution. This is easily explained since several Meso-NH grid cells fall outside of the irrigated zone, and therefore have a very different surface energy partitioning from the rest.
 The ICOLMDZOR \noirr simulation has a sensible heat flux at 12UTC that corresponds to the most extreme values simulated in Meso-NH.
 At Els Plans (Fig. \ref{fig:sens_bins}c-d), the distribution is more symetric, although the presence of some irrigated grid cells within the considered ensemble lead to a longer tail of data points with weak sensible heat flux.
-Here the three ICOLMDZOR simulations are all very similar and clearly overestimate sensible heat flux on both days, falling outside of the Meso-NH distribution on 15 July, and in the very last bin on July 20.
+On this rainfed site, the three ICOLMDZOR simulations are all very similar and clearly overestimate sensible heat flux on both days, falling outside of the Meso-NH distribution on 15 July, and in the very last bin on July 20.
 
 The excessively high ABL simulated by ICOLMDZOR on 15 July can be attributed to an excessively high sensible heat flux in the \noirr and \irr simulation at La cendrosa, and in all simulations at Els Plans. However, in \irrboost at La Cendrosa, the sensible heat flux matches the average of \mesomean whereas the ABL is still higher. This suggests that the grid-cell mean value of sensible heat flux is not sufficient to describe the ABL structure, and that the ABL height in observations and in Meso-NH is influenced by neighbouring grid cells. In this case, it appears that the mean value of sensible heat flux is being increased by these few grid cells which are not irrigated, but that the ABL height is not impacted in the same way.
 
 \hfill
 
-To look into this, two additional vertical profiles from subsamples at each site were added alongside the \mesomean profile in Fig. \ref{fig:profiles_theta_ovap_sensbins}. One is the average of grid cells with the lowest values of sensible heat flux at 12UTC (orange dotted line) and the other of the highest values (orange dashed line), respectively encompassing the first and last two bins in Fig. \ref{fig:sens_bins}. 
+To look into this, two additional vertical profiles from subsamples at each site are presented alongside the \mesomean profile in Fig. \ref{fig:profiles_theta_ovap_sensbins}. One is the average of grid cells with the lowest values of sensible heat flux at 12UTC (orange dotted line) and the other of the highest values (orange dashed line), respectively encompassing the first and last two bins in Fig. \ref{fig:sens_bins}a-b. 
+% 15 July : < 150 and > 400
+% 20 July : < 100 and > 375
 %option:map of selected grid cells ?
 
 At La Cendrosa on 15 July, it shows that the values of potential temperature and specific humidity are very similar for the two subsamples and the mean value, suggesting that mixing is efficient.
-The mean boundary layer is very similar to the low surface sensible heat flux subsample (Fig. \ref{fig:profiles_theta_ovap_sensbins}a-b), in particular the inversion, suggesting they are the major driver of ABL height in the area. The ABL for grid cells with a high sensible heat flux is higher but still much lower than in \noirr and \irr, suggesting that its extent is limited by the neighbouring grid cell.
-At Els Plans, there are large differences in potential temperature (more than 2K) and specific humidity (1 g \perkg) between the two subsamples.
+The mean boundary layer is very similar to the low surface sensible heat flux subsample which contains about 50\% of grid cells (Fig. \ref{fig:profiles_theta_ovap_sensbins}a-b). In particular, the inversion is at the same height, suggesting they are the major driver of ABL height in the area. The ABL is higher for the high sensible heat flux subsample, but still much lower than in \noirr and \irr, suggesting that its extent is limited by the neighbouring grid cells, or that the ABL in dry conditions is too high in ICOLMDZOR.
+
+At Els Plans (Fig. \ref{fig:profiles_theta_ovap_sensbins}e-f), there are large differences in potential temperature (more than 2K) and specific humidity (1 g \perkg) between the two subsamples.
 ABL structure for the small sensible heat flux subsample is very similar to the one seen at La Cendrosa, and also to the observed profile at Els Plans. For the high sensible heat flux subsample, the ABL is warmer and higher than at La Cendrosa. 
-The two subsamples are therefore much more independent of each other at Els Plans than at La Cendrosa. This could be related to the structure of the heterogeneities, and to the influence of wind on mixing between grid cells.
-In the La Cendrosa subset, the few non-irrigated grid cells are quite spread out, and surrounded by more irrigated grid cells to the west. At Els Plans, there is a much sharper delineation and the few irrigated grid cells are part of a continuous irrigated patch. This can explain why the irrigated grid cells which fall within the Els Plans subset are largely influenced by the other irrigated grid cells to their West. 
-The local (south-)westerly surface winds probably increase that influence since they tend to advect the boundary layer of the irrigated patch into the rainfed area, bringing cooler air and moisture.
-%todo:refs from bouzeid that parallel wind separates zones whereas perpendicular wind creates internal BL+advected ML
+The two subsamples are therefore much more independent of each other at Els Plans than at La Cendrosa, and the observed profile could be interpreted as a combination of two distinct patches with an internal layer influenced by irrigated grid cells and a larger mixed layer corresponding to dry cells (with a second inversion around 1400 m in Fig. \ref{fig:profiles_theta_ovap_sensbins}e-f). 
 
-On July 20, the two subsamples are both very close to the mean profile for both potential temperature and specific humidity on both sites, appart from a cooler and moister 500-meter high sublayer which is only seen for the low sensible heat flux subsamples (Fig. \ref{fig:profiles_theta_ovap_sensbins}c-d). This sublayer, also visble in obserations at La Cendrosa, seems to be the main consequence of heterogeneities in surface fluxes, since the differences on the rest of the ABL structure are rather limited, even at Els Plans.
-This type of internal sublayer is not expected to be captured by the LMDZ physics, where mixing is dominated by the EDMF scheme using an average thermal plume. Therefore, on this study case, surface flux heterogeneities do not seem to be a first order driver of the limitations of ICOLMDZOR. This is strengthened by the fact that at Els Plans, ABL height is largely underestimated by ICOLMDZOR, even though the observed and Meso-NH profiles are very well mixed with a clear inversion at 1500 m.
-The surface winds in Meso-NH can partly explain this since there is a clear front of strong southeasterly wind that enters the Els Plans area and faces the exising light northerly wind. This convergence of air might be the cause for the very high ABL (higher than on 15 July despite lower sensible heat fluxes). ICOLMDZOR is not able to represent this process.
+The difference between the subsets for the two sites might be related to the structure of the heterogeneities, and to the influence of wind direction.
+At La Cendrosa, the few non-irrigated grid cells are quite spread out, and surrounded by more irrigated grid cells to the west. At Els Plans, there is a much sharper delineation and the few irrigated grid cells are part of a continuous irrigated patch. 
+This can explain why the irrigated grid cells which fall within the Els Plans subset are largely influenced by the other irrigated grid cells to their West. 
+The local (south-)westerly low-level winds (Fig. \ref{fig:iop_days_winds}a, c, e, g) increase that influence since they tend to advect the boundary layer of the irrigated patch into the rainfed area, bringing cooler air and moisture.
 
-%todo:refaire sans les légendes sauf le 1er
+\hfill
+
+On July 20, the two subsamples are very close to the mean profile for potential temperature and specific humidity on both sites, appart from a cooler and moister 500-meter high sublayer which is only seen for the low sensible heat flux subsamples (Fig. \ref{fig:profiles_theta_ovap_sensbins}c-d). This sublayer, also visble in obserations at La Cendrosa, seems to be the main consequence of heterogeneities in surface fluxes, since the differences on the rest of the ABL structure are rather limited, even at Els Plans.
+This type of internal sublayer is not expected to be captured by the LMDZ physics, where mixing is dominated by the EDMF scheme using an average thermal plume \citep{rio_thermal_2008}. 
+However, the main limitation of ICOLMDZOR in representing the ABL structure for this day is not related to the presence of this internal boundary layer, but rather the large ABL height underestimation at Els Plans.
+On this site, the observed profile is very well mixed with a clear inversion at 1500 m (and 1650 m in \mesoexact), but ICOLMDZOR simulates a 900 m ABL, although it overestimates the surface sensible heat flux.
+The most likely driver of ABL development in Meso-NH comes from low-level winds (Fig. \ref{fig:iop_days_winds}b, d, f, h). A strong southeasterly wind  enters the Els Plans area and faces a light northerly wind with a clear front at the border between the irrigated and non-irrigated zones, that extends at least to 950 hPa.
+The mixing induced by strong winds and the upward motions associated to the convergence of air are most likely the cause for the very high ABL on 20 July (higher than on 15 July despite lower sensible heat fluxes in both observations and Meso-NH). 
+%option:mention that this front is present in previous hours as well ?
+Above the front, higher altitude southeasterly winds seem to partly advect that well developed mixed layer into the irrigated zone, above the internal boundary layer, contributing to the more complex vertical profiles at La Cendrosa.
+Some further investigation could help determine if the location of the front is mainly dictated by the difference in roughness or by pressure gradients between the two zones, but it seems clear that subgrid heterogeneities is surface sensible heat flux is not a first order driver of ABL development.
+This explains why the irrigation parametrization could not improve the ABL structure over the area in the current state of the model, which does not account for the impact of the observed front on the ABL.
+
 % Fig : profiles with sens bins min/max theta and ovap
 \begin{figure}[hbtp]
     \centering
@@ -700,44 +715,44 @@ The surface winds in Meso-NH can partly explain this since there is a clear fron
         %cendrosa
         %1507
         \begin{subfigure}[t]{0.382\textwidth}
-            \caption{15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_cendrosa_theta_1507_sensbins.png}
+            \caption{15 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_theta_1507_sensbins.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.29\textwidth}
-            \caption{15 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_cendrosa_ovap_1507_sensbins.png}
+            \caption{15 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_ovap_1507_sensbins.png}
         \end{subfigure} &
         %2007
         \begin{subfigure}[t]{0.285\textwidth}
-            \caption{20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_cendrosa_theta_2007_sensbins.png}
+            \caption{20 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_theta_2007_sensbins.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.29\textwidth}
-            \caption{20 July (La Cendrosa)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_cendrosa_ovap_2007_sensbins.png}
+            \caption{20 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_ovap_2007_sensbins.png}
         \end{subfigure} \\
         %elsplans
         %1507
         \begin{subfigure}[t]{0.382\textwidth}
-            \caption{15 July (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_elsplans_theta_1507_sensbins.png}
+            \caption{15 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_theta_1507_sensbins.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.29\textwidth}
-            \caption{15 July (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_elsplans_ovap_1507_sensbins.png}
+            \caption{15 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_ovap_1507_sensbins.png}
         \end{subfigure} &
         %2007        
         \begin{subfigure}[t]{0.285\textwidth}
-            \caption{20 July (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_elsplans_theta_2007_sensbins.png}
+            \caption{20 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_theta_2007_sensbins.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.29\textwidth}
-            \caption{20 July (Els Plans)}
-            \includegraphics[width=\textwidth]{images/chap5/profiles/profile_elsplans_ovap_2007_sensbins.png}
+            \caption{20 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_ovap_2007_sensbins.png}
         \end{subfigure} \\
     \end{tabular}
     }
-    \caption{Vertical profiles of potential temperature and specific humidity at 12UTC at La Cendrosa (a-d) and Els Plans (e-h), on 15 July and 20 July. Additional orange lines show with the mean profile for the minimum (dotted) and maximum (dashed) sensible heat fux bins of Fig. \ref{fig:sens_bins}.}
+    \caption{Vertical profiles of potential temperature and specific humidity at 12UTC at La Cendrosa (a-d) and Els Plans (e-h), on 15 July and 20 July. Additional orange lines show the mean profile for the minimum (dotted) and maximum (dashed) sensible heat fux subsamples (first and last two bins on Fig. \ref{fig:sens_bins}).}
     \label{fig:profiles_theta_ovap_sensbins}
 \end{figure}
 
@@ -748,41 +763,41 @@ The surface winds in Meso-NH can partly explain this since there is a clear fron
         %10m
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{15 July at 10 m}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_maps/mesoNH_wind_10m_2021-07-15T12:00:00.png}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_maps/mesoNH_wind_10m_2021-07-15T12:00:00.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{20 July at 10 m}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_maps/mesoNH_wind_10m_2021-07-20T12:00:00.png}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_maps/mesoNH_wind_10m_2021-07-20T12:00:00.png}
         \end{subfigure} \\
         %950hPa
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{15 July at 950 hPa}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_maps/mesoNH_wind_950_2021-07-15T12:00:00.png}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_maps/mesoNH_wind_950_2021-07-15T12:00:00.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{20 July at 950 hPa}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_maps/mesoNH_wind_950_2021-07-20T12:00:00.png}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_maps/mesoNH_wind_950_2021-07-20T12:00:00.png}
         \end{subfigure} \\
         %900hPa
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{15 July at 900 hPa}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_maps/mesoNH_wind_900_2021-07-15T12:00:00.png}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_maps/mesoNH_wind_900_2021-07-15T12:00:00.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{20 July at 900 hPa}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_maps/mesoNH_wind_900_2021-07-20T12:00:00.png}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_maps/mesoNH_wind_900_2021-07-20T12:00:00.png}
         \end{subfigure} \\
         %850hPa
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{15 July at 850 hPa}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_maps/mesoNH_wind_850_2021-07-15T12:00:00.png}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_maps/mesoNH_wind_850_2021-07-15T12:00:00.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
             \caption{20 July at 850 hPa}
-            \includegraphics[width=\textwidth]{images/chap5/IOP_maps/mesoNH_wind_850_2021-07-20T12:00:00.png}
+            \includegraphics[width=\textwidth]{images/chap6/IOP_maps/mesoNH_wind_850_2021-07-20T12:00:00.png}
         \end{subfigure} \\
     \end{tabular}
-    \caption{Wind speed simulated by Meso-NH over the LIAISE areas at 12UTC on 15 and 20 July, at 10m (a-b), 950hPa (c-d), 900hPa (e-f), and 850hPa (g-h).}
+    \caption{Wind speed simulated by Meso-NH over the LIAISE observations sites at 12UTC on 15 and 20 July, at 10m (a-b), 950hPa (c-d), 900hPa (e-f), and 850hPa (g-h).}
     \label{fig:iop_days_winds}
 \end{figure}
 
@@ -791,52 +806,47 @@ The surface winds in Meso-NH can partly explain this since there is a clear fron
 \section{Chapter conclusions}
 
 This chapter used the simulation setup used in Chapters \ref{chap:monthly} to compare the ICOLMDZOR LAM to local observations from the LIAISE campaign and Meso-NH simulations at 2-kilometer resolution.
-
 Two grid cells were selected for the LIAISE observation sites of La Cendrosa (irrigated alfalfa crops) and Els Plans (rainfed low vegetation), in the eastern Ebro basin.
-The basic comparison of the \noirr and \irr simulations quickly identified a shortage of water that did not allow the irrigation scheme to sustain irrigation demand. This was already identified generally in Chapter \ref{chap:monthly} mostly for southern regions of the Iberian Peninsula, but also applied to the study area and period of the LIAISE campaign. It can partly be explained because actual irrigation relies on water adduction from the Pyrenees provided by the Canal d'Urgell, which is not represented in the model.
-Due to this lack of water, the \irr simulation show little differences with \noirr, since latent heat flux could only be partially increased during the day and did not follow the structure of the observed diurnal cycle.
+The basic comparison of the \noirr and \irr simulations quickly identified a shortage of water that did not allow the irrigation scheme to sustain irrigation demand. This was already identified generally in Chapter \ref{chap:monthly} mostly for southern regions of the Iberian Peninsula, but also applied to the study area and period of the LIAISE campaign. It can partly be explained because actual irrigation relies on water adduction from the Pyrenees by the Canal d'Urgell, which is not represented in the model.
+Due to this lack of water, the \irr simulation shows little differences with \noirr, since latent heat flux could only be partially increased during the day and did not follow the structure of the observed diurnal cycle.
 
-The \irrboost simulation was therefore conducted as a sensitivity experiment, lifting the limit on available water for the month of July 2021, and enhancing irrigated fraction contrasts with 83.5\% at La Cendrosa and 0\% at Els Plans to increase the representativity of the grid cells regarding the point-based observation sites. 
+The \irrboost simulation was therefore conducted as a sensitivity experiment, lifting the limits on available water for the month of July 2021.
 At La Cendrosa, this enabled simulated irrigation to match irrigation demand, and latent heat flux to follow a complete diurnal cycle. On average over the LIAISE SOP \irrboost largely reduced the biases to observed values of turbulent fluxes, 2-meter temperature and humidity and slightly reduced the excessive wind speed. 
-One limitation of these improvements however, is that this increase in evapotranspiration in ORCHIDEE was mostly (80\% %todo:check this
-) driven by bare soil evaporation rather than plant transpiration, which is not considered realistic, but has been identified in other LSM \citep{marti_implementation_2025}. %todo:not shown ou Appendix ? 
-This might be attributed to an insufficient development of vegetation, but also to the partitioning of ET between its components, which could be another possibility to improve surface-atmosphere interactions in irrigated areas.
+One limitation of these improvements not analyzed here, is that this increase in evapotranspiration in ORCHIDEE was mostly ($\sim$75\%) driven by bare soil evaporation rather than plant transpiration, which is not considered realistic, but has been identified in other LSM \citep{marti_implementation_2025}. %option: figure en Appendix ? 
+This might be attributed to an insufficient development of vegetation, but also to the partitioning of ET between its components, which could be another direction to explore to improve surface-atmosphere interactions in irrigated areas.
 %option:soil moisture data here....
-Surface variables at Els Plans, however, as well as wind directions, were not affected by simulated irrigation, showing almost no non-local effects of irrigation. 
-This lack of dynamical response to irrigation was expected considering that the lifting of water supply limitations in \irrboost only applied to a small area of about 20 grid cells, including some areas that do not actually receive large irrigation. This setup was mostly designed for an exploration of local processes which seemed a reasonable objective considering the 25-kilometer resolution of ICOLMDZOR and the relative size of irrigated patch in the LIAISE study area (about 20 km).
+Surface variables at Els Plans, however, as well as wind directions, were not affected by simulated irrigation, showing almost no non-local effects of irrigation, appart from a small moistening in the day.
+This lack of dynamical response to irrigation was expected considering that the lifting of water supply limitations in \irrboost only applied to a few grid cells, including some areas that do not actually receive large irrigation. This setup was mostly designed for an exploration of local processes which seemed a reasonable objective considering the 25-kilometer resolution of ICOLMDZOR relative to the size of the main irrigated patch in the LIAISE study area (about 20 km). The Els Plans site was therefore mostly used to isolate the biases of the model that cannot be attributed to irrigation and help analyzing the situation at La Cendrosa.
 
 In addition to the observations, ICOLMDZOR was also compared to the Meso-NH simulations, particularly by aggregating all the Meso-NH grid cells of each ICOLMDZOR grid cell into one average value (\mesomean). At La Cendrosa, this showed that even when the \irrboost simulation is not matching the observed values, it is very close \mesomean, especially for turbulent fluxes, but also on temperature and humidity during the day. 
+The demonstrates that the tiled approach for irrigation and the parameter aggregation framework enables ORCHIDEE to properly represent average surface fluxes over the grid cell.
 
 \hfill
 
 The question of whether this good performance on surface variables was also observed in the boundary layer was investigated using vertical profiles of the atmosphere. Out of the seven IOP days on which radiosoundings were conducted on both sites, two were selected (15 and 20 July), each representative of a part of the SOP with different characteristics.
 
-Vertical profiles confirmed that the effects of simulation irrigation in ICOLMDZOR extend into the entire ABL, with systematic cooling and moistening at La Cendrosa. There was no noticeble impact on winds and at Els Plans, a small moistening was also visible, meaning that a portion of the additional atmospheric moisture provided by irrigation can be advected to a non-irrigated grid cell.
-The two IOP days showed different limitations of ICOLMDZOR regarding the boundary layer: on 15 July specific humidity was correct but potential temperature was too hgih, whereas on 20 July, temperature was closer to expected values, but a dry bias was observed, and the ABL was much lower than observations and Meso-NH.
-At La Cendrosa, \irrboost irrigation was only able to reduce a small part of the warm bias, and led to an overestimated specific humidity, whereas on 20 July, it allowed the potential temperature and specific humidity to match observations much better, showing that its impact is much more relevant when biases are linked to local processes.
+Vertical profiles confirmed that the effects of simulation irrigation in ICOLMDZOR extend into the entire ABL, with systematic cooling and moistening at La Cendrosa. There was no noticeble impact on winds, and at Els Plans, a small moistening was also visible, meaning that a portion of the additional atmospheric moisture provided by irrigation can be advected to a non-irrigated grid cell.
+The two IOP days showed different limitations of ICOLMDZOR regarding the boundary layer: on 15 July specific humidity was correct but potential temperature was too high, whereas on 20 July, temperature was closer to expected values, but a dry bias was observed, and the ABL was much lower than observations and Meso-NH.
+At La Cendrosa, \irrboost irrigation was only able to reduce a small part of the warm bias on 15 July, but led to an overestimated specific humidity, whereas on 20 July, it allowed the potential temperature and specific humidity to match observations much better, showing that its impact is much more relevant when biases are linked to local processes.
 
-Regarding boundary layer structure however, it is mostly on 15 July that the impact of irrigation was positive, since it lowered the excessively high ABL. It was still far from matching the observed profile however, and still presented a higher ABL than the \mesomean value. 
+Regarding boundary layer structure however, it is mostly on 15 July that the impact of irrigation was positive, since it lowered the excessively high ABL. It was still not perfectly matching the observed profile however, and still presented a higher ABL than the \mesomean value. 
 On 20 July, irrigation also contributed to a lower boundary layer but did not enable a better match with the expected profile. 
 To better understand the limitations identified in these two IOP days, surface heterogeneities of fluxes were explored in more detail.
 
 \hfill
 
-Considering the choice of having no irrigation at all at Els Plans, this analysis of heterogeneity focused mostly on La Cendrosa, but the Els Plans grid cell still served as a reference to understand the default behaviour of the model.
+Considering the choice of having no irrigation at all at Els Plans, this analysis of heterogeneity focused mostly on La Cendrosa, but, as for surface variables the Els Plans grid cell still served as a reference to understand the behaviour of the model and the ABL structure over the area.
 It was shown that the \mesomean average value at La Cendrosa was due to a very skewed distribution with a large majority of irrigated grid cells. 
 On 15 July, the subsample of non-irrigated grid cells seems to have a large impact on the mean sensible heat flux, but not to be major drivers of the mean ABL development. ICOLMDZOR does not account for this aspect in taking only the an average sensible heat flux, and this can partly explain why it is still simulating an excessively high ABL even with the appropriate surface fluxes.
 
-On 20 July, the development of the ABL simulated by Meso-Nh at Els Plans seems partly driven by a front of intense southeasterly wind that follows the delineation between the irrigated and non-irrigated area. This front is also present at 10UTC, and likely contributes to an intense mixing and elevation of the ABL to 1500 m. This also seems to explain the complex structure of the ABL seen at La Cendrosa, with a very high ABL that is partly advected from the rainfed area, and a cooler and moister sublayer over the irrigated grid cells. 
-The LMDZ physics are not designed to represent such subtle ABL structures which depend more on wind heterogeneities than on surface fluxes heterogeneities, and can therfore not be greatly improved by irrigation.
+On 20 July, the development of the ABL simulated by Meso-NH at Els Plans seems partly driven by a front of intense southeasterly wind that follows the delineation between the irrigated and non-irrigated area, which likely contributes to an intense mixing and elevation of the ABL to 1500 m. 
+This also seems to explain the complex structure of the ABL seen at La Cendrosa, with a very high ABL that is partly advected from the rainfed area, and a cooler and moister sublayer over the irrigated grid cells. 
+The LMDZ physics are not designed to represent such ABL sub-structures which depend more on heterogeneities of wind of surface fluxes, and can therefore not be greatly improved by irrigation.
 
-As a conclusion, the importance of accounting for surface flux heterogeneities was mostly relevant on 15 July, which showed an important impact of neighbouring grid cells. On 20 July, ABL development was mostly dominated by other factors.
-
-\hfill
-
-
-%discussion
-%setup does not allow a study of heterogeneity at Els Plans but it was not the main aim here, it rather serves as a reference for noirr case
-%how much of the positive impacts of irrigation are error compensation ?
-
+More generally, the analysis of the two selected days confirmed that the influence of surface heterogeneities is strongly dependent their structure and on the local wind regime. 
+In particular, the direction of the wind relative to the borders between patches of different surface conditions drives the influence of these patches on one another.
+When the low-level wind is perpendicular to the border (as seen at Els Plans on both days or La Cendrosa on 20 July), the ABL is generally well mixed but can lead to the presence of internal sublayers \citep[as reviewed in][]{bou-zeid_persistent_2020}. When the wind is parallel to the border, different ABL structures coexist side by side and their development is largely conditioned by surface fluxes (as seen at Els Plans on 15 July on Fig. \ref{fig:profiles_theta_ovap_sensbins}e-f).
+Out of the four situations examined here (2 grid cells on 2 distinct days), the assumptions associated to the use of a single atmospheric column for the grid cell seem to hold, but this is not the case when the wind is aligned with the border between irrigated and non-irrigated land.
 
 \clearpage
 
