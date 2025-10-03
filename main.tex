@@ -98,7 +98,7 @@ Plusieurs sources de biais du modèle ICOLMDZOR sur la région sont également i
 \pagebreak
 \include{3.routing}
 
-\chapter{Influence of lateral boundary conditions on the consistency of the ICOLMDZOR-LAM}
+\chapter{Influence of lateral boundary conditions on the consistency of the ICOLMDZOR LAM}
 \label{chap:forcing}
 \minitoc
 \pagebreak
@@ -122,15 +122,24 @@ Plusieurs sources de biais du modèle ICOLMDZOR sur la région sont également i
 \pagebreak
 \include{7.conclusion}
 
+% Appendix
+\chapter*{Appendix} % Unnumbered chapter
+\addcontentsline{toc}{chapter}{Appendix} % Manually add to toc
+\label{chap:appendix}
+\renewcommand{\thefigure}{A\arabic{figure}} % Figure numbering: A1, A2
 \include{appendix}
 
+% List of Figures and Tables (with clickable links)
 \newpage
-
 \listoffigures
+\addcontentsline{toc}{chapter}{List of figures} % Add to TOC
+
 \newpage
 \listoftables
+\addcontentsline{toc}{chapter}{List of tables} % Add to TOC
 
-%Using biblatex
-\printbibliography
+% Bibliography (with entry in TOC)
+\newpage
+\printbibliography[heading=bibintoc, title={Bibliography}]
 
 \end{document}
