@@ -1,6 +1,4 @@
-\chapter*{Appendix}
-
-\section*{Chapter \ref{chap:routing}}
+\section*{Appendix to chapter \ref{chap:routing}}
 
 %figure : 3 time series (3 reservoirs) on average over the IP for both routings
 \begin{figure}[htbp]
@@ -36,9 +34,36 @@
     \label{fig:reservoir_time_series}
 \end{figure}
 
+%figure : maps of diff vs ERA for 2 forcing sampling freqs
+\begin{figure}[!h]
+    \centering
+    \begin{tabular}{cc}
+        %total cc
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{Total cloud cover bias\\(\%, \forcingoneh)}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_cldt_lmdz1h_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{Total cloud cover bias\\(\%, \forcingsixh)}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_cldt_lmdz6h_era.png}
+        \end{subfigure}\\
+        %low cc
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{Low cloud cover bias\\(\%, \forcingoneh)}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_cldl_lmdz1h_era.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{Low cloud cover bias\\(\%, \forcingsixh)}
+            \includegraphics[width=\textwidth]{images/chap4/forcing_sampling_freq/diff_map_cldl_lmdz6h_era.png}
+        \end{subfigure}
+    \end{tabular}
+    \caption{Biases of cloud cover for the simulations with hourly and 6-hourly forcing data, compared to ERA (2013).}
+    \label{fig:forcing_sampling_freq_ERA_diff_maps_appendix}
+\end{figure}
+
 \clearpage
 
-\section*{Chapter \ref{chap:forcing}}
+\section*{Appendix to chapter \ref{chap:forcing}}
 %Forcing influence
 
 %figure : maps of relative diff vs ERA for 3 domain sizes
@@ -80,7 +105,7 @@
 
 \clearpage
  
-\section*{Chapter \ref{chap:monthly}}
+\section*{Appendix to chapter \ref{chap:monthly}}
 % Article
 
 %f
@@ -393,7 +418,7 @@
 
 \clearpage
 
-\section*{Chapter \ref{chap:liaise}}
+\section*{Appendix to chapter \ref{chap:liaise}}
 
 \begin{figure}[hbtp]
     \centering
