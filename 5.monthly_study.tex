@@ -4,20 +4,43 @@ This chapter presents results of coupled regional climate simulations run with t
 The objective was to address the following questions:
 \begin{itemize}
     \item Is simulated irrigation realistic in coupled simulations ? What are its limits and perspectives for improvements ?
-    \item What impacts does simulated irrigation have on the water cycle and land-atmosphere interactions ? Does irrigation improve the ability of the model to represent them ?
-    \item At the scale of the Iberian Peninsula, is the impact of irrigation limited to intensely irrigated areas or can remote effects be observed as a consequence of atmospheric feedbacks ?
-    \item How are the impacts of irrigation modulated in a future climate, under a strong climate change scenario ?
+    \item What impacts does irrigation have on the water cycle and land-atmosphere interactions ? Does irrigation improve the ability of the model to represent them ?
+    \item At the scale of the Iberian Peninsula, is the impact of irrigation limited to intensely irrigated areas or can remote effects be identified as a consequence of atmospheric feedbacks ?
+    \item Under an high-end climate change scenario, how do the impacts of irrigation interact with those of climate change in the region ?
 \end{itemize}
 
-%todo:check this abd update
-This chapter first contains methodological aspects regarding the simulation setups used and the reference products used for evaluation of the LAM. 
 
-Section \ref{sec:article1} then presents the impacts of irrigation on land-atmosphere interactions and the water cycle, under the present climate of the Iberian Peninsula. These results were presented in an article currently under review in Earth System Dynamics: \url{https://egusphere.copernicus.org/preprints/2025/egusphere-2025-2491/}.
-The article was not included as a whole in this chapter but many elements were reused and adapted, to avoid redundancies with Chapters \ref{chap:introduction} and \ref{chap:methods} and enable a better integration with additional results from \ref{sec:climate_change}, and Chapters \ref{chap:forcing} and \ref{chap:liaise}. The full article in its current version is available as an appendix to this manuscript.
-Finally, Section \ref{sec:climate_change} presents preliminary results obtained from coupled simulations of future climate under a strong climate change scenario, highlighting the impacts of climate change over the Iberian Peninsula, and how they interact with irrigation.
+%todo: evaluate need to mention this again 
+All the results presented in this chapter are derived from simulation setups described in Chapter \ref{chap:methods}. Their key characteristics are summarised in Table \ref{table:coupled_simulations_chap5}. The routing and irrigation schemes were used with the parameter set identified after the offline calibration presented in Chapter \ref{chap:routing}, and the MERIT DEM at 1-arcminute resolution.
 
-%todo: evaluate need to metion this again 
-% All the results presented in this chapter are derived from coupled simulation run with ICOLMDZ and ORCHIDEE using the LAM described in Chapter \ref{chap:methods}. The routing and irrigation schemes were used with the parameter set identified after the offline calibration presented in Chapter \ref{chap:routing}, and the MERIT DEM at 2-km resolution.
+%table:all coupled simulation details
+%todo:add SST/SIC ?
+\begin{table}[htbp]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{|l|l|l|l|l|l|l|l|}
+            \hline
+            \textbf{Section} & \textbf{Simulation name} & \textbf{Period} & \textbf{Diameter} & \textbf{NBP} & \textbf{Forcing (source, frequency)} & \textbf{Irrigation} \\
+            \hline
+            \ref{sec:article1} & \irr & 2010-2022 & 1500 km & 60 & ERA5, 1h & Yes \\
+            \hline
+            \ref{sec:article1} & \noirr & 2010-2022 & 1500 km & 60 & ERA5, 1h & No \\
+            \hline
+            \ref{sec:climate_change} & \presnoirr & 2010-2022 & 1000 km & 40 & ICOLMDZOR, 1h & No \\
+            \hline
+            \ref{sec:climate_change} & \futnoirr & 2050-2062 & 1000 km & 40 & ICOLMDZOR, 1h & No \\
+            \hline
+            \ref{sec:climate_change} & \futirr & 2050-2062 & 1000 km & 40 & ICOLMDZOR, 1h & Yes \\
+            \hline
+        \end{tabular}
+    }
+    \caption{Characteristics of coupled simulations used in this chapter.}
+    \label{table:coupled_simulations_chap5}
+\end{table}
+
+Section \ref{sec:article1} presents the impacts of irrigation on land-atmosphere interactions and the water cycle, under the present climate of the Iberian Peninsula. These results were presented in an \href{https://egusphere.copernicus.org/preprints/2025/egusphere-2025-2491/}{article currently under review} in Earth System Dynamics, available in its current version as an appendix to this manuscript.
+Many elements were reused and adapted, but the article was not included as a whole in this chapter to avoid redundancies with Chapters \ref{chap:introduction} and \ref{chap:methods} and enable a better integration with additional results under climate change and Chapters \ref{chap:forcing} and \ref{chap:liaise}. 
+Section \ref{sec:climate_change} presents preliminary results obtained from coupled simulations of future climate under a strong climate change scenario (SSP5-8.5), highlighting the impacts of climate change over the Iberian Peninsula, and how they interact with irrigation.
 
 \clearpage
 
@@ -33,24 +56,24 @@ Finally, Section \ref{sec:climate_change} presents preliminary results obtained 
 
 \section{Chapter conclusions}
 
-This chapter presents results from coupled simulations with the ICOLMDZOR LAM to study the regional climate of the Iberian Peninsula, and the impacts irrigation has on this climate and the water cycle, through land-atmosphere interactions. 
+This chapter presents results from coupled simulations with the ICOLMDZOR LAM over the Iberian Peninsula to study the impacts of irrigation on the regional climate and the water cycle, through land-atmosphere interactions. 
 
 \hfill
 
-The impacts of irrigation on land surface-atmosphere coupling variables and the water cycle over the Iberian Peninsula were first studied in the present climate. Two simulations were run, with and without irrigation, using hourly ERA5 forcing data, which was the only option technically available at the time. A larger domain size than initially envisionned was selected (the intermediate domain size), to limit the impact of the transition zone discrepancies on the study area.
+The impacts of irrigation on land surface-atmosphere coupling variables and the water cycle over the Iberian Peninsula were first studied in the present climate. Two simulations were run, with and without irrigation, using hourly ERA5 forcing data, which was the only option technically available at the time, and the intermediate domain identified in Chapter \ref{chap:forcing} as a good compromise to limit biases over the Iberian Peninsula.
 
-This study first showed that the ORCHIDEE irrigation scheme simulates realistic values from April to September in areas where surface water withdrawals are most important, such as the Ebro Valley. However, it cannot represent winter irrigation, or satisfy irrigation demand in southern regions, where actual irrigation is more dependent on groundwater pumping and river dams, due to low available volumes in rivers and groundwater routing reservoirs. Ongoing developments to add river dams into the ORCHIDEE routing scheme \citep{baratgin_modeling_2024} could very likely improve this aspect by representing interseasonal water storage, making more water available in summer.
-Explicit dam representation could also limit the winter and spring overestimates of river discharge in anthropized areas, since water would be stored in the dam reservoirs during this season instead of flowing in the rivers. 
+This study first showed that the ORCHIDEE irrigation scheme simulates realistic values from April to September in areas where surface water withdrawals are most important, such as the Ebro Valley. However, it cannot represent winter irrigation, and is enable to satisfy irrigation demand in southern regions, where actual irrigation is more dependent on groundwater pumping and river dams, due to low available volumes in rivers and groundwater routing reservoirs. Ongoing developments to add river dams into the ORCHIDEE routing scheme \citep{baratgin_modeling_2024} could very likely improve this aspect by representing interseasonal water storage, making more water available in summer.
+Explicit dam representation could also limit the winter and spring overestimations of river discharge in anthropised areas, since water would be stored in the dam reservoirs during this season instead of flowing in the rivers. 
 Overall, the irrigation parameterization reduces river discharge and enables better agreement with observations, but since it is only active when the LAI is above a defined threshold, these impacts are mostly visible in summer and autumn. Future work with a looser activation threshold for irrigation could help to represent winter crop irrigation, although it is not expected to have as significant an impact on discharge as an explicit dam representation since simulated irrigation demand would still remain low in winter. Nevertheless, precipitation biases are very likely to remain a major driver of discharge biases, largely independent of irrigation or dam representation.
 
 The simulation of precipitation and ET over the Iberian Peninsula is satisfactory in winter and spring, but this study highlighted a large underestimation in summer and contrasted spatial patterns with positive precipitation biases in elevated regions and negative biases in plains. ET underestimation is partly improved by simulated irrigation, but remains present on average and over most of the domain. 
 It was only a hypothesis at the time, but it is now clear that running simulations with ICOLMZOR output as forcing data would improve the underestimation of summer precipitation and ET, but also degrade the performance in winter river discharge due to excessive precipitation in mountainous areas.
 % These linked biases might be improved with a different simulation setup, particularly in the lateral forcing. Preliminary analyses (not shown) revealed an abnormal behaviour of the model in the transition zone between the ERA5 forcing zone and the central free zone, which was attributed to discrepancies between the physics used in the model and in the reanalysis. This resulted in precipitation underestimations throughout the entire simulation domain, which were largely improved by using a larger domain for the simulations presented here. A good lead for future works would be to use lateral forcing from global simulations of the ICOLMDZOR model or nested LAM simulations rather than a reanalysis, but these options are not yet technically available.
-To improve these biases would likely require more work in ICOLMDZOR, regarding the modelling of radiative processes, shallow and deep convection (whose tuning often focuses on tropical regions), or surface processes (roughness, albedo, components of ET). This highlighted the fact that the results of this study are necessarily limited by the modelling choices, uncertainties, and biases of the IPSL-CM, and therefore remain largely model-specific.
+To improve these biases would likely require more work in ICOLMDZOR, regarding the modelling of radiative processes, shallow and deep convection (whose tuning often focuses on tropical regions), surface processes (roughness, albedo, components of ET), and the modelling of snow. This highlighted the fact that the results of this study are necessarily limited by the modelling choices, uncertainties, and biases of the ICOLMDZOR LAM, and therefore remain largely model-specific.
 
 The atmospheric impacts of irrigation were analysed in detail in summer, since it is the season with the largest irrigation values and the most significant response for all variables of interest, although it is the driest season, with very little precipitation. 
 In JJA, the strong response of turbulent fluxes to irrigation leads to cooling and moistening of the lower atmosphere and significantly affects its structure (LCL and ABL height), with stronger effects on intensely irrigated regions, which is consistent with the findings of \citet{rappin_landatmosphere_2022}. In contrast, significant increases in precipitation are mostly detected in lightly irrigated mountainous areas surrounding the highly irrigated Ebro Valley. This points to a dominant effect of ABL stabilization, described by \citet{findell_atmospheric_2003-1, ek_influence_2004}, in intensely irrigated areas, and remote effects of atmospheric moistening as in \citet{deangelis_evidence_2010, lo_irrigation_2013, yang_impact_2017}. 
-An improved representation of winter and spring irrigation could either allow to generalize the following results or to identify different responses to irrigation under moister atmospheric conditions.
+An improved representation of winter and spring irrigation could either allow to generalise the following results or to identify different responses to irrigation under moister atmospheric conditions.
 Furthermore, over the Iberian Peninsula, increases in ET are proportional to applied irrigation and actually exceed it for almost every simulation month. This is made possible by small but systematic increases in average precipitation over the domain, forming evidence of continental moisture recycling over the Iberian Peninsula. The precipitation increases are of lower magnitude than those of ET and occur much more in lightly irrigated regions than in intensely irrigated regions, confirming that the recycling is partial and mostly non-local.
 
 These findings called for an analysis of surface-atmosphere coupling processes in the presence of irrigation at the diurnal scale to better describe the impacts on the ABL structure in both irrigated areas and neighbouring regions.
@@ -61,12 +84,12 @@ Therefore, the LAM was compared to field observations from the LIAISE campaign, 
 \hfill
 
 Following this study of regional climate under present conditions, another experiment was set up to study future climate conditions over the Iberian Peninsula, in the context of Mariame Maiga's internship.
-Hourly lateral boundary conditions for the LAM are obtained from a global ICOLMDZOR simulation under SSP5-8.5 climate change scenario. 
+In this setup, hourly lateral boundary conditions for the LAM are obtained from a global ICOLMDZOR simulation under SSP5-8.5 climate change scenario. 
 One simulation was run for the present period (2010-2022), without irrigation, and two for the future period (2050-2062), with and without irrigation. This allowed for an analysis of the impacts of climate change on the region, and of the behaviour and impact of irrigation in the future. 
 Although some new simulations are needed (and ongoing) to strengthen the preliminary results presented in Section \ref{sec:climate_change}, several conclusions were drawn from this study. 
 
 Under SSP5-8.5, mid-century simulated climate is 2.3°C warmer than present climate on average over the Iberian Peninsula. Although specific humidity increases due to the water-holding capacity of the air, relative humidity decreases over all the domain, particularly in the northern mountain ranges. Cloud cover and precipitation decrease over most of the domain, with the exception of a coastal region in the Southeast, leading to a decrease in latent heat flux and an increase in sensible heat flux. Using the UNEP aridity index, a clear shift in the aridity was identified over the Peninsula, with humid regions in the North evolving towards a semi-arid climate, and the arid areas in the valleys extending to cover large share of the Ebro, Guadian and Guadalquivir basins.
-
+%todo:dire que c'est limité par le choix evapot ?
 The simulation of future climate with irrigation showed that irrigation can counteract the effect of climate change on evapotranspiration, whereas its cooling effect is much weaker than the warming induced by climate change. Irrigation is not associated with large changes in precipitation, and the only significant increases occur in mountainous humid regions, where land-atmosphere interactions are not very impacted by additional moisture. 
 %todo:FC peux tu faire la le lien avec le recyclage ?
 Therefore, the impact of irrigation on the aridification of the Peninsula induced by climate change remains limited to a few grid cells.
