@@ -7,7 +7,7 @@
     \centering
     \vspace*{2cm}
 
-    {\Huge\bfseries Modelling regional impacts of irrigation on climate, the water cycle, and the atmospheric boundary layer over the Iberian Peninsula\par}
+    {\Huge\bfseries Modelling the regional impacts of irrigation on the climate, water cycle, and atmospheric boundary layer over the Iberian Peninsula\par}
     \vspace{1cm}
 
     {\Large Pierre Tiengou\par}
@@ -30,7 +30,7 @@
         Mme Agnès DUCHARNE \\
         Mme Frédérique CHERUY\\
     }
-
+%todo:roles et grades
 
     % \includegraphics[width=0.3\textwidth]{logo.png}
 \end{titlepage}
@@ -40,16 +40,21 @@
 Irrigation is a widespread agricultural practice expected to keep expanding in the future. It is recognized as a major anthropogenic driver of land-atmosphere interactions, significantly affecting regional climate, continental and atmospheric water cycle components, surface energy balance, and the atmospheric boundary layer (ABL).
 Under climate change, in semi-arid regions like most of the Mediterranean basin, it is associated with major challenges regarding water availability, increased evaporative demand, and disrupted precipitation patterns, justifying efforts to understand and represent the diversity of its impacts.
 
-This thesis investigates the effects of irrigation on the water cycle, regional climate, and the atmospheric boundary layer over the Iberian Peninsula using the ICOLMDZOR limited area model (LAM). This new regional climate model stems from the global Institut Pierre-Simon Laplace climate model (ISPL-CM), using the ORCHIDEE land surface model with a new routing scheme, the ICOLMDZ atmospheric model, and lateral forcings from ERA5 reanalyses.
-It is evaluated over the region, and simulations with and without irrigation are compared to isolate its impacts.
+This thesis investigates the regional effects of irrigation on the water cycle, climate, and the atmospheric boundary layer over the Iberian Peninsula using the ICOLMDZOR limited area model (LAM) at 25-kilometre resolution. 
+This new regional climate model stems from the global climate model developed at Institut Pierre-Simon Laplace (IPSL-CM), using the ORCHIDEE land surface model with a new routing scheme, and the ICOLMDZ atmospheric model.
+The LAM is evaluated over the region under recent climate (2010-2022), and simulations with and without irrigation are compared to isolate its impacts.
+Simulations of future climate (2050-2062) under the SSP5-8.5 scenario are also analysed to assess how these impacts interact with those of climate change.
 
-This work first demonstrates the dominant influence of irrigation on the ability of the land surface model to simulate river discharge in offline simuulations. It identifies a more appropriate set of parameters for the river routing and irrigation scheme over the Iberian Peninsula, to adapt to a 1-arcminute resolution topography and better reflect regional irrigation practices. 
-Then, in coupled LAM simulations, atmospheric impacts of irrigation mainly consist in a cooling and moistening over irrigated areas and a stabilization of the ABL. Partial recycling of atmospheric moisture is identified at the scale of the Peninsula, with increases in precipitation in mountainous regions surrounding the intensely irrigated Ebro Valley.
-The atmospheric processes at play are analysed in more details by comparing the ICOLMDOZR LAM to observations data from the Land Surface Interactions with the Atmosphere over the Iberian Semi-Arid Environment (LIAISE) campaign in the Ebro valley, and Meso-NH simulations at 2-kilometer resolution over the LIAISE study area.
-In a sensitivity experiment with increased water availability for irrigation, surface fluxes are found to be greatly improved compared to observations. Surface variables in the ICOLMDZOR grid cell for the irrigated observation site also match the average of Meso-NH grid cells contained within it, suggesting that the tiled approach of irrigation is sufficient to represent impacts at the surface. However, although the cooling and moistening effects of irrigation are found to extend vertically into the ABL, ICOLMDZOR does not achieve as good performance in ABL representation as in surface variables. This is attributed partly to the influence of subgrid heterogeneities, in surface fluxes, but also in wind speed and directionn, and to imperfect advection terms in ICOLMDZOR.
+This work first demonstrates the dominant influence of irrigation on the ability of the land surface model to simulate river discharge in offline simulations. It identifies an appropriate set of parameters for the river routing and irrigation schemes over the Iberian Peninsula, to adapt to a 1-arcminute resolution topography and better reflect regional irrigation practices. 
+Using this improved representation of the land surface in coupled LAM simulations reveals that the atmospheric impacts of irrigation mainly consist in a cooling and moistening over irrigated areas and a stabilization of the ABL. Partial recycling of atmospheric moisture is identified at the scale of the Peninsula, with increases in precipitation in mountainous regions surrounding the intensely irrigated Ebro Valley.
+The atmospheric processes at play are analysed in more details by comparing the ICOLMDZOR LAM to point-based observations (surface measurements and radio-soundings) from the Land Surface Interactions with the Atmosphere over the Iberian Semi-Arid Environment (LIAISE) campaign, held in the Ebro valley in July 2021.
+In a sensitivity experiment with increased water availability for irrigation, surface fluxes are found to be greatly improved compared to observations. In comparison to Meso-NH simulations at 2-kilometre resolution, surface variables in the ICOLMDZOR grid cell for the irrigated observation site match the average of Meso-NH grid cells it contains. This suggests that the modelling approach for irrigation and surface fluxes used in ICOLMDZOR is sufficient to represent grid-cell average impacts at the surface. However, although the cooling and moistening effects of irrigation are found to extend vertically into the ABL, ICOLMDZOR does not achieve as good performance in ABL representation as in surface variables. This is likely attributed partly to a lack of sub-grid heterogeneities, in surface fluxes, but also in wind speed and direction, and to advection terms that do not perfectly reflect observed weather conditions.
 
-Overall, this work presents a first use-case of the new ICOLMDZOR LAM for the study of land-surface interactions at the regional scale, with visible impacts of irrigation on river discharge, precipitation, surface variables and ABL development.
-Several sources of biases of the ICOLMDZOR LAM over the region are also identified and partly corrected, and possible improvements are presented for future regional climate modelling studies.
+Overall, this PhD work presents a first use-case of the new ICOLMDZOR LAM for the study of land-surface interactions at the regional and climatic scales, with visible impacts of irrigation on river discharge, precipitation, surface variables and ABL development.
+Several sources of biases of the ICOLMDZOR LAM over the region were also identified and partly corrected, and possible improvements are presented for upcoming regional climate modelling studies.
+
+% \hfill
+% \textbf{Keywords:} irrigation, regional climate modelling, land-atmosphere interactions, hydrological modelling
 
 \clearpage
 
@@ -66,9 +71,12 @@ Ensuite, dans les simulations couplées, les impacts atmosphériques de l'irriga
 Les processus atmosphériques en jeu sont analysés plus en détail en comparant le LAM ICOLMDZOR à des données d'observation issues de la campagne LIAISE (Land Surface Interactions with the Atmosphere over the Iberian Semi-Arid Environment) dans la vallée de l'Ebre, ainsi qu'à des simulations Meso-NH à une résolution de 2 kilomètres sur la zone d'étude de LIAISE.
 Dans une expérience de sensibilité avec une disponibilité accrue en eau pour l'irrigation, les flux de surface sont grandement améliorés par rapport aux observations. Les variables de surface dans la maille ICOLMDZOR du site irrigué correspondent également à la moyenne des mailles Meso-NH qu'elle contient, suggérant que l'approche en mosaïque de l'irrigation est suffisante pour représenter les impacts à la surface. Cependant, bien que le refroidissement et l'humidification générés par l'irrigation se propage verticalement dans la CLA, ICOLMDZOR ne parvient pas à atteindre la même performance dans la représentation de la CLA que pour les variables de surface. Cela est attribué en partie à l'influence des hétérogénéités sous-maille, non seulement dans les flux de surface, mais aussi dans la vitesse et la direction du vent, ainsi qu'à des termes d'advection imparfaits dans ICOLMDZOR.
 
-Dans l'ensemble, ce travail présente une première application du nouveau LAM ICOLMDZOR pour l'étude des interactions surface-atmosphère à l'échelle régionale, mettant en évidence des impacts visibles de l'irrigation sur les débits des rivières, les précipitations, les variables de surface et le développement de la CLA.
-Plusieurs sources de biais du modèle ICOLMDZOR sur la région sont également identifiées et en partie corrigées, et des pistes d'amélioration sont proposées pour les futures études de modélisation climatique régionale.
+Dans l'ensemble, ce travail présente une première application du nouveau LAM ICOLMDZOR pour l'étude des interactions surface-atmosphère à l'échelle du climat régional, mettant en évidence des impacts visibles de l'irrigation sur les débits des rivières, les précipitations, les variables de surface et le développement de la CLA.
+Plusieurs sources de biais du LAM ICOLMDZOR sur la région sont également identifiées et en partie corrigées, et des pistes d'amélioration sont proposées pour les futures études de modélisation climatique régionale.
+%todo:inclure corrections version anglais
 
+% \hfill
+% \textbf{Mots clés :} irrigation, modélisation climatique régionale, interactions surface-atmosphère, modélisation hydrologique
 \clearpage
 
 \section*{Résumé long}
@@ -84,62 +92,62 @@ Plusieurs sources de biais du modèle ICOLMDZOR sur la région sont également i
 \label{chap:introduction}
 \minitoc
 \pagebreak
-% \include{1.introduction}
+\include{1.introduction}
 
 \chapter{Methods and tools: regional simulations with the ICOLMDZOR LAM}
 \label{chap:methods}
 \minitoc
 \pagebreak
-% \include{2.methods}
+\include{2.methods}
 
 \chapter{Evaluation and parameter tuning of a new routing scheme over the Iberian Peninsula}
 \label{chap:routing}
 \minitoc
 \pagebreak
-% \include{3.routing}
+%\include{3.routing}
 
 \chapter{Influence of lateral boundary conditions on the consistency of the ICOLMDZOR LAM}
 \label{chap:forcing}
 \minitoc
 \pagebreak
-% \include{4.forcing_influence}
+%\include{4.forcing_influence}
 
 \chapter{Impacts of irrigation on the regional climate of the Iberian Peninsula}
 \label{chap:monthly}
 \minitoc
 \pagebreak
-\include{5.monthly_study}
+% \include{5.monthly_study}
 
 \chapter{Impacts of irrigation and surface heterogeneities on the atmospheric boundary layer}
 \label{chap:liaise}
 \minitoc
 \pagebreak
-% \include{6.ABL_hf_study}
+\include{6.ABL_hf_study}
 
 \chapter{Conclusions and perspectives}
 \label{chap:conclusion}
 \minitoc
 \pagebreak
-% \include{7.conclusion}
+\include{7.conclusion}
 
 % Appendix
 \chapter*{Appendix} % Unnumbered chapter
 \addcontentsline{toc}{chapter}{Appendix} % Manually add to toc
 \label{chap:appendix}
 \renewcommand{\thefigure}{A\arabic{figure}} % Figure numbering: A1, A2
-% \include{appendix}
+\include{appendix}
 
 % List of Figures and Tables (with clickable links)
 \newpage
 \listoffigures
 \addcontentsline{toc}{chapter}{List of figures} % Add to TOC
 
-% \newpage
+\newpage
 \listoftables
 \addcontentsline{toc}{chapter}{List of tables} % Add to TOC
 
 % Bibliography (with entry in TOC)
 \newpage
-% \printbibliography[heading=bibintoc, title={Bibliography}]
+\printbibliography[heading=bibintoc, title={Bibliography}]
 
 \end{document}
