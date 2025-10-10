@@ -38,7 +38,7 @@ Overall, the spatial biases of the simulated irrigation offset each other relati
 %todo:check que l'ajout des stations reste propre et cohérent
 
 The simulated river discharge was evaluated against monthly data from 18 stations of the GRDC datbase (described in Section \ref{sec:eval_datasets}).
-These stations, selected since they provided data over the simulation period and an had adequate position on the DEM grid, are described in Table \ref{table:stations_data} and shown in Fig. \ref{fig:selected_stations}. Most stations have available data from January 2010 to September 2017, and river discharge was therefore evaluated using the first eight years of simulation (2010-2017).
+These stations, selected since they provide data over the simulation period and have an adequate position on the DEM grid, are described in Table \ref{table:stations_data} and shown in Fig. \ref{fig:selected_stations}. Most stations have available data from January 2010 to September 2017, and river discharge was therefore evaluated using the first eight years of simulation (2010-2017).
 
 %figure:discharge stations and dams
 \begin{figure}[htbp]
@@ -50,8 +50,6 @@ These stations, selected since they provided data over the simulation period and
 
 %table:description of discharge station used
 \begin{table*}[htbp]
-    \caption{Characteristics of river discharge stations used for evaluation. Stations marked with * are the largest of the five major basins of the Peninsula, and are shown in Fig. \ref{fig:discharge_SC}.
-    }
     \resizebox{\textwidth}{!}{%
     \begin{tabular}{lcccccc}
         \toprule
@@ -80,6 +78,8 @@ These stations, selected since they provided data over the simulation period and
         \bottomrule
     \end{tabular}
     }
+    \caption{Characteristics of river discharge stations used for evaluation. Stations marked with * are the largest of the five major basins of the Peninsula, and are shown in Fig. \ref{fig:discharge_SC}.
+    }
     \label{table:stations_data}
 \end{table*}
 
@@ -101,7 +101,6 @@ As shown in Table \ref{table:stations_metrics}, for all fifteen stations where t
 Overall, the performance is clearly improved for 12 stations but partly degraded for 6 stations. Three of them (n°10, 13, 17) have a very small average discharge, which may explain why small changes in the model can lead to large changes in performance and limits their relevance compared with larger stations. If only stations with an average annual discharge greater than 10 m³ s$^{-1}$ are considered, irrigation improves performance in nine out of twelve cases, and degrades it for three stations. One station (n°9) exhibits an unexpected increase in the spring discharge peak which originates mostly from a single year (2011, see Fig. \ref{fig:TS_discharge_18stations}) and worsens an already-existing 250 \% bias in this season. The other two (n°4 and 5) are close to the Pyrenees mountains and present very strong biases in both simulations (300 \% overestimation in spring, unexpected double peak in March and June, Fig. \ref{fig:SC_discharge_18stations}). These discrepancies are likely related to biases in precipitation (discussed hereafter) and were not positively impacted by irrigation, apart from the mean bias.
 
 \begin{table*}[hbtp]
-    \caption{Station mean discharge (\textit{obs}, m$^3$ s$^{-1}$), discharge bias (for the \noirr and \irr simulations, in \%), and change in evaluated metrics (\irr - \noirr) for the RMSE (relative change in \%), Pearson correlation coefficient $r$, Nash-Sutcliffe efficiency and Kling-Gupta efficiency. Model performance improvements when using irrigation are shown in bold. Stations marked with * are the largest of the five major basins of the Peninsula, and are shown in Fig. \ref{fig:discharge_SC}.}
     \resizebox{\textwidth}{!}{
     \begin{tabular}{lccccccccc}
         \toprule
@@ -133,6 +132,7 @@ Overall, the performance is clearly improved for 12 stations but partly degraded
         \bottomrule
     \end{tabular}
     }
+    \caption{Station mean discharge (\textit{obs}, m$^3$ s$^{-1}$), discharge bias (for the \noirr and \irr simulations, in \%), and change in evaluated metrics (\irr - \noirr) for the RMSE (relative change in \%), Pearson correlation coefficient $r$, Nash-Sutcliffe efficiency and Kling-Gupta efficiency. Model performance improvements when using irrigation are shown in bold. Stations marked with * are the largest of the five major basins of the Peninsula, and are shown in Fig. \ref{fig:discharge_SC}.}
     \label{table:stations_metrics}
 \end{table*}
 
@@ -163,13 +163,13 @@ In contrast, the ET bias remains significant in lightly irrigated grid cells suc
 \subsection{Atmospheric impacts of irrigation in summer}
 \label{sec:jja_atmospheric_impacts}
 \subsubsection{Statistical significance}
-To assess the influence of irrigation on the model, a statistical significance test was used to filter out differences between the two simulations (\irr and \noirr) that may be the result of natural variability only. In Fig. \ref{fig:diff_sig_6vars}, a Student t-test is used to assess for each grid cell whether the mean difference between the two simulations  (\irr-\noirr) significantly differs from 0, with a p-value of 0.05 as the limit to reject the null hypothesis. Grid cells with \textit{non-significant} changes are partly hidden with \textit{hatches}.
+To assess the influence of irrigation on the model, a statistical significance test was used to filter out differences between the two simulations (\irr and \noirr) that may be the result of natural variability only. In Fig. \ref{fig:diff_sig_6vars}, a Student t-test is used to assess for each grid cell whether the mean difference between the two simulations  (\irr-\noirr) significantly differs from 0, with a p-value of 0.05 as the limit to reject the null hypothesis. Grid cells with \textit{non-significant} changes are partly hidden with \textit{hatches} \citep[as per the convention used in][]{RN1}.
 
 \subsubsection{Results}
 %figure : maps of JJA diff with non-sig grid cells hatched 
-\begin{figure}[htbp]
+\begin{figure}[hb!]
     \centering
-    \includegraphics[width=15cm]{images/chap4/article/f07_v2.png}
+    \includegraphics[width=\textwidth]{images/chap4/article/f07_v2.png}
     \caption{Summer irrigation and its impacts (JJA, 2010-2022). (a) Irrigation (mm d$^{-1}$) and 10 m wind (\irr simulation). Mean changes in the presence of irrigation (\irr - \noirr): (b) evaporative fraction, (c) 2 m temperature (K), (d) atmospheric boundary layer height (m), (e) lifting condensation level (m), (f) precipitation (mm d$^{-1}$), (g) convective available potential energy (J kg$^{-1}$), (h) moisture convergence (mm d$^{-1}$). Hatching indicates areas where the change is not statistically significant.}
     \label{fig:diff_sig_6vars}
 \end{figure}
@@ -189,6 +189,15 @@ The competing interactions of ABL stabilization and atmospheric moistening are r
 
 \subsection{Atmospheric moisture recycling over the Iberian Peninsula}
 \label{sec:recycling}
+On average over the continental domain, the monthly change in ET in the presence of irrigation is well correlated with the amount of water added by irrigation and even exceeds it, particularly in summer months (the orange JJA data points in Fig. \ref{fig:scatter_IP}a are all on or above the 1:1 line).
+In the simulation, ET is constrained by available water, and almost all the water added by irrigation is evaporated or transpired, meaning that this additional increase in ET comes from an additional input of water into the soil.
+This is explained by a systematic increase in precipitation over the domain (all the data points are on or above the x-axis on Fig. \ref{fig:scatter_IP}b). This increase is also roughly proportional to the amount of applied irrigation, although the correlation is weaker than for ET, and precipitation increases remain lower than the amounts of water added by irrigation.
+Therefore, it appears that irrigation contributes to an increase in atmospheric moisture, and that a part of this moisture is recycled as continental precipitation, which can then be reevaporated.
+
+\hfill
+
+\pagebreak
+
 %figure: 2 scatter plots over IP domain, rainDiff vs irrig
 \begin{figure}[htbp]
     \centering
@@ -197,17 +206,14 @@ The competing interactions of ABL stabilization and atmospheric moistening are r
     \label{fig:scatter_IP}
 \end{figure}
 
-On average over the continental domain, the monthly change in ET in the presence of irrigation is well correlated with the amount of water added by irrigation and even exceeds it, particularly in summer months (the orange JJA data points in Fig. \ref{fig:scatter_IP}a are all on or above the 1:1 line).
-In the simulation, ET is constrained by available water, and almost all the water added by irrigation is evaporated or transpired, meaning that this additional increase in ET comes from an additional input of water into the soil.
-This is explained by a systematic increase in precipitation over the domain (all the data points are on or above the x-axis on Fig. \ref{fig:scatter_IP}b). This increase is also roughly proportional to the amount of applied irrigation, although the correlation is weaker than for ET, and precipitation increases remain lower than the amounts of water added by irrigation.
-Therefore, it appears that irrigation contributes to an increase in atmospheric moisture, and that a part of this moisture is recycled as continental precipitation, which can then be reevaporated.
-
+% \hfill
 
 To look further into this recycling, three subdomains were defined, namely, low, medium and high irrigation areas, on the basis of the mean irrigation thresholds given in Table \ref{tab:irrig_lvl_areas}. In the map of simulated irrigation (Fig. \ref{fig:irrig_maps}d), the low irrigation domain corresponds to the first colour bin (yellow), the medium irrigation domain to the second bin (light green), and the high irrigation domain to the eight other bins. The three subdomains are also shown distinctly in Fig. \ref{fig:moisture_budget_annual}e.
+
+
 %t
 % \begin{table}[t]
 \begin{table}[h]
-    \caption{Subdomains of different irrigation intensity.}
     \resizebox{\textwidth}{!}{
     \begin{tabular}{lcccc}
         \toprule
@@ -222,6 +228,7 @@ To look further into this recycling, three subdomains were defined, namely, low,
         \bottomrule
     \end{tabular}
     }
+    \caption{Subdomains of different irrigation intensity.}
     \label{tab:irrig_lvl_areas}
 \end{table}
 
@@ -229,13 +236,11 @@ On average, the increase in ET is slightly superior to irrigation for each subdo
 However, the increase in precipitation is more than twice as large for the low irrigation subdomain than for the medium and high irrigation subdomains. Since irrigated areas are mostly in plains and valleys, this result is consistent with the increase in precipitation already described over mountainous areas in summer (Fig. \ref{fig:diff_sig_6vars}f). It points towards a nonlocal moisture recycling, with atmospheric moisture transfer from intensely irrigated areas to neighbouring lightly irrigated areas, meaning that a significant part of the additional rainfall does not occur on irrigated crops.
 Over the entire Iberian Peninsula, the increase in precipitation represents 25 \% of the irrigated volume, whereas the increase in ET amounts to 112 \% of irrigation.
 
-
 %figure: moisture budget : barplot for 3 zones +IP
-\begin{figure}[htbp]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{images/chap4/article/f09_v2.png}
     \caption{Changes in the atmospheric moisture budget for subdomains with different irrigation intensities. Each bar plot shows the annual mean irrigation in the \irr simulation (2010-2022, mm d$^{-1}$) alongside the changes (\textit{irr - no\_irr}) in ET (mm d$^{-1}$) and P (mm d$^{-1}$) averaged over distinct subsets of the domain: (a) low irrigation, grid cells with an annual average irrigation lower than 0.06 mm d$^{-1}$, (b) medium irrigation, those where it is between 0.06 and 0.12 mm d$^{-1}$, (c) high irrigation those where it is higher than 0.12 mm d$^{-1}$, and (d) the Iberian Peninsula includes all 3 subsets. The three subdomains are shown in (e).}
     \label{fig:moisture_budget_annual}
 \end{figure}
 
-\clearpage

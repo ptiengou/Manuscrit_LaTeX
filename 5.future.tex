@@ -7,8 +7,9 @@ To simulate future climate conditions, the LAM is used with forcing data from a 
 Sea-surface temperature (SST) and sea ice concentration (SIC) for this global simulation were prescribed from a dataset constructed for CMIP6 by applying bias and variance correction \citep{beaumet_assessing_2019} to IPSL-CM6 fully coupled simulations with SSP5-8.5 radiative forcing. 
 However, these global simulation did not account for dynamical evolutions of aerosols. 
 Directly using CMIP6 outputs as lateral boundary conditions was considered but many model crashes were encountered, which are likely due to the very coarse resolution of CMIP6 outputs (compared to that of the LAM), and possibly to the 6-hourly sampling frequency, as mentioned in Chapter \ref{chap:forcing}.
+The global ICOLMDZOR simulation provides hourly outputs and is zoomed to match the resolution of the LAM over its domain.
 
-The mid-century period 2050-2062 was studied and compared to the present period (2010-2022). Longer simulations are under analysis to extend the study period to 30 years for both present and future but they were not yet available when writing this manuscript.
+The mid-century period 2050-2062 was studied and compared to the present period (2010-2022). Longer simulations are under analysis to extend the study period to 30 years for both present and future but they were not yet available at the time of writing this manuscript.
 The smaller LAM domain ($R_{domain} = 1000$ km, $NBP=40$) was used for computational efficiency, considering the findings of Chapter \ref{chap:forcing} that the inconsistencies in the transition zone are limited when lateral boundary conditions are obtained from ICOLMDZOR.
 Simulations without irrigation in the present (\presnoirr) and future climate (\futnoirr) are compared to characterize the impacts of climate change over the Peninsula. Then, \futnoirr is compared to a simulation over the same period, with irrigation (\futirr) to analyse how irrigation interacts with these impacts.
 In \futirr, irrigated fractions were kept similar to present conditions, using the last available map in the HID map at 5 arc-min resolution \citep{siebert_quantifying_2010}, correponding to the year 2012. This assumption is not expected to largely affect the results as the Iberian Peninsula is already a very anthropised region, more likely to undergo changes in water management policy and irrigation methods than in the spatial distribution of irrigated crops.
@@ -23,18 +24,10 @@ A general warming of the air is observed, as expected with a strong climate chan
 Precipitation decreases over most of the Peninsula, especially in the northern coast and the Pyrenees while the only region where it increases is the Southeast (Fig. \ref{fig:diffmaps_present_future}c). This region usually receives little precipitation so, although the absolute values are small, the relative increase is higher than 10\% over a large area and exceeds 25\% in several grid cells (see supplementary Fig. \ref{fig:reldiffmaps_present_future}). 
 %evap and fluxsens
 The changes in precipitation translate into similar changes in ET, of lower magnitude (Fig. \ref{fig:diffmaps_present_future}d). The only exceptions are in  Pyrenees and Cantabrian mountain ranges in the North, which are very humid areas where ET is limited by incoming radiation rather than available soil moisture.
-These general decreases in precipitation and ET are consistent with CMIP6 projections for the northern Mediterranean basin under climate change, which are attributed to the combined influence of local responses to atmospheric warming and alterations in large-scale circulation patterns \cite{tuel_understanding_2021, arjdal_future_2023}.
-
-The sensible heat flux is increased over almost all the continental domain  (Fig. \ref{fig:diffmaps_present_future}b). This evolution is not only a consequence of changes in surface energy partitioning since increases are also visible in areas where ET is locally increasing. It is likely dominated by an increase in the incoming energy at the surface, since it closely linked to increases in downwelling shortwave radiation (Fig. \ref{fig:diffmaps_present_future}g).
-%q2m and RH2m
-Near-surface specific humidity is increased over the whole domain, with the largest increases reaching 1 g \perkg on coastal areas (Fig. \ref{fig:diffmaps_present_future}e), which corresponds to a 10\% increase. Considering the increase in 2-metre air temperature, this can be understood using the Clausius-Clapeyron relation, showing that warmer air can contain more water \citep[in theory up to +7\% for a 1°C increase, Chapter 8 in][]{IPCC_2023}.
-However, under climate change, the increase in specific humidity is not as impactful as the increase in temperature since 2-metre relative humidity is lower over all the continental domain (Fig. \ref{fig:diffmaps_present_future}f), especially in the north of the Peninsula. 
-%link to rad fluxes and cloud cover
-This extends to the rest of the atmospheric column and leads to smaller cloud cover (see supplementary Fig. \ref{fig:clouds_present_future}), which is reflected by the increase in the downwelling shortwave radiation flux (Fig. \ref{fig:diffmaps_present_future}g), particularly in the north-west of the Peninsula. 
-The general increase in longwave downwelling radiation (Fig. \ref{fig:diffmaps_present_future}h) is an expected consequence of a warmer atmosphere, but this increase is not as large in the north and north-west of the domain, where changes in relative humidity (and cloud cover) are the largest . 
+These general decreases in precipitation and ET are consistent with CMIP6 projections for the northern Mediterranean basin under climate change, which are attributed to the combined influence of local responses to atmospheric warming and alterations in large-scale circulation \cite{tuel_understanding_2021, arjdal_future_2023}.
 
 %figure : diff maps (no_irr, present - future)
-\begin{figure}[htbp]
+\begin{figure}[ht!]
     \centering
     \begin{tabular}{cc}
         %t2m
@@ -58,8 +51,6 @@ The general increase in longwave downwelling radiation (Fig. \ref{fig:diffmaps_p
             \caption{ET difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_evap_presfut.png}
         \end{subfigure} \\
-
-
         %q2m
         \begin{subfigure}[b]{0.5\textwidth}
             \caption{2-metre specific humidity difference}
@@ -70,7 +61,6 @@ The general increase in longwave downwelling radiation (Fig. \ref{fig:diffmaps_p
             \caption{2-metre relative humidity difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_rh2m_presfut.png}
         \end{subfigure} \\
-
         %SWdnSFC
         \begin{subfigure}[b]{0.5\textwidth}
             \caption{Downwelling shortwave radiation difference}
@@ -86,7 +76,15 @@ The general increase in longwave downwelling radiation (Fig. \ref{fig:diffmaps_p
     \label{fig:diffmaps_present_future}
 \end{figure}
 
-\clearpage
+The sensible heat flux is increased over almost all the continental domain  (Fig. \ref{fig:diffmaps_present_future}b). This evolution is not only a consequence of changes in surface energy partitioning since increases are also visible in areas where ET is locally increasing. It is likely dominated by an increase in the incoming energy at the surface, since it closely linked to increases in downwelling shortwave radiation (Fig. \ref{fig:diffmaps_present_future}g).
+%q2m and RH2m
+Near-surface specific humidity is increased over the whole domain, with the largest increases reaching 1 g \perkg on coastal areas (Fig. \ref{fig:diffmaps_present_future}e), which corresponds to a 10\% increase. Considering the increase in 2-metre air temperature, this can be understood using the Clausius-Clapeyron relation, showing that warmer air can contain more water \citep[in theory up to +7\% for a 1°C increase, Chapter 8 in][]{IPCC_2023}.
+However, under climate change, the increase in specific humidity is not as impactful as the increase in temperature since 2-metre relative humidity is lower over all the continental domain (Fig. \ref{fig:diffmaps_present_future}f), especially in the north of the Peninsula. 
+%link to rad fluxes and cloud cover
+This extends to the rest of the atmospheric column and leads to smaller cloud cover (see supplementary Fig. \ref{fig:clouds_present_future}), which is reflected by the increase in the downwelling shortwave radiation flux (Fig. \ref{fig:diffmaps_present_future}g), particularly in the north-west of the Peninsula. 
+The general increase in longwave downwelling radiation (Fig. \ref{fig:diffmaps_present_future}h) is an expected consequence of a warmer atmosphere, but this increase is not as large in the north and north-west of the domain, where changes in relative humidity (and cloud cover) are the largest . 
+
+% \clearpage
 
 \subsection{Impacts of irrigation under climate change}
 %todo: FC Est ce que tu peux comparer  l'intensité du recyclage induit par l irrigation, local et remote, en climat modifié à celui analysé pour le climat récent? 
@@ -110,27 +108,16 @@ The general increase in longwave downwelling radiation (Fig. \ref{fig:diffmaps_p
 \end{figure}
 
 Irrigation in the \futirr simulation is largest in the valleys of the Ebro, Douro, Tagus, Guadiana and Guadalquivir rivers (Fig. \ref{fig:future_irrig}a). Due to modelling choices, it is near-zero in winter, and follows a rather symmetrical seasonal cycle from spring to autumn, with a peak in July (Fig. \ref{fig:future_irrig}b).
-It is important to note that this simulation cannot be directly compared to the simulation of irrigation in present condition presented in Section \ref{sec:article1}, for two reasons. First, the simulation setup is different since a smaller domain with lateral boundary conditions from ICOLMDZOR are used, instead of the intermediate domain and ERA5 data. Secondly, a technical issue with the routing scheme occurred when running this simulation with irrigation under future climate. A different setting was inappropriately used, which alters the routing scheme parameters determined in Chapter \ref{chap:routing}, dividing them by 1000. This leads to irrelevant values for river discharge (not shown here) and very large volumes of water available in the routing reservoirs. In practice, that means that irrigation was mostly not constrained by available water in this simulation, and that irrigation demand was systematically met, maintaining soil moisture at 60\% of field capacity in irrigated areas.
-To some extent, this setup can be considered as a sensitivity experiment representing a situation where irrigation infrastructure can provide very large amounts of water. Also, this likely circumvents the limitations of the \textit{normal} irrigation scheme setup identified in Section \ref{sec:article1} for southern regions, where irrigation was highly underestimated. Therefore, this simulation was still used for a preliminary study of atmospheric feedbacks of irrigation.
-
-%turbulent fluxes
-Compared to the \futnoirr simulation, the most direct impact of irrigation is an increase in ET of similar amplitude to the irrigation amounts (Fig. \ref{fig:diffmaps_future_irr}d), which largely compensates for the decrease in ET induced by climate change. This increase of the latent heat flux is directly linked to a decrease of the sensible heat flux (Fig. \ref{fig:diffmaps_future_irr}b) reaching -15 W \persqm in the most irrigated valleys. 
-%t2m
-This new partitioning of surface energy leads to a cooler air over most of the domain (Fig. \ref{fig:diffmaps_future_irr}a). The largest decreases occur  over the intensely irrigated areas where 2-metre temperature is lowered by 0.5°C on annual average and 1°C in summer (see supplementary Fig. \ref{fig:diffmaps_JJA_future_irr} for JJA impacts). 
-Contrary to ET, this consequence of irrigation is insufficient to compensate the impact of climate change, which induces 2-metre temperature increases of 2°C annually and larger than 3°C in summer (see supplementary Fig. \ref{fig:SC_future_irr} for a mean seasonal cycle over the whole domain).
-Regarding humidity, \futirr is moister than \futnoirr (Fig. \ref{fig:diffmaps_future_irr}e) but some intensely irrigated areas such as the Ebro valley show smaller increases in specific humidity than others, showing that the impacts on humidity are not a local as those on temperature. Combined with the changes in temperature, the increase of specific humidity also leads to an increase in relative humidity  (Fig. \ref{fig:diffmaps_future_irr}f), which opposes the impact of climate change, without reverting it.
-%ABL
-The structure of the boundary layer is also affected by irrigation, as seen in Section \ref{sec:article1}. Stabilization dominates and follows the same pattern as irrigation, as a consequence of cooling and of the reduced sensible heat flux. The ABL height is lowered by more than a 100 m in the most intensely irrigated grid cells. 
-Due to the moistening and cooling of the atmosphere, the lifting condensation level is also lowered. Similarly to the changes in 2-metre humidity, LCL is more affected in the Tagus, Guadiana and Guadalquivir basins than in the Ebro and Douro basins.
-As explained in Section \ref{sec:article1}, the lowering of both the ABL height and LCL point to opposite effects on cloud formation and precipitation, since one reflects a more stable atmosphere less likely to form clouds through convection, while the other is associated with a moister and cooler atmosphere where condensation is more likely. As a consequence, the impact of irrigation on precipitation is rather limited and the only structures that emerge are precipitation increases in the highest mountain ranges (the Baetic, Central, Iberian Systems and the Pyrenees), and a decrease in the northern Ebro valley (more clearly visible by looking at relative changes in Fig. \ref{fig:reldiffmaps_future_irr}c).
+It is important to note that this simulation cannot be directly compared to the simulation of irrigation in present conditions presented in Section \ref{sec:article1}, for two reasons. First, the simulation setup is different since a smaller domain and lateral boundary conditions from ICOLMDZOR are used, instead of the intermediate domain and ERA5 data. Secondly, a technical issue with the routing scheme occurred when running this simulation with irrigation under future climate. A different setting was inappropriately used, which alters the routing scheme parameters determined in Chapter \ref{chap:routing}, dividing them by 1000. This leads to irrelevant values for river discharge (not shown here) and very large volumes of water available in the routing reservoirs. In practice, that means that irrigation was mostly not constrained by available water in this simulation, and that irrigation demand was systematically met, maintaining soil moisture at 60\% of field capacity in irrigated areas.
+To some extent, this setup can be considered as a sensitivity experiment representing a situation where irrigation infrastructure can provide virtually infinite amounts of water. Also, this likely circumvents the limitations of the \textit{normal} irrigation scheme setup identified in Section \ref{sec:article1} for southern regions, where irrigation was highly underestimated. Therefore, this simulation was still used for a preliminary study of atmospheric feedbacks of irrigation.
 
 %figure : diff maps (future, irr - no_irr)
-\begin{figure}[htbp]
+\begin{figure}[hb!]
     \centering
     \begin{tabular}{cc}
         %t2m
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{2-m temperature difference}
+            \caption{2-metre temperature difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_t2m_futirr.png}
         \end{subfigure} &
         %fluxsens
@@ -138,7 +125,6 @@ As explained in Section \ref{sec:article1}, the lowering of both the ABL height 
             \caption{Sensible heat flux difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_fluxsens_futirr.png}
         \end{subfigure} \\
-
         %precip
         \begin{subfigure}[b]{0.5\textwidth}
             \caption{Precipitation difference}
@@ -149,7 +135,6 @@ As explained in Section \ref{sec:article1}, the lowering of both the ABL height 
             \caption{ET difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_evap_futirr.png}
         \end{subfigure} \\
-
         %q2m
         \begin{subfigure}[b]{0.5\textwidth}
             \caption{2-metre specific humidity difference}
@@ -160,7 +145,6 @@ As explained in Section \ref{sec:article1}, the lowering of both the ABL height 
             \caption{2-metre relative humidity difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_rh2m_futirr.png}
         \end{subfigure} \\
-
         %pblh
         \begin{subfigure}[b]{0.5\textwidth}
             \caption{ABL height difference}
@@ -172,9 +156,20 @@ As explained in Section \ref{sec:article1}, the lowering of both the ABL height 
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_s_lcl_futirr.png}
         \end{subfigure}
     \end{tabular}
-    \caption{Impacts of irrigation under climate change. Annual mean difference (\futirr - \futnoirr, 2050-2062).}
+    \caption{Impacts of irrigation under climate change. \\Annual mean difference (\futirr - \futnoirr, 2050-2062).}
     \label{fig:diffmaps_future_irr}
 \end{figure}
+
+%turbulent fluxes
+Compared to the \futnoirr simulation, the most direct impact of irrigation is an increase in ET of similar amplitude to the irrigation amounts (Fig. \ref{fig:diffmaps_future_irr}d), which largely compensates for the decrease in ET induced by climate change. This increase of the latent heat flux is directly linked to a decrease of the sensible heat flux (Fig. \ref{fig:diffmaps_future_irr}b) reaching -15 W \persqm in the most irrigated valleys. 
+%t2m
+This new partitioning of surface energy leads to a cooler air over most of the domain (Fig. \ref{fig:diffmaps_future_irr}a). The largest decreases occur  over the intensely irrigated areas where 2-metre temperature is lowered by 0.5°C on annual average and 1°C in summer (see supplementary Fig. \ref{fig:diffmaps_JJA_future_irr} for JJA impacts). 
+Contrary to ET, this consequence of irrigation is insufficient to compensate the impact of climate change, which induces 2-metre temperature increases of 2°C annually and larger than 3°C in summer (see supplementary Fig. \ref{fig:SC_future_irr} for a mean seasonal cycle over the whole domain).
+Regarding humidity, \futirr is moister than \futnoirr (Fig. \ref{fig:diffmaps_future_irr}e) but some intensely irrigated areas such as the Ebro valley show smaller increases in specific humidity than others, showing that the impacts on humidity are not a local as those on temperature. Combined with the changes in temperature, the increase of specific humidity also leads to an increase in relative humidity  (Fig. \ref{fig:diffmaps_future_irr}f), which opposes the impact of climate change, without reverting it.
+%ABL
+The structure of the boundary layer is also affected by irrigation, as seen in Section \ref{sec:article1}. Stabilization dominates and follows the same pattern as irrigation, as a consequence of cooling and of the reduced sensible heat flux. The ABL height is lowered by more than a 100 m in the most intensely irrigated grid cells. 
+Due to the moistening and cooling of the atmosphere, the lifting condensation level is also lowered. Similarly to the changes in 2-metre humidity, LCL is more affected in the Tagus, Guadiana and Guadalquivir basins than in the Ebro and Douro basins.
+As explained in Section \ref{sec:article1}, the lowering of both the ABL height and LCL point to opposite effects on cloud formation and precipitation, since one reflects a more stable atmosphere less likely to form clouds through convection, while the other is associated with a moister and cooler atmosphere where condensation is more likely. As a consequence, the impact of irrigation on precipitation is rather limited and the only structures that emerge are precipitation increases in the highest mountain ranges (the Baetic, Central, Iberian Systems and the Pyrenees), and a decrease in the northern Ebro valley (more clearly visible by looking at relative changes in Fig. \ref{fig:reldiffmaps_future_irr}c).
 
 %IP average if useful 
 %precip
@@ -210,16 +205,12 @@ As explained in Section \ref{sec:article1}, the lowering of both the ABL height 
 % future, no_irr : 65.23708 (%)
 % future, irr : 66.66062 (%)
 
-\clearpage
+% \clearpage
 
 \subsection{Aridification and impact of irrigation}
 
 Aridity indices are often used as a way to characterize continental regions and how their climate will evolve in the future, under climate change. Aridity aims to describe long-term moisture deficits that limit the development of vegetation. Several definitions and indices have been proposed and used in the last decades, but the most common is the United Nations Environmental Programme aridity index \citep{unep1992}, defined as the ratio of the annual precipitation to potential evapotranspiration : $AI = \frac{P}{PET}$.
 This index is most relevant when averaged over multiple years to reduce sensitivity to specific droughts or extreme precipitation events.
-
-At the end of Mariame Maiga's internship, a short study of the evolution of aridity under climate change was conducted, using this index to classify grid cells into five aridity classes as presented in Table \ref{table:aridity_classes}. 
-Potential evapotranspiration was computed using the Penman-Monteith equation, matching the formulation used to compute aridity indices with observation data over the Iberian Peninsula in \citet{begueria_aridity_2025}.
-%taken from ORCHIDEE's \textit{evapot\_corr} variable, which is computed by applying a correction from \citet{milly_potential_1992} to the formulation given for $E_{pot}$ in Chapter \ref{chap:methods}.
 
 \begin{table}[h]
     \centering
@@ -242,44 +233,45 @@ Potential evapotranspiration was computed using the Penman-Monteith equation, ma
     \label{table:aridity_classes}
 \end{table}
 
-The spatial distribution in the \presnoirr simulation (Fig. \ref{fig:aridity_index_v2}a, b) shows a dominant semi-arid climate over the Iberian Peninsula, with a humid strip in the northern coast and the Pyrenees, and arid climate in the Ebro and Guadalquivir valleys, and other areas in the South.
-Index values are much more arid than the results obtained from observations for the period 1991-2020 in \citet{begueria_aridity_2025}, which did not show any arid area and a larger extent of the dry sub-humid areas. Over 1961-2017, \citep{paniagua_aridity_2019} found a similar proportion of semi-arid areas but no arid ones and a larger extent of humid and subhumid, and confirmed this distribution using another index \citep{DeMartonne1925}.
-The differences might be explained by the more recent period considered since climatic changes are already observed in the Iberian Peninsula \citep[][documents an aridification trend since 1961 that accelerates in the 80s for about half of the Peninsula]{paniagua_aridity_2019}.
-Furthermore, the way to compute the 2-metre variables used to obtain PET and the more generic biases of the model can have a strong impact on the value of the aridity index in ICOLMDZOR and on the classification of each grid cell. However, this simple index remains an interesting tool to study the future evolution of aridity in the various regions of the Peninsula by comparing simulations to one another.
-Under the SSP5-8.5 climate change scenario, in \futnoirr (Fig. \ref{fig:aridity_index_v2}c, d), the share of humid grid cells falls from 19.4\% to 11.0\%, the share of semi-arid and dry sub-humid cells is reduced by respectively 1 and 2 percentage points, while the share or arid grid cells is more than doubled, from 8.0\% to 19.9\%. This corresponds to a shift in aridity index, that affects each aridity class. Most humid areas change to dry sub-humid or even directly to semi-arid, leaving only the heart of the Pyrenees and of the north-western mountain ranges in this aridity class. The arid areas, on the contrary, extend to encompass a large share of the Ebro, Guadiana and Guadalquivir valleys. This shift in aridity is consistent with the changes described in Fig. \ref{fig:diffmaps_present_future}, a decrease of precipitation and an increase in temperature (which partly drives PET), and is also described in \citet{fonseca_agricultural_2022} for water dependent regions like the Ebro and Guadalquivir basins.
+At the end of Mariame Maiga's internship, a short study of the evolution of aridity under climate change was conducted, using this index to classify grid cells into five aridity classes as presented in Table \ref{table:aridity_classes}. 
+Potential evapotranspiration was computed using the Penman-Monteith equation, matching the formulation used to compute aridity indices with observation data over the Iberian Peninsula in \citet{begueria_aridity_2025}.
+%taken from ORCHIDEE's \textit{evapot\_corr} variable, which is computed by applying a correction from \citet{milly_potential_1992} to the formulation given for $E_{pot}$ in Chapter \ref{chap:methods}.
 
-The influence of irrigation on this evolution under climate change remains limited (Fig. \ref{fig:aridity_index_v2}). The share of arid grid cells is lower in \futirr (16.2\%) than \futnoirr (19.9\%), which is mostly compensated by a larger share of semi-arid grid cells (65.3\% instead of 62.9\%) whereas the share of humid cells increase by one percentage point. Irrigation has an effect on the aridity index through the moistening and cooling of the lower atmosphere, which can decrease PET, and through the changes in precipitation. As described in Fig. \ref{fig:diffmaps_future_irr}, the cooling induced by irrigation is rather small compared to the warming induced by climate change, and the increases in precipitation are mostly located in the elevated areas. This explains why irrigation is not able to limit the expansion of the arid areas in the valleys under climate change.
-The results presented here are clearly dependent on the the choice of the aridity index and on the biases of the model for near-surface variables and precipitation, which would require further investigation. In practical terms, they still suggest that although irrigation is an adaptation strategy which can help sustaining plant growth in the valleys, it has very limited long-term benefits on the local and regional climate over cultivated areas.
+\hfill
 
 %figure : maps of aridity index classes for present and future
 \begin{figure}[htbp]
     \centering
     %pres, no_irr
-    \begin{subfigure}[b]{0.42\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \caption{Aridity index in \presnoirr}
         \includegraphics[width=\textwidth]{images/chap4/future/map_AI_pres_noirr.png}
     \end{subfigure}
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{0.54\textwidth}
         \caption{Aridity index classes in \presnoirr}
         \includegraphics[width=\textwidth]{images/chap4/future/aridity_index_pres_noirr.png}
     \end{subfigure} \\
 
+    \vspace{0.2cm}
+
     %future, noirr
-    \begin{subfigure}[b]{0.42\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \caption{Aridity index in \futnoirr}
         \includegraphics[width=\textwidth]{images/chap4/future/map_AI_fut_noirr.png}
     \end{subfigure}
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{0.54\textwidth}
         \caption{Aridity index classes in \futnoirr}
         \includegraphics[width=\textwidth]{images/chap4/future/aridity_index_fut_noirr.png}
     \end{subfigure} \\
 
+    \vspace{0.2cm}
+
     %future, irr
-    \begin{subfigure}[b]{0.42\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \caption{Aridity index in \futirr}
         \includegraphics[width=\textwidth]{images/chap4/future/map_AI_fut_irr.png}
     \end{subfigure}
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{0.54\textwidth}
         \caption{Aridity index classes in \futirr}
         \includegraphics[width=\textwidth]{images/chap4/future/aridity_index_fut_irr.png}
     \end{subfigure}\\
@@ -301,6 +293,17 @@ The results presented here are clearly dependent on the the choice of the aridit
     \caption{Spatial distribution of aridity index values and classes in the \presnoirr (2010-2022), \futnoirr (2050-2062), and \futirr simulations (2050-2062).}
     \label{fig:aridity_index_v2}
 \end{figure}
+
+
+The spatial distribution in the \presnoirr simulation (Fig. \ref{fig:aridity_index_v2}a, b) shows a dominant semi-arid climate over the Iberian Peninsula, with a humid strip in the northern coast and the Pyrenees, and arid climate in the Ebro and Guadalquivir valleys, and other areas in the South.
+Index values are much more arid than the results obtained from observations for the period 1991-2020 in \citet{begueria_aridity_2025}, which did not show any arid area and a larger extent of the dry sub-humid areas. Over 1961-2017, \citep{paniagua_aridity_2019} found a similar proportion of semi-arid areas but no arid ones and a larger extent of humid and subhumid, and confirmed this distribution using another index \citep{DeMartonne1925}.
+The differences might be explained by the more recent period considered since climatic changes are already observed in the Iberian Peninsula \citep[][documents an aridification trend since 1961 that accelerates in the 80s for about half of the Peninsula]{paniagua_aridity_2019}.
+Furthermore, the way to compute the 2-metre variables used to obtain PET and the more generic biases of the model can have a strong impact on the value of the aridity index in ICOLMDZOR and on the classification of each grid cell. However, this simple index remains an interesting tool to study the future evolution of aridity in the various regions of the Peninsula by comparing simulations to one another.
+
+Under the SSP5-8.5 climate change scenario, in \futnoirr (Fig. \ref{fig:aridity_index_v2}c, d, h), the share of humid grid cells falls from 19.4\% to 11.0\%, the shares of semi-arid and dry sub-humid cells are reduced by respectively 1 and 2 percentage points, while the share or arid grid cells is more than doubled, from 8.0\% to 19.9\%. This corresponds to a shift in aridity index, that affects each aridity class. Most humid areas change to dry sub-humid or even directly to semi-arid, leaving only the heart of the Pyrenees and of the north-western mountain ranges in this aridity class. The arid areas, on the contrary, extend to encompass a large share of the Ebro, Guadiana and Guadalquivir valleys. This shift in aridity is consistent with the changes described in Fig. \ref{fig:diffmaps_present_future}, a decrease of precipitation and an increase in temperature (which partly drives PET), and is also described in \citet{fonseca_agricultural_2022} for water dependent regions like the Ebro and Guadalquivir basins.
+
+The influence of irrigation on this evolution under climate change remains limited (Fig. \ref{fig:aridity_index_v2}). The share of arid grid cells is slightly lower in \futirr (16.2\%) than \futnoirr (19.9\%), which is mostly compensated by a larger share of semi-arid grid cells (65.3\% instead of 62.9\%) whereas the share of humid cells increase by one percentage point. Irrigation has an effect on the aridity index through the moistening and cooling of the lower atmosphere, which can decrease PET, and through the changes in precipitation. As described in Fig. \ref{fig:diffmaps_future_irr}, the cooling induced by irrigation is rather small compared to the warming induced by climate change, and the increases in precipitation are mostly located in the elevated areas. This explains why irrigation is not able to limit the expansion of the arid areas in the valleys under climate change.
+The results presented here are clearly dependent on the the choice of the aridity index and on the biases of the model for near-surface variables and precipitation, which would require further investigation. In practical terms, they still suggest that although irrigation is an adaptation strategy which can help sustaining plant growth in the valleys, it has very limited long-term benefits on the local and regional climate over cultivated areas.
 
 % present_noirr
 %Arid: 74 grid cells (8.034744842562432)
