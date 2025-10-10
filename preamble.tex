@@ -21,7 +21,7 @@
 %Bibliography
 % \usepackage{natbib}
 % \bibliographystyle{plainnat}
-\usepackage[backend=biber, style=apa, sorting=nyt, sortcites=false]{biblatex}
+\usepackage[backend=biber, style=apa, backref=true, sorting=nyt, sortcites=false]{biblatex}
 \addbibresource{biblio_all.bib}
 
 \newcommand{\citep}{\parencite}
@@ -63,3 +63,81 @@
 
 \usepackage{hyperref}
 \usepackage{booktabs} %doesn't work ?
+
+% This file contains all package imports and custom configuration settings
+% for geometry, chapter titles (titlesec), and running heads (fancyhdr).
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern} % Use modern Latin font
+\usepackage{geometry} % Custom margin settings
+\usepackage{fancyhdr} % For custom headers/footers (running heads)
+\usepackage{titlesec} % For custom chapter and section titles
+\usepackage{lipsum} % Package for generating placeholder text
+\usepackage{glossaries} 
+
+% Set geometry for standard thesis margins
+\geometry{
+    a4paper,
+    top=3cm,
+    bottom=2cm,
+    left=3cm, % Slightly wider for binding
+    right=2.5cm,
+    headheight=13.6pt % Required for fancyhdr
+}
+
+% --- 1. Custom Chapter Title Styling (titlesec) ---
+% Redefine the chapter title format for a bolder, display style
+\titleformat{\chapter}[display]
+  % Format for the entire title area
+  {\normalfont\bfseries\centering\color{black}}
+  % The chapter label (e.g., "CHAPTER 1")
+  {\Huge\chaptertitlename\ \thechapter}
+  % Vertical space between the label and the title text
+  {20pt}
+  % Format for the chapter name itself
+  {\sffamily\Huge} % Using a sans-serif font for the title for contrast
+
+% Explicitly control Chapter spacing: 0pt left, 50pt before, 40pt after
+\titlespacing*{\chapter}{0pt}{50pt}{40pt}
+
+% Ensure sections are also clear
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}
+  {\thesection}{1em}{}
+
+% Explicitly control Section spacing to resolve minitoc spacing issues
+% 0pt left, 12pt before, 8pt after (tight spacing)
+\titlespacing*{\section}{0pt}{12pt}{8pt}
+
+% --- 2. Custom Running Heads (fancyhdr) ---
+\pagestyle{fancy}
+\fancyhead{} % Clear all previous header settings
+\fancyfoot{} % Clear all previous footer settings
+
+% Page Numbers are placed on the outside edge
+\fancyhead[LE, RO]{\thepage}
+
+% Content for Odd Pages (Section title on the left)
+% \nouppercase{} prevents the default behavior of capitalizing titles in headers
+\fancyhead[LO]{\nouppercase{\rightmark}} 
+
+% Content for Even Pages (Chapter title on the right)
+\fancyhead[RE]{\nouppercase{\leftmark}}
+
+% --- Custom Marks for fancyhdr ---
+% Redefine what goes into \leftmark (Chapter) and \rightmark (Section)
+% \MakeUppercase ensures the chapter title is capitalized in the mark register
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{#1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\quad #1}{}}
+
+% Add a line under the header for a professional look
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt} % No footer line
+
+% Remove the running head from the Chapter Start page (where the title is printed)
+\fancypagestyle{plain}{
+    \fancyhead{}
+    \renewcommand{\headrulewidth}{0pt}
+}
