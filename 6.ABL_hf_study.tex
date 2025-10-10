@@ -194,7 +194,7 @@ ICOLMDZOR, on the contrary, presents an incorrect diurnal cycle of specific humi
 The differences between ICOLMDZOR and observed values increase largely from 20 July, where humidity drops in the simulations but not in reality or in Meso-NH simulation (Fig. \ref{fig:cendrosa_surfacevars}g).
 %todoFC:il y a qd meme un assechement mais moins prononcé
 This shows that in certain daytime conditions, increasing ET by accounting for irrigation is not sufficient to simulate a realistic 2-metre specific humidity. In particular, incorrect advection terms and surface wind can neutralise the effect of this local improvement of land-atmosphere interactions.
-%todoFC:ca peut aussi venir de la parameterization de la PBL.
+%todoFC:ca peut aussi venir de la parametrization de la PBL.
 
 This hypothesis is corroborated by the 10-metre wind regime at La Cendrosa (Fig. \ref{fig:bothsites_wind}a-d), which is quite well structured in the beginning of the SOP with low wind speeds, but shows important variations in direction and an increased wind speed from 20 July. ICOLMDZOR seems to be capturing the variations quite well until 19 July but clearly misses part of the direction changes afterwards. This can clearly lead to a poor representation of advection terms over a day, failing to represent moisture inputs from the more humid Pyrenees or from the Mediterranean sea.
 On average over the SOP, \mesoexact follows observations closely, and the diurnal cycle simulated by ICOLMDZOR has the same structure as \mesomean, particularly for wind direction.
@@ -361,20 +361,19 @@ In the second part of the SOP, a dry bias in ICOLMDZOR was identified, which is 
 
 \clearpage
 
-\section{Vertical structure of the atmosphere}
+\section{Vertical structure of the atmosphere on IOP days}
 \label{sec:iop}
 
 Out of the seven IOP days over which radio-soundings were conducted on both sites, two were selected (15 July and 20th) to further investigate the atmospheric behaviour of the ICOLMDZOR LAM and the impact of irrigation on the vertical structure of the ABL. 
 15 July was selected as a representative IOP day for the beginning of the SOP, showing similarities with observed profiles on the 16 and 17 July. As the SOP progressed, 2-metre temperature increased and the wind regime became much more changeable, with more influence from the sea breeze circulation.
-The three following IOP days (20, 21, 22 July) therefore presented different conditions, and 20 July was also selected to analyse the impacts of irrigation on the ABL in this other context.
-%todo:expliciter que le 20 représente les conditions des 3 jours
+The three following IOP days (20, 21, 22 July) therefore presented a different type of conditions, and 20 July was also selected as representative IOP day to analyse the impacts of irrigation on the ABL in this other context.
+In all the following figures, 15 July will be shown on the left and 20 July on the right. The surface conditions at La Cendrosa on these days are first compared to understand their differences (supplementary Fig. \ref{fig:iop_days_TS_surfvars_elsplans} and \ref{fig:iop_days_TS_energy_elsplans} show the same variables at Els Plans).
 
-\subsection{Observed and modelled surface conditions at La Cendrosa on IOP days}
+\subsection{Observed and modelled surface conditions at La Cendrosa}
 
 The time series at La Cendrosa over both days (Fig. \ref{fig:iop_days_TS_surfvars}) clearly show that 20 July was a warmer and moister day than 15 July.
 On 20 July, the observed latent heat flux is higher and the sensible heat flux lower, even presenting negative values in the afternoon.
-%todoFC:C est vraiment tres negatif. est ce que ces valeurs d obs. sont discutées dans la litérature sur LIAISE?.  Tu pourrais parler aussi des incertitudes sur les obs.  en particulier de la non fermeture du bilan d energie et les corrections apportée aux flux qui se base sur la conservation du rapport de bowen. On a regardé ca avec Alice. Tu ne vas pas entrer dans les détails mais il faudrait quand meme le mentionner.   Ci dessous ce que l on a mis dans le papier d Alice Eddy covariance measurement of turbulent flows results almost systematically in non-closure of the energy balance of around
-20 %. As presented by Mauder et al. (2024), this imbalance can come from several sources such as sensor uncertainties,275sampling error, storage terms, measurement footprint on heterogeneous landscapes, etc. To reduce energy imbalance, theground storage term is estimated in Section B and the measurement footprint in Section C. The sampling error corresponds toeddies of large or small size that are not sampled (respectively due to a too short or too long sampling period). It is calculated according to Finkelstein and Sims (2001); Jomé (2024) and is shown in Fig A1. Figure A1 shows that the residual fluctuates between 1 and 100 W.m−2, and is slightly higher on the morning of August 20 (up to 185 W.m−2, equivalent to 30 % of Rn).280 During the night, the residual is negative (-22 W.m−2 on average and around 50 % of Rn). Then, it is rather common to partition the energy balance residual into contributions from H and LE. Several methods exists Mauder et al. (2024), one of the simplest ways is to assume that the Bowen ratio is preserved, and to adjust sensitive and latent flows by the same percentage (Twine et al., 2000). This correction is done here with instantaneous Bowen ratio (30 min time step) While the wind direction and speed are rather stable on 15 July (westerly wind, lower than 3 m \persec), important variations are observed on 20 July. The observed 10-metre wind in the morning is very low and mainly comes from the North-Northwest (NNW). In the afternoon, observations show a rapid change in wind direction to a south-easterly wind, associated with an increase in wind speed from less than 1 m \persec to more than 5 m \persec. That sudden variation is very likely associated with a complex regional circulation phenomenon, referred to as the \textit{marinada}. It results from the interaction of a sea breeze, bringing moist air from the Mediterranean sea, with the Catalan pre-coastal mountain range \citep{lunel_marinada_2024}. However, this local process was not studied in this thesis.
+%todoFC:C est vraiment tres negatif. est ce que ces valeurs d obs. sont discutées dans la litérature sur LIAISE?.  Tu pourrais parler aussi des incertitudes sur les obs.  en particulier de la non fermeture du bilan d energie et les corrections apportée aux flux qui se base sur la conservation du rapport de bowen. On a regardé ca avec Alice. Tu ne vas pas entrer dans les détails mais il faudrait quand meme le mentionner.   Ci dessous ce que l on a mis dans le papier d Alice Eddy covariance measurement of turbulent flows results almost systematically in non-closure of the energy balance of around20 %. As presented by Mauder et al. (2024), this imbalance can come from several sources such as sensor uncertainties,275sampling error, storage terms, measurement footprint on heterogeneous landscapes, etc. To reduce energy imbalance, theground storage term is estimated in Section B and the measurement footprint in Section C. The sampling error corresponds toeddies of large or small size that are not sampled (respectively due to a too short or too long sampling period). It is calculated according to Finkelstein and Sims (2001); Jomé (2024) and is shown in Fig A1. Figure A1 shows that the residual fluctuates between 1 and 100 W.m−2, and is slightly higher on the morning of August 20 (up to 185 W.m−2, equivalent to 30 % of Rn).280 During the night, the residual is negative (-22 W.m−2 on average and around 50 % of Rn). Then, it is rather common to partition the energy balance residual into contributions from H and LE. Several methods exists Mauder et al. (2024), one of the simplest ways is to assume that the Bowen ratio is preserved, and to adjust sensitive and latent flows by the same percentage (Twine et al., 2000). This correction is done here with instantaneous Bowen ratio (30 min time step) While the wind direction and speed are rather stable on 15 July (westerly wind, lower than 3 m \persec), important variations are observed on 20 July. The observed 10-metre wind in the morning is very low and mainly comes from the North-Northwest (NNW). In the afternoon, observations show a rapid change in wind direction to a south-easterly wind, associated with an increase in wind speed from less than 1 m \persec to more than 5 m \persec. That sudden variation is very likely associated with a complex regional circulation phenomenon, referred to as the \textit{marinada}. It results from the interaction of a sea breeze, bringing moist air from the Mediterranean sea, with the Catalan pre-coastal mountain range \citep{lunel_marinada_2024}. However, this local process was not studied in this thesis.
 
 \hfill
 
@@ -492,23 +491,76 @@ This analysis remains very simplified and assumes that some of the characteristi
 \subsection{Impact of irrigation on vertical profiles at 12UTC}
 \label{sec:vertical_profiles}
 
+% Fig : profiles with sens bins min/max theta and ovap
+\begin{figure}[hbtp]
+    \hspace*{-1.5cm} % Move the figure 1 cm into the left margin
+    \centering
+    % \makebox[\textwidth][c]{%
+    \resizebox{1.15\textwidth}{!}{
+    \begin{tabular}{@{}cccc@{}}
+        %cendrosa
+        %1507
+        \begin{subfigure}[t]{0.382\textwidth}
+            \caption{15 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_theta_1507_sensbins.png}
+        \end{subfigure} &
+        \begin{subfigure}[t]{0.29\textwidth}
+            \caption{15 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_ovap_1507_sensbins.png}
+        \end{subfigure} &
+        %2007
+        \begin{subfigure}[t]{0.285\textwidth}
+            \caption{20 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_theta_2007_sensbins.png}
+        \end{subfigure} &
+        \begin{subfigure}[t]{0.29\textwidth}
+            \caption{20 July - La Cendrosa}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_ovap_2007_sensbins.png}
+        \end{subfigure} \\
+        %elsplans
+        %1507
+        \begin{subfigure}[t]{0.382\textwidth}
+            \caption{15 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_theta_1507_sensbins.png}
+        \end{subfigure} &
+        \begin{subfigure}[t]{0.29\textwidth}
+            \caption{15 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_ovap_1507_sensbins.png}
+        \end{subfigure} &
+        %2007        
+        \begin{subfigure}[t]{0.285\textwidth}
+            \caption{20 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_theta_2007_sensbins.png}
+        \end{subfigure} &
+        \begin{subfigure}[t]{0.29\textwidth}
+            \caption{20 July - Els Plans}
+            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_ovap_2007_sensbins.png}
+        \end{subfigure} \\
+    \end{tabular}
+    }
+    \caption{Vertical profiles of potential temperature and specific humidity at 12UTC at La Cendrosa (a-d) and Els Plans (e-h), on 15 July and 20 July. Additional orange lines show the mean profile for the minimum (dotted) and maximum (dashed) sensible heat fux sub-samples (first and last two bins on Fig. \ref{fig:sens_bins}).}
+    \label{fig:profiles_theta_ovap_sensbins}
+\end{figure}
+
 \subsubsection*{15 July 2021}
-On 15 July at 12UTC, the surface warm bias seen in ICOLMDZOR is present in all the ABL, where potential temperature is 5K higher than in observations for the \noirr simulation at La Cendrosa (Fig. \ref{fig:profiles_cendrosa_1507}a). 
-At Els Plans (Fig. \ref{fig:profiles_cendrosa_1507}e), it is 3-4K higher, which suggests that the bias at La Cendrosa is not only related to irrigation and ET. 
-The values of specific humidity in the ABL for the \noirr and \irr simulations are really close to the observations and \mesomean values, indicating that the warm bias is not associated to a dry bias, even in \noirr (Fig. \ref{fig:profiles_cendrosa_1507}b).
+On 15 July at 12UTC, the surface warm bias seen in ICOLMDZOR is present in all the ABL, where potential temperature is 5 K higher than in observations for the \noirr simulation at La Cendrosa (Fig. \ref{fig:profiles_theta_ovap_sensbins}a). 
+At Els Plans (Fig. \ref{fig:profiles_theta_ovap_sensbins}e), it is 3-4 K higher, which suggests that the bias at La Cendrosa is not only related to irrigation and ET. 
+The values of specific humidity in the ABL for the \noirr and \irr simulations are really close to the observations and \mesomean values, indicating that the warm bias is not associated to a dry bias, even in \noirr (Fig. \ref{fig:profiles_theta_ovap_sensbins}b).
 Above the ABL, the three ICOLMDZOR simulations converge, and keep exhibiting a warm bias, although smaller than in the ABL, as well as excessive specific humidity, confirming that large-scale advection is imperfectly represented.
 At La Cendrosa, the warm bias is reduced by 1K in the \irrboost simulation as surface cooling propagates in the ABL. Specific humidity increases by 1 g \perkg, beyond the observed and \mesomean values, further suggesting that the atmosphere is excessively moist on that day.
 
 %option:mention that above ABL, ICOLMDZOR is too moist ?
 On both sites, the ABL height for \noirr and \irr is about 1600 m, which is higher than in observations (800 m at La Cendrosa, 900 at Els Plans). This difference can be attributed to the overestimated surface sensible heat flux in these simulations with little to no irrigation (Fig. \ref{fig:iop_days_TS_energy}c,  \ref{fig:iop_days_TS_energy_elsplans}c). 
 In comparison, the ABL is clearly lowered in \irrboost, down to 1200 m, likely through the reduction of the sensible heat flux. This is a good improvement of the structure, but still about 250 m higher than the average ABL height seen in \mesomean, showing that over a grid cell, a good representation of the average surface fluxes does not fully translate into an equally good average ABL structure.
-Among the possible causes of such discrepancies in vertical structure are the ABL parametrizations of LMDZ, the influence of sub-grid heterogeneities, and variables which are mostly determined by the dynamics. The vertical profiles of wind show that the direction simulated by ICOLMDZOR is mostly correct (Fig. \ref{fig:profiles_cendrosa_1507}d, h), but that wind speed might be too low in most of the ABL on both sites, although it is really similar to \mesomean and \mesoexact (Fig. \ref{fig:profiles_cendrosa_1507}c, g). In theory, an underestimation of wind speed would be associated to a lack of mixing and does not seem to explain the discrepancies. The possible influence of heterogeneities will be discussed in Section \ref{sec:heterogeneities}.
+Among the possible causes of such discrepancies in vertical structure are the ABL parametrizations of LMDZ, the influence of sub-grid heterogeneities, and variables which are mostly determined by the dynamics. 
+Vertical profiles of wind are not displayed here for conciseness, but show almost no differences between the three ICOLMDZOR simulations (see supplementary Fig. \ref{profiles_winds_sensbins}). The the direction simulated by ICOLMDZOR is mostly correct but that wind speed might be too low in most of the ABL on both sites, although it is really similar to \mesomean and \mesoexact. 
+In theory, an underestimation of wind speed would be associated to a lack of mixing and does not seem to explain the discrepancies. The possible influence of heterogeneities will be discussed in Section \ref{sec:heterogeneities}.
 %todo:demander à Etienne et/ou Fred leur avis
 
 \subsubsection*{20 July 2021}
 
-On 20 July at 12UTC, the \noirr simulation presents a warm bias of 2K in potential temperature and a dry bias of 1 to 1.5 g \perkg in the ABL, compared to observations at La Cendrosa (Fig. \ref{fig:profiles_cendrosa_2007}a, b). 
-At Els Plans potential temperature is correct in the mixed layer, but there is an even larger dry bias of 2.5 g \perkg (Fig. \ref{fig:profiles_cendrosa_2007}e, f). It must be noted that this is not because ICOLMDZOR simulates a lower specific humidity (in \noirr it is similar on both sites) but rather because the observed values are higher in the rain-fed site than in the irrigated site, suggesting a strong impact of non-local processes.
+On 20 July at 12UTC, the \noirr simulation presents a warm bias of 2 K in potential temperature and a dry bias of 1 to 1.5 g \perkg in the ABL, compared to observations at La Cendrosa (Fig. \ref{fig:profiles_theta_ovap_sensbins}c, d). 
+At Els Plans potential temperature is correct in the mixed layer, but there is an even larger dry bias of 2.5 g \perkg (Fig. \ref{fig:profiles_theta_ovap_sensbins}g, h). It must be noted that this is not because ICOLMDZOR simulates a lower specific humidity (in \noirr it is similar on both sites) but rather because the observed values are higher in the rain-fed site than in the irrigated site, suggesting a strong impact of non-local processes.
 The activation of irrigation at La Cendrosa enables large improvements of the warm and dry biases in \irrboost. Potential temperature is decreased by at least 1K (more than half of the bias), and all the mixed layer benefits from the surface moistening, allowing specific humidity to match the radio-sounding profile. 
 
 The ABL height in \noirr is 1200 m at La Cendrosa whereas in the radio-sounding, although it remains subject to interpretation, it is more likely around 1400 m, and in Meso-NH it is slightly above 1500 m.
@@ -516,9 +568,7 @@ Moreover, there appears to be an internal sublayer up to 500 m, cooler than the 
 %option:internal BL ref from Bouzeid (when wind blow perpendicularly its expected) need to remember the proper ref
 At Els Plans, the observed profile is easier to interpret with a clear inversion at 1500 m, which is located higher in \mesoexact (around 1650 m) and much lower in ICOLMDZOR simulations (around 850 m).
 This cannot be attributed to differences in surface sensible heat flux, since it is higher in ICOLMDZOR simulations than observations (even for \irrboost at La Cendrosa, Fig. \ref{fig:iop_days_TS_energy}d).
-Considering that the observed ABL is higher than on 15 July despite a lower surface sensible heat flux (Fig. \ref{fig:iop_days_TS_energy}c-d), the most likely explanation is that ABL development on that day was controlled by other processes, not accounted for in ICOLMDZOR.
-In particular, the wind speed at La Cendrosa (Fig. \ref{fig:profiles_cendrosa_2007}c) is two to three times higher in ICOLMDZOR than the observed one in the first 500 m of the atmosphere (and this is the case throughout all morning). %option:link to appendix fig, ajouter mention de la direction (?)
-It is similar at Els Plans until 11UTC, but at 12UTC (Fig. \ref{fig:profiles_cendrosa_2007}g), a strong south-easterly wind is observed up to 800 m, and although the direction is rather correct in ICOLMDZOR and Meso-NH, the rapid increase in wind speed is not captured.
+Considering that the observed ABL is higher than on 15 July despite a lower surface sensible heat flux (Fig. \ref{fig:iop_days_TS_energy}c-d), the most likely explanation is that ABL development on that day was controlled by other processes, not accounted for in ICOLMDZOR, as further investigated in Section \ref{sec:heterogeneities}.
 In this context, the representation of ABL structure at La Cendrosa is not improved by irrigation since the height of the mixed layer is clearly reduced to 900 m in \irrboost, worsening the limitation identified in \noirr.
 
 \subsubsection*{First conclusions on the impacts of irrigation in the ABL}
@@ -536,97 +586,100 @@ The impacts on the Els Plans site are also imperceptible, apart from a small moi
 To further investigate the mixing in the ABL and understand what controls its vertical extension on both days, the influence of sub-grid heterogeneities was explored in more details.
 %todoFC:tu viens de dire que il y un gros impact de la dynamique. Je ne tournerais pas la phrase de cette façon.
 
-%Fig : profiles 1507 12UTC
-\begin{figure}[hbtp]
-    \centering
-    \makebox[\textwidth][c]{%
-    \begin{tabular}{@{}cccc@{}}
-        %cendrosa
-        \begin{subfigure}[t]{0.382\textwidth}
-            \caption{15 July - La Cendrosa}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_theta_1507_.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.289\textwidth}
-            \caption{15 July - La Cendrosa}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_ovap_1507_.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.283\textwidth}
-            \caption{15 July - La Cendrosa}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_wind_speed_1507_.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.283\textwidth}
-            \caption{15 July - La Cendrosa}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_wind_direction_1507_.png}
-        \end{subfigure} \\
-        %elsplans
-        \begin{subfigure}[t]{0.382\textwidth}
-            \caption{15 July - Els Plans}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_theta_1507_.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.289\textwidth}
-            \caption{15 July - Els Plans}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_ovap_1507_.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.283\textwidth}
-            \caption{15 July - Els Plans}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_wind_speed_1507_.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.283\textwidth}
-            \caption{15 July - Els Plans}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_wind_direction_1507_.png}
-        \end{subfigure} \\
-    \end{tabular}
-    }
-    \caption{Vertical profiles of observed and simulated potential temperature (a,e), specific humidity (b,f), wind speed (c,g) and direction (d,h) at 12UTC on 15 July, at La Cendrosa (a-d) and Els Plans (e-h).}
-    \label{fig:profiles_cendrosa_1507}
-\end{figure}
-%todoFC:le premier niveau des meso-NH est a quelle altitude? Tu ne peux pas prolonger le profils LMDZ jusque à la surface au moins avec t2m?
 
-%Fig : profiles 2007 12UTC
-\begin{figure}[hbtp]
-    \centering
-    \makebox[\textwidth][c]{%
-    \begin{tabular}{@{}cccc@{}}
-        %cendrosa
-        \begin{subfigure}[t]{0.382\textwidth}
-            \caption{20 July - La Cendrosa}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_theta_2007_.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.289\textwidth}
-            \caption{20 July - La Cendrosa}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_ovap_2007_.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.283\textwidth}
-            \caption{20 July - La Cendrosa}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_wind_speed_2007_.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.283\textwidth}
-            \caption{20 July - La Cendrosa}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_wind_direction_2007_.png}
-        \end{subfigure} \\
-        %elsplans
-        \begin{subfigure}[t]{0.382\textwidth}
-            \caption{20 July - Els Plans}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_theta_2007_.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.289\textwidth}
-            \caption{20 July - Els Plans}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_ovap_2007_.png}
-        \end{subfigure} &
-        %winds
-        \begin{subfigure}[t]{0.283\textwidth}
-            \caption{20 July - Els Plans}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_wind_speed_2007_.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.283\textwidth}
-            \caption{20 July - Els Plans}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_wind_direction_2007_.png}
-        \end{subfigure} \\
-    \end{tabular}
-    }
-    \caption{Vertical profiles of observed and simulated potential temperature (a,e), specific humidity (b,f), wind speed (c,g) and direction (d,h) at 12UTC on 20 July, at La Cendrosa (a-d) and Els Plans (e-h).}
-    \label{fig:profiles_cendrosa_2007}
-\end{figure}
+% %Fig : profiles 1507 12UTC
+% % \begin{figure}[hbtp]
+% %     \centering
+% %     \makebox[\textwidth][c]{%
+% %     \begin{tabular}{@{}cccc@{}}
+% %         %cendrosa
+% %         \begin{subfigure}[t]{0.382\textwidth}
+% %             \caption{15 July - La Cendrosa}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_theta_1507_.png}
+% %         \end{subfigure} &
+% %         \begin{subfigure}[t]{0.289\textwidth}
+% %             \caption{15 July - La Cendrosa}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_ovap_1507_.png}
+% %         \end{subfigure} &
+% %         \begin{subfigure}[t]{0.283\textwidth}
+% %             \caption{15 July - La Cendrosa}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_wind_speed_1507_.png}
+% %         \end{subfigure} &
+% %         \begin{subfigure}[t]{0.283\textwidth}
+% %             \caption{15 July - La Cendrosa}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_wind_direction_1507_.png}
+% %         \end{subfigure} \\
+% %         %elsplans
+% %         \begin{subfigure}[t]{0.382\textwidth}
+% %             \caption{15 July - Els Plans}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_theta_1507_.png}
+% %         \end{subfigure} &
+% %         \begin{subfigure}[t]{0.289\textwidth}
+% %             \caption{15 July - Els Plans}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_ovap_1507_.png}
+% %         \end{subfigure} &
+% %         \begin{subfigure}[t]{0.283\textwidth}
+% %             \caption{15 July - Els Plans}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_wind_speed_1507_.png}
+% %         \end{subfigure} &
+% %         \begin{subfigure}[t]{0.283\textwidth}
+% %             \caption{15 July - Els Plans}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_wind_direction_1507_.png}
+% %         \end{subfigure} \\
+% %     \end{tabular}
+% %     }
+% %     \caption{Vertical profiles of observed and simulated potential temperature (a,e), specific humidity (b,f), wind speed (c,g) and direction (d,h) at 12UTC on 15 July, at La Cendrosa (a-d) and Els Plans (e-h).}
+% %     \label{fig:profiles_cendrosa_1507}
+% % \end{figure}
+
+
+% %Fig : profiles 2007 12UTC
+% % \begin{figure}[hbtp]
+% %     \centering
+% %     \makebox[\textwidth][c]{%
+% %     \begin{tabular}{@{}cccc@{}}
+% %         %cendrosa
+% %         \begin{subfigure}[t]{0.382\textwidth}
+% %             \caption{20 July - La Cendrosa}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_theta_2007_.png}
+% %         \end{subfigure} &
+% %         \begin{subfigure}[t]{0.289\textwidth}
+% %             \caption{20 July - La Cendrosa}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_ovap_2007_.png}
+% %         \end{subfigure} &
+% %         \begin{subfigure}[t]{0.283\textwidth}
+% %             \caption{20 July - La Cendrosa}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_wind_speed_2007_.png}
+% %         \end{subfigure} &
+% %         \begin{subfigure}[t]{0.283\textwidth}
+% %             \caption{20 July - La Cendrosa}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_wind_direction_2007_.png}
+% %         \end{subfigure} \\
+% %         %elsplans
+% %         \begin{subfigure}[t]{0.382\textwidth}
+% %             \caption{20 July - Els Plans}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_theta_2007_.png}
+% %         \end{subfigure} &
+% %         \begin{subfigure}[t]{0.289\textwidth}
+% %             \caption{20 July - Els Plans}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_ovap_2007_.png}
+% %         \end{subfigure} &
+% %         %winds
+% %         \begin{subfigure}[t]{0.283\textwidth}
+% %             \caption{20 July - Els Plans}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_wind_speed_2007_.png}
+% %         \end{subfigure} &
+% %         \begin{subfigure}[t]{0.283\textwidth}
+% %             \caption{20 July - Els Plans}
+% %             \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_wind_direction_2007_.png}
+% %         \end{subfigure} \\
+% %     \end{tabular}
+% %     }
+% %     \caption{Vertical profiles of observed and simulated potential temperature (a,e), specific humidity (b,f), wind speed (c,g) and direction (d,h) at 12UTC on 20 July, at La Cendrosa (a-d) and Els Plans (e-h).}
+% %     \label{fig:profiles_cendrosa_2007}
+% % \end{figure}
+
+%todoFC:le premier niveau des meso-NH est a quelle altitude? Tu ne peux pas prolonger le profils LMDZ jusque à la surface au moins avec t2m?
 
 \clearpage
 
@@ -710,60 +763,12 @@ This type of internal sublayer is not expected to be captured by the LMDZ physic
 However, the main limitation of ICOLMDZOR in representing the ABL structure for this day is not related to the presence of this internal boundary layer, but rather resides in the large ABL height underestimation at Els Plans.
 On this site, the observed profile is very well mixed with a clear inversion at 1500 m (and 1650 m in \mesoexact), but ICOLMDZOR simulates a 900 m ABL, although it overestimates the surface sensible heat flux.
 The most likely driver of ABL development in Meso-NH comes from low-level winds (Fig. \ref{fig:iop_days_winds}b, d, f, h). A strong south-easterly wind  enters the Els Plans area and faces a light northerly wind with a clear front at the border between the irrigated and non-irrigated zones, that extends at least to 950 hPa.
-The mixing induced by strong winds and the upward motions associated to the convergence of air are most likely the cause for the very high ABL on 20 July (higher than on 15 July despite lower sensible heat fluxes in both observations and Meso-NH). 
+The mixing induced by strong winds and the upward motions associated to the convergence of air (see vertical winds in supplementary Fig. \ref{fig:iop_days_vertwinds}) are most likely the cause for the very high ABL on 20 July (higher than on 15 July despite lower sensible heat fluxes in observations and Meso-NH). 
+The spatial resolution of ICOLMDZOR does not allow it to represent such subtle sub-grid structures, and although it simulates south-southeasterly low level winds, it does not account for the impacts of this front on the ABL (see supplementary Fig. \ref{fig:iop_days_LMDZ_winds} for ICOLMDZOR winds at 10 metres and 850 hPa on both IOP days).
 %option:mention that this front is present in previous hours as well ?
-Above the front, higher altitude south-easterly winds seem to partly advect that well developed mixed layer into the irrigated zone, above the internal boundary layer, contributing to the more complex vertical profiles at La Cendrosa.
-Some further investigation could help determine if the location of the front is mainly dictated by the difference in roughness or by pressure gradients between the two zones, but it seems clear that sub-grid heterogeneities is surface sensible heat flux is not a first order driver of ABL development.
+In Meso-NH, above the front, higher altitude south-easterly winds seem to partly advect that well developed mixed layer into the irrigated zone, above the internal boundary layer, contributing to the more complex vertical profiles at La Cendrosa.
+Some further investigation could help determine if the location of the front is mainly dictated by the difference in roughness or by pressure gradients between the two zones, but it seems clear that sub-grid heterogeneities of surface sensible heat flux are not a first order driver of ABL development.
 This explains why the irrigation parametrization could not improve the ABL structure over the area in the current state of the model, which does not account for the impact of the observed front on the ABL.
-
-% Fig : profiles with sens bins min/max theta and ovap
-\begin{figure}[hbtp]
-    \centering
-    \makebox[\textwidth][c]{%
-    \begin{tabular}{@{}cccc@{}}
-        %cendrosa
-        %1507
-        \begin{subfigure}[t]{0.382\textwidth}
-            \caption{15 July - La Cendrosa}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_theta_1507_sensbins.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.29\textwidth}
-            \caption{15 July - La Cendrosa}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_ovap_1507_sensbins.png}
-        \end{subfigure} &
-        %2007
-        \begin{subfigure}[t]{0.285\textwidth}
-            \caption{20 July - La Cendrosa}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_theta_2007_sensbins.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.29\textwidth}
-            \caption{20 July - La Cendrosa}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_cendrosa_ovap_2007_sensbins.png}
-        \end{subfigure} \\
-        %elsplans
-        %1507
-        \begin{subfigure}[t]{0.382\textwidth}
-            \caption{15 July - Els Plans}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_theta_1507_sensbins.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.29\textwidth}
-            \caption{15 July - Els Plans}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_ovap_1507_sensbins.png}
-        \end{subfigure} &
-        %2007        
-        \begin{subfigure}[t]{0.285\textwidth}
-            \caption{20 July - Els Plans}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_theta_2007_sensbins.png}
-        \end{subfigure} &
-        \begin{subfigure}[t]{0.29\textwidth}
-            \caption{20 July - Els Plans}
-            \includegraphics[width=\textwidth]{images/chap6/profiles/profile_elsplans_ovap_2007_sensbins.png}
-        \end{subfigure} \\
-    \end{tabular}
-    }
-    \caption{Vertical profiles of potential temperature and specific humidity at 12UTC at La Cendrosa (a-d) and Els Plans (e-h), on 15 July and 20 July. Additional orange lines show the mean profile for the minimum (dotted) and maximum (dashed) sensible heat fux sub-samples (first and last two bins on Fig. \ref{fig:sens_bins}).}
-    \label{fig:profiles_theta_ovap_sensbins}
-\end{figure}
 
 %Fig : Meso-NH winds Cendrosa
 \begin{figure}[hbtp]
