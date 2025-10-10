@@ -380,7 +380,14 @@ However, a wide range of other atmospheric models exist, that achieve much highe
 This section gives a brief overview of the existing atmospheric model classes, their applications, and their interest for climate modelling.
 
 Regional climate models (RCMs) are mostly based on the same structure and assumptions as AGCMs but are used on restricted domains (typically a few hundred of kilometres). The ICOLMDZ limited area model (used in this thesis and presented in Section \ref{sec:ICOLMDZLAM}) is an example of RCM.
-Running simulations over a limited area requires lateral boundary conditions to take into account large-scale atmospheric features without simulating the global circulation, but it enables running simulations over a region on climatic timescales, at higher spatial resolutions.
+Running simulations over a limited area requires lateral boundary conditions (LBC) to take into account large-scale atmospheric features without simulating the global circulation.
+The influence of the LBC is a well known problem for regional climate modelling or dynamical downscaling. 
+\citet{denis_sensitivity_2003} analysed the dependency of the simulated climate to the resolution of the LBC and found that a 12 times lower spatial resolution in the forcing compared to the domain could still yield acceptable performance. This study also explored the influence of the temporal sampling and little difference between a 3-hour and a 6-hour sampling, but a degradation of performance with a 12-hour sampling frequency.
+\citet{wu_estimating_2005} performed regional climate model simulations with LBC obtained from 16 different sources and found them to be more impactful than the initial conditions, and that climate variables such as precipitation could be affected by the choice of forcing source over the whole simulation domain. 
+The sensitivity of variables such as precipitation or sea level pressure to the LBC was found to be improved with larger simulation domains \citep{koltzow_importance_2011}, although \citet{leduc_sensitivity_2011} showed that this effect was very dependent on the local climate and even on the season.
+Using forcing data from the exact same model at the same resolution, \citet{colin_sensitivity_2010} found that model performance was not degraded on precipitation, and particulalry its extreme values, even using a rather small domain. 
+
+Althouhg using a limited domain introduces such complex sensitivities, it also enables running simulations over a region on climatic timescales at higher spatial resolutions, without exceeding reasonable computation time.
 This means that model developers and users must be aware of the scale-dependent hypotheses and parameters of the model to ensure that they remain suitable.
 In particular, the hydrostatic hypothesis used in dynamical cores of AGCM and RCMs is considered valid only above 10-kilometre resolution, and surely invalid below 4-kilometre resolution \citep{stull2012introduction, guichard_short_2017}.
 More generally, the scale separation between processes that are effectively resolved by the dynamics and processes that must be parametrized cannot be universal across scales. For instance, when model resolution reaches the average size of a single cloud, statistical parametrizations of the cloud population then become partly unadapted, yet the dynamical core is not fully capable of properly representing their distribution. Multiple \textit{grey zones} are therefore identified for processes that were historically parametrized in atmospheric models, as scales within which new representations need to be developed \citep{wei_research_2024,frassoni_building_2018,chow_crossing_2019}.
@@ -422,13 +429,6 @@ At the end of the 20th and the beginning of the 21st century, many developments 
 In 2021, Syukuro Manabe shared one half of the Nobel Prize in Physics with Klaus Hasselmann "for the physical modelling of Earth's climate, quantifying variability and reliably predicting global warming". 
 Hasselmann's work focused on the statistical methods that allowed to disentangle the variations in weather from long-term changes of climate induced by external forcings, such as anthropogenic greenhouse gases emissions, and identify a \textit{fingerprint} of climate change \citep{hasselmann_optimal_1993,hasselmann_stochastic_2022}.
 
-Early climate change studies focused on idealised scenarios, such as the doubling of atmospheric CO$_2$, but the IPCC has since introduced new standards for future climate simulations. For its 6th Assessment Report \citep{RN1}, Shared Socio-economic Pathways (SSPs) were defined, encompassing different trajectories for population, economic development, education, and technological change to represent a range of plausible futures for human society. They are used with Representative Concentration Pathways (RCPs), which quantify the additional radiative forcing on the global energy budget induced by greenhouse gases emissions in each scenario.
-This approach allows climate modellers to assess a wide spectrum of radiative forcing scenarios, providing policymakers with a range of possible evolutions of the climate system (Fig. \ref{fig:ipcc_ssp}).
-In the Coupled Model Intercomparison Project \citep[CMIP,][]{eyring_overview_2016}, similar simulations are performed by multiple climate models for several SSP-RCP scenarios. 
-This allows the IPCC to elaborate conclusions that are not reliant on a single model, and to account for the uncertainties induced by modelling choices in each climate model.
-Moreover, a given model also performs multiple simulations for each scenario with slightly different initial conditions, constituting a simulation ensemble. Considering the chaotic nature of the climate system, changes in initial conditions will lead to different results. Studying the outputs of a simulation ensemble as a statistic distribution of plausible trajectories of the climate system is a way to account for its internal variability and to quantify the uncertainties in its predicted evolution. 
-
-
 \begin{figure}[hbtp]
     \centering
     \includegraphics[width=\textwidth]{images/intro/IPCC_AR6_WGI_SPM_Figure_8.png}
@@ -436,7 +436,13 @@ Moreover, a given model also performs multiple simulations for each scenario wit
     \label{fig:ipcc_ssp}
 \end{figure}
 
-\clearpage
+Early climate change studies focused on idealised scenarios, such as the doubling of atmospheric CO$_2$, but the IPCC has since introduced new standards for future climate simulations. For its 6th Assessment Report \citep{RN1}, Shared Socio-economic Pathways (SSPs) were defined, encompassing different trajectories for population, economic development, education, and technological change to represent a range of plausible futures for human society. They are used with Representative Concentration Pathways (RCPs), which quantify the additional radiative forcing on the global energy budget induced by greenhouse gases emissions in each scenario.
+This approach allows climate modellers to assess a wide spectrum of radiative forcing scenarios, providing policymakers with a range of possible evolutions of the climate system (Fig. \ref{fig:ipcc_ssp}).
+In the Coupled Model Intercomparison Project \citep[CMIP,][]{eyring_overview_2016}, similar simulations are performed by multiple climate models for several SSP-RCP scenarios. 
+This allows the IPCC to elaborate conclusions that are not reliant on a single model, and to account for the uncertainties induced by modelling choices in each climate model.
+Moreover, a given model also performs multiple simulations for each scenario with slightly different initial conditions, constituting a simulation ensemble. Considering the chaotic nature of the climate system, changes in initial conditions will lead to different results. Studying the outputs of a simulation ensemble as a statistic distribution of plausible trajectories of the climate system is a way to account for its internal variability and to quantify the uncertainties in its predicted evolution. 
+
+% \clearpage
 
 \subsection{Land-atmosphere interactions in climate models}
 
