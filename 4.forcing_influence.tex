@@ -25,7 +25,7 @@ In this chapter, the inconsistencies identified in the transition zone are analy
     \resizebox{\textwidth}{!}{
         \begin{tabular}{|l|l|l|l|l|l|l|l|}
             \hline
-            \textbf{Section} & \textbf{Simulation name} & \textbf{Period} & \textbf{Diameter} & \textbf{NBP} & \textbf{Forcing (source, frequency)} & \textbf{Irrigation} \\
+            \textbf{Section} & \textbf{Simulation name} & \textbf{Period} & \textbf{Diameter} & \textbf{NBP} & \textbf{Forcing} & \textbf{Irrigation} \\
             \hline
             \ref{sec:domain_size} & \smalld & 2010-2014 & 1000 km & 40 & ERA5, 1h & No \\
             \hline
@@ -93,7 +93,7 @@ The inconsistencies were identified with the initial simulation setup \smalld, b
 This lack of precipitation is correlated to a lower ET on continents, which receive less water. However, over the Atlantic ocean and the Mediterranean sea, ET was surprisingly high, overestimating the values of ERA5 (Fig. \ref{fig:domain_size_P_ET_ERA_diff_maps}b). 
 
 Simulations with the intermediate and large domains show that the strongest biases in precipitation are located in the transition zone, especially in the north-west of the domain which is not influenced by the presence of continents (Fig. \ref{fig:domain_size_P_ET_ERA_diff_maps}b-c).
-In all simulations, the differences compared to ERA5 in the very edge of the domain correspond to a relative decrease between -80\% and -100\%, meaning the model computes almost no precipitation in these grid cells (Fig. \ref{fig:domain_size_ERA_reldiff_maps} in the appendix presents similar maps to Fig. \ref{fig:domain_size_P_ET_ERA_diff_maps} but with relative differences).
+In all simulations, the differences compared to ERA5 in the very edge of the domain correspond to a relative decrease between -80\% and -100\%, meaning the model computes almost no precipitation in these grid cells (similar maps to Fig. \ref{fig:domain_size_P_ET_ERA_diff_maps} but with relative differences can be found in supplementary Fig. \ref{fig:domain_size_ERA_reldiff_maps}).
 In the free zone, precipitation remains underestimated over the sea but much less than in \smalld, and the bias decreases towards the centre. Along the northern coast of the Peninsula, the underestimation is still present but seems structurally independent from the behaviour of the model on the edges of the domain.
 The overestimation in ET is also confined to the northwestern edge of the domain and the large overestimation in the Mediterranean is reversed to an underestimation, of smaller magnitude, for both \interd and \larged (Fig. \ref{fig:domain_size_P_ET_ERA_diff_maps}e-f).
 As mentioned before, although ERA5 cannot be considered as the best reference product for all the variables considered, it is the spatial structure of the biases that is striking here, since they are independent of the structure of the variable (Fig. \ref{fig:ERA_var_maps}), and follow the edges of the domain even when the radius changes.
@@ -354,7 +354,7 @@ The results presented here compare two simulations with the intermediate domain 
 \hfill
 
 First, it is clear that the biases in the transition zone identified in Section \ref{sec:domain_size} for downwelling radiative fluxes are strengthened in \forcingsixh (Fig. \ref{fig:forcing_sampling_freq_ERA_diff_maps}f, h). 
-Compared to \forcingoneh, shortwave flux is increased and longwave flux is decrease over the whole domain, and are associated to a reduced cloud cover (see Fig. \ref{fig:forcing_sampling_freq_ERA_diff_maps_appendix} in the appendix).
+Compared to \forcingoneh, shortwave flux is increased and longwave flux is decrease over the whole domain, and are associated to a reduced cloud cover (see supplementary Fig. \ref{fig:forcing_sampling_freq_ERA_diff_maps_appendix}).
 In \forcingsixh, precipitation remains near-zero in the transition zone, and the bias seems confined to the edges (Fig. \ref{fig:forcing_sampling_freq_ERA_diff_maps}b). However, precipitation is largely underestimated in the central part of the domain, including continental areas in the north-west of the Peninsula, the Ebro valley, and near the Gibraltar straight. Considering the structure of the bias, this does not seem to be a direct consequence of the inconsistencies in the transition zone, but might still be an indirect consequence of the discrepancies between the physics used by ERA5 and LMDZ.
 The underestimation of ET is generally strengthened in \forcingsixh than in \forcingoneh, which is not very well correlated with the changes found for radiative fluxes over the sea (Fig. \ref{fig:forcing_sampling_freq_ERA_diff_maps}d). This might be due to more complex feedback loops involving ET, atmospheric humidity, cloud cover, and therefore surface radiation, but it was not investigated further due to the scope of this study.
 Over land, the underestimations of ET compare to ERA5 reflect those of precipitations but only to some extent, mostly in the Ebro valley and the western part of the domain.
