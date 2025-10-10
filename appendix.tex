@@ -1,4 +1,4 @@
-\section*{Appendix to chapter \ref{chap:routing}}
+\section{Supplementary figures to Chapter \ref{chap:routing}}
 
 %figure : 3 time series (3 reservoirs) on average over the IP for both routings
 \begin{figure}[htbp]
@@ -30,8 +30,50 @@
         \includegraphics[width=\textwidth]{images/chap3/time_series/streamr_seasonal_cycle.png}
     \end{subfigure} \\
 
-    \caption{Time series and seasonal cycles of reservoir volumes on average over the Iberian Peninsula domain.}
+    \caption{Time series and seasonal cycles of reservoir volumes on average over the Iberian Peninsula domain (2003-2012). Similar to Fig. \ref{fig:reservoir_cont_time_series} but including coastal grid cells.}
     \label{fig:reservoir_time_series}
+\end{figure}
+
+\clearpage
+
+\section{Supplementary figures to Chapter \ref{chap:forcing}}
+%Forcing influence
+
+%figure : maps of relative diff vs ERA for 3 domain sizes
+%todo:captions
+\begin{figure}[htbp]
+    \centering
+    \begin{tabular}{ccc}
+        %precip
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{Precipitation relative bias to ERA5 (\%, \smalld)}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_precip_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{Precipitation relative bias to ERA5 (\%, \interd)}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_precip_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{Precipitation relative bias to ERA5 (\%, \larged)}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_precip_era_LAM_2000km_NBP80.png}
+        \end{subfigure} \\
+        
+        %evap
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{ET relative bias to ERA5\\(\%, \smalld)}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_1000km_NBP40.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{ET relative bias to ERA5\\(\%, \interd)}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_1500km_NBP60.png}
+        \end{subfigure} &
+        \begin{subfigure}[b]{0.33\textwidth}
+            \caption{ET relative bias to ERA5\\(\%, \larged)}
+            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_2000km_NBP80.png}
+        \end{subfigure}
+    \end{tabular}
+    \caption{Precipitation (a-c) and evapotranspiration (d-f) relative biases compared to ERA5 over 2010-2014 for three simulations with small, intermediate and large domain sizes.}
+    \label{fig:domain_size_ERA_reldiff_maps}
 \end{figure}
 
 %figure : maps of diff vs ERA for 2 forcing sampling freqs
@@ -62,54 +104,11 @@
 \end{figure}
 
 \clearpage
-
-\section*{Appendix to chapter \ref{chap:forcing}}
-%Forcing influence
-
-%figure : maps of relative diff vs ERA for 3 domain sizes
-%todo:captions
-\begin{figure}[htbp]
-    \centering
-    \begin{tabular}{ccc}
-        %precip
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_precip_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_precip_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_precip_era_LAM_2000km_NBP80.png}
-        \end{subfigure} \\
-        
-        %evap
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_1000km_NBP40.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_1500km_NBP60.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.33\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_2000km_NBP80.png}
-        \end{subfigure}
-    \end{tabular}
-    \caption{}
-    \label{fig:domain_size_ERA_reldiff_maps}
-\end{figure}
-
-\clearpage
  
-\section*{Appendix to chapter \ref{chap:monthly}}
+\section{Supplementary figures to Chapter \ref{chap:monthly}}
 % Article
-
 %f
-\begin{figure}[htbp]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{images/chap4/article/18_stations_TS.png}
     \caption{Time series of river discharge for the \irr and \noirr simulations and GRDC observations.}
@@ -120,192 +119,139 @@
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{images/chap4/article/18_stations_SC.png}
-    \caption{Mean seasonal cycle of river discharge for the \irr and \noirr simulations and GRDC observations. A mask is applied to the simulations to filter out months without corresponding observation data.}
+    \caption{Mean seasonal cycle (2010-2017) of river discharge for the \irr and \noirr simulations and GRDC observations. A mask is applied to the simulations to filter out months without corresponding observation data.}
     \label{fig:SC_discharge_18stations}
 \end{figure}
 
 
 % Climate change 
 
-%figure : from chap 4 future vs present. Seasonnal cycle of variables for 3 sims
+%figure : Seasonnal cycle of variables for 3 sims (future x2, present)
 \begin{figure}[htbp]
     \centering
     \begin{tabular}{cc}
-        %precip
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/SC_precip_presfutirr.png}
-        \end{subfigure} &
-        %evap
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/SC_evap_presfutirr.png}
-        \end{subfigure} \\
-
         %t2m
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{2-metre temperature mean seasonal cycle}
             \includegraphics[width=\textwidth]{images/chap4/future/SC_t2m_presfutirr.png}
         \end{subfigure} &
         %fluxsens
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{Sensible heat flux mean seasonal cycle}
             \includegraphics[width=\textwidth]{images/chap4/future/SC_fluxsens_presfutirr.png}
+        \end{subfigure} \\
+
+        %precip
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{Precipitation mean seasonal cycle}
+            \includegraphics[width=\textwidth]{images/chap4/future/SC_precip_presfutirr.png}
+        \end{subfigure} &
+        %evap
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{Evapotranspiration mean seasonal cycle}
+            \includegraphics[width=\textwidth]{images/chap4/future/SC_evap_presfutirr.png}
         \end{subfigure} \\
 
         %q2m
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{Specific humidity mean seasonal cycle}
             \includegraphics[width=\textwidth]{images/chap4/future/SC_q2m_presfutirr.png}
         \end{subfigure} &
         %rh2m
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{Relative humidity mean seasonal cycle}
             \includegraphics[width=\textwidth]{images/chap4/future/SC_rh2m_presfutirr.png}
         \end{subfigure} \\
 
         %pblh
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{ABL height mean seasonal cycle}
             \includegraphics[width=\textwidth]{images/chap4/future/SC_s_pblh_presfutirr.png}
         \end{subfigure} &
         %lcl
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{Lifting condenstation level mean seasonal cycle}
             \includegraphics[width=\textwidth]{images/chap4/future/SC_s_lcl_presfutirr.png}
         \end{subfigure} \\
     \end{tabular}
-    \caption{}
+    \caption{Mean seasonal cycle of the variables shown in Fig. \ref{fig:diffmaps_future_irr} in the \presnoirr (2010-2022), \futnoirr (2050-2062), and \futirr (2050-2062) simulations, averaged over the Iberian Peninsula.}
     \label{fig:SC_future_irr}
 \end{figure}
-
-%figure : diff maps JJA (noirr, pres - future)
-% \begin{figure}[htbp]
-%     \centering
-%     \begin{tabular}{cc}
-%         %precip
-%         \begin{subfigure}[b]{0.5\textwidth}
-%             \caption{}
-%             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_precip_presfut.png}
-%         \end{subfigure} &
-%         %evap
-%         \begin{subfigure}[b]{0.5\textwidth}
-%             \caption{}
-%             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_evap_presfut.png}
-%         \end{subfigure} \\
-
-%         %t2m
-%         \begin{subfigure}[b]{0.5\textwidth}
-%             \caption{}
-%             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_t2m_presfut.png}
-%         \end{subfigure} &
-%         %fluxsens
-%         \begin{subfigure}[b]{0.5\textwidth}
-%             \caption{}
-%             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_fluxsens_presfut.png}
-%         \end{subfigure} \\
-
-%         %q2m
-%         \begin{subfigure}[b]{0.5\textwidth}
-%             \caption{}
-%             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_q2m_presfut.png}
-%         \end{subfigure} &
-%         %rh2m
-%         \begin{subfigure}[b]{0.5\textwidth}
-%             \caption{}
-%             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_rh2m_presfut.png}
-%         \end{subfigure} \\
-
-%         %pblh
-%         \begin{subfigure}[b]{0.5\textwidth}
-%             \caption{}
-%             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_s_pblh_presfut.png}
-%         \end{subfigure} &
-%         %lcl
-%         \begin{subfigure}[b]{0.5\textwidth}
-%             \caption{}
-%             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_s_lcl_presfut.png}
-%         \end{subfigure} \\
-%     \end{tabular}
-%     \caption{JJA difference (\futnoirr - \presnoirr)}
-%     \label{fig:diffmaps_JJA_present_future}
-% \end{figure}
 
 %figure : relative diff maps annual (noirr, pres - future)
 \begin{figure}[htbp]
     \centering
     \begin{tabular}{cc}
-        %precip
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_precip_presfut.png}
-        \end{subfigure} &
-        %evap
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_evap_presfut.png}
-        \end{subfigure} \\
-
         %t2m
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{Surface pressure relative difference}
             \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_psol_presfut.png}
         \end{subfigure} &
         %fluxsens
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{Sensible heat flux relative difference}
             \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_fluxsens_presfut.png}
+        \end{subfigure} \\
+
+        %precip
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{Precipitation relative difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_precip_presfut.png}
+        \end{subfigure} &
+        %evap
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{Evapotranspiration relative difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_evap_presfut.png}
         \end{subfigure} \\
 
         %q2m
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{2-metre specific humidity relative difference}
             \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_q2m_presfut.png}
         \end{subfigure} &
         %rh2m
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{2-metre relative humidity relative difference}
             \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_rh2m_presfut.png}
         \end{subfigure} \\
 
-        %pblh
+        %SW
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_s_pblh_presfut.png}
+            \caption{Downwelling shortwave radiation relative \\difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_SWdnSFC_presfut.png}
         \end{subfigure} &
-        %lcl
+        %LW
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_s_lcl_presfut.png}
+            \caption{Downwelling shortwave radiation relative \\difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_LwdnSFC_presfut.png}
         \end{subfigure} \\
     \end{tabular}
-    \caption{Relative difference, \futnoirr - \presnoirr}
+    \caption{Impacts of climate change over the Iberian Peninsula. Annual mean relative difference between \futnoirr (2050-2062) and \presnoirr (2010-2022), for the variables shown in Fig. \ref{fig:diffmaps_present_future}.}
     \label{fig:reldiffmaps_present_future}
 \end{figure}
-
 
 %figure : cloud cover diff maps annual (noirr, pres - future)
 \begin{figure}[htbp]
     \centering
     \begin{tabular}{cc}
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{Total cloud cover difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_cldt_presfut.png}
         \end{subfigure} &
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{Low cloud cover difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_cldl_presfut.png}
         \end{subfigure} \\
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{Medium cloud cover difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_cldm_presfut.png}
         \end{subfigure} &
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{High cloud cover difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_cldh_presfut.png}
         \end{subfigure} \\
     \end{tabular}
-    \caption{Cloud cover difference, \futnoirr - \presnoirr}
+    \caption{Annual mean difference between \futnoirr (2050-2062) and  \presnoirr(2010-2022), for total cloud fraction and the three cloud levels distinguished by the LMDZ physics (low, medium, high).}
     \label{fig:clouds_present_future}
 \end{figure}
 
@@ -313,295 +259,213 @@
 \begin{figure}[htbp]
     \centering
     \begin{tabular}{cc}
-        %precip
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_precip_futirr.png}
-        \end{subfigure} &
-        %evap
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_evap_futirr.png}
-        \end{subfigure} \\
-
         %t2m
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{2-metre temperature difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_t2m_futirr.png}
         \end{subfigure} &
         %fluxsens
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{Sensible heat flux difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_fluxsens_futirr.png}
+        \end{subfigure} \\
+
+        %precip
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{Precipitation difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_precip_futirr.png}
+        \end{subfigure} &
+        %evap
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{Evapotranspiration difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_evap_futirr.png}
         \end{subfigure} \\
 
         %q2m
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{2-metre specific humidity difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_q2m_futirr.png}
         \end{subfigure} &
         %rh2m
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{2-metre relative humidity difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_rh2m_futirr.png}
         \end{subfigure} \\
 
         %pblh
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{ABL height difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_s_pblh_futirr.png}
         \end{subfigure} &
         %lcl
         \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
+            \caption{Lifting condensation level difference}
             \includegraphics[width=\textwidth]{images/chap4/future/diffmap_JJA_s_lcl_futirr.png}
         \end{subfigure} \\
     \end{tabular}
-    \caption{JJA difference (\futnoirr - \futirr)}
+    \caption{Summer impacts of irrigation under climate change. JJA mean difference (\futnoirr - \futirr, 2050-2062), for the variables shown in Fig. \ref{fig:diffmaps_future_irr}.}
     \label{fig:diffmaps_JJA_future_irr}
-\end{figure}
-
-
-%figure : rel diff maps (future, irr - no_irr)
-\begin{figure}[htbp]
-    \centering
-    \begin{tabular}{cc}
-        %t2m replaced by psol
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_psol_futirr.png}
-        \end{subfigure} &
-        %fluxsens
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_fluxsens_futirr.png}
-        \end{subfigure} \\
-        %precip
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_precip_futirr.png}
-        \end{subfigure} &
-        %evap
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_evap_futirr.png}
-        \end{subfigure} \\
-
-        %q2m
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_q2m_futirr.png}
-        \end{subfigure} &
-        %rh2m
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_rh2m_futirr.png}
-        \end{subfigure} \\
-
-        %pblh
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_s_pblh_futirr.png}
-        \end{subfigure} &
-        %lcl
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_s_lcl_futirr.png}
-        \end{subfigure} \\
-    \end{tabular}
-    \caption{Annual relative difference (\futnoirr - \futirr)}
-    \label{fig:reldiffmaps_future_irr}
-\end{figure}
-
-%figure : Aridity Index diff and rel diff maps
-\begin{figure}[htbp]
-    \centering
-    \begin{tabular}{cc}
-        %present vs future (noirr)
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{Absolute change in aridity index under climate change}
-            \includegraphics[width=\textwidth]{images/chap4/future/diffmap_aridity_index_presfut.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{Relative change in aridity index under climate change}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_aridity_index_presfut.png}
-        \end{subfigure} \\
-
-        %irr vs noirr (future)
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{Absolute change in future aridity index in the presence of irrigation}
-            \includegraphics[width=\textwidth]{images/chap4/future/diffmap_aridity_index_futirr.png}
-        \end{subfigure} &
-        \begin{subfigure}[b]{0.5\textwidth}
-            \caption{Relative change in future aridity index in the presence of irrigation}
-            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_aridity_index_futirr.png}
-        \end{subfigure} \\
-    \end{tabular}
-    \caption{Aridity index changes under climate change and in the presence of irrigation.}
-    \label{fig:diffmaps_aridity}
 \end{figure}
 
 \clearpage
 
-\section*{Appendix to chapter \ref{chap:liaise}}
+\section{Supplementary figures to Chapter \ref{chap:liaise}}
 
-\begin{figure}[hbtp]
+%SW LW down average over the SOP
+\begin{figure}[h!]
     \centering
     \begin{tabular}{cc}
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+        \begin{subfigure}[t]{0.48\textwidth}
+            \caption{Downwelling shortwave radiation (La Cendrosa)}
             \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_cendrosa_SWdnSFC.png}
         \end{subfigure} &
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+        \begin{subfigure}[t]{0.48\textwidth}
+            \caption{Mean diurnal cycle of downwelling shortwave radiation (14-30 July - La Cendrosa)}
             \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_cendrosa_SWdnSFC.png}
         \end{subfigure} \\
-        
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+        \begin{subfigure}[t]{0.48\textwidth}
+            \caption{Downwelling longwave radiation (La Cendrosa)}
             \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_cendrosa_LWdnSFC.png}
         \end{subfigure} &
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+        \begin{subfigure}[t]{0.48\textwidth}
+            \caption{Mean diurnal cycle of downwelling longwave radiation (14-30 July - La Cendrosa)}
             \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_cendrosa_LWdnSFC.png}
         \end{subfigure} \\
-
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+        \begin{subfigure}[t]{0.48\textwidth}
+            \caption{Downwelling shortwave radiation (Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_elsplans_SWdnSFC.png}
         \end{subfigure} &
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+        \begin{subfigure}[t]{0.48\textwidth}
+            \caption{Mean diurnal cycle of downwelling shortwave radiation (14-30 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_elsplans_SWdnSFC.png}
         \end{subfigure} \\
-        
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+        \begin{subfigure}[t]{0.48\textwidth}
+            \caption{Downwelling longwave radiation (Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/time_series_elsplans_LWdnSFC.png}
         \end{subfigure} &
-        \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+        \begin{subfigure}[t]{0.48\textwidth}
+            \caption{Mean diurnal cycle of downwelling longwave radiation (14-30 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/SOP_TS_DC/diurnal_cycle_elsplans_LWdnSFC.png}
-        \end{subfigure} \\
+        \end{subfigure} \
     \end{tabular}
-    \caption{Time series and mean diurnal cycle of radiative fluxes on both sites, 14-30 July 2021.}
+    \caption{Time series and mean diurnal cycle of downwelling radiative fluxes on both sites.}
     \label{fig:bothsites_rad}
 \end{figure}
 
-%Fig : surface variables ElsPlans
+%Fig : IOP surface variables ElsPlans
 \begin{figure}[hbtp]
     \centering
     \begin{tabular}{cc}
         %t2m, q2m
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{2-metre temperature\\(15 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_elsplans_t2m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{2-metre temperature\\(20 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_elsplans_t2m.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{2-metre specific humidity\\(15 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_elsplans_q2m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{2-metre specific humidity\\(20 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_elsplans_q2m.png}
         \end{subfigure} \\
         %wind speed
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{10-metre wind speed\\(15 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_elsplans_wind_speed_10m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{10-metre wind speed\\(20 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_elsplans_wind_speed_10m.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{10-metre wind direction\\(15 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_elsplans_wind_direction_10m.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{10-metre wind direction\\(20 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_elsplans_wind_direction_10m.png}
         \end{subfigure} \\
     \end{tabular}
-    \caption{}
+    \caption{Evolution of 2-m temperature (a-b), 2-m specific humidity (c-d), 10-m wind speed (e-f) and direction (g-h) at Els Plans on 15 and 20 July.}
     \label{fig:iop_days_TS_surfvars_elsplans}
 \end{figure}
 
-%Fig : energy fluxes ElsPlans
+%Fig : IOP energy fluxes ElsPlans
 \begin{figure}[hbtp]
     \centering
     \begin{tabular}{cc}
         %turb fluxes
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{Latent heat flux\\(15 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_elsplans_flat.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{Latent heat flux\\(20 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_elsplans_flat.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{Sensible heat flux\\(15 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_elsplans_sens.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{Sensible heat flux\\(20 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_elsplans_sens.png}
         \end{subfigure} \\
         %rad fluxes
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{Downwelling shortwave radiation\\(15 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_elsplans_SWdnSFC.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{Downwelling shortwave radiation\\(20 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_elsplans_SWdnSFC.png}
         \end{subfigure} \\
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{Downwelling longwave radiation\\(15 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-15_elsplans_LWdnSFC.png}
         \end{subfigure} &
         \begin{subfigure}[t]{0.5\textwidth}
-            \caption{}
+            \caption{Downwelling longwave radiation\\(20 July - Els Plans)}
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_elsplans_LWdnSFC.png}
         \end{subfigure} 
     \end{tabular}
-    \caption{}
+    \caption{Evolution of surface latent (a-b) and sensible (c-d) heat fluxes, downward shortwave (e-f) and longwave (g-h) radiation at Els Plans on 15 and 20 July}
     \label{fig:iop_days_TS_energy_elsplans}
 \end{figure}
 
-%Fig : bins flux lat
-\begin{figure}[hbtp]
-    \centering
-    \makebox[\textwidth][c]{%
-    \begin{tabular}{cc}
-        \begin{subfigure}[t]{0.48\textwidth}
-            \caption{La Cendrosa, 15 July at 12UTC}
-            \includegraphics[width=\textwidth]{images/chap6/IOP_bins/bins_flat_2021-07-15T12:00:00_cendrosa.png}
-        \end{subfigure}
-        \begin{subfigure}[t]{0.48\textwidth}
-            \caption{La Cendrosa, 20 July at 12UTC}
-            \includegraphics[width=\textwidth]{images/chap6/IOP_bins/bins_flat_2021-07-20T12:00:00_cendrosa.png}
-        \end{subfigure} \\
-        \begin{subfigure}[t]{0.48\textwidth}
-            \caption{Els Plans, 15 July at 12UTC}
-            \includegraphics[width=\textwidth]{images/chap6/IOP_bins/bins_flat_2021-07-15T12:00:00_elsplans.png}
-        \end{subfigure}
-        \begin{subfigure}[t]{0.48\textwidth}
-            \caption{Els Plans, 20 July at 12UTC}
-            \includegraphics[width=\textwidth]{images/chap6/IOP_bins/bins_flat_2021-07-20T12:00:00_elsplans.png}
-        \end{subfigure}
-    \end{tabular}
-    }
-    \caption{Distribution of surface latent heat flux at 12UTC in \mesomean at La Cendrosa (a-b) and Els Plans (c-d) on 15 July and 20 July.}
-    \label{fig:flat_bins}
-\end{figure}
+% %Fig : IOP bins flux lat
+% \begin{figure}[hbtp]
+%     \centering
+%     \makebox[\textwidth][c]{%
+%     \begin{tabular}{cc}
+%         \begin{subfigure}[t]{0.48\textwidth}
+%             \caption{La Cendrosa, 15 July at 12UTC}
+%             \includegraphics[width=\textwidth]{images/chap6/IOP_bins/bins_flat_2021-07-15T12:00:00_cendrosa.png}
+%         \end{subfigure}
+%         \begin{subfigure}[t]{0.48\textwidth}
+%             \caption{La Cendrosa, 20 July at 12UTC}
+%             \includegraphics[width=\textwidth]{images/chap6/IOP_bins/bins_flat_2021-07-20T12:00:00_cendrosa.png}
+%         \end{subfigure} \\
+%         \begin{subfigure}[t]{0.48\textwidth}
+%             \caption{Els Plans, 15 July at 12UTC}
+%             \includegraphics[width=\textwidth]{images/chap6/IOP_bins/bins_flat_2021-07-15T12:00:00_elsplans.png}
+%         \end{subfigure}
+%         \begin{subfigure}[t]{0.48\textwidth}
+%             \caption{Els Plans, 20 July at 12UTC}
+%             \includegraphics[width=\textwidth]{images/chap6/IOP_bins/bins_flat_2021-07-20T12:00:00_elsplans.png}
+%         \end{subfigure}
+%     \end{tabular}
+%     }
+%     \caption{Distribution of surface latent heat flux at 12UTC in \mesomean at La Cendrosa (a-b) and Els Plans (c-d) on 15 July and 20 July.}
+%     \label{fig:flat_bins}
+% \end{figure}
 
-%Fig : profiles with sens bins min/max winds
+%Fig : IOP profiles with sens bins min/max winds
 \begin{figure}[hbtp]
     \centering
     \makebox[\textwidth][c]{%
@@ -650,7 +514,7 @@
     \label{fig:profiles_winds_sensbins}
 \end{figure}
 
-%Fig : MesoNH IOP vertical winds
+%Fig : IOP MesoNH vertical winds
 \begin{figure}[hbtp]
     \centering
     \begin{tabular}{cc}
@@ -696,7 +560,7 @@
 \end{figure}
 
 
-%Fig : LMDZ IOP winds (10m + 850hPa)
+%Fig : IOP LMDZ winds (10m + 850hPa)
 \begin{figure}[hbtp]
     \centering
     \begin{tabular}{cc}
@@ -724,4 +588,4 @@
 \end{figure}
 \clearpage
 
-%end of appendix
+%end
