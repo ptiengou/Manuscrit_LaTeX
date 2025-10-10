@@ -4,7 +4,6 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{pgfplotstable}
-\usepackage{minitoc}
 \usepackage{xcolor} % For coloring
 \usepackage{amsmath} 
 \usepackage{rotating} % Required for sidewaysfigure
@@ -18,9 +17,16 @@
 \usepackage{lipsum} % Package for generating placeholder text
 \usepackage{glossaries} 
 
-% \usepackage{titlesec}
-% \usepackage{amsthm}
-% \usepackage{cleveref}
+\usepackage{minitoc}
+\setlength{\mtcindent}{1.5em}
+\setlength{\baselineskip}{10pt}
+\renewcommand{\mtcfont}{\normalsize}
+\renewcommand{\mtcSfont}{\normalsize}
+\renewcommand{\mtcSSfont}{\normalsize}
+% \setlength{\mtcskip}{0.3em}
+% \setlength{\mtcsep}{0.2em}
+\mtcsetfeature{minitoc}{before}{\vspace{-0.5em}}
+\mtcsetfeature{minitoc}{after}{\vspace{-0.3em}}
 
 \usepackage{setspace}
 % \doublespacing
