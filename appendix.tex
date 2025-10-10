@@ -72,7 +72,7 @@
             \includegraphics[width=\textwidth]{images/chap4/domain_size/rel_diff_map_evap_era_LAM_2000km_NBP80.png}
         \end{subfigure}
     \end{tabular}
-    \caption{Precipitation (a-c) and evapotranspiration (d-f) relative biases compared to ERA5 over 2010-2014 for three simulations with small, intermediate and large domain sizes.}
+    \caption{Precipitation (a-c) and evapotranspiration (d-f) relative biases compared to ERA5 over 2010-2014 for three simulations with small, intermediate and large domain sizes. Presented in complement to Fig. \ref{fig:domain_size_P_ET_ERA_diff_maps}, which showed differences in absolute value.}
     \label{fig:domain_size_ERA_reldiff_maps}
 \end{figure}
 
@@ -255,6 +255,58 @@
     \label{fig:clouds_present_future}
 \end{figure}
 
+%figure : relative diff maps (future, irr - no_irr)
+\begin{figure}[htbp]
+    \centering
+    \begin{tabular}{cc}
+        %t2m
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{Surface pressure relative difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_psol_futirr.png}
+        \end{subfigure} &
+        %fluxsens
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{Sensible heat flux relative difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_fluxsens_futirr.png}
+        \end{subfigure} \\
+
+        %precip
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{Precipitation relative difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_precip_futirr.png}
+        \end{subfigure} &
+        %evap
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{ET relative difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_evap_futirr.png}
+        \end{subfigure} \\
+
+        %q2m
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{2-metre specific humidity relative difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_q2m_futirr.png}
+        \end{subfigure} &
+        %rh2m
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{2-metre relative humidity relative difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_rh2m_futirr.png}
+        \end{subfigure} \\
+
+        %pblh
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{ABL height relative difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_s_pblh_futirr.png}
+        \end{subfigure} &
+        %lcl
+        \begin{subfigure}[b]{0.5\textwidth}
+            \caption{Lifting condensation level relative difference}
+            \includegraphics[width=\textwidth]{images/chap4/future/reldiffmap_s_lcl_futirr.png}
+        \end{subfigure} \\
+    \end{tabular}
+    \caption{Impacts of irrigation under climate change. Annual mean relative difference (\futirr - \futnoirr, 2050-2062), in complement of \ref{fig:diffmaps_future_irr} which showed absolute differences.}
+    \label{fig:reldiffmaps_future_irr}
+\end{figure}
+
 % figure : diff maps JJA (future, irr - no_irr)
 \begin{figure}[htbp]
     \centering
@@ -306,6 +358,7 @@
     \caption{Summer impacts of irrigation under climate change. JJA mean difference (\futnoirr - \futirr, 2050-2062), for the variables shown in Fig. \ref{fig:diffmaps_future_irr}.}
     \label{fig:diffmaps_JJA_future_irr}
 \end{figure}
+
 
 \clearpage
 
@@ -391,7 +444,7 @@
             \includegraphics[width=\textwidth]{images/chap6/IOP_TS/TS_2021-07-20_elsplans_wind_direction_10m.png}
         \end{subfigure} \\
     \end{tabular}
-    \caption{Evolution of 2-m temperature (a-b), 2-m specific humidity (c-d), 10-m wind speed (e-f) and direction (g-h) at Els Plans on 15 and 20 July.}
+    \caption{Evolution of 2-metre temperature (a-b), 2-metre specific humidity (c-d), 10-metre wind speed (e-f) and direction (g-h) at Els Plans on 15 and 20 July.}
     \label{fig:iop_days_TS_surfvars_elsplans}
 \end{figure}
 
