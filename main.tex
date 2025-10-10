@@ -38,7 +38,7 @@
     {\Large\bfseries Pierre Tiengou\par}
     \vspace{0.5cm}
 
-    {\large Devant un jury composé de :\par}
+    {\large Devant un jury composé de\par}
     \vspace{0.5cm}
     \resizebox{\textwidth}{!}{
     \begin{tabular}{@{}ll@{}}
@@ -110,7 +110,7 @@ Plusieurs sources de biais du LAM ICOLMDZOR sur la région sont également ident
 \clearpage
 
 % \section*{Résumé long}
-\section*{Remerciements}
+% \section*{Remerciements}
 
 \clearpage
 \dominitoc
@@ -120,45 +120,63 @@ Plusieurs sources de biais du LAM ICOLMDZOR sur la région sont également ident
 
 \chapter{Introduction}
 \label{chap:introduction}
-\minitoc
-\pagebreak
-% \include{1.introduction}
+\begin{minipage}[t]{0.9\textwidth}
+    \minitoc
+\end{minipage}
+\vspace{4cm}
+\include{1.introduction}
 
 \chapter{Methods and tools: regional simulations with the ICOLMDZOR LAM}
 \label{chap:methods}
-\minitoc
-\pagebreak
-% \include{2.methods}
+\begin{minipage}[t]{0.9\textwidth}
+    \minitoc
+\end{minipage}
+\vspace{6cm}
+\include{2.methods}
 
 \chapter{Evaluation and parameter tuning of a new routing scheme over the Iberian Peninsula}
 \label{chap:routing}
-\minitoc
-\pagebreak
-% \include{3.routing}
+\begin{minipage}[t]{0.9\textwidth}
+    \minitoc
+\end{minipage}
+\vspace{1cm}
+\include{3.routing}
 
 \chapter{Influence of lateral boundary conditions on the consistency of the ICOLMDZOR LAM}
 \label{chap:forcing}
-\minitoc
+\begin{minipage}[t]{0.9\textwidth}
+    \minitoc
+\end{minipage}
+\vspace{7cm}
 \pagebreak
-% \include{4.forcing_influence}
+\include{4.forcing_influence}
 
 \chapter{Impacts of irrigation on the regional climate of the Iberian Peninsula}
 \label{chap:monthly}
-\minitoc
+\begin{minipage}[t]{0.9\textwidth}
+    \minitoc
+\end{minipage}
+\vspace{4cm}
 \pagebreak
-% \include{5.monthly_study}
+\include{5.monthly_study}
 
-\chapter{Impacts of irrigation and surface heterogeneities on the atmospheric boundary layer}
+\chapter{Diurnal impacts of irrigation and surface heterogeneities on the ABL}
 \label{chap:liaise}
-\minitoc
+\begin{minipage}[t]{0.9\textwidth}
+    \minitoc
+\end{minipage}
+\vspace{4cm}
 \pagebreak
-% \include{6.ABL_hf_study}
+\include{6.ABL_hf_study}
 
 \chapter{Conclusions and perspectives}
 \label{chap:conclusion}
-\minitoc
+\begin{minipage}[t]{0.9\textwidth}
+    \minitoc
+\end{minipage}
+\vspace{6cm}
 \pagebreak
-% \include{7.conclusion}
+\include{7.conclusion}
 
 \newpage
 \markboth{}{}
@@ -172,7 +190,7 @@ Plusieurs sources de biais du LAM ICOLMDZOR sur la région sont également ident
 \markboth{Supplementary figures}{}
 \addcontentsline{toc}{chapter}{Supplementary figures} % Manually add to toc
 \label{chap:appendix}
-% \include{appendix}
+\include{appendix}
 
 % List of Figures and Tables (with clickable links)
 \newpage
@@ -186,6 +204,6 @@ Plusieurs sources de biais du LAM ICOLMDZOR sur la région sont également ident
 
 % Bibliography (with entry in TOC)
 \newpage
-% \printbibliography[heading=bibintoc, title={Bibliography}]
+\printbibliography[heading=bibintoc, title={Bibliography}]
 
 \end{document}
