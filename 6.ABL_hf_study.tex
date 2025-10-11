@@ -515,7 +515,7 @@ This analysis remains very simplified and assumes that some of the characteristi
         2-m temperature & Obs & 23°C at 12UTC & 31.5°C at 12UTC \\
         % Línea de separación entre Obs y ICOLMDZOR (sólo sobre las columnas de descriptor/datos)
         \cmidrule(lr){2-4} 
-        & ICOLMDZOR & Overestimated & Overestimated only in \irrboost \\
+        & ICOLMDZOR & Overestimated, reduced bias in \irrboost & Overestimated only in \noirr and \irr, correct in \irrboost \\
         \midrule % Separador de bloque de variable
         
         % 2-m specific humidity
@@ -662,19 +662,19 @@ The influence of sub-grid heterogeneities was explored in more details to furthe
         \midrule % Separator for the entire header block
         
         % -- Potential temperature --
-        \textbf{Potential temperature} & Obs & 296 K & 297 K & 306-307 K & 307 K \\
+        \textbf{Potential temp.} & Obs & 296 K & 297 K & 306-307 K & 307 K \\
         \cline{2-6} % Line separating Obs and ICOLMDZOR (now using \cline for continuous line)
         & ICOLMDZOR & Warm bias, 5 K in \noirr, 4 K in \irrboost & Warm bias, 4-5 K & Warm bias, 2 K in \noirr, 0.5-1 K in \irrboost & Correct \\
         \midrule % Separador de bloque de variable
         
         % -- Specific humidity --
-        \textbf{Specific humidity} & Obs & 7.5 g \perkg & 8 g \perkg & 9 g \perkg & 9.5 g \perkg \\
+        \textbf{Spec. humidity} & Obs & 7.5 g \perkg & 8 g \perkg & 9 g \perkg & 9.5 g \perkg \\
         \cline{2-6}
         & ICOLMDZOR & Slightly drier in \noirr, moister in \irrboost & 1-1.5 g \perkg{} dry bias & 1-1.5 g \perkg{} dry bias in \noirr, correct in \irrboost & 2.5 g \perkg{} dry bias \\
         \midrule
         
         % -- Estimated ABL height --
-        \textbf{Estimated ABL height} & Obs & 800 m & 900-1000 m & Internal ABL 500 m, Mixed layer 1400 m & 1500 m \\
+        \textbf{ABL height} & Obs & 800 m & 900-1000 m & Internal ABL 500 m, Mixed layer 1400 m & 1500 m \\
         \cline{2-6}
         & ICOLMDZOR & 1600 m in \noirr, 1200 m in \irrboost & 1650 m & 1200 m in \noirr, 900 m in \irrboost & 900 m \\
         \bottomrule
@@ -911,6 +911,8 @@ The spatial resolution of ICOLMDZOR does not allow it to represent such subtle s
 In Meso-NH, above the front, higher altitude south-easterly winds seem to partly advect the well-developed mixed layer into the irrigated zone, above the internal boundary layer, contributing to the more complex vertical profiles at La Cendrosa.
 Some further investigation could help determine if the location of the front is mainly dictated by the difference in roughness or if pressure gradients between the two zones play a role, but it seems clear that sub-grid heterogeneities of surface sensible heat flux are not a first order driver of ABL development.
 This explains why the irrigation parametrization could not improve the ABL structure over the area in the current state of the model, which does not account for the impact of the observed front on the ABL.
+
+\clearpage 
 
 \section{Chapter conclusions}
 
