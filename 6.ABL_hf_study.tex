@@ -374,7 +374,8 @@ In the second part of the SOP, a dry bias in ICOLMDZOR was identified, which is 
 Out of the seven IOP days over which radio-soundings were conducted on both sites, two were selected (15 July and 20th) to further investigate the atmospheric behaviour of the ICOLMDZOR LAM and the impact of irrigation on the vertical structure of the ABL. 
 15 July was selected as a representative IOP day for the beginning of the SOP, showing similarities with observed profiles on the 16 and 17 July. As the SOP progressed, 2-metre temperature increased and the wind regime became much more changeable, with more influence from the sea breeze circulation.
 The three following IOP days (20, 21, 22 July) therefore presented a different type of conditions, and 20 July was also selected as representative IOP day to analyse the impacts of irrigation on the ABL in this other context.
-In all the following figures, 15 July will be shown on the left and 20 July on the right. The surface conditions at La Cendrosa on these days are first compared to understand their differences ( see supplementary Fig. \ref{fig:iop_days_TS_surfvars_elsplans} and \ref{fig:iop_days_TS_energy_elsplans} for the Els Plans site), before analysing vertical profiles over both sites, and assessing the influence of sub-grid heterogeneities.
+In all the following figures, 15 July will be shown on the left and 20 July on the right. The surface conditions at La Cendrosa on these days are first compared to understand their differences (Fig. \ref{fig:iop_days_TS_surfvars} and \ref{fig:iop_days_TS_energy} for La Cendrosa and corresponding supplementary Fig. \ref{fig:iop_days_TS_surfvars_elsplans} and \ref{fig:iop_days_TS_energy_elsplans} for Els Plans).
+Table \ref{tab:surface_cond} summarises of the main characteristics of surface variables on both days at La Cendrosa, before analysing vertical profiles on these days, and the influence of sub-grid heterogeneities.
 
 \subsection{Observed and modelled surface conditions at La Cendrosa}
 
@@ -488,17 +489,69 @@ As mentionned in Section \ref{sec:sop}, this might be due to the drying induced 
 
 The low-level wind simulated by ICOLMDZOR matches very well with observations and \mesomean on 15 July, but does not reproduce the multiple direction and wind speed changes on 20 July. In particular, in the morning, ICOLMDZOR simulates an increasingly stronger wind from the South-south-east (SSE), while observations and \mesoexact show NNW weak winds, and \mesomean exhibits low winds of changing directions, with a large envelope comprising north-easterly to southerly winds. This demonstrates the complex situation on 20 July, which cannot be fully captured by ICOLMDZOR, and will be further highlighted in Section \ref{sec:heterogeneities} and Fig. \ref{fig:iop_days_winds}.
 
-The downwelling longwave radiation flux (LW down, Fig. \ref{fig:iop_days_TS_energy}g-h) can be considered to summarise several differences between 15 July and 20 July. 
+In complement of Table \ref{tab:surface_cond}, the downwelling longwave radiation flux (LW down, Fig. \ref{fig:iop_days_TS_energy}g-h) can be considered to summarise several differences between 15 July and 20 July. 
 15 July has a smaller LW down flux since the atmosphere is cooler and drier, and ICOLMDZ overestimates it because of a warm bias. In \irrboost this warm bias is much smaller, but specific humidity is overestimated so overall, the bias in LW down is only slightly reduced. 
 On 20 July, ICOLMDZOR presents a smaller warm bias (almost no bias for \irrboost) but a strong dry bias, leading to an underestimation of LW down. 
-This analysis remains very simplified and assumes that some of the characteristics of near-surface variables can be extended to the rest of the ABL. This assumption is confirmed by the comparison of vertical profiles in the models and radio-soundings at 12UTC presented in the next section, providing further insight into the behaviour of the atmosphere on these two days.
+This analysis remains very simplified and assumes that some of the characteristics of near-surface variables identified can be extended to the rest of the ABL. This assumption will be confirmed by the comparison of vertical profiles in the models and radio-soundings at 12UTC presented in the next section, providing further insight into the behaviour of the atmosphere on these two days.
 
+\hfill
+
+\begin{table}[h!]
+    \centering
+    % Tabla de 4 columnas con líneas verticales: 
+    % Columna 1 (Nombre de la Variable), Columna 2 (Descriptor Obs/ICOLMDZOR), 
+    % Columnas 3 & 4 (Datos)
+    \resizebox{1.\textwidth}{!}{
+        \begin{tabular}{|l|l| p{4.5cm}| p{4.5cm}|}
+        \toprule
+        % Date Headers
+        & & \textbf{15 July} & \textbf{20 July} \\
+        \cline{3-4} % Line separating the date from the location (only under the date columns)
+        % Location Sub-Header
+        & & \multicolumn{2}{c|}{\textbf{La Cendrosa}} \\ % Merge columns 3 and 4
+        \midrule % Separator for the entire header block
+        
+        % 2-m temperature
+        2-m temperature & Obs & 23°C at 12UTC & 31.5°C at 12UTC \\
+        % Línea de separación entre Obs y ICOLMDZOR (sólo sobre las columnas de descriptor/datos)
+        \cmidrule(lr){2-4} 
+        & ICOLMDZOR & Overestimated & Overestimated only in \irrboost \\
+        \midrule % Separador de bloque de variable
+        
+        % 2-m specific humidity
+        2-m specific humidity & Obs & 9.3 g \perkg at 12UTC & 10.7 g \perkg at 12UTC \\
+        \cmidrule(lr){2-4}
+        & ICOLMDZOR & Overestimated in \irrboost, daytime drying & Underestimated all day, strong daytime drying \\
+        \midrule
+        
+        % Wind
+        Wind & Obs & 2.2 m \persec at 12UTC, SW, weak all day & 1 m \persec at 12UTC, N weak in the morning, W strong in the afternoon \\
+        \cmidrule(lr){2-4}
+        & ICOLMDZOR & Correct & Overestimated until 15UTC, SSW all day \\
+        \midrule
+        
+        % Latent heat flux
+        Latent heat flux & Obs & 250 W \persqm at 12UTC & 420 W \persqm at 12UTC \\
+        \cmidrule(lr){2-4}
+        & ICOLMDZOR & Overestimated, matches \mesomean & Small underestimation, matches \mesomean \\
+        \midrule
+        
+        % Sensible heat flux
+        Sensible heat flux & Obs & 210 W \persqm at 12UTC & 50 W \persqm at 12UTC \\
+        \cmidrule(lr){2-4}
+        & ICOLMDZOR & Correct, matches \mesomean & Overestimated, matches \mesomean \\
+        \bottomrule
+    \end{tabular}
+    }
+    \caption{Summarised characteristics of the selected IOP days at La Cendrosa in observations and ICOLMDZOR simulations.}
+    \label{tab:surface_cond}
+\end{table}
 
 \subsection{Impact of irrigation on vertical profiles at 12UTC}
 \label{sec:vertical_profiles}
 
 % Fig : profiles with sens bins min/max theta and ovap
-\begin{figure}[hbtp]
+\begin{figure}[hb!]
     \hspace*{-1.5cm} % Move the figure 1 cm into the left margin
     \centering
     % \makebox[\textwidth][c]{%
@@ -544,7 +597,7 @@ This analysis remains very simplified and assumes that some of the characteristi
         \end{subfigure} \\
     \end{tabular}
     }
-    \caption{Vertical profiles of potential temperature and specific humidity at 12UTC at La Cendrosa (a-d) and Els Plans (e-h), on 15 July and 20 July. Additional orange lines show the mean profile for the minimum (dotted) and maximum (dashed) sensible heat fux sub-samples (first and last two bins on Fig. \ref{fig:sens_bins}).}
+    \caption{Vertical profiles of potential temperature and specific humidity at 12UTC at (a-d) La Cendrosa and (e-h) Els Plans, on 15 July and 20 July. Additional orange lines show the mean profile for the minimum (dotted) and maximum (dashed) sensible heat fux sub-samples defined in Section \ref{sec:heterogeneities} (first and last two bins on Fig. \ref{fig:sens_bins}). Similar profiles of wind speed and directions are shown in supplementary Fig. \ref{fig:profiles_winds_sensbins}.}
     \label{fig:profiles_theta_ovap_sensbins}
 \end{figure}
 
@@ -553,21 +606,21 @@ On 15 July at 12UTC, the surface warm bias seen in ICOLMDZOR is present in all t
 At Els Plans (Fig. \ref{fig:profiles_theta_ovap_sensbins}e), it is 3-4 K higher, which suggests that the bias at La Cendrosa is not only related to irrigation and ET. 
 The values of specific humidity in the ABL for the \noirr and \irr simulations are really close to the observations and \mesomean values, indicating that the warm bias is not associated to a dry bias, even in \noirr (Fig. \ref{fig:profiles_theta_ovap_sensbins}b).
 Above the ABL, the three ICOLMDZOR simulations converge, and keep exhibiting a warm bias, although smaller than in the ABL, as well as excessive specific humidity, confirming that large-scale advection is imperfectly represented.
-At La Cendrosa, the warm bias is reduced by 1K in the \irrboost simulation as surface cooling propagates in the ABL. Specific humidity increases by 1 g \perkg, beyond the observed and \mesomean values, further suggesting that the atmosphere is excessively moist on that day.
+At La Cendrosa, the warm bias is reduced by 1 K in the \irrboost simulation as surface cooling propagates in the ABL. Specific humidity increases by 1 g \perkg, beyond the observed and \mesomean values, further suggesting that the atmosphere is excessively moist on that day in ICOLMDZOR.
 
 %option:mention that above ABL, ICOLMDZOR is too moist ?
-On both sites, the ABL height for \noirr and \irr is about 1600 m, which is higher than in observations (800 m at La Cendrosa, 900 at Els Plans). This difference can be attributed to the overestimated surface sensible heat flux in these simulations with little to no irrigation (Fig. \ref{fig:iop_days_TS_energy}c,  \ref{fig:iop_days_TS_energy_elsplans}c). 
+On both sites, the ABL height for \noirr and \irr is about 1600 m, which is higher than in observations (800 m at La Cendrosa, 900 at Els Plans). This difference can be at least partly attributed to the overestimated surface sensible heat flux in these simulations with little to no irrigation (Fig. \ref{fig:iop_days_TS_energy}c,  \ref{fig:iop_days_TS_energy_elsplans}c). 
 In comparison, the ABL is clearly lowered in \irrboost, down to 1200 m, likely through the reduction of the sensible heat flux. This is a good improvement of the structure, but still about 250 m higher than the average ABL height seen in \mesomean, showing that over a grid cell, a good representation of the average surface fluxes does not fully translate into an equally good average ABL structure.
-Among the possible causes of such discrepancies in vertical structure are the ABL parametrizations of LMDZ, the influence of sub-grid heterogeneities, and variables which are mostly determined by the dynamics. 
-Vertical profiles of wind are not displayed here for conciseness, but show almost no differences between the three ICOLMDZOR simulations (see supplementary Fig. \ref{fig:profiles_winds_sensbins}). The the direction simulated by ICOLMDZOR is mostly correct but that wind speed might be too low in most of the ABL on both sites, although it is really similar to \mesomean and \mesoexact. 
+Among the possible causes of such discrepancies in vertical structure are the ABL parametrizations of LMDZ, the influence of sub-grid heterogeneities, and background wind computed by the dynamics. 
+Vertical profiles of wind are not displayed here for conciseness, but show almost no differences between the three ICOLMDZOR simulations (see supplementary Fig. \ref{fig:profiles_winds_sensbins}). The direction simulated by ICOLMDZOR is mostly correct but wind speed might be too low in most of the ABL on both sites, although it is really similar to \mesomean and \mesoexact. 
 In theory, an underestimation of wind speed would be associated to a lack of mixing and does not seem to explain the discrepancies. The possible influence of heterogeneities will be discussed in Section \ref{sec:heterogeneities}.
 %todo:demander à Etienne et/ou Fred leur avis
 
 \subsubsection*{20 July 2021}
 
 On 20 July at 12UTC, the \noirr simulation presents a warm bias of 2 K in potential temperature and a dry bias of 1 to 1.5 g \perkg in the ABL, compared to observations at La Cendrosa (Fig. \ref{fig:profiles_theta_ovap_sensbins}c, d). 
-At Els Plans potential temperature is correct in the mixed layer, but there is an even larger dry bias of 2.5 g \perkg (Fig. \ref{fig:profiles_theta_ovap_sensbins}g, h). It must be noted that this is not because ICOLMDZOR simulates a lower specific humidity (in \noirr it is similar on both sites) but rather because the observed values are higher in the rain-fed site than in the irrigated site, suggesting a strong impact of non-local processes.
-The activation of irrigation at La Cendrosa enables large improvements of the warm and dry biases in \irrboost. Potential temperature is decreased by at least 1K (more than half of the bias), and all the mixed layer benefits from the surface moistening, allowing specific humidity to match the radio-sounding profile. 
+At Els Plans potential temperature is correct in the mixed layer, but there is an even larger dry bias of 2.5 g \perkg (Fig. \ref{fig:profiles_theta_ovap_sensbins}g, h). It must be noted that this is not because ICOLMDZOR simulates a lower specific humidity at Els Plans (in \noirr it is similar on both sites) but rather because the observed values are higher in the rain-fed site than in the irrigated site, suggesting a strong impact of non-local processes.
+The activation of irrigation at La Cendrosa enables large improvements of the warm and dry biases in \irrboost. Potential temperature is decreased by at least 1 K (more than half of the bias), and all the mixed layer benefits from the surface moistening, allowing specific humidity to match the radio-sounding profile. 
 
 The ABL height in \noirr is 1200 m at La Cendrosa whereas in the radio-sounding, although it remains subject to interpretation, it is more likely around 1400 m, and in Meso-NH it is slightly above 1500 m.
 Moreover, there appears to be an internal sublayer up to 500 m, cooler than the rest of the mixed layer, which is also visible in the Meso-NH simulation, where it is also moister. This type of process is unsurprisingly not captured by ICOLMDZOR, which explains why potential temperature in \irrboost matches observations better between 500 m and 900 m.
@@ -577,21 +630,59 @@ This cannot be attributed to differences in surface sensible heat flux, since it
 Considering that the observed ABL is higher than on 15 July despite a lower surface sensible heat flux (Fig. \ref{fig:iop_days_TS_energy}c-d), the most likely explanation is that ABL development on that day was controlled by other processes, not accounted for in ICOLMDZOR, as further investigated in Section \ref{sec:heterogeneities}.
 In this context, the representation of ABL structure at La Cendrosa is not improved by irrigation since the height of the mixed layer is clearly reduced to 900 m in \irrboost, worsening the limitation identified in \noirr.
 
-\subsubsection*{First conclusions on the impacts of irrigation in the ABL}
+\subsubsection*{Systematic impacts of irrigation on the ABL but condition-dependent model improvements}
 
-The main takeaway from this analysis of vertical profiles is that the impact of irrigation in \irrboost is not limited to surface turbulent fluxes or 2-metre temperature and specific humidity, but also impacts the atmospheric boundary layer.
+The main takeaway from this analysis of vertical profiles is that the impact of irrigation in \irrboost is not limited to surface turbulent fluxes or 2-metre temperature and specific humidity, but also impacts the atmospheric boundary layer. The main conclusions on both days are summarised in Table \ref{tab:iop_vertical}
 
-This allows irrigation to reduce the warm bias in the ABL on both days, reducing potential temperature by 1K, and leads to an increase in specific humidity of 1-1.5 g \perkg over La Cendrosa.
+This allows irrigation to reduce the warm bias in the ABL on both days, reducing potential temperature by 1 K, and leads to an increase in specific humidity of 1-1.5 g \perkg over La Cendrosa.
 These impacts are similar for the two days when considered in absolute value, but their relevance compared to existing biases of ICOLMDZOR depends on the situation.
-On 15 July, multiple elements suggest that the 5K bias is not only due to local processes, and it is not very surprising that the impact of irrigation through the surface energy budget is not sufficient to reduce most of the bias in the ABL. On 20 July however, the temperature bias in \noirr is mostly attributable to local processes and a lack of soil moisture at La Cendrosa , which is why it is largely reduced in \irrboost. 
+On 15 July, multiple elements suggest that the 5 K bias is not only due to local processes, and it is not very surprising that the impact of irrigation through the surface energy budget is not sufficient to reduce most of the bias in the ABL, and there is no important bias in specific humidity so the moistening does not improve model performance. 
+On 20 July however, the temperature bias in \noirr is likely attributable to local processes and a lack of soil moisture at La Cendrosa , which is why it is largely reduced in \irrboost. 
 A similar conclusion can be made regarding ABL height. On 15 July, where ABL height was too high in \noirr, irrigation lowers it by 400 m in \irrboost, making it much closer to the \mesomean value. On 20 July, it is lowered by 300 m at La Cendrosa, even though it was already lower than observations and Meso-NH on both sites.
 
 In general, the impact of irrigation on wind speed and direction is quite negligible, except for wind speed around 1000 m above ground level at La Cendrosa on 20 July, where it follows the top of the boundary layer (which is lowered by irrigation).
-The impacts on the Els Plans site are also imperceptible, apart from a small moistening of the ABL (0.5 g \perkg at most), visible on both days, which can be explained by advection of moister air from neighbouring irrigated grid cells.
+The impacts on the Els Plans site are also imperceptible, apart from a small moistening of the ABL (0.5 g \perkg at most), visible on both days, which can be explained by advection of moister air from neighbouring irrigated grid cells, and slightly improves performance.
 
-To further investigate the mixing in the ABL and understand what controls its vertical extension on both days, the influence of sub-grid heterogeneities was explored in more details.
-%todoFC:tu viens de dire que il y un gros impact de la dynamique. Je ne tournerais pas la phrase de cette façon.
+The influence of sub-grid heterogeneities was explored in more details to further disentangle it from the various factors that control the vertical extent and structure of the ABL on the two IOP days.
 
+\hfill
+
+\begin{table}[h!]
+    \centering
+    % Tabla de 6 columnas con líneas verticales: 
+    % Col 1 (Variable), Col 2 (Descriptor), Col 3-6 (Datos)
+    \resizebox{1.\textwidth}{!}{
+    \begin{tabular}{|l|l|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+        \toprule
+        % Row 1: Date Headers (Spanning two location columns each)
+        \multicolumn{2}{|c|}{} & \multicolumn{2}{|c|}{\textbf{15 July}} & \multicolumn{2}{|c|}{\textbf{20 July}} \\
+        \cline{3-6}
+        % Row 2: Location Subdivisions (The core change)
+        \multicolumn{2}{|c|}{} & \textbf{La Cendrosa} & \textbf{Els Plans} & \textbf{La Cendrosa} & \textbf{Els Plans} \\
+        \midrule % Separator for the entire header block
+        
+        % -- Potential temperature --
+        \textbf{Potential temperature} & Obs & 296 K & 297 K & 306-307 K & 307 K \\
+        \cline{2-6} % Line separating Obs and ICOLMDZOR (now using \cline for continuous line)
+        & ICOLMDZOR & Warm bias, 5 K in \noirr, 4 K in \irrboost & Warm bias, 4-5 K & Warm bias, 2 K in \noirr, 0.5-1 K in \irrboost & Correct \\
+        \midrule % Separador de bloque de variable
+        
+        % -- Specific humidity --
+        \textbf{Specific humidity} & Obs & 7.5 g \perkg & 8 g \perkg & 9 g \perkg & 9.5 g \perkg \\
+        \cline{2-6}
+        & ICOLMDZOR & Slightly drier in \noirr, moister in \irrboost & 1-1.5 g \perkg{} dry bias & 1-1.5 g \perkg{} dry bias in \noirr, correct in \irrboost & 2.5 g \perkg{} dry bias \\
+        \midrule
+        
+        % -- Estimated ABL height --
+        \textbf{Estimated ABL height} & Obs & 800 m & 900-1000 m & Internal ABL 500 m, Mixed layer 1400 m & 1500 m \\
+        \cline{2-6}
+        & ICOLMDZOR & 1600 m in \noirr, 1200 m in \irrboost & 1650 m & 1200 m in \noirr, 900 m in \irrboost & 900 m \\
+        \bottomrule
+    \end{tabular}
+    }
+    \caption{Simplified summary of the effects on the ABL on the selected IOP days.}
+    \label{tab:iop_vertical}
+\end{table}
 
 % %Fig : profiles 1507 12UTC
 % % \begin{figure}[hbtp]
@@ -637,7 +728,6 @@ To further investigate the mixing in the ABL and understand what controls its ve
 % %     \caption{Vertical profiles of observed and simulated potential temperature (a,e), specific humidity (b,f), wind speed (c,g) and direction (d,h) at 12UTC on 15 July, at La Cendrosa (a-d) and Els Plans (e-h).}
 % %     \label{fig:profiles_cendrosa_1507}
 % % \end{figure}
-
 
 % %Fig : profiles 2007 12UTC
 % % \begin{figure}[hbtp]
@@ -685,14 +775,14 @@ To further investigate the mixing in the ABL and understand what controls its ve
 % %     \label{fig:profiles_cendrosa_2007}
 % % \end{figure}
 
-%todoFC:le premier niveau des meso-NH est a quelle altitude? Tu ne peux pas prolonger le profils LMDZ jusque à la surface au moins avec t2m?
+%optionFC:le premier niveau des meso-NH est a quelle altitude? Tu ne peux pas prolonger le profils LMDZ jusque à la surface au moins avec t2m?
 
-\clearpage
+% \clearpage
 
 \subsection{Importance of surface heterogeneities}
 \label{sec:heterogeneities}
 
-After noticing the biases in simulated boundary layer height at 12UTC in ICOLMDZOR (overestimation on 15 July and underestimation on 20 July), the influence of surface heterogeneities was investigated, in particular to explore whether representing similar average surface fluxes in \irrboost (compared to \mesomean) can be sufficient to obtain a similar ABL structure.
+After noticing the biases in simulated boundary layer height at 12UTC in ICOLMDZOR (overestimation on 15 July and underestimation on 20 July), the influence of surface heterogeneities was investigated, in particular to explore whether representing similar average surface fluxes (in \irrboost compared to \mesomean) can be sufficient to obtain a similar ABL structure.
 The objective of this analysis was to determine the dependencies of the \mesomean boundary layer to surface heterogeneities and compare them to the tiled parameter aggregation approach used in ICOLMDZOR, to identify major drivers of ABL development that are misrepresented by not accounting for sub-grid heterogeneities. It is a way to assess whether computing one equivalent roughness and one average sensible heat flux for the whole grid cell can realistically propagate the impacts of irrigation in the ABL.
 
 %questions
@@ -701,7 +791,7 @@ The objective of this analysis was to determine the dependencies of the \mesomea
 %can the limitations of ICOLMDZOR ABL structure be explained by the lack of surface heterogeneity ? When it's too high on 15 July and when it's too low on 20 July ? 
 
 %Fig : bins flux sens
-\begin{figure}[hbtp]
+\begin{figure}[ht!]
     \centering
     \makebox[\textwidth][c]{%
     \begin{tabular}{cc}
@@ -735,25 +825,25 @@ The objective of this analysis was to determine the dependencies of the \mesomea
     \label{fig:sens_bins}
 \end{figure}
 
-The distribution of sensible heat flux of all the Meso-NH grid cells contributing to \mesomean is represented for the subsets of La Cendrosa and Els Plans on both days at 12UTC, in Fig. \ref{fig:sens_bins}.
-It shows that at La Cendrosa (Fig. \ref{fig:sens_bins}a-b), the \mesomean average (orange cross) does not correspond to the majority of Meso-NH grid cells and hides a skewed distribution. This is easily explained since several Meso-NH grid cells fall outside of the irrigated zone, and therefore have a very different surface energy partitioning from the rest.
-The ICOLMDZOR \noirr simulation has a sensible heat flux at 12UTC that corresponds to the most extreme values simulated in Meso-NH.
-At Els Plans (Fig. \ref{fig:sens_bins}c-d), the distribution is more symmetric, although the presence of some irrigated grid cells within the considered ensemble lead to a longer tail of data points with weak sensible heat flux.
+The map and distribution of sensible heat flux of all the Meso-NH grid cells contributing to the \mesomean average is represented for the subsets of La Cendrosa and Els Plans on both days at 12UTC, in Fig. \ref{fig:sens_bins}.
+It shows that at La Cendrosa (Fig. \ref{fig:sens_bins}c-d), the \mesomean average (orange cross) does not correspond to the majority of Meso-NH grid cells and hides a skewed distribution. This is easily explained since several Meso-NH grid cells fall outside of the irrigated zone, and therefore have a very different surface energy partitioning from the rest (Fig. \ref{fig:sens_bins}a-b).
+The ICOLMDZOR \noirr simulation (red cross) has a sensible heat flux at 12UTC that corresponds to the most extreme values simulated in Meso-NH.
+At Els Plans (Fig. \ref{fig:sens_bins}e-f), the distribution is more symmetric, although the presence of some irrigated grid cells within the considered ensemble lead to a longer tail of data points with weak sensible heat flux.
 On this rain-fed site, the three ICOLMDZOR simulations are all very similar and clearly overestimate sensible heat flux on both days, falling outside of the Meso-NH distribution on 15 July, and in the very last bin on July 20.
-
-The excessively high ABL simulated by ICOLMDZOR on 15 July can be attributed to an excessively high sensible heat flux in the \noirr and \irr simulation at La Cendrosa, and in all simulations at Els Plans. However, in \irrboost at La Cendrosa, the sensible heat flux matches the average of \mesomean whereas the ABL is still higher. This suggests that the grid-cell mean value of sensible heat flux is not sufficient to describe the ABL structure, and that the ABL height in observations and in Meso-NH is influenced by neighbouring grid cells. In this case, it appears that the mean value of sensible heat flux is being increased by these few grid cells which are not irrigated, but that the ABL height is not impacted in the same way.
-
-\hfill
+These extreme values further suggest that the excessively high ABL simulated by ICOLMDZOR on 15 July can be attributed to an excessively high sensible heat flux in the \noirr and \irr simulation at La Cendrosa, and in all simulations at Els Plans. 
+However, in \irrboost at La Cendrosa, the sensible heat flux matches the average of \mesomean but the ABL height is still overestimated (Fig. \ref{fig:profiles_theta_ovap_sensbins}a-b). This suggests that the grid-cell mean value of sensible heat flux is not sufficient to describe the ABL structure. In this case, it appears that the few grid cells which are not irrigated increase the \mesomean value of sensible heat flux, but have little impact on ABL height development. This might be a consequence of their spatial organisation, as the non-irrigated patch exhibiting high sensible heat flux is rather small compared to the irrigated patch that covers most of the grid cell at La Cendrosa, and is bordered by other irrigated areas in the west (Fig. \ref{fig:sens_bins}), further limiting its impact on the ABL.
 
 To look into this, two additional vertical profiles from sub-samples at each site are presented alongside the \mesomean profile in Fig. \ref{fig:profiles_theta_ovap_sensbins}. One is the average of grid cells with the lowest values of sensible heat flux at 12UTC (orange dotted line) and the other of the highest values (orange dashed line), respectively encompassing the first and last two bins in Fig. \ref{fig:sens_bins}a-b. 
 % 15 July : < 150 and > 400
 % 20 July : < 100 and > 375
 %option:map of selected grid cells ?
 
-At La Cendrosa on 15 July, it shows that the values of potential temperature and specific humidity are very similar for the two sub-samples and the mean value, suggesting that mixing is efficient.
-The mean boundary layer is very similar to the low surface sensible heat flux sub-sample which contains about 50\% of grid cells (Fig. \ref{fig:profiles_theta_ovap_sensbins}a-b). In particular, the inversion is at the same height, suggesting they are the major driver of ABL height in the area. The ABL is higher for the high sensible heat flux sub-sample, but still much lower than in \noirr and \irr. This can suggest that the ABL in dry conditions is too high in ICOLMDZOR, or that the extent of the ABL over these dry grid cells is limited because they do not cover a sufficient surface to generate their own mixed layer.
+\subsubsection*{15 July 2021}
+At La Cendrosa on 15 July, it shows that the values of potential temperature and specific humidity are very similar for the two sub-samples and the mean value, suggesting that mixing is efficient and the ABL is rather homogeneous.
+The mean boundary layer is very similar to the low surface sensible heat flux sub-sample, which contains about 50\% of grid cells (Fig. \ref{fig:profiles_theta_ovap_sensbins}a-b). 
+In particular, the inversion is at the same height, suggesting they are the major driver of ABL height in the area. The ABL is higher for the high sensible heat flux sub-sample, but still much lower than in \noirr and \irr. This can suggest that the ABL in dry conditions is too high in ICOLMDZOR, or that the extent of the ABL over these dry grid cells is limited because they do not cover a sufficient surface to generate their own mixed layer.
 
-At Els Plans (Fig. \ref{fig:profiles_theta_ovap_sensbins}e-f), there are large differences in potential temperature (more than 2K) and specific humidity (1 g \perkg) between the two sub-samples.
+At Els Plans on the same day (Fig. \ref{fig:profiles_theta_ovap_sensbins}e-f), there are large differences in potential temperature (more than 2 K) and specific humidity (1 g \perkg) between the two sub-samples.
 ABL structure for the small sensible heat flux sub-sample is very similar to the one seen at La Cendrosa, and also to the observed profile at Els Plans. For the high sensible heat flux sub-sample, the ABL is warmer and higher than at La Cendrosa. 
 The two sub-samples are therefore much more independent of each other at Els Plans than at La Cendrosa, and the observed profile could be interpreted as a combination of two distinct patches with an internal layer influenced by irrigated grid cells and a larger mixed layer corresponding to dry cells (with a second inversion around 1400 m in Fig. \ref{fig:profiles_theta_ovap_sensbins}e-f). 
 
@@ -761,20 +851,6 @@ The difference between the subsets for the two sites might be related to the str
 At La Cendrosa, the few non-irrigated grid cells are quite spread out, and surrounded by more irrigated grid cells to the west. At Els Plans, there is a much sharper delineation and the few irrigated grid cells are part of a continuous irrigated patch. 
 This can explain why the irrigated grid cells which fall within the Els Plans subset are largely influenced by the other irrigated grid cells to their West. 
 The local (south-)westerly low-level winds (Fig. \ref{fig:iop_days_winds}a, c, e, g) increase that influence since they tend to advect the boundary layer of the irrigated patch into the rain-fed area, bringing cooler air and moisture.
-
-\hfill
-
-On July 20, the two sub-samples are very close to the mean profile for potential temperature and specific humidity on both sites, apart from a cooler and moister 500-metre high sublayer which is only seen for the low sensible heat flux sub-samples (Fig. \ref{fig:profiles_theta_ovap_sensbins}c-d). This sublayer, also visible in observations at La Cendrosa, seems to be the main consequence of heterogeneities in surface fluxes, since the differences on the rest of the ABL structure are rather limited, even at Els Plans.
-This type of internal sublayer is not expected to be captured by the LMDZ physics, where mixing is dominated by the EDMF scheme using an average thermal plume \citep{rio_thermal_2008}. An extended mosaic approach that represents atmospheric sub-columns over soil tiles within a grid cell could possibly better account for such structures.
-However, the main limitation of ICOLMDZOR in representing the ABL structure for this day is not related to the presence of this internal boundary layer, but rather resides in the large ABL height underestimation at Els Plans.
-On this site, the observed profile is very well mixed with a clear inversion at 1500 m (and 1650 m in \mesoexact), but ICOLMDZOR simulates a 900 m ABL, although it overestimates the surface sensible heat flux.
-The most likely driver of ABL development in Meso-NH comes from low-level winds (Fig. \ref{fig:iop_days_winds}b, d, f, h). A strong south-easterly wind  enters the Els Plans area and faces a light northerly wind with a clear front at the border between the irrigated and non-irrigated zones, that extends at least to 950 hPa.
-The mixing induced by strong winds and the upward motions associated to the convergence of air (see vertical winds in supplementary Fig. \ref{fig:iop_days_vertwinds}) are most likely the cause for the very high ABL on 20 July (higher than on 15 July despite lower sensible heat fluxes in observations and Meso-NH). 
-The spatial resolution of ICOLMDZOR does not allow it to represent such subtle sub-grid structures, and although it simulates south-southeasterly low level winds, it does not account for the impacts of this front on the ABL (see supplementary Fig. \ref{fig:iop_days_LMDZ_winds} for ICOLMDZOR winds at 10 metres and 850 hPa on both IOP days).
-%option:mention that this front is present in previous hours as well ?
-In Meso-NH, above the front, higher altitude south-easterly winds seem to partly advect that well developed mixed layer into the irrigated zone, above the internal boundary layer, contributing to the more complex vertical profiles at La Cendrosa.
-Some further investigation could help determine if the location of the front is mainly dictated by the difference in roughness or by pressure gradients between the two zones, but it seems clear that sub-grid heterogeneities of surface sensible heat flux are not a first order driver of ABL development.
-This explains why the irrigation parametrization could not improve the ABL structure over the area in the current state of the model, which does not account for the impact of the observed front on the ABL.
 
 %Fig : Meso-NH winds Cendrosa
 \begin{figure}[hbtp]
@@ -823,52 +899,67 @@ This explains why the irrigation parametrization could not improve the ABL struc
 
 \clearpage
 
-\section{Chapter conclusions}
+\subsubsection*{20 July 2021}
 
-%todoFC:C est vraiment tres negatif. est ce que ces valeurs d obs. sont discutées dans la litérature sur LIAISE?.  Tu pourrais parler aussi des incertitudes sur les obs.  en particulier de la non fermeture du bilan d energie et les corrections apportée aux flux qui se base sur la conservation du rapport de bowen. On a regardé ca avec Alice. Tu ne vas pas entrer dans les détails mais il faudrait quand meme le mentionner.   Ci dessous ce que l on a mis dans le papier d Alice Eddy covariance measurement of turbulent flows results almost systematically in non-closure of the energy balance of around20 %. As presented by Mauder et al. (2024), this imbalance can come from several sources such as sensor uncertainties,275sampling error, storage terms, measurement footprint on heterogeneous landscapes, etc. To reduce energy imbalance, theground storage term is estimated in Section B and the measurement footprint in Section C. The sampling error corresponds toeddies of large or small size that are not sampled (respectively due to a too short or too long sampling period). It is calculated according to Finkelstein and Sims (2001); Jomé (2024) and is shown in Fig A1. Figure A1 shows that the residual fluctuates between 1 and 100 W.m−2, and is slightly higher on the morning of August 20 (up to 185 W.m−2, equivalent to 30 % of Rn).280 During the night, the residual is negative (-22 W.m−2 on average and around 50 % of Rn). Then, it is rather common to partition the energy balance residual into contributions from H and LE. Several methods exists Mauder et al. (2024), one of the simplest ways is to assume that the Bowen ratio is preserved, and to adjust sensitive and latent flows by the same percentage (Twine et al., 2000). This correction is done here with instantaneous Bowen ratio (30 min time step)
+On July 20, the two sub-samples are very close to the mean profile for potential temperature and specific humidity on both sites, apart from a cooler and moister 500-metre high sublayer which is only seen for the low sensible heat flux sub-samples (Fig. \ref{fig:profiles_theta_ovap_sensbins}c-d). This sublayer, also visible in observations at La Cendrosa, seems to be the main consequence of heterogeneities in surface fluxes, since the differences on the rest of the ABL structure are rather limited, even at Els Plans.
+This type of internal sublayer is not expected to be captured by the LMDZ physics, where mixing is dominated by the EDMF scheme using an average thermal plume \citep{rio_thermal_2008}. An extended mosaic approach that represents atmospheric sub-columns over soil tiles within a grid cell could possibly better account for such structures.
+However, the main limitation of ICOLMDZOR in representing the ABL structure for this day is not related to the presence of this internal boundary layer, but rather resides in the large ABL height underestimation at Els Plans.
+On this site, the observed profile is very well mixed with a clear inversion at 1500 m (and 1650 m in \mesoexact), but ICOLMDZOR simulates a 900 m ABL, despite an overestimation of the surface sensible heat flux (green, blue and red crosses on Fig. \ref{fig:sens_bins}f).
+The most likely driver of ABL development in Meso-NH comes from low-level winds (Fig. \ref{fig:iop_days_winds}b, d, f, h). A strong south-easterly wind  enters the Els Plans area and faces a light northerly wind with a clear front at the border between the irrigated and non-irrigated zones, that extends at least to 950 hPa.
+The mixing induced by strong winds and the upward motions associated to the convergence of air (see vertical winds in supplementary Fig. \ref{fig:iop_days_vertwinds}) are most likely the cause for the very high ABL on 20 July. This mechanical process can explain why it is higher than on 15 July despite lower sensible heat fluxes, in observations and Meso-NH. 
+The spatial resolution of ICOLMDZOR does not allow it to represent such subtle sub-grid structures, and although it simulates south-southeasterly low level winds, it does not account for the impacts of this front on the ABL (see supplementary Fig. \ref{fig:iop_days_LMDZ_winds} for ICOLMDZOR winds at 10 metres and 850 hPa on both IOP days).
+In Meso-NH, above the front, higher altitude south-easterly winds seem to partly advect the well-developed mixed layer into the irrigated zone, above the internal boundary layer, contributing to the more complex vertical profiles at La Cendrosa.
+Some further investigation could help determine if the location of the front is mainly dictated by the difference in roughness or if pressure gradients between the two zones play a role, but it seems clear that sub-grid heterogeneities of surface sensible heat flux are not a first order driver of ABL development.
+This explains why the irrigation parametrization could not improve the ABL structure over the area in the current state of the model, which does not account for the impact of the observed front on the ABL.
+
+\section{Chapter conclusions}
 
 This chapter used the simulation setup used in Chapters \ref{chap:monthly} to compare the ICOLMDZOR LAM to local observations from the LIAISE campaign and Meso-NH simulations at 2-kilometre resolution.
 Two grid cells were selected for the LIAISE observation sites of La Cendrosa (irrigated alfalfa crops) and Els Plans (rain-fed low vegetation), in the eastern Ebro basin.
 The basic comparison of the \noirr and \irr simulations quickly identified a shortage of water that did not allow the irrigation scheme to sustain irrigation demand. This was already identified generally in Chapter \ref{chap:monthly} mostly for southern regions of the Iberian Peninsula, but also applied to the study area and period of the LIAISE campaign. It can partly be explained because actual irrigation relies on water adduction from the Pyrenees by the Canal d'Urgell, which is not represented in the model.
 Due to this lack of water, the \irr simulation shows little differences with \noirr, since latent heat flux could only be partially increased during the day and did not follow the structure of the observed diurnal cycle.
 
-The \irrboost simulation was therefore conducted as a sensitivity experiment, lifting the limits on available water for the month of July 2021.
-At La Cendrosa, this enabled simulated irrigation to match irrigation demand, and latent heat flux to follow a complete diurnal cycle. On average over the LIAISE SOP \irrboost largely reduced the biases to observed values of turbulent fluxes, 2-metre temperature and humidity and slightly reduced the excessive wind speed. 
+The \irrboost simulation was therefore conducted as a sensitivity experiment, lifting the limits on available water for the month of July 2021. 
+At La Cendrosa, this enabled simulated irrigation to match irrigation demand, and latent heat flux to follow a complete diurnal cycle. 
+It must be noted that soil moisture was brielfy compared to observations and that \irrboost did not exceed the observed values, suggesting that this sensitivity experiment is not providing unrealistic amounts of water to the soil. However, some difficulties of interpretation in the measurements and in the comparison to modelled variables limited this analysis, which would need to be further extended to strengthen the confidence in this simulation setup.
+More generally, it must be noted that the LIAISE observations were used in this chapter without any specific post-treatment. In particular, it is common to correct edd-covariance measurements of turbulent fluxes to account for incomplete closure of the surface energy balance in observations \citep{lunel_irrigation_2024, jome2024}. This non-closure can exceed 20\% of the net radiation and stem from several sources of errors \citep{mauder_energy_2024}. Accounting for this uncertainty in measurements could strengthen the results obtained for surface variables and provide more insights on specific features not reproduced by ICOLMDZOR such as the large negative sensible heat flux in the afternoon on 20 July.
+
+On average over the LIAISE SOP, \irrboost largely reduced the biases to observed values of turbulent fluxes, 2-metre temperature and humidity and slightly reduced the excessive wind speed. 
 One limitation of these improvements not analysed here, is that this increase in evapotranspiration in ORCHIDEE was mostly ($\sim$75\%) driven by bare soil evaporation rather than plant transpiration, which is not considered realistic, but has been identified in other LSM \citep{marti_implementation_2025}.
 This might be attributed to an insufficient development of vegetation, but also to the partitioning of ET between its components, which could be another direction to explore to improve surface-atmosphere interactions, notably in irrigated areas.
 %option:soil moisture data here....
-Surface variables at Els Plans, however, as well as wind directions, were not affected by simulated irrigation, showing almost no non-local effects of irrigation, apart from a small moistening in the day.
-This lack of dynamical response to irrigation was expected considering that the lifting of water supply limitations in \irrboost only applied to a few grid cells, including some areas that do not actually receive large irrigation. This setup was mostly designed for an exploration of local processes which seemed a reasonable objective considering the 25-kilometre resolution of ICOLMDZOR relative to the size of the main irrigated patch in the LIAISE study area (about 20 km). The Els Plans site was therefore mostly used to isolate the biases of the model that cannot be attributed to irrigation and help analysing the situation at La Cendrosa.
+Most surface variables at Els Plans, however, as well as wind directions, were not affected by simulated irrigation, showing almost no non-local effects of irrigation, apart from a small moistening in the day.
+This lack of dynamical response to irrigation was expected considering that the lifting of water supply limitations in \irrboost only applied to a few grid cells, including some areas that do not actually receive large irrigation. This setup was mostly designed for an exploration of local processes which seemed a reasonable objective considering the 25-kilometre resolution of ICOLMDZOR relative to the size of the main irrigated patch in the LIAISE study area ($\sim$20 km). The Els Plans site was therefore mostly used to isolate the biases of the model that cannot be attributed to irrigation and help analysing the situation at La Cendrosa.
 
 In addition to the observations, ICOLMDZOR was also compared to the Meso-NH simulations, particularly by aggregating all the Meso-NH grid cells of each ICOLMDZOR grid cell into one average value (\mesomean). At La Cendrosa, this showed that even when the \irrboost simulation is not matching the observed values, it is very close \mesomean, especially for turbulent fluxes, but also on temperature and humidity during the day. 
-The demonstrates that the tiled approach for irrigation and the parameter aggregation framework enables ORCHIDEE to properly represent average surface fluxes over the grid cell.
+This demonstrates that the tiled approach for irrigation and the parameter aggregation framework enables ORCHIDEE to properly represent average surface fluxes over the grid cell.
 
 \hfill
 
-The question of whether this good performance on surface variables was also observed in the boundary layer was investigated using vertical profiles of the atmosphere. Out of the seven IOP days on which radio-soundings were conducted on both sites, two were selected (15 and 20 July), each representative of a part of the SOP with different characteristics.
+The question of whether this good performance on surface variables propagates in the boundary layer was investigated using vertical profiles of the atmosphere. Out of the seven IOP days on which radio-soundings were conducted on both sites, two were selected (15 and 20 July), each representative of a part of the SOP with different characteristics.
 
 Vertical profiles confirmed that the effects of simulation irrigation in ICOLMDZOR extend into the entire ABL, with systematic cooling and moistening at La Cendrosa. There was no noticeble impact on winds, and at Els Plans, a small moistening was also visible, meaning that a portion of the additional atmospheric moisture provided by irrigation can be advected to a non-irrigated grid cell.
-The two IOP days showed different limitations of ICOLMDZOR regarding the boundary layer: on 15 July specific humidity was correct but potential temperature was too high, whereas on 20 July, temperature was closer to expected values, but a dry bias was observed, and the ABL was much lower than observations and Meso-NH.
+The two IOP days showed different limitations of ICOLMDZORregarding the boundary layer: on 15 July specific humidity was correct but potential temperature was too high, whereas on 20 July, temperature was closer to expected values, but a dry bias was observed, and the ABL was much lower than observations and Meso-NH.
 At La Cendrosa, \irrboost irrigation was only able to reduce a small part of the warm bias on 15 July, but led to an overestimated specific humidity, whereas on 20 July, it allowed the potential temperature and specific humidity to match observations much better, showing that its impact is much more relevant when biases are linked to local processes.
 
-Regarding boundary layer structure however, it is mostly on 15 July that the impact of irrigation was positive, since it lowered the excessively high ABL. It was still not perfectly matching the observed profile however, and still presented a higher ABL than the \mesomean value. 
-On 20 July, irrigation also contributed to a lower boundary layer but did not enable a better match with the expected profile. 
-To better understand the limitations identified in these two IOP days, surface heterogeneities of fluxes were explored in more detail.
+Regarding boundary layer structure however, it is mostly on 15 July that the impact of irrigation improved the model, since it lowered the excessively high ABL. It was still not perfectly matching the observed profile however, and still presented a higher ABL than the \mesomean value. 
+On 20 July, irrigation also contributed to a lower boundary layer, degrading model performance for simulated ABL height. 
+To better understand the limitations identified in these two IOP days, heterogeneities of surface sensible heat flux and low-level winds were explored in more detail.
 
 \hfill
 
-Considering the choice of having no irrigation at all at Els Plans, this analysis of heterogeneity focused mostly on La Cendrosa, but, as for surface variables the Els Plans grid cell still served as a reference to understand the behaviour of the model and the ABL structure over the area.
+Considering the choice of having no irrigation at all at Els Plans, this analysis of heterogeneity focused mostly on La Cendrosa, but, as for surface variables, the Els Plans grid cell still served as a reference to understand the behaviour of the model and the ABL structure over the area.
 It was shown that the \mesomean average value at La Cendrosa was due to a very skewed distribution with a large majority of irrigated grid cells. 
 On 15 July, the sub-sample of non-irrigated grid cells seems to have a large impact on the mean sensible heat flux, but not to be major drivers of the mean ABL development. ICOLMDZOR does not account for this aspect in taking only an average sensible heat flux, and this can partly explain why it is still simulating an excessively high ABL even with the appropriate surface fluxes.
 
 On 20 July, the development of the ABL simulated by Meso-NH at Els Plans seems partly driven by a front of intense south-easterly wind that follows the delineation between the irrigated and non-irrigated area, which likely contributes to an intense mixing and elevation of the ABL to 1500 m. 
 This also seems to explain the complex structure of the ABL seen at La Cendrosa, with a very high ABL that is partly advected from the rain-fed area, and a cooler and moister sublayer over the irrigated grid cells. 
-The LMDZ physics are not designed to represent such ABL sub-structures which depend more on heterogeneities of wind of surface fluxes, and can therefore not be greatly improved by irrigation.
+The LMDZ physics are not designed to represent such ABL sub-structures, which depend more on heterogeneities of roughness and wind than of surface fluxes, and can therefore not be greatly improved by irrigation.
 
 More generally, the analysis of the two selected days confirmed that the influence of surface heterogeneities is strongly dependent on their structure and on the local wind regime. 
 In particular, the direction of the wind relative to the borders between patches of different surface conditions drives the influence of these patches on one another.
-When the low-level wind is perpendicular to the border (as seen at Els Plans on both days or La Cendrosa on 20 July), the ABL is generally well mixed but can lead to the presence of internal sublayers \citep[as reviewed in][]{bou-zeid_persistent_2020}. When the wind is parallel to the border, different ABL structures coexist side by side and their development is largely conditioned by surface fluxes (as seen at Els Plans on 15 July on Fig. \ref{fig:profiles_theta_ovap_sensbins}e-f).
-Out of the four situations examined here (2 grid cells on 2 distinct days), the assumptions associated to the use of a single atmospheric column for the grid cell seem to hold, but this is not the case when the wind is aligned with the border between irrigated and non-irrigated land.
+When the low-level wind is perpendicular to the border (as seen at Els Plans on both days or La Cendrosa on 20 July), the ABL is generally well mixed but can lead to the presence of an internal sublayer \citep[as reviewed in][]{bou-zeid_persistent_2020}. When the wind is parallel to the border, different ABL structures coexist side by side and their development is largely conditioned by surface fluxes (as seen at Els Plans on 15 July on Fig. \ref{fig:profiles_theta_ovap_sensbins}e-f).
+Finally, out of the four situations examined here (2 grid cells on 2 distinct days), the assumptions associated to the use of a single atmospheric column for the grid cell seem to hold, but this is not the case when the wind is aligned with the border between irrigated and non-irrigated land. In this situation, an extended mosaic approach with sub-columns in the atmosphere would enable a better representation of the distinct boundary layers formed over irrigated and non-irrigated zones.
 
 \clearpage
 
